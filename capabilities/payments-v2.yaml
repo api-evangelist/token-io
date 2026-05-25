@@ -1,0 +1,67 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Token.io Payments v2
+  description: 'Token.io Open Banking API — Payments v2. Initiate single immediate and future-dated A2A payments,
+    list payments, retrieve payment status, and trigger payments under a previously authorised VRP mandate.
+    Self-contained Naftiko capability covering one Token.io business surface.'
+  tags:
+  - Token.io
+  - Payments
+  - Open Banking
+  - PIS
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    TOKEN_IO_JWT: TOKEN_IO_JWT
+capability:
+  consumes:
+  - type: http
+    namespace: payments-v2
+    baseUri: https://api.token.io
+    description: Token.io Payments v2 business capability. Self-contained, no shared references.
+    resources:
+    - name: payments
+      path: /v2/payments
+      operations:
+      - name: initiatepayment
+        method: POST
+        description: Initiate a single immediate or future-dated payment.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Payment initiation request (JSON).
+          required: true
+      - name: listpayments
+        method: GET
+        description: List payments filtered by status, date range, or bank.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: payment
+      path: /v2/payments/{paymentId}
+      operations:
+      - name: getpayment
+        method: GET
+        description: Retrieve a single payment by ID.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: paymentId
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer

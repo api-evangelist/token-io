@@ -1,0 +1,101 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Token.io Data (AIS) — Accounts
+  description: 'Token.io Open Banking API — Data / Account Information Services (AIS). Retrieve account lists,
+    balances, transactions, and standing orders for users who have granted consent. Self-contained Naftiko
+    capability covering one Token.io business surface.'
+  tags:
+  - Token.io
+  - AIS
+  - Open Banking
+  - Accounts
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    TOKEN_IO_JWT: TOKEN_IO_JWT
+capability:
+  consumes:
+  - type: http
+    namespace: data-accounts
+    baseUri: https://api.token.io
+    description: Token.io AIS / Accounts business capability. Self-contained, no shared references.
+    resources:
+    - name: accounts
+      path: /accounts
+      operations:
+      - name: listaccounts
+        method: GET
+        description: List accounts the user has shared via an authorised AIS consent.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: account
+      path: /accounts/{accountId}
+      operations:
+      - name: getaccount
+        method: GET
+        description: Retrieve a single account by ID.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accountId
+          in: path
+          type: string
+          required: true
+    - name: account-balance
+      path: /accounts/{accountId}/balance
+      operations:
+      - name: getbalance
+        method: GET
+        description: Retrieve the current balance(s) for an account.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accountId
+          in: path
+          type: string
+          required: true
+    - name: account-transactions
+      path: /accounts/{accountId}/transactions
+      operations:
+      - name: listtransactions
+        method: GET
+        description: List transactions for an account with optional date range filtering.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accountId
+          in: path
+          type: string
+          required: true
+    - name: account-standing-orders
+      path: /accounts/{accountId}/standing-orders
+      operations:
+      - name: liststandingorders
+        method: GET
+        description: List standing orders configured on an account.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accountId
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer

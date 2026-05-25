@@ -1,0 +1,66 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Token.io Refunds
+  description: 'Token.io Open Banking API — Refunds. Initiate and track refunds linked to an original payment
+    transaction via settlement accounts. Self-contained Naftiko capability covering one Token.io business
+    surface.'
+  tags:
+  - Token.io
+  - Refunds
+  - Open Banking
+  - Settlements
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    TOKEN_IO_JWT: TOKEN_IO_JWT
+capability:
+  consumes:
+  - type: http
+    namespace: refunds
+    baseUri: https://api.token.io
+    description: Token.io Refunds business capability. Self-contained, no shared references.
+    resources:
+    - name: refunds
+      path: /refunds
+      operations:
+      - name: initiaterefund
+        method: POST
+        description: Initiate a refund tied to an original payment.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+      - name: listrefunds
+        method: GET
+        description: List refunds filtered by payment or status.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: refund
+      path: /refunds/{refundId}
+      operations:
+      - name: getrefund
+        method: GET
+        description: Retrieve a single refund by ID.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: refundId
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer

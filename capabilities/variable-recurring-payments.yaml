@@ -1,0 +1,79 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Token.io Variable Recurring Payments
+  description: 'Token.io Open Banking API — Variable Recurring Payments (VRP). Create and manage VRP consents
+    (sweeping and commercial / non-sweeping), initiate payments under an authorised VRP mandate, and check fund
+    availability. Self-contained Naftiko capability covering one Token.io business surface.'
+  tags:
+  - Token.io
+  - VRP
+  - Open Banking
+  - Recurring Payments
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    TOKEN_IO_JWT: TOKEN_IO_JWT
+capability:
+  consumes:
+  - type: http
+    namespace: variable-recurring-payments
+    baseUri: https://api.token.io
+    description: Token.io VRP business capability. Self-contained, no shared references.
+    resources:
+    - name: vrp-consents
+      path: /vrp-consents
+      operations:
+      - name: createvrpconsent
+        method: POST
+        description: Create a new VRP consent / mandate.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: VRP consent request (JSON).
+          required: true
+    - name: vrp-consent
+      path: /vrp-consents/{id}
+      operations:
+      - name: getvrpconsent
+        method: GET
+        description: Retrieve a VRP consent by ID.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+    - name: vrp-consent-payments
+      path: /vrp-consents/{id}/payments
+      operations:
+      - name: initiatevrppayment
+        method: POST
+        description: Initiate a payment under an authorised VRP mandate.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    authentication:
+      type: bearer

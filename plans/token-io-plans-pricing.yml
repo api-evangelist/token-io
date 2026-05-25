@@ -1,0 +1,137 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Token.io
+providerId: token-io
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: false
+tags:
+  - Open Banking
+  - Payments
+  - AIS
+  - VRP
+description: 'Plans and pricing structure for Token.io. Token.io does not publish public per-transaction pricing
+  on its website; commercial terms are negotiated per-customer based on transaction volume, mix of products
+  (Payments, Data/AIS, VRP), and contract length. The plans below describe the publicly documented sales tracks
+  and the special charity track. Contact sales for exact rates.'
+sources:
+  - https://token.io/contact/pricing
+  - https://token.io/blog/flattening-the-cost-curve-with-open-banking
+  - https://token.io/faq
+plans:
+  - id: token-io-sandbox
+    name: Sandbox / Developer
+    type: free
+    description: Free sandbox access via dashboard.sandbox.token.io for development and integration testing.
+      Includes test bank coverage, JWT key management, and full API surface against mocked / sandbox bank
+      backends. No production payment processing.
+    entries:
+      - label: Sandbox API access
+        name: sandbox_access
+        type: free
+        metric: requests
+        limit: -1
+        timeFrame: monthly
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Test bank coverage
+        name: sandbox_banks
+        type: free
+        metric: feature
+        limit: -1
+        timeFrame: monthly
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+  - id: token-io-commercial-payments
+    name: Commercial — Payments
+    type: usage-based
+    description: Production access to Payments v2, VRP, Refunds, Payouts, Pay by Link, and Settlement Accounts.
+      Per-transaction pricing negotiated with sales based on volume bands and contract length.
+    entries:
+      - label: Payment initiations (volume-banded)
+        name: payment_initiations
+        type: metered
+        metric: transactions
+        limit: -1
+        timeFrame: usage
+        geo: EU+UK
+        unit: 1
+        price: 'contact-sales'
+        userMultiplied: false
+      - label: VRP payments (volume-banded)
+        name: vrp_payments
+        type: metered
+        metric: transactions
+        limit: -1
+        timeFrame: usage
+        geo: EU+UK
+        unit: 1
+        price: 'contact-sales'
+        userMultiplied: false
+      - label: Refunds
+        name: refunds
+        type: metered
+        metric: transactions
+        limit: -1
+        timeFrame: usage
+        geo: EU+UK
+        unit: 1
+        price: 'contact-sales'
+        userMultiplied: false
+      - label: Payouts
+        name: payouts
+        type: metered
+        metric: transactions
+        limit: -1
+        timeFrame: usage
+        geo: EU+UK
+        unit: 1
+        price: 'contact-sales'
+        userMultiplied: false
+  - id: token-io-commercial-data
+    name: Commercial — Data (AIS)
+    type: usage-based
+    description: Production access to Account Information Services (AIS) endpoints — accounts, balances,
+      transactions, standing orders. Pricing based on active consents and request volume.
+    entries:
+      - label: AIS active consents
+        name: ais_consents
+        type: metered
+        metric: consents
+        limit: -1
+        timeFrame: monthly
+        geo: EU+UK
+        unit: 1
+        price: 'contact-sales'
+        userMultiplied: false
+      - label: AIS API requests
+        name: ais_requests
+        type: metered
+        metric: requests
+        limit: -1
+        timeFrame: monthly
+        geo: EU+UK
+        unit: 1
+        price: 'contact-sales'
+        userMultiplied: false
+  - id: token-io-charity
+    name: Charity Track
+    type: free
+    description: Token.io waives all payment fees for registered charitable organisations receiving donations
+      via Open Banking A2A payments. Available to existing and new charity customers.
+    entries:
+      - label: Payment processing fees
+        name: charity_payments
+        type: free
+        metric: transactions
+        limit: -1
+        timeFrame: usage
+        geo: EU+UK
+        unit: 1
+        price: '0.00'
+        userMultiplied: false

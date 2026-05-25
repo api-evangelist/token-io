@@ -1,0 +1,48 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Token.io Banks
+  description: 'Token.io Open Banking API — Banks v1 / v2. Discover the 4,000+ connected banks across Europe,
+    filter by country and supported service, and initiate authorisation with a user-selected bank.
+    Self-contained Naftiko capability covering one Token.io business surface.'
+  tags:
+  - Token.io
+  - Banks
+  - Open Banking
+  - Discovery
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    TOKEN_IO_JWT: TOKEN_IO_JWT
+capability:
+  consumes:
+  - type: http
+    namespace: banks
+    baseUri: https://api.token.io
+    description: Token.io Banks discovery business capability. Self-contained, no shared references.
+    resources:
+    - name: banks
+      path: /banks
+      operations:
+      - name: listbanks
+        method: GET
+        description: List banks filtered by country, name, service, or features.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: bank-countries
+      path: /bank/countries
+      operations:
+      - name: listbankcountries
+        method: GET
+        description: List supported countries for bank discovery.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer

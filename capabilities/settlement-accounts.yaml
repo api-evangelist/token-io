@@ -1,0 +1,68 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Token.io Settlement Accounts
+  description: 'Token.io Open Banking API — Settlement Accounts. Manage virtual settlement accounts, list
+    transactions, and configure settlement rules used for refunds and payouts. Self-contained Naftiko capability
+    covering one Token.io business surface.'
+  tags:
+  - Token.io
+  - Settlement Accounts
+  - Virtual Accounts
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    TOKEN_IO_JWT: TOKEN_IO_JWT
+capability:
+  consumes:
+  - type: http
+    namespace: settlement-accounts
+    baseUri: https://api.token.io
+    description: Token.io Settlement Accounts business capability. Self-contained, no shared references.
+    resources:
+    - name: settlement-accounts
+      path: /settlement-accounts
+      operations:
+      - name: listsettlementaccounts
+        method: GET
+        description: List settlement accounts under the TPP.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: settlement-account
+      path: /settlement-accounts/{accountId}
+      operations:
+      - name: getsettlementaccount
+        method: GET
+        description: Retrieve a settlement account by ID.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accountId
+          in: path
+          type: string
+          required: true
+    - name: settlement-account-transactions
+      path: /settlement-accounts/{accountId}/transactions
+      operations:
+      - name: listsettlementtransactions
+        method: GET
+        description: List transactions for a settlement account.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accountId
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer

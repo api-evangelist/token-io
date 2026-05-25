@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.com/schemas/token-io/token-io-payment-schema.json",
+  "title": "Token.io Payment",
+  "description": "Schema for a Token.io Payments v2 single immediate or future-dated payment initiation request and the resulting payment resource returned by POST /payments and GET /payments/{paymentId}.",
+  "type": "object",
+  "definitions": {
+    "PaymentInitiationRequest": {
+      "type": "object",
+      "description": "Request body for initiating a Token.io payment via Payments v2.",
+      "required": ["amount", "currency", "creditor"],
+      "properties": {
+        "amount": {
+          "type": "string",
+          "description": "Payment amount as a decimal string (e.g. '100.00')."
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 three-letter currency code (e.g. GBP, EUR).",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "remittanceInformation": {
+          "type": "string",
+          "description": "Free-text payment reference shown to the payer / payee."
+        },
+        "endToEndId": {
+          "type": "string",
+          "description": "Unique end-to-end identifier propagated through the payment rail."
+        },
+        "creditor": {
+          "$ref": "#/definitions/Party"
+        },
+        "debtor": {
+          "$ref": "#/definitions/Party"
+        },
+        "executionDate": {
+          "type": "string",
+          "format": "date",
+          "description": "Future-dated payment execution date (omit for immediate)."
+        },
+        "paymentRail": {
+          "type": "string",
+          "description": "Preferred payment rail.",
+          "enum": ["FASTER_PAYMENTS", "SEPA", "SEPA_INSTANT", "CHAPS", "BACS"]
+        }
+      }
+    },
+    "Payment": {
+      "type": "object",
+      "description": "Token.io payment resource.",
+      "required": ["paymentId", "status", "amount", "currency"],
+      "properties": {
+        "paymentId": {
+          "type": "string",
+          "description": "Token.io-assigned payment identifier."
+        },
+        "status": {
+          "type": "string",
+          "description": "Payment lifecycle status.",
+          "enum": [
+            "INITIATION_PENDING",
+            "INITIATION_PROCESSING",
+            "INITIATION_COMPLETED",
+            "INITIATION_REJECTED",
+            "SETTLEMENT_PROCESSING",
+            "SETTLEMENT_COMPLETED",
+            "SETTLEMENT_INCOMPLETE",
+            "FAILED"
+          ]
+        },
+        "amount": {"type": "string"},
+        "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+        "createdAtMs": {"type": "string", "description": "Creation timestamp in milliseconds since epoch."},
+        "executedAtMs": {"type": "string", "description": "Execution timestamp in milliseconds since epoch."},
+        "endToEndId": {"type": "string"},
+        "creditor": {"$ref": "#/definitions/Party"},
+        "debtor": {"$ref": "#/definitions/Party"},
+        "bankId": {"type": "string", "description": "Bank identifier from the Banks v2 catalog."}
+      }
+    },
+    "Party": {
+      "type": "object",
+      "description": "Creditor or debtor party with account details.",
+      "required": ["name"],
+      "properties": {
+        "name": {"type": "string"},
+        "accountIdentifier": {
+          "type": "object",
+          "description": "Account identifier — IBAN, sort-code+account-number, or BBAN.",
+          "properties": {
+            "iban": {"type": "string"},
+            "bban": {"type": "string"},
+            "sortCodeAccountNumber": {
+              "type": "object",
+              "properties": {
+                "sortCode": {"type": "string"},
+                "accountNumber": {"type": "string"}
+              }
+            }
+          }
+        },
+        "address": {
+          "type": "object",
+          "properties": {
+            "addressLine": {"type": "array", "items": {"type": "string"}},
+            "country": {"type": "string", "pattern": "^[A-Z]{2}$"},
+            "postCode": {"type": "string"},
+            "city": {"type": "string"}
+          }
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {"$ref": "#/definitions/PaymentInitiationRequest"},
+    {"$ref": "#/definitions/Payment"}
+  ]
+}

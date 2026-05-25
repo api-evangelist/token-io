@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.com/schemas/token-io/token-io-vrp-consent-schema.json",
+  "title": "Token.io VRP Consent",
+  "description": "Schema for a Token.io Variable Recurring Payments (VRP) consent / mandate, covering both sweeping and commercial (non-sweeping) VRP. Used by POST /vrp-consents and GET /vrp-consents/{id}.",
+  "type": "object",
+  "required": ["amountLimits", "currency", "creditor"],
+  "properties": {
+    "vrpConsentId": {
+      "type": "string",
+      "description": "Token.io-assigned VRP consent identifier."
+    },
+    "type": {
+      "type": "string",
+      "description": "VRP consent type.",
+      "enum": ["SWEEPING", "COMMERCIAL"]
+    },
+    "status": {
+      "type": "string",
+      "description": "Consent lifecycle status.",
+      "enum": [
+        "PENDING_AUTHORISATION",
+        "AUTHORISED",
+        "REJECTED",
+        "REVOKED",
+        "EXPIRED"
+      ]
+    },
+    "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+    "amountLimits": {
+      "type": "object",
+      "description": "Per-period and per-payment maximum amounts.",
+      "properties": {
+        "perPayment": {"type": "string"},
+        "perDay": {"type": "string"},
+        "perWeek": {"type": "string"},
+        "perMonth": {"type": "string"},
+        "perYear": {"type": "string"},
+        "overall": {"type": "string"}
+      }
+    },
+    "validFrom": {"type": "string", "format": "date-time"},
+    "validTo": {"type": "string", "format": "date-time"},
+    "creditor": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {"type": "string"},
+        "accountIdentifier": {"type": "object"}
+      }
+    },
+    "debtor": {
+      "type": "object",
+      "properties": {
+        "name": {"type": "string"},
+        "accountIdentifier": {"type": "object"}
+      }
+    },
+    "remittanceInformation": {"type": "string"},
+    "psuAuthenticationMethod": {
+      "type": "string",
+      "enum": ["REDIRECT", "DECOUPLED", "EMBEDDED"]
+    }
+  }
+}

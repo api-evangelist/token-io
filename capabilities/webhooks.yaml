@@ -1,0 +1,57 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Token.io Webhooks
+  description: 'Token.io Open Banking API — Webhooks. Configure event notifications for payments, VRP consents,
+    refunds, payouts, and AIS lifecycle events. Self-contained Naftiko capability covering one Token.io business
+    surface.'
+  tags:
+  - Token.io
+  - Webhooks
+  - Events
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    TOKEN_IO_JWT: TOKEN_IO_JWT
+capability:
+  consumes:
+  - type: http
+    namespace: webhooks
+    baseUri: https://api.token.io
+    description: Token.io Webhooks business capability. Self-contained, no shared references.
+    resources:
+    - name: webhook-config
+      path: /webhook/config
+      operations:
+      - name: getwebhookconfig
+        method: GET
+        description: Retrieve the current webhook configuration.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: setwebhookconfig
+        method: PUT
+        description: Update the webhook URL and event subscription configuration.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+      - name: deletewebhookconfig
+        method: DELETE
+        description: Disable webhook delivery.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer

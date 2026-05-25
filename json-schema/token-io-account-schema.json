@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.com/schemas/token-io/token-io-account-schema.json",
+  "title": "Token.io Account",
+  "description": "Schema for a Token.io AIS Account resource and its associated balance / transaction entries, returned by GET /accounts, GET /accounts/{accountId}, GET /accounts/{accountId}/balance, and GET /accounts/{accountId}/transactions.",
+  "type": "object",
+  "definitions": {
+    "Account": {
+      "type": "object",
+      "required": ["accountId"],
+      "properties": {
+        "accountId": {"type": "string", "description": "Token.io-internal account identifier."},
+        "name": {"type": "string", "description": "Bank-supplied account display name."},
+        "type": {
+          "type": "string",
+          "enum": ["CURRENT", "SAVINGS", "CREDIT_CARD", "LOAN", "BUSINESS", "OTHER"]
+        },
+        "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+        "bankId": {"type": "string"},
+        "accountIdentifier": {
+          "type": "object",
+          "properties": {
+            "iban": {"type": "string"},
+            "bban": {"type": "string"},
+            "sortCodeAccountNumber": {
+              "type": "object",
+              "properties": {
+                "sortCode": {"type": "string"},
+                "accountNumber": {"type": "string"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "Balance": {
+      "type": "object",
+      "required": ["amount", "currency"],
+      "properties": {
+        "amount": {"type": "string"},
+        "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+        "type": {
+          "type": "string",
+          "enum": ["AVAILABLE", "CURRENT", "BOOKED", "CLOSING_BOOKED", "EXPECTED"]
+        },
+        "asOf": {"type": "string", "format": "date-time"}
+      }
+    },
+    "Transaction": {
+      "type": "object",
+      "required": ["transactionId", "amount", "currency"],
+      "properties": {
+        "transactionId": {"type": "string"},
+        "amount": {"type": "string"},
+        "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+        "status": {
+          "type": "string",
+          "enum": ["BOOKED", "PENDING"]
+        },
+        "type": {
+          "type": "string",
+          "enum": ["CREDIT", "DEBIT"]
+        },
+        "bookingDate": {"type": "string", "format": "date"},
+        "valueDate": {"type": "string", "format": "date"},
+        "description": {"type": "string"},
+        "remittanceInformation": {"type": "string"},
+        "merchantName": {"type": "string"},
+        "merchantCategoryCode": {"type": "string"}
+      }
+    }
+  },
+  "oneOf": [
+    {"$ref": "#/definitions/Account"},
+    {"$ref": "#/definitions/Balance"},
+    {"$ref": "#/definitions/Transaction"}
+  ]
+}

@@ -1,0 +1,123 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Token.io
+providerId: token-io
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: false
+tags:
+  - FinOps
+  - Cost Management
+  - FOCUS
+  - Open Banking
+  - Payments
+description: FOCUS-aligned FinOps view of the Token.io commercial surface. Token.io charges per-transaction
+  fees on Payment Initiation, VRP, Refunds, Payouts, and per-consent fees on AIS, under negotiated commercial
+  contracts. Charity workloads are zero-fee.
+sources:
+  - https://token.io/contact/pricing
+  - https://token.io/blog/flattening-the-cost-curve-with-open-banking
+  - https://docs.token.io/products/tpp
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Token.io Ltd
+serviceCategory: Financial Services - Open Banking Infrastructure
+billingModel:
+  pricingCategory: Usage-Based
+  billingFrequency: Monthly
+  billingCurrency: GBP
+  alternateCurrencies:
+    - EUR
+  chargeCategories:
+    - Usage
+    - Adjustment
+    - Credit
+  primaryUnit: transaction
+  secondaryUnits:
+    - consent
+    - request
+focusColumns:
+  ServiceName: Token.io Open Banking API
+  ServiceCategory: Financial Services
+  ProviderName: Token.io
+  PublisherName: Token.io Ltd
+  InvoiceIssuerName: Token.io Ltd
+  PricingCategory: Usage-Based
+  PricingUnit: transaction
+  BillingCurrency: GBP
+meters:
+  - name: payment_initiations
+    unit: transaction
+    aggregation: count
+    dimensions:
+      - bank
+      - rail
+      - currency
+      - tenant
+  - name: vrp_payments
+    unit: transaction
+    aggregation: count
+    dimensions:
+      - bank
+      - consent_type
+      - currency
+      - tenant
+  - name: vrp_consents_active
+    unit: consent
+    aggregation: max
+    dimensions:
+      - consent_type
+      - tenant
+  - name: refunds
+    unit: transaction
+    aggregation: count
+    dimensions:
+      - bank
+      - currency
+      - tenant
+  - name: payouts
+    unit: transaction
+    aggregation: count
+    dimensions:
+      - bank
+      - rail
+      - currency
+      - tenant
+  - name: ais_consents_active
+    unit: consent
+    aggregation: max
+    dimensions:
+      - bank
+      - tenant
+  - name: ais_requests
+    unit: request
+    aggregation: count
+    dimensions:
+      - bank
+      - endpoint
+      - tenant
+discountLanes:
+  - name: Volume bands
+    description: Transaction unit price decreases as monthly transaction count crosses contractually defined
+      bands.
+  - name: Charity track
+    description: All payment processing fees waived for registered charitable organisations.
+  - name: Multi-product bundling
+    description: Bundled Payments + Data + VRP contracts attract bundle discounts negotiated per agreement.
+costAllocation:
+  dimensions:
+    - tenant
+    - sub-TPP
+    - workspace
+    - business-unit
+  recommended:
+    - Use Sub-TPP entities to segregate cost lines for resellers and platform models.
+    - Use settlement-account groupings to allocate refund / payout costs to business units.
+notes: Token.io invoices monthly in GBP (UK customers) or EUR (EU customers). Exact FOCUS mapping depends on
+  the customer's commercial agreement; the above represents the typical structure observed in Token.io's public
+  documentation and pricing collateral.

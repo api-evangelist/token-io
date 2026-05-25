@@ -1,0 +1,90 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@vocab": "https://schema.org/",
+    "token": "https://api.token.io/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "obie": "https://standards.openbanking.org.uk/",
+
+    "Payment": {
+      "@id": "token:Payment",
+      "@context": {
+        "paymentId": {"@id": "token:Payment/paymentId", "@type": "xsd:string"},
+        "status": {"@id": "token:Payment/status", "@type": "xsd:string"},
+        "amount": {"@id": "schema:price", "@type": "xsd:decimal"},
+        "currency": {"@id": "schema:priceCurrency", "@type": "xsd:string"},
+        "createdAtMs": {"@id": "schema:dateCreated", "@type": "xsd:long"},
+        "executedAtMs": {"@id": "schema:scheduledTime", "@type": "xsd:long"},
+        "endToEndId": {"@id": "token:Payment/endToEndId", "@type": "xsd:string"},
+        "creditor": {"@id": "schema:recipient", "@type": "@id"},
+        "debtor": {"@id": "schema:participant", "@type": "@id"},
+        "bankId": {"@id": "token:Payment/bankId", "@type": "xsd:string"},
+        "paymentRail": {"@id": "token:Payment/paymentRail", "@type": "xsd:string"}
+      }
+    },
+
+    "VRPConsent": {
+      "@id": "token:VRPConsent",
+      "@context": {
+        "vrpConsentId": {"@id": "token:VRPConsent/id", "@type": "xsd:string"},
+        "type": {"@id": "token:VRPConsent/type", "@type": "xsd:string"},
+        "status": {"@id": "token:VRPConsent/status", "@type": "xsd:string"},
+        "validFrom": {"@id": "schema:validFrom", "@type": "xsd:dateTime"},
+        "validTo": {"@id": "schema:validThrough", "@type": "xsd:dateTime"},
+        "amountLimits": {"@id": "token:VRPConsent/amountLimits"},
+        "creditor": {"@id": "schema:recipient", "@type": "@id"},
+        "debtor": {"@id": "schema:participant", "@type": "@id"}
+      }
+    },
+
+    "Account": {
+      "@id": "token:Account",
+      "@context": {
+        "accountId": {"@id": "token:Account/accountId", "@type": "xsd:string"},
+        "name": {"@id": "schema:name", "@type": "xsd:string"},
+        "type": {"@id": "token:Account/type", "@type": "xsd:string"},
+        "currency": {"@id": "schema:currency", "@type": "xsd:string"},
+        "bankId": {"@id": "token:Account/bankId", "@type": "xsd:string"},
+        "accountIdentifier": {"@id": "token:Account/accountIdentifier"}
+      }
+    },
+
+    "Balance": {
+      "@id": "token:Balance",
+      "@context": {
+        "amount": {"@id": "schema:price", "@type": "xsd:decimal"},
+        "currency": {"@id": "schema:priceCurrency", "@type": "xsd:string"},
+        "type": {"@id": "token:Balance/type", "@type": "xsd:string"},
+        "asOf": {"@id": "schema:dateModified", "@type": "xsd:dateTime"}
+      }
+    },
+
+    "Transaction": {
+      "@id": "token:Transaction",
+      "@context": {
+        "transactionId": {"@id": "token:Transaction/id", "@type": "xsd:string"},
+        "amount": {"@id": "schema:price", "@type": "xsd:decimal"},
+        "currency": {"@id": "schema:priceCurrency", "@type": "xsd:string"},
+        "status": {"@id": "token:Transaction/status", "@type": "xsd:string"},
+        "type": {"@id": "token:Transaction/type", "@type": "xsd:string"},
+        "bookingDate": {"@id": "schema:datePosted", "@type": "xsd:date"},
+        "valueDate": {"@id": "token:Transaction/valueDate", "@type": "xsd:date"},
+        "description": {"@id": "schema:description", "@type": "xsd:string"},
+        "merchantName": {"@id": "schema:seller", "@type": "xsd:string"},
+        "merchantCategoryCode": {"@id": "token:Transaction/mcc", "@type": "xsd:string"}
+      }
+    },
+
+    "Bank": {
+      "@id": "token:Bank",
+      "@context": {
+        "bankId": {"@id": "token:Bank/bankId", "@type": "xsd:string"},
+        "name": {"@id": "schema:name", "@type": "xsd:string"},
+        "country": {"@id": "schema:addressCountry", "@type": "xsd:string"},
+        "supportedServices": {"@id": "token:Bank/supportedServices"}
+      }
+    }
+  }
+}

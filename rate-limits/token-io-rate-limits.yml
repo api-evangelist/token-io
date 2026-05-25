@@ -1,0 +1,48 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Token.io
+providerId: token-io
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: false
+tags:
+  - Open Banking
+  - Rate Limiting
+  - PSD2
+description: 'Rate limit posture for the Token.io Open Banking API. Token.io itself does not publish a single
+  global RPS / RPM number for the TPP API; effective limits are governed by (a) PSD2 / Open Banking Standard
+  defaults applied per-consent at each connected bank, and (b) any TPP-level limits Token.io applies to its own
+  API surface. Token.io recommends rate limiting on a per-consent basis to prevent overuse of bank-side AIS
+  endpoints. Consult contract terms for production tenant-level limits.'
+sources:
+  - https://support.token.io/hc/en-us/articles/22853099035673-Should-we-add-rate-limiting-to-our-Open-Banking-API
+  - https://docs.token.io/products/tpp/integration-considerations/api-basics
+  - https://standards.openbanking.org.uk
+headers:
+  retryAfter: retry-after
+responseCodes:
+  throttled: 429
+  quotaExceeded: 429
+algorithm: per-consent
+limits:
+  - scope: per-AIS-consent (Open Banking UK default)
+    tier: Default
+    rule: 4 requests per minute when accessed without PSU present, unlimited PSU-present
+    notes: 'UK Open Banking Standard default for AIS endpoints — accounts, balance, transactions, standing
+      orders. Bank-enforced upstream of Token.io.'
+  - scope: per-TPP global
+    tier: Production
+    rule: contract-defined
+    notes: Token.io applies tenant-level throttling per commercial agreement. Exact RPS / RPM negotiated with
+      sales.
+  - scope: per-bank
+    tier: All
+    rule: bank-defined
+    notes: Each upstream bank enforces its own PSD2 / Open Banking rate limits. Token.io surfaces 429s and bank
+      status via the Reports API at /reports/banks/status.
+recommendations:
+  - Apply per-consent rate limiting on AIS workflows to stay within bank-side caps.
+  - Use the Webhooks API to receive event-driven updates rather than polling.
+  - Use the Reports API (/reports/banks/status and /reports/banks/{bankId}/status) to monitor degraded bank
+    connectivity before retrying.
