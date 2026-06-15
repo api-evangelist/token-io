@@ -1,107 +1,280 @@
-# Token.io (token-io)
-Token.io is an Open Banking infrastructure provider offering A2A (Account-to-Account) payments and account information services across Europe. Founded in 2016 and FCA-authorised since 2018, Token.io was the first payment initiation service provider to conduct an end-to-end PSD2-compliant Open Banking transaction. The Token.io platform connects developers and TPPs to over 4,000 banks via a single standardised API supporting Payment Initiation Services (PIS), Account Information Services (AIS), Variable Recurring Payments (VRP), refunds, payouts, settlement accounts, account verification, and Pay-by-Link checkout.
+# token-io (token-io)
 
-**URL:** [Visit APIs.json](https://raw.githubusercontent.com/api-evangelist/token-io/refs/heads/main/apis.yml)
+Token.io is an Open Banking infrastructure provider offering A2A (Account-to-Account) payments and account information services across Europe. Founded in 2016 and FCA-authorised since 2018, Token.io was the first payment initiation service provider to conduct an end-to-end PSD2-compliant Open Banking transaction. The Token.io platform connects developers and TPPs to over 4,000 banks via a single standardised API supporting Payment Initiation Services (PIS), Account Information Services (AIS), Variable Recurring Payments (VRP), refunds, payouts, settlement accounts, account verification, and Pay-by-Link checkout. Used by merchants, PSPs, fintechs, PFM apps, and platform businesses to replace card-rail payments and aggregate multibank data.
 
-**Run:** [Capabilities Using Naftiko](https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=company-api-evangelist&utm_content=repo)
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/token-io/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/token-io/refs/heads/main/apis.yml)
 
-## Tags
+## Scope
 
-- Open Banking, Payments, AIS, PIS, VRP, PSD2, A2A Payments, Pay by Bank, Financial Services
+- **Position:** Consuming
 
 ## Timestamps
 
-- **Created:** 2026-05-25
+- **Created:** 2026-05-25T00:00:00.000Z
 - **Modified:** 2026-05-25
-
-## Products
-
-| Product | Description |
-|---|---|
-| Payments v2 | Single immediate and future-dated A2A payment initiation |
-| Variable Recurring Payments (VRP) | Sweeping and commercial (non-sweeping) recurring payment mandates |
-| Data (AIS) | Account information — balances, transactions, standing orders |
-| Pay by Link | Reusable payment URLs with amount and usage limits |
-| Account on File | Tokenized bank account references for repeat payments |
-| Refunds | Refund initiation tied to original payment transactions |
-| Payouts | Outbound transfer execution and monitoring |
-| Settlement Accounts | Virtual accounts and settlement rules |
-| Account Verification | Name / account-holder confirmation checks |
-| Banks v1 & v2 | Discovery of 4,000+ connected banks across Europe |
-| Sub-TPPs | Sub-TPP entity management for reseller / platform models |
-| Webhooks | Event notifications for payments, VRP, AIS lifecycle |
-| Reports | Bank status monitoring across AIS and PIS |
 
 ## APIs
 
 ### Token.io Open Banking API
-Token.io's Open Banking API for Third Party Providers (TPPs) — covers Payment Initiation Services (PIS), Account Information Services (AIS), Variable Recurring Payments (VRP), refunds, payouts, settlement accounts, account verification, Pay-by-Link, and bank discovery across 4,000+ European banks. JWT-authenticated production API at `https://api.token.io` with sandbox access via `dashboard.sandbox.token.io`.
 
-**Human URL:** [https://docs.token.io/products/tpp/api/reference](https://docs.token.io/products/tpp/api/reference)
-**Base URL:** `https://api.token.io`
+Token.io's Open Banking API for Third Party Providers (TPPs). Enables authorized access to authenticated users' account information, initiation and tracking of single immediate and future-dated payments, variable recurring payments (VRP) for long-held consents, settlement-account based payments and refunds, payouts, account verification, and Pay-by-Link checkout flows. Supports Banks v1/v2, Sub-TPP management, webhooks, JWT-based authentication, and reporting across 4,000+ connected banks in Europe.
+
+- **Human URL:** [https://docs.token.io/products/tpp/api/reference](https://docs.token.io/products/tpp/api/reference)
+- **Base URL:** `https://api.token.io`
+
+#### Tags
+
+- Open Banking
+- Payments
+- Account Information
+- AIS
+- PIS
+- VRP
+- PSD2
+
+#### Properties
 
 - [Documentation](https://docs.token.io/products/tpp/api/reference)
-- [API Reference](https://reference.token.io/)
+- [Reference](https://reference.token.io/)
 - [Getting Started](https://docs.token.io/products/tpp)
-- [OpenAPI Source](https://docs.token.io/_bundle/products/tpp/api/reference/index.yaml)
-- [OpenAPI (local)](openapi/token-io-openapi.yml)
-- [JSON Schema — Payment](json-schema/token-io-payment-schema.json)
-- [JSON Schema — VRP Consent](json-schema/token-io-vrp-consent-schema.json)
-- [JSON Schema — Account](json-schema/token-io-account-schema.json)
-- [JSON-LD Context](json-ld/token-io-context.jsonld)
+- [Open A P I Source](https://docs.token.io/_bundle/products/tpp/api/reference/index.yaml)
+- [OpenAPI](openapi/token-io-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/token-io.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/token-io.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [JSON Schema](json-schema/token-io-payment-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Schema](json-schema/token-io-vrp-consent-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Schema](json-schema/token-io-account-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON-LD](json-ld/token-io-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
 
-## Naftiko Capabilities
+### Token.io JavaScript SDK
 
-| Capability | Surface |
-|---|---|
-| [Payments v2](capabilities/payments-v2.yaml) | Initiate, list, and retrieve single immediate / future-dated payments |
-| [Variable Recurring Payments](capabilities/variable-recurring-payments.yaml) | Create VRP consents, initiate VRP payments |
-| [Data (AIS) — Accounts](capabilities/data-accounts.yaml) | Accounts, balances, transactions, standing orders |
-| [Banks](capabilities/banks.yaml) | Bank discovery and country list |
-| [Refunds](capabilities/refunds.yaml) | Refund initiation and tracking |
-| [Payouts](capabilities/payouts.yaml) | Payout initiation and monitoring |
-| [Settlement Accounts](capabilities/settlement-accounts.yaml) | Virtual account management |
-| [Webhooks](capabilities/webhooks.yaml) | Webhook configuration |
-| [Pay by Link](capabilities/pay-by-link.yaml) | Reusable payment links |
+Official Token.io JavaScript SDK for Node.js and browser environments interacting with the Token System and Open Banking API.
 
-## SDKs and Samples
+- **Human URL:** [https://github.com/tokenio/sdk-js](https://github.com/tokenio/sdk-js)
 
-| Repo | Language | Purpose |
-|---|---|---|
-| [sdk-js](https://github.com/tokenio/sdk-js) | JavaScript / Node | Token System and Open Banking client |
-| [sdk-php](https://github.com/tokenio/sdk-php) | PHP | Token System client |
-| [sdk-csharp](https://github.com/tokenio/sdk-csharp) | C# / .NET | Token System client |
-| [sdk-objc](https://github.com/tokenio/sdk-objc) | Objective-C | iOS native client |
-| [tokenio-ios-webview-sdk](https://github.com/tokenio/tokenio-ios-webview-sdk) | Swift | iOS Hosted Payments webview |
-| [tokenio-android-webview-sdk](https://github.com/tokenio/tokenio-android-webview-sdk) | Kotlin | Android Hosted Payments webview |
-| [merchant-sample-java](https://github.com/tokenio/merchant-sample-java) | Java | Merchant checkout sample |
-| [merchant-sample-js](https://github.com/tokenio/merchant-sample-js) | JavaScript | Merchant checkout sample |
-| [bank-sample-java](https://github.com/tokenio/bank-sample-java) | Java | Bank Integration API sample |
-| [pfm-sample-java](https://github.com/tokenio/pfm-sample-java) | Java | Personal finance / Access Tokens sample |
-| [merchant-integration-workshop](https://github.com/tokenio/merchant-integration-workshop) | HTML | Hands-on integration workshop |
+#### Tags
 
-## Commercial
+- SDK
+- JavaScript
+- Node.js
+- Browser
 
-- [Plans / Pricing (API Commons Plans 0.1)](plans/token-io-plans-pricing.yml)
-- [Rate Limits (API Commons Rate Limits 0.1)](rate-limits/token-io-rate-limits.yml)
-- [FinOps (FOCUS 1.3)](finops/token-io-finops.yml)
+#### Properties
 
-## Compliance and Licensing
+- [Source Code](https://github.com/tokenio/sdk-js)
+- [SDK](https://github.com/tokenio/sdk-js)
+- [Postman Collection](collections/token-io.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/token-io.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
-- FCA-authorised UK Payment Initiation Service Provider (PISP) and Account Information Service Provider (AISP) since 2018
-- PSD2-compliant
-- Listed on the [UK Open Banking regulated providers register](https://www.openbanking.org.uk/regulated-providers/token/)
+### Token.io PHP SDK
 
-## Common Links
+Official Token.io PHP SDK for interacting with the Token System and Open Banking API.
+
+- **Human URL:** [https://github.com/tokenio/sdk-php](https://github.com/tokenio/sdk-php)
+
+#### Tags
+
+- SDK
+- PHP
+
+#### Properties
+
+- [Source Code](https://github.com/tokenio/sdk-php)
+- [SDK](https://github.com/tokenio/sdk-php)
+- [Postman Collection](collections/token-io.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/token-io.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### Token.io C# SDK
+
+Official Token.io C# / .NET SDK for the Open Banking API.
+
+- **Human URL:** [https://github.com/tokenio/sdk-csharp](https://github.com/tokenio/sdk-csharp)
+
+#### Tags
+
+- SDK
+- C#
+- .NET
+
+#### Properties
+
+- [Source Code](https://github.com/tokenio/sdk-csharp)
+- [SDK](https://github.com/tokenio/sdk-csharp)
+- [Postman Collection](collections/token-io.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/token-io.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### Token.io Objective-C SDK
+
+Official Token.io Objective-C SDK for iOS.
+
+- **Human URL:** [https://github.com/tokenio/sdk-objc](https://github.com/tokenio/sdk-objc)
+
+#### Tags
+
+- SDK
+- Objective-C
+- iOS
+
+#### Properties
+
+- [Source Code](https://github.com/tokenio/sdk-objc)
+- [SDK](https://github.com/tokenio/sdk-objc)
+- [Postman Collection](collections/token-io.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/token-io.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### Token.io iOS Webview SDK
+
+iOS webview SDK for embedding Token.io Hosted Payments pages in native iOS apps.
+
+- **Human URL:** [https://github.com/tokenio/tokenio-ios-webview-sdk](https://github.com/tokenio/tokenio-ios-webview-sdk)
+
+#### Tags
+
+- SDK
+- iOS
+- Swift
+- Webview
+- Hosted Payments
+
+#### Properties
+
+- [Source Code](https://github.com/tokenio/tokenio-ios-webview-sdk)
+- [Postman Collection](collections/token-io.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/token-io.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### Token.io Android Webview SDK
+
+Android webview SDK for embedding Token.io Hosted Payments pages in native Android apps.
+
+- **Human URL:** [https://github.com/tokenio/tokenio-android-webview-sdk](https://github.com/tokenio/tokenio-android-webview-sdk)
+
+#### Tags
+
+- SDK
+- Android
+- Kotlin
+- Webview
+- Hosted Payments
+
+#### Properties
+
+- [Source Code](https://github.com/tokenio/tokenio-android-webview-sdk)
+- [Postman Collection](collections/token-io.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/token-io.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### Merchant Sample (Java)
+
+Java merchant checkout sample illustrating Token.io payment initiation flows.
+
+- **Human URL:** [https://github.com/tokenio/merchant-sample-java](https://github.com/tokenio/merchant-sample-java)
+
+#### Tags
+
+- Sample
+- Java
+- Merchant
+
+#### Properties
+
+- [Source Code](https://github.com/tokenio/merchant-sample-java)
+- [Postman Collection](collections/token-io.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/token-io.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### Merchant Sample (JavaScript)
+
+Simple JavaScript merchant checkout example for Token.io.
+
+- **Human URL:** [https://github.com/tokenio/merchant-sample-js](https://github.com/tokenio/merchant-sample-js)
+
+#### Tags
+
+- Sample
+- JavaScript
+- Merchant
+
+#### Properties
+
+- [Source Code](https://github.com/tokenio/merchant-sample-js)
+- [Postman Collection](collections/token-io.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/token-io.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### Bank Sample (Java)
+
+Sample implementation of the Token Bank Integration API in Java.
+
+- **Human URL:** [https://github.com/tokenio/bank-sample-java](https://github.com/tokenio/bank-sample-java)
+
+#### Tags
+
+- Sample
+- Java
+- Bank Integration
+
+#### Properties
+
+- [Source Code](https://github.com/tokenio/bank-sample-java)
+- [Postman Collection](collections/token-io.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/token-io.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### Personal Finance Management Sample (Java)
+
+Simple personal finance app illustrating Token.io's Access Tokens for AIS use cases.
+
+- **Human URL:** [https://github.com/tokenio/pfm-sample-java](https://github.com/tokenio/pfm-sample-java)
+
+#### Tags
+
+- Sample
+- Java
+- PFM
+- Access Tokens
+
+#### Properties
+
+- [Source Code](https://github.com/tokenio/pfm-sample-java)
+- [Postman Collection](collections/token-io.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/token-io.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### Merchant Integration Workshop
+
+Hands-on workshop for integrating a merchant with Token Checkout.
+
+- **Human URL:** [https://github.com/tokenio/merchant-integration-workshop](https://github.com/tokenio/merchant-integration-workshop)
+
+#### Tags
+
+- Tutorial
+- Workshop
+- Merchant
+
+#### Properties
+
+- [Source Code](https://github.com/tokenio/merchant-integration-workshop)
+- [Postman Collection](collections/token-io.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/token-io.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+## Common Properties
 
 - [Portal](https://token.io)
 - [Documentation](https://docs.token.io)
 - [Getting Started](https://docs.token.io/products/tpp)
-- [API Reference](https://reference.token.io/)
-- [Sandbox Dashboard](https://dashboard.sandbox.token.io/signin)
+- [Reference](https://reference.token.io/)
 - [Support](https://support.token.io)
+- [Sandbox](https://dashboard.sandbox.token.io/signin)
 - [GitHub Organization](https://github.com/tokenio)
 - [Pricing](https://token.io/contact/pricing)
 - [News](https://token.io/news)
 - [Blog](https://token.io/blog)
-- [FAQ](https://token.io/faq)
+- [F A Q](https://token.io/faq)
+- [License](https://www.openbanking.org.uk/regulated-providers/token/)
+- [Plans](plans/token-io-plans-pricing.yml)
+- [Rate Limits](rate-limits/token-io-rate-limits.yml)
+- [Fin Ops](finops/token-io-finops.yml)
+- [Features](undefined)
+- [Use Cases](undefined)
+
+## Maintainers
+
+**FN:** Kin Lane
+**Email:** info@apievangelist.com
+**URL:** https://apievangelist.com

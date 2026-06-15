@@ -1,0 +1,2891 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Token.io's Open Banking API for TPPs"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get information for all accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/accounts",
+            "headers": [
+              {
+                "name": "on-behalf-of",
+                "value": "ta:3eYPU1BEKKunfmYgQuSKXFCeo851C5Y3XiZW3XA465TU:5zKtXEAq"
+              },
+              {
+                "name": "token-customer-ip-address",
+                "value": "172.16.254.1"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /accounts` endpoint retrieves information for all bank accounts."
+        },
+        {
+          "info": {
+            "name": "Get account information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/accounts/:accountId",
+            "headers": [
+              {
+                "name": "on-behalf-of",
+                "value": "ta:3eYPU1BEKKunfmYgQuSKXFCeo851C5Y3XiZW3XA465TU:5zKtXEAq"
+              },
+              {
+                "name": "token-customer-ip-address",
+                "value": "172.16.254.1"
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "a:8DbPteGnytmMbKXdnWTReeRB6cYWKXZ84JgLTBC7fKL4:5zKcENpV",
+                "type": "path",
+                "description": "The system-generated, unique bank account id, which specifies the account for which the information is requested."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /accounts/{accountId}` endpoint retrieves the information for a specific bank account."
+        },
+        {
+          "info": {
+            "name": "Get account balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/account-balance",
+            "headers": [
+              {
+                "name": "on-behalf-of",
+                "value": "ta:3eYPU1BEKKunfmYgQuSKXFCeo851C5Y3XiZW3XA465TU:5zKtXEAq"
+              },
+              {
+                "name": "token-customer-ip-address",
+                "value": "172.16.254.1"
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "a:8DbPteGnytmMbKXdnWTReeRB6cYWKXZ84JgLTBC7fKL4:5zKcENpV,a:9TFpwkcQmcsMbdjQcpdjfsEBosDw28503fAAGPEMF2MVF19hfk3nc,a:rtmv254gaskGLdkadQvdNesk2Y9ferbvpaom5mvepm0mv2nfGnaix",
+                "type": "query",
+                "description": "A list of account ids for which you wish to retrieve account balances. Each `accountId` should be specified separately as accountId=a:xxx:xxx&accountId=a:yyy:yyy."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /account-balance` endpoint retrieves the balances for multiple bank accounts."
+        },
+        {
+          "info": {
+            "name": "Get an account balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/accounts/:accountId/balance",
+            "headers": [
+              {
+                "name": "on-behalf-of",
+                "value": "ta:3eYPU1BEKKunfmYgQuSKXFCeo851C5Y3XiZW3XA465TU:5zKtXEAq"
+              },
+              {
+                "name": "token-customer-ip-address",
+                "value": "172.16.254.1"
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "a:8DbPteGnytmMbKXdnWTReeRB6cYWKXZ84JgLTBC7fKL4:5zKcENpV",
+                "type": "path",
+                "description": "The unique bank account id, which specifies the account for which the information is requested."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /accounts/{accountId}/balance` endpoint retrieves the balance for a given bank account."
+        },
+        {
+          "info": {
+            "name": "Get information for all standing orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/accounts/:accountId/standing-orders",
+            "headers": [
+              {
+                "name": "on-behalf-of",
+                "value": "ta:3eYPU1BEKKunfmYgQuSKXFCeo851C5Y3XiZW3XA465TU:5zKtXEAq"
+              },
+              {
+                "name": "token-customer-ip-address",
+                "value": "172.16.254.1"
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "a:8DbPteGnytmMbKXdnWTReeRB6cYWKXZ84JgLTBC7fKL4:5zKcENpV",
+                "type": "path",
+                "description": "The unique bank account id, which specifies the account for which the information is requested."
+              },
+              {
+                "name": "page.offset",
+                "value": "LerV6Jmex",
+                "type": "query",
+                "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br>The offset is not visible to a user and should not be parsed and/or understood in any way."
+              },
+              {
+                "name": "page.limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of records to return. This must be less than 200."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /accounts/{accountId}/standing-orders` endpoint retrieves information for all standing orders in a given account, once consent has been given."
+        },
+        {
+          "info": {
+            "name": "Get standing order information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/accounts/:accountId/standing-orders/:standingOrderId",
+            "headers": [
+              {
+                "name": "on-behalf-of",
+                "value": "ta:3eYPU1BEKKunfmYgQuSKXFCeo851C5Y3XiZW3XA465TU:5zKtXEAq"
+              },
+              {
+                "name": "token-customer-ip-address",
+                "value": "172.16.254.1"
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "a:8DbPteGnytmMbKXdnWTReeRB6cYWKXZ84JgLTBC7fKL4:5zKcENpV",
+                "type": "path",
+                "description": "The system-generated, unique bank account id, which specifies the account for which the information is requested."
+              },
+              {
+                "name": "standingOrderId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /accounts/{accountId}/standing-orders/{standingOrderId}` endpoint retrieves information for a specific standing order in a given account, once consent has been given."
+        },
+        {
+          "info": {
+            "name": "Get account transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/accounts/:accountId/transactions",
+            "headers": [
+              {
+                "name": "on-behalf-of",
+                "value": "ta:3eYPU1BEKKunfmYgQuSKXFCeo851C5Y3XiZW3XA465TU:5zKtXEAq"
+              },
+              {
+                "name": "token-customer-ip-address",
+                "value": "172.16.254.1"
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "a:8DbPteGnytmMbKXdnWTReeRB6cYWKXZ84JgLTBC7fKL4:5zKcENpV",
+                "type": "path",
+                "description": "The system-generated unique bank account id, which specifies the account for which the information is requested."
+              },
+              {
+                "name": "page.offset",
+                "value": "LerV6Jmex",
+                "type": "query",
+                "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way."
+              },
+              {
+                "name": "page.limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of records to return. This must be less than 200."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "The earliest transaction date requested, in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "The latest transaction date requested, in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /accounts/{accountId}/transactions` endpoint retrieves information for all transactions in a given account."
+        },
+        {
+          "info": {
+            "name": "Get transaction information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/accounts/:accountId/transaction/:transactionId",
+            "headers": [
+              {
+                "name": "on-behalf-of",
+                "value": "ta:3eYPU1BEKKunfmYgQuSKXFCeo851C5Y3XiZW3XA465TU:5zKtXEAq"
+              },
+              {
+                "name": "token-customer-ip-address",
+                "value": "172.16.254.1"
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "a:8DbPteGnytmMbKXdnWTReeRB6cYWKXZ84JgLTBC7fKL4:5zKcENpV",
+                "type": "path",
+                "description": "The unique bank account id, which specifies the account for which the information is requested."
+              },
+              {
+                "name": "transactionId",
+                "value": "42909b155d4942299c39017686b5dc36",
+                "type": "path",
+                "description": "The unique transaction identifier, which specifies the transaction requested."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /accounts/{accountId}/transaction/{transactionId}` endpoint retrieves information for a specific transaction in a given account."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Banks v1",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get banks v1",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/banks",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "The index of the page currently being retrieved."
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The key to sort the result. This can be `name` (<i>i.e.</i>, bank name), `provider`, or `country`."
+              },
+              {
+                "name": "memberId",
+                "value": "m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq",
+                "type": "query",
+                "description": "The Token.io-assigned member id of the TPP."
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks with a `bankId` (case-insensitive) matching any of the ids listed, up to a maximum of 1000. Only exact (full string) matches are returned."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks with a name or identifiers containing this search string."
+              },
+              {
+                "name": "tppId",
+                "value": "4h27g823-g73s-07v3-l49s-prte94bf21v",
+                "type": "query",
+                "description": "Filters for banks for which the TPP represented by this `tppId` has access."
+              },
+              {
+                "name": "providers",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that are accessed through any of the listed providers."
+              },
+              {
+                "name": "bankCode",
+                "value": "NBAGDE3E",
+                "type": "query",
+                "description": "Filters for banks with a BIC (or BLZ, if German) that matches this `bankCode`. The BIC must have a string length of 8 or 11. The BLZ must have a string length of 8."
+              },
+              {
+                "name": "countries",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that are located in the countries specified by this list of two-letter country codes in upper case (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "bank_features.supports_send_payment.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support payment initiation."
+              },
+              {
+                "name": "bank_features.supports_receive_payment.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support receiving payments."
+              },
+              {
+                "name": "bank_features.supports_balance.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for the banks that support retrieving balances."
+              },
+              {
+                "name": "bank_features.supports_scheduled_payment.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support future dated scheduled payments."
+              },
+              {
+                "name": "bank_features.supports_standing_order.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support recurring payments/standing orders."
+              },
+              {
+                "name": "bank_features.requires_one_step_payment.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that only support immediate redemption of transfers."
+              },
+              {
+                "name": "bank_features.supports_funds_confirmation.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for the banks that support confirmation of available funds."
+              },
+              {
+                "name": "bank_features.supports_return_refund_account.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for the banks that support request of refund account."
+              },
+              {
+                "name": "bank_features.supports_transactions_date_filter.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support retrieving transactions by date filter."
+              },
+              {
+                "name": "bank_features.supports_account_information.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support retrieval of account information."
+              },
+              {
+                "name": "bank_features.supports_single_payment.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support single immediate payments."
+              },
+              {
+                "name": "bank_features.supports_variable_recurring_payment.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support variable recurring payments."
+              },
+              {
+                "name": "bics",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks whose BIC matches any of the listed BICs (case-insensitive), up to a maximum of 1000."
+              },
+              {
+                "name": "supportedPaymentNetworks",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support any of the listed payment networks."
+              },
+              {
+                "name": "bankGroup",
+                "value": "HSBC,Coop",
+                "type": "query",
+                "description": "Filters for banks that are part of the bank group specified."
+              },
+              {
+                "name": "bankSubGroup",
+                "value": "CMM Grand,Banque Populaire,La Banque",
+                "type": "query",
+                "description": "Filters for banks that are part of the bank sub-group specified."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /banks` endpoint retrieves a list of connected banks matching the parameters specified."
+        },
+        {
+          "info": {
+            "name": "Get bank countries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/bank/countries",
+            "params": [
+              {
+                "name": "ids",
+                "value": "goldbank,opalbank,platinumbank",
+                "type": "query",
+                "description": "Filters for banks with bank ids that are represented in this list of ids (case-insensitive), up to a maximum of 1000."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks with names or identifiers that contain this search string (case sensitive)."
+              },
+              {
+                "name": "tppId",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks to which the TPP with this `tppId` has access."
+              },
+              {
+                "name": "bankCode",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks with a BIC (or BLZ, if German) that matches this `bankCode`. The BIC must have a string length of 8 or 11. The BLZ must have a string length of 8."
+              },
+              {
+                "name": "countries",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that are located in the countries specified by this list of two-letter country code in upper case (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "providers",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that are accessed through any of this list of providers."
+              },
+              {
+                "name": "bank_features.supports_send_payment.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support payment initiation."
+              },
+              {
+                "name": "bank_features.supports_receive_payment.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support the receipt of payments."
+              },
+              {
+                "name": "bank_features.supports_balance.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for the banks that support retrieving account balances."
+              },
+              {
+                "name": "bank_features.supports_scheduled_payment.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support future dated scheduled payments."
+              },
+              {
+                "name": "bank_features.supports_standing_order.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support standing orders/recurring payments."
+              },
+              {
+                "name": "bank_features.requires_one_step_payment.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that only support immediate redemption of transfer tokens."
+              },
+              {
+                "name": "bank_features.supports_funds_confirmation.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support confirmation of available funds."
+              },
+              {
+                "name": "bank_features.supports_return_refund_account.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support the request of refund account."
+              },
+              {
+                "name": "bank_features.supports_transactions_date_filter.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support retrieving transactions by date filter."
+              },
+              {
+                "name": "bank_features.supports_account_information.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support retrieving account information using Account Information Services (AIS)."
+              },
+              {
+                "name": "bank_features.supports_single_payment.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support single immediate payments."
+              },
+              {
+                "name": "bank_features.supports_variable_recurring_payment.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support variable recurring payments."
+              },
+              {
+                "name": "memberId",
+                "value": "m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq",
+                "type": "query",
+                "description": "The Token.io-assigned member id of the TPP."
+              },
+              {
+                "name": "supportedPaymentNetworks",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support any of the listed payment networks."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /banks/countries` endpoint retrieves the list of countries that have connected banks which match the parameters specified."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Sub-TPPs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get sub-TPPs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/member/sub-tpps",
+            "params": [
+              {
+                "name": "page.offset",
+                "value": "LerV6Jmex",
+                "type": "query",
+                "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way."
+              },
+              {
+                "name": "page.limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of records to return. This must be less than 200."
+              },
+              {
+                "name": "filter.byCompanyNames",
+                "value": "",
+                "type": "query",
+                "description": "Filters the sub-TPPs by the list of company names submitted."
+              },
+              {
+                "name": "filter.byRegistrationDates",
+                "value": "",
+                "type": "query",
+                "description": "Filters the sub-TPPs by the list of registration dates submitted."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /member/sub-tpps` endpoint retrieves a list of all sub-TPPs for a reseller."
+        },
+        {
+          "info": {
+            "name": "Create a sub-TPP",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/member/sub-tpps",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `POST /member/sub-tpps` endpoint creates a new sub-TPP for a reseller."
+        },
+        {
+          "info": {
+            "name": "Get sub-TPP information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/member/sub-tpps/:subTppId",
+            "params": [
+              {
+                "name": "subTppId",
+                "value": "",
+                "type": "path",
+                "description": "This id specifies the sub-TPP to be retrieved."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /member/sub-tpps/{subTppId}` endpoint retrieves the details of the specified sub-TPP for a reseller."
+        },
+        {
+          "info": {
+            "name": "Delete a sub-TPP",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.token.io/member/sub-tpps/:subTppId",
+            "params": [
+              {
+                "name": "subTppId",
+                "value": "8d54f066-c14a-47c0-b58b-fec6b0ed6b4c",
+                "type": "path",
+                "description": "This id specifies the sub-TPP to delete."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `DELETE /member/sub-tpps/{subTppId}` endpoint deletes an existing sub-TPP for a reseller."
+        },
+        {
+          "info": {
+            "name": "Get sub-TPP children",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/member/sub-tpps/:subTppId/children",
+            "params": [
+              {
+                "name": "subTppId",
+                "value": "",
+                "type": "path",
+                "description": "This id specifies the sub-TPP for which the children are to be retrieved."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /member/sub-tpps/{subTppId}/children` endpoint retrieves the sub-TPP children for given sub-TPP."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Authentication keys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get public keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/member/:memberId/keys",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path",
+                "description": "This id specifies the member for whom the public keys are to be retrieved."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /member/{memberId}/keys` endpoint retrieves a list of all public keys, for the specified member."
+        },
+        {
+          "info": {
+            "name": "Submit a public key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/member/:memberId/keys",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path",
+                "description": "This id specifies the member for whom the public key is to be submitted."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `POST /member/{memberId}/keys` endpoint submits a public key for authentication, for the specified member."
+        },
+        {
+          "info": {
+            "name": "Get a public key",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/member/:memberId/keys/:keyId",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path",
+                "description": "This id specifies the member for whom the public key is to be retrieved."
+              },
+              {
+                "name": "keyId",
+                "value": "",
+                "type": "path",
+                "description": "This id specifies the public key to be retrieved."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /member/{memberId}/keys/{keyId}` endpoint retrieves the details of a specific public key, for the specified member."
+        },
+        {
+          "info": {
+            "name": "Delete a public key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.token.io/member/:memberId/keys/:keyId",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path",
+                "description": "This id specifies the member for whom the public key is to be deleted."
+              },
+              {
+                "name": "keyId",
+                "value": "",
+                "type": "path",
+                "description": "This id specifies the public key to be deleted."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `DELETE /member/{memberId}/keys/{keyId}` endpoint deletes an existing public key, for the specified member."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get bank statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/reports/banks/status",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /reports/banks/status` endpoint returns the current AIS and PIS service status along with server status for all banks."
+        },
+        {
+          "info": {
+            "name": "Get a bank status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/reports/banks/:bankId/status",
+            "params": [
+              {
+                "name": "bankId",
+                "value": "ob-goldbank",
+                "type": "path",
+                "description": "The bank identifier, identical to the `id` in the repsonse to `GET /banks`."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /reports/banks/{bankId}/status` endpoint returns the current AIS and PIS service status for a specific bank."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Requests - for Payments v1 or AIS",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Initiate a token request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/token-requests",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `POST /token-requests` endpoint persists the required information used by AIS requests and PIS requests using the API and the Token.io Hosted Pages."
+        },
+        {
+          "info": {
+            "name": "Get a token request",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/token-requests/:requestId",
+            "params": [
+              {
+                "name": "requestId",
+                "value": "",
+                "type": "path",
+                "description": "The request id received in response to the original token request."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /token-requests/{requestId}` endpoint retrieves a specific token request by its id."
+        },
+        {
+          "info": {
+            "name": "Get a token request result",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/token-requests/:tokenRequestId/result",
+            "params": [
+              {
+                "name": "tokenRequestId",
+                "value": "",
+                "type": "path",
+                "description": "The token request id received in response to the original token request."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /token-requests/{tokenRequestId}/result` endpoint checks whether a token request result is available. This endpoint will return a `PENDING` status while the result is not available. The status will become `PROCESSED` once the result is available. If the request is rejected by the bank, the status will become `REJECTED`. The status will become `EXPIRED` if the request is not processed or rejected before the token request expiration."
+        },
+        {
+          "info": {
+            "name": "Initiate bank authorization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/token-requests/:tokenRequestId/authorization",
+            "params": [
+              {
+                "name": "tokenRequestId",
+                "value": "",
+                "type": "path",
+                "description": "The token request id received in response to the original token request."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `POST /token-requests/{tokenRequestId}/authorization` endpoint initiates the bank authorization process with a given bank id and token request id."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Tokens",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/tokens",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the type of token returned."
+              },
+              {
+                "name": "page.offset",
+                "value": "LerV6Jmex",
+                "type": "query",
+                "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way."
+              },
+              {
+                "name": "page.limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of records to return. This must be less than 200."
+              },
+              {
+                "name": "filter.sourceAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Identifies the payer's account."
+              },
+              {
+                "name": "filter.destinationAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Identifies the payee/beneficiary's account."
+              },
+              {
+                "name": "filter.startTimeMs",
+                "value": "67505",
+                "type": "query",
+                "description": "The filtered list start timestamp in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000."
+              },
+              {
+                "name": "filter.endTimeMs",
+                "value": "365650",
+                "type": "query",
+                "description": "The filtered list end timestamp in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000."
+              },
+              {
+                "name": "filter.role",
+                "value": "",
+                "type": "query",
+                "description": "Filters by `accountHolder` role."
+              },
+              {
+                "name": "filter.actingAsRefId",
+                "value": "4kwl35c9sp3fwp4xq",
+                "type": "query",
+                "description": "Filters the list by the sub-TPP identifier generated by Token.io once a TPP has been onboarded."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /tokens` endpoint retrieves a list of all tokens for the authenticated member."
+        },
+        {
+          "info": {
+            "name": "Get a token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/tokens/:tokenId",
+            "params": [
+              {
+                "name": "tokenId",
+                "value": "tt:8zK1dic95omjWb72gvc3z3ELKbTNfnGd89MbDnM73er4:ZhBVAJSH8DeU1",
+                "type": "path",
+                "description": "Identifies a unique authorization token for a transfer, standing order, or account information access."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /tokens/{tokenId}` endpoint retrieves information about a specific token for the authenticated member."
+        },
+        {
+          "info": {
+            "name": "Cancel a token",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.token.io/tokens/:tokenId/cancel",
+            "headers": [
+              {
+                "name": "token-customer-ip-address",
+                "value": "172.16.254.1"
+              },
+              {
+                "name": "customer-initiated",
+                "value": "true"
+              },
+              {
+                "name": "token-customer-device-id",
+                "value": "00000000-00000000-01234567-89ABCDEF"
+              }
+            ],
+            "params": [
+              {
+                "name": "tokenId",
+                "value": "",
+                "type": "path",
+                "description": "Identifies a unique authorization token for a transfer, standing order, or account information access."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `PUT /tokens/{tokenId}/cancel` endpoint cancels a given token."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Transfers - for Payments v1",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get transfers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/transfers",
+            "params": [
+              {
+                "name": "tokenId",
+                "value": "",
+                "type": "query",
+                "description": "Identifies the authorization token for the request."
+              },
+              {
+                "name": "page.offset",
+                "value": "LerV6Jmex",
+                "type": "query",
+                "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way."
+              },
+              {
+                "name": "page.limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of records to return. This must be less than 200."
+              },
+              {
+                "name": "filter.tokenId",
+                "value": "tt:3kFGtpEKHu8S2fJuEkb6YPnHZ4bJ2oUrYPCsJop68vCH:5zKcENpV",
+                "type": "query",
+                "description": "Filters by the authorization token id."
+              },
+              {
+                "name": "filter.startTimeMs",
+                "value": "72799",
+                "type": "query",
+                "description": "Filtered list start time boundary in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000."
+              },
+              {
+                "name": "filter.endTimeMs",
+                "value": "3341983424",
+                "type": "query",
+                "description": "Filtered list end time boundary in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000."
+              },
+              {
+                "name": "filter.transactionStatus",
+                "value": "",
+                "type": "query",
+                "description": "Filters by transaction status. <ul> <li><b>PROCESSING</b> – This status indicates that the transaction is in process and that the final status has not been received from the bank.</li><li><b>SUCCESS</b> – This status indicates that successful payment initiation has been received from the bank. Settlement might not be complete.</li> <li><b>INITIATED</b> – This status is set when the previous status has remained as `PROCESSING` for 30 days and cannot be updated. The transaction has been initiated but the result is unknown. This is the final status and will not get updated later because Token.io has stopped polling the bank.<br/> This status is also returned in a two-step payment flow in the event that a user’s request has been authorized at the bank but the payment confirmation has subsequently failed.</li><li><b>PENDING_EXTERNAL_AUTHORIZATION</b> – This status indicates that the user has been sent to the bank to complete the authorization process. If not completed within the allowed timeframe (usually around 15 mins, but there are variations between banks) the transaction will expire and transition to `FAILURE_EXPIRED`. This status is only relevant for 1-step payment flows.</li> <li><b>FAILURE_GENERIC</b> – This status usually indicates a technical failure. Possibly, a failure callback was received from the bank, with no transaction status and no further information.</li> <li><b>FAILURE_PERMISSION_DENIED</b> – This status indicates that the user has been denied authorization at the bank This status is only relevant for two-step payment flows.</li> <li><b>FAILURE_CANCELED</b> – This status indicates that the payment initiation has been canceled before execution.</li> <li><b>FAILURE_EXPIRED</b> – This status indicates that the user did not complete the authorization process within the allowed timeframe (usually around 15 mins, but there are variations between banks) and the payment has expired.</li> <li><b>FAILURE_INSUFFICIENT_FUNDS</b> – This status indicates that the payment initiation request has been rejected due to insufficient funds.</li> <li><b>FAILURE_DECLINED</b> – This status indicates that the payment initiation has been rejected by the bank.</li> <li><b>SETTLEMENT_IN_PROGRESS</b> – This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Token.io is waiting for the payment to reach the payee bank. No action is required; await the next step, <i>e.g.</i>, Token.io sends a webhook with the status update, or a polling call. The status will change to `SETTLEMENT_IN_PROGRESS` soon after Token.io receives the final status from the debtor bank.</li> <li><b>SETTLEMENT_COMPLETED</b> – This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. The payment has reached the payee bank and Token.io has matched the transaction in the TPP’s settlement account to the initiated payment. For instant payments, `SETTLEMENT_COMPLETED` will be achieved within 30-45 minutes from payment initiation, at the latest. For non-instant payments, the time to reach `SETTLEMENT_COMPLETED` will depend on the clearing period for the payment.</li><li><b>SETTLEMENT_INCOMPLETE</b> – This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Reconciliation has failed. This happens when Token.io doesn't find the corresponding transaction in the TPP’s settlement account automatically.</li></ul><br/>During settlement of a settlement accounts payment, the status update job will run first for up to 30 days. Payment will then enter into a 'final' status, normally `SUCCESS`.<br/>Once the status update job has run, the reconciliation job looks for matching inbound payments.For SEPA payments:<ul><li>if a matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>For SEPA Instant payments:<ul><li>if a matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>"
+              },
+              {
+                "name": "filter.role",
+                "value": "",
+                "type": "query",
+                "description": "Filters list by the account holder role."
+              },
+              {
+                "name": "filter.actingAsRefId",
+                "value": "",
+                "type": "query",
+                "description": "Filters the list by the sub-TPP identifier generated by Token.io once a TPP has been onboarded."
+              },
+              {
+                "name": "filter.refId",
+                "value": "",
+                "type": "query",
+                "description": "Filters list by `refID`."
+              },
+              {
+                "name": "filter.transferRefundStatus",
+                "value": "",
+                "type": "query",
+                "description": "Filters list by refund status."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /transfers` endpoint retrieves information for all transfers."
+        },
+        {
+          "info": {
+            "name": "Redeem a transfer token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/transfers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `POST /transfers` endpoint is only required when you explicitly redeem the request token, <i>i.e.</i>, auto-redeem is not enabled."
+        },
+        {
+          "info": {
+            "name": "Get a transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/transfers/:transferId",
+            "params": [
+              {
+                "name": "transferId",
+                "value": "",
+                "type": "path",
+                "description": "The unique id of the transfer sent in the `POST /transfers` response and/or included in a respective `GET /transfers` response."
+              },
+              {
+                "name": "skipTransferUpdate",
+                "value": "",
+                "type": "query",
+                "description": "If `skipTransferUpdate` is false, the request will call the bank for a status update. If set to true, the cached result will be returned instead."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /transfers/{transferId}` endpoint retrieves information about a specific transfer in a given account."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get webhook config",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/webhook/config",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /webhook/config` endpoint retrieves the webhook configuration."
+        },
+        {
+          "info": {
+            "name": "Set webhook config",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.token.io/webhook/config",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `PUT /webhook/config` endpoint sets the webhook configuration."
+        },
+        {
+          "info": {
+            "name": "Delete webhook config",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.token.io/webhook/config",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `DELETE /webhook/config` endpoint deletes the webhook configuration."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Variable Recurring Payments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get VRP consents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/vrp-consents",
+            "params": [
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "The maximum number of records to return."
+              },
+              {
+                "name": "offset",
+                "value": "LerV6Jmex",
+                "type": "query",
+                "description": "The offset from the previous page."
+              },
+              {
+                "name": "createdAfter",
+                "value": "2022-04-05T17:00:00.000Z",
+                "type": "query",
+                "description": "Returns only Vrp consents created after this time (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)."
+              },
+              {
+                "name": "createdBefore",
+                "value": "2023-04-05T17:00:00.000Z",
+                "type": "query",
+                "description": "Returns only Vrp consents created before this time (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)."
+              },
+              {
+                "name": "statuses",
+                "value": "PENDING,AUTHORIZED",
+                "type": "query",
+                "description": "Filters Vrp consents by statuses"
+              },
+              {
+                "name": "scheme",
+                "value": "OBL_SWEEPING",
+                "type": "query",
+                "description": "Filters Vrp consents by Vrp scheme (only OBL_SWEEPING is currently supported)"
+              },
+              {
+                "name": "onBehalfOfId",
+                "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7",
+                "type": "query",
+                "description": "Filters Vrp consents by their `onBehalfOfId` value."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /vrp-consents` endpoint retrieves all VRP consents created by the calling member."
+        },
+        {
+          "info": {
+            "name": "Create a VRP consent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/vrp-consents",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `POST /vrp-consents` endpoint creates a new VRP consent."
+        },
+        {
+          "info": {
+            "name": "Get a VRP consent",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/vrp-consents/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /vrp-consents/{id}` endpoint retrieves the details for an individual VRP consent."
+        },
+        {
+          "info": {
+            "name": "Revoke a VRP consent",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.token.io/vrp-consents/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `DELETE /vrp-consents/{id}` endpoint revokes an individual VRP consent."
+        },
+        {
+          "info": {
+            "name": "Get payments under a VRP consent",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/vrp-consents/:id/payments",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "VRP consent id"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "The maximum number of records to return."
+              },
+              {
+                "name": "offset",
+                "value": "LerV6Jmex",
+                "type": "query",
+                "description": "The offset from the previous page."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /vrp-consents/{id}/payments` endpoint retrieves the payments under a given VRP consent."
+        },
+        {
+          "info": {
+            "name": "Verify if funds are available or not",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/vrps/:id/confirm-funds",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The VRP consent id."
+              },
+              {
+                "name": "amount",
+                "value": "",
+                "type": "query",
+                "description": "The amount to confirm availability for."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /vrps/{id}/confirm-funds` endpoint confirms whether the funds are available to initiate VRP."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Refunds",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get refunds",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/refunds",
+            "params": [
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "The maximum number of records to return."
+              },
+              {
+                "name": "offset",
+                "value": "LerV6Jmex",
+                "type": "query",
+                "description": "The offset from the previous page."
+              },
+              {
+                "name": "startDate",
+                "value": "2010-01-01",
+                "type": "query",
+                "description": "Lower bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or after the given date will be returned."
+              },
+              {
+                "name": "endDate",
+                "value": "2010-01-01",
+                "type": "query",
+                "description": "Upper bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or before the given date will be returned."
+              },
+              {
+                "name": "ids",
+                "value": "rf:4QExXrhKTxfShBdcTeqFabqJJhUF:2gFUX1NDgpN,rf:N5cJDFsQzVca3Qvr8kQocgEnjgX:2gFUX1NEdYA",
+                "type": "query",
+                "description": "Filters refunds by their ids - returns only refunds with ids listed in this parameter."
+              },
+              {
+                "name": "invertIds",
+                "value": "false",
+                "type": "query",
+                "description": "Invert ids query - returns only refunds with ids not listed in the ids parameter."
+              },
+              {
+                "name": "statuses",
+                "value": "INITIATION_COMPLETED,INITIATION_REJECTED",
+                "type": "query",
+                "description": "Filters refunds by their statuses - returns only refunds with statuses listed in this parameter."
+              },
+              {
+                "name": "invertStatuses",
+                "value": "true",
+                "type": "query",
+                "description": "Invert statuses query - returns only refunds with statuses not listed in the statuses parameter."
+              },
+              {
+                "name": "refIds",
+                "value": "ShBdcTeqFabqJJhUF,N5cJDFsQzVca3Q",
+                "type": "query",
+                "description": "Filters refunds by their `refId` values - returns only refunds with `refIds` listed in this parameter."
+              },
+              {
+                "name": "partial",
+                "value": "true",
+                "type": "query",
+                "description": "Returns refunds in a partial format - with only id and status fields populated."
+              },
+              {
+                "name": "onBehalfOfIds",
+                "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7,6f34h397-b29h-23b0-s30g-hkd0d2dk4k1s",
+                "type": "query",
+                "description": "Filters payouts by their `onBehalfOfId` values - returns only payouts with the `onBehalfOfId` values specified in this parameter. This field is mandatory for unregulated TPPs."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /refunds` endpoint retrieves a complete or filtered list of refunds."
+        },
+        {
+          "info": {
+            "name": "Initiate a refund",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/refunds",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `POST /refunds` endpoint initiates a refund. After the refund is settled, the refund status of the original transfer will be updated. <br/> The debtor field can be optional if you're using the debtor in registration. The creditor field can be optional if the information is available in the original payment."
+        },
+        {
+          "info": {
+            "name": "Get a refund",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/refunds/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /refunds/{id}` endpoint retrieves a given refund."
+        },
+        {
+          "info": {
+            "name": "Get all refunds by transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/transfers/:id/refunds",
+            "params": [
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "The maximum number of records to return."
+              },
+              {
+                "name": "offset",
+                "value": "LerV6Jmex",
+                "type": "query",
+                "description": "The offset from the previous page."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /transfers/{id}/refunds` endpoint retrieves all refunds associated with a given transfer."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Payouts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get payouts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/payouts",
+            "params": [
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "The maximum number of records to return."
+              },
+              {
+                "name": "offset",
+                "value": "LerV6Jmex",
+                "type": "query",
+                "description": "The offset from the previous page."
+              },
+              {
+                "name": "startDate",
+                "value": "2010-01-01",
+                "type": "query",
+                "description": "Lower bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or after the given date will be returned."
+              },
+              {
+                "name": "endDate",
+                "value": "2010-01-01",
+                "type": "query",
+                "description": "Upper bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or before the given date will be returned."
+              },
+              {
+                "name": "ids",
+                "value": "po:28oivvd3iFhBrcbNj4tmtLEhxRTk:2gFUX1NE1T6,po:3ZfdHxbpXmRZ1TVmiYNPgcwEocBy:2gFUX1NDdqr",
+                "type": "query",
+                "description": "Filters payouts by their ids - returns only payouts with ids listed in this parameter."
+              },
+              {
+                "name": "invertIds",
+                "value": "false",
+                "type": "query",
+                "description": "Invert ids query - returns only payouts with ids not listed in the ids parameter."
+              },
+              {
+                "name": "statuses",
+                "value": "INITIATION_COMPLETED,INITIATION_REJECTED",
+                "type": "query",
+                "description": "Filters payouts by their statuses - returns only payouts with statuses listed in this parameter."
+              },
+              {
+                "name": "invertStatuses",
+                "value": "true",
+                "type": "query",
+                "description": "Invert statuses query - returns only payouts with statuses not listed in the statuses parameter."
+              },
+              {
+                "name": "refIds",
+                "value": "ShBdcTeqFabqJJhUF,N5cJDFsQzVca3Q",
+                "type": "query",
+                "description": "Filters payouts by their `refId` values - returns only payouts with `refIds` listed in this parameter."
+              },
+              {
+                "name": "onBehalfOfId",
+                "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7",
+                "type": "query",
+                "description": "Filters payouts by their `onBehalfOfId` value - returns only payouts with the `onBehalfOfId` value specified in this parameter. This field is mandatory for unregulated TPPs."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /payouts` endpoint retrieves a complete or filtered list of payouts."
+        },
+        {
+          "info": {
+            "name": "Initiate a payout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/payouts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `POST /payouts` endpoint initiates a payout."
+        },
+        {
+          "info": {
+            "name": "Get a payout",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/payouts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /payouts/{id}` endpoint retrieves a given payout."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Banks v2",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get banks v2",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/v2/banks",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The index of the page currently being retrieved."
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The key to sort the result. This can be `NAME` (Bank's name), `STANDARD` (OpenBankingStandard), `RANK`, or `COUNTRY`."
+              },
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "query",
+                "description": "The Token.io-assigned member id of the TPP."
+              },
+              {
+                "name": "tppId",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks for which the TPP represented by this `tppId` has access."
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks with a `bankId` (case-insensitive) matching any of the ids listed, up to a maximum of 1000. Only exact (full string) matches are returned."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks with a name or identifiers containing this search string."
+              },
+              {
+                "name": "bankGroup",
+                "value": "HSBC,Coop",
+                "type": "query",
+                "description": "Filters for banks that are members of the bank group specified."
+              },
+              {
+                "name": "bankSubGroup",
+                "value": "CMM Grand,Banque Populaire,La Banque",
+                "type": "query",
+                "description": "Filters for banks that are part of the bank sub-group specified."
+              },
+              {
+                "name": "bankCode",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks with a BIC (or BLZ, if German) that matches this `bankCode`. The BIC must have a string length of 8 or 11. The BLZ must have a string length of 8."
+              },
+              {
+                "name": "openBankingStandards",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that are accessed through any of the listed standards."
+              },
+              {
+                "name": "countries",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that are located in the countries specified by this list of two-letter country code in upper case (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "bics",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks whose BIC matches any of the listed BICs (case-insensitive), up to a maximum of 1000."
+              },
+              {
+                "name": "supportedLocalInstruments",
+                "value": "SEPA,SEPA_INSTANT,FASTER_PAYMENTS",
+                "type": "query",
+                "description": "Filters for banks that support any of the listed payment networks."
+              },
+              {
+                "name": "supportsAccountList",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support fetching accounts."
+              },
+              {
+                "name": "supportsAccountDetails",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support fetching account details."
+              },
+              {
+                "name": "supportsAccountBalance",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support fetching account balances."
+              },
+              {
+                "name": "supportsTransactionList",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support fetching transactions."
+              },
+              {
+                "name": "supportsTransactionDetails",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support fetching transaction details."
+              },
+              {
+                "name": "supportsStandingOrderList",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support the fetching standing orders."
+              },
+              {
+                "name": "supportsTransactionsDateFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support feting transactions using a date filter."
+              },
+              {
+                "name": "requiresOneStepPayment",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that only support immediate redemption of transfers."
+              },
+              {
+                "name": "supportsSinglePayment",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support single immediate payments."
+              },
+              {
+                "name": "supportsScheduledPayment",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support future dated scheduled payments."
+              },
+              {
+                "name": "supportsStandingOrder",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support recurring payments/standing orders."
+              },
+              {
+                "name": "supportsReturnRefundAccount",
+                "value": "",
+                "type": "query",
+                "description": "Filters for the banks that support request of refund account."
+              },
+              {
+                "name": "supportsReturnRefundAccountHolderName",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support returning the refund account holder name."
+              },
+              {
+                "name": "supportsFundsConfirmation",
+                "value": "",
+                "type": "query",
+                "description": "Filters for the banks that support confirmation of available funds."
+              },
+              {
+                "name": "supportsVariableRecurringPayment",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support variable recurring payments."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /v2/banks` endpoint retrieves a list of connected banks matching the parameters specified."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Payments v2",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get payments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/v2/payments",
+            "params": [
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "The maximum number of records to return."
+              },
+              {
+                "name": "offset",
+                "value": "LerV6Jmex",
+                "type": "query",
+                "description": "The offset from the previous page."
+              },
+              {
+                "name": "ids",
+                "value": "pm2:4QExXrhKTxfShBdcTeqFabqJJhUF:2gFUX1NDgpN,pm2:N5cJDFsQzVca3Qvr8kQocgEnjgX:2gFUX1NEdYA",
+                "type": "query",
+                "description": "Filters payments by their ids - returns only payments with ids listed in this parameter."
+              },
+              {
+                "name": "invertIds",
+                "value": "false",
+                "type": "query",
+                "description": "Invert ids query - returns only payments with ids not listed in the ids parameter."
+              },
+              {
+                "name": "statuses",
+                "value": "INITIATION_COMPLETED,INITIATION_REJECTED",
+                "type": "query",
+                "description": "Filters payments by their statuses - returns only payments with statuses listed in this parameter. For VRP payments (when type=VARIABLE_RECURRING_PAYMENT), only the following PaymentStatus values are supported:<br/>• INITIATION_PENDING<br/>• INITIATION_PROCESSING<br/>• INITIATION_COMPLETED<br/>• INITIATION_REJECTED<br/>• INITIATION_REJECTED_INSUFFICIENT_FUNDS<br/>• INITIATION_FAILED<br/>• INITIATION_NO_FINAL_STATUS_AVAILABLE<br/>Using unsupported statuses for VRP payments will result in an error.<br/><br/>For single immediate payments, all PaymentStatus values are supported."
+              },
+              {
+                "name": "invertStatuses",
+                "value": "true",
+                "type": "query",
+                "description": "Invert statuses query - returns only payments with statuses not listed in the statuses parameter."
+              },
+              {
+                "name": "createdAfter",
+                "value": "2022-04-05T17:00:00.000Z",
+                "type": "query",
+                "description": "Returns only payments created after this time (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)."
+              },
+              {
+                "name": "createdBefore",
+                "value": "2022-04-05T17:00:00.000Z",
+                "type": "query",
+                "description": "Returns only payments created before this time (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)."
+              },
+              {
+                "name": "refIds",
+                "value": "ShBdcTeqFabqJJhUF,N5cJDFsQzVca3Q",
+                "type": "query",
+                "description": "Filters payments by their `refId` values - returns only payments with `refIds` listed in this parameter."
+              },
+              {
+                "name": "onBehalfOfId",
+                "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7",
+                "type": "query",
+                "description": "Filters payments by the `onBehalfOfId` value - returns only payments with the `onBehalfOfId` value specified in this parameter. This field is mandatory for unregulated TPPs."
+              },
+              {
+                "name": "refundStatuses",
+                "value": "PARTIAL,NONE",
+                "type": "query",
+                "description": "Filters payments by their refund status values - returns only payments with refund statuses listed in this parameter. Not supported for Vrp."
+              },
+              {
+                "name": "partial",
+                "value": "true",
+                "type": "query",
+                "description": "Returns payments in a partial format - with only id and status fields populated."
+              },
+              {
+                "name": "externalPsuReference",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by payment type - single immediate or variable recurring payment. Defaults to SINGLE_IMMEDIATE_PAYMENT if not specified."
+              },
+              {
+                "name": "vrpConsentId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by Vrp consent id value. Only applied if type is VARIABLE_RECURRING_PAYMENT."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /v2/payments` endpoint provides you with a list of payments and their details."
+        },
+        {
+          "info": {
+            "name": "Initiate a payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/v2/payments",
+            "headers": [
+              {
+                "name": "request-timeout",
+                "value": "10"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `POST /v2/payments` endpoint enables you to initiate a payment with a bank.<br/><br/>Once the payment has been initiated, the end user needs to authenticate themselves with their bank.<br/><br/><b>Check payment status:</b><br/><ol><li>If the status in the initiation response is `INITIATION_PENDING_REDIRECT_AUTH` or `INITIATION_PENDING_REDIRECT_HP`, redirect the user to the redirect url found in the authentication payload of the payment, to authenticate at the bank or at Token.io's Hosted Pag"
+        },
+        {
+          "info": {
+            "name": "Get a payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/v2/payments/:paymentId",
+            "headers": [
+              {
+                "name": "request-timeout",
+                "value": "10"
+              }
+            ],
+            "params": [
+              {
+                "name": "paymentId",
+                "value": "",
+                "type": "path",
+                "description": "The payment id."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /v2/payments/{paymentId}` endpoint provides you with details of an individual payment and checks the payment status for the next step, if any."
+        },
+        {
+          "info": {
+            "name": "Provide information for embedded authentication",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/v2/payments/:paymentId/embedded-auth",
+            "headers": [
+              {
+                "name": "request-timeout",
+                "value": "10"
+              }
+            ],
+            "params": [
+              {
+                "name": "paymentId",
+                "value": "",
+                "type": "path",
+                "description": "The payment id."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `POST /v2/payments/{paymentId}/embedded-auth` endpoint provides you with the requested information when the payment status is `INITIATION_PENDING_EMBEDDED_AUTH`. The requested information can be found in the authentication field of the payment. <br/> <br/> It's possible that some banks might request the user's input multiple times. In this case you might need to call this endpoint again for a new field set."
+        },
+        {
+          "info": {
+            "name": "Generate QR code",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/qr-code",
+            "params": [
+              {
+                "name": "data",
+                "value": "",
+                "type": "query",
+                "description": "The encoded URL to use while generating the QR code. The link must be URL encoded."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /qr-code` endpoint generates a QR code in fixed SVG format (240x240 px). This allows TPPs to programmatically obtain a scannable QR code ."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Account on File",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create an Account on File",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/tokenized-accounts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates an Account on File from the provided bank account details. This can be used by Third Party Providers (TPPs) in future API requests to reference the account without resending the full account information."
+        },
+        {
+          "info": {
+            "name": "Retrieve an Account on File",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/tokenized-accounts/:tokenizedAccountId",
+            "params": [
+              {
+                "name": "tokenizedAccountId",
+                "value": "",
+                "type": "path",
+                "description": "The tokenized account id."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves an Account on File using its tokenizedAccountId."
+        },
+        {
+          "info": {
+            "name": "Delete an Account on File",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.token.io/tokenized-accounts/:tokenizedAccountId",
+            "params": [
+              {
+                "name": "tokenizedAccountId",
+                "value": "",
+                "type": "path",
+                "description": "The tokenized account id."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an Account on File. After deletion, the tokenizedAccountId can no longer be used to reference the associated account details in API requests."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Pay by Link",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List payment links",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/v2/payment-links",
+            "params": [
+              {
+                "name": "ids",
+                "value": "pl-019c8a02-a30e-7307-83da-7428239da59d,pl-019f0d3a-9c4b-7a1e-8c2f-0b7d9a4e3c12",
+                "type": "query",
+                "description": "Filter by payment link ID list"
+              },
+              {
+                "name": "statuses",
+                "value": "LINK_ACTIVE,LINK_EXPIRED",
+                "type": "query",
+                "description": "Filter by link statuses"
+              },
+              {
+                "name": "onBehalfOfId",
+                "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7",
+                "type": "query",
+                "description": "Filter by on behalf of ID"
+              },
+              {
+                "name": "externalPsuReference",
+                "value": "customer_456789_coffee_order",
+                "type": "query",
+                "description": "Filter by external PSU Reference"
+              },
+              {
+                "name": "createdAfter",
+                "value": "2026-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Filter links created after this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)"
+              },
+              {
+                "name": "createdBefore",
+                "value": "2026-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Filter links created before this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)"
+              },
+              {
+                "name": "expiresAfter",
+                "value": "2026-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Filter links expiring after this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)"
+              },
+              {
+                "name": "expiresBefore",
+                "value": "2026-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Filter links expiring before this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return"
+              },
+              {
+                "name": "offset",
+                "value": "019f0d6b-3e21-7c9a-9f04-6a2b8d1c7e53",
+                "type": "query",
+                "description": "The offset for the current page. The offset is not required to fetch the first page. To fetch subsequent pages, use the 'nextOffset' value from the previous page response."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /v2/payment-links` endpoint returns a list of payment links. At least one filter parameter must be provided. Results can be filtered by IDs, statuses, creation date range (createdAfter, createdBefore), expiration date range (expiresAfter, expiresBefore), external PSU reference, and on-behalf-of ID."
+        },
+        {
+          "info": {
+            "name": "Create a payment link",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/v2/payment-links",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `POST /v2/payment-links` endpoint creates a new payment link with payment template and link configuration. Payment links allow you to create reusable or single-use payment URLs that can be shared with customers. The link can have fixed or variable amounts, usage limits, and expiration dates."
+        },
+        {
+          "info": {
+            "name": "Get payment link details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/v2/payment-links/:paymentLinkId",
+            "params": [
+              {
+                "name": "paymentLinkId",
+                "value": "pl-019c8a02-a30e-7307-83da-7428239da59d",
+                "type": "path",
+                "description": "Payment link ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /v2/payment-links/{paymentLinkId}` endpoint retrieves detailed information about a specific payment link including current usage statistics."
+        },
+        {
+          "info": {
+            "name": "Deactivate payment link",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.token.io/v2/payment-links/:paymentLinkId",
+            "params": [
+              {
+                "name": "paymentLinkId",
+                "value": "pl-019c8a02-a30e-7307-83da-7428239da59d",
+                "type": "path",
+                "description": "Payment link ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `DELETE /v2/payment-links/{paymentLinkId}` endpoint deactivates a payment link, preventing further usage. Only active payment links can be deactivated."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Settlement Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get settlement accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/virtual-accounts",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of records to return. <br/>The maximum allowed limit is 200. If the passed limit is bigger than this, it will be set to 200."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The offset for the current page. The offset is not required to fetch the first page. To fetch subsequent pages, use the 'nextOffset' value from the previous page response. <br/>The offset value should not be parsed and/or understood in any way."
+              },
+              {
+                "name": "currency",
+                "value": "EUR",
+                "type": "query",
+                "description": "The <a href=\"https://www.iso.org/iso-4217-currency-codes.html\" target=\"_blank\">ISO 4217</a> three letter currency code."
+              },
+              {
+                "name": "country",
+                "value": "PL",
+                "type": "query",
+                "description": "Two-letter country code in upper case (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "nickname",
+                "value": "Account Alias",
+                "type": "query",
+                "description": "The alias name that identifies the settlement account."
+              },
+              {
+                "name": "onBehalfOfId",
+                "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7",
+                "type": "query",
+                "description": "The id of the ultimate client on whose behalf the account is created. If the account is created on behalf of a sub-TPP, this field should contain the sub-TPP `referenceId`. This field is mandatory for unregulated TPPs."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /virtual-accounts` endpoint retrieves information for all settlement accounts."
+        },
+        {
+          "info": {
+            "name": "Create a settlement account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/virtual-accounts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `POST /virtual-accounts` endpoint creates a settlement account."
+        },
+        {
+          "info": {
+            "name": "Get a settlement account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/virtual-accounts/:accountId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The system-generated, unique id which specifies the settlement account."
+              },
+              {
+                "name": "onBehalfOfId",
+                "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7",
+                "type": "query",
+                "description": "Filters payments by the `onBehalfOfId` value - returns only payments with the `onBehalfOfId` value specified in this parameter.  This field is mandatory for unregulated TPPs."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /virtual-accounts/{accountId}` endpoint the information, for a given settlement account."
+        },
+        {
+          "info": {
+            "name": "Get settlement account transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/virtual-accounts/:accountId/transactions",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The system-generated, unique id which specifies the settlement account."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of records to return. <br/>The maximum allowed limit is 200. If the passed limit is bigger than this, it will be set to 200."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The offset for the current page. The offset is not required to fetch the first page. To fetch subsequent pages, use the 'nextOffset' value from the previous page response. <br/>The offset value should not be parsed and/or understood in any way."
+              },
+              {
+                "name": "refId",
+                "value": "",
+                "type": "query",
+                "description": "Filters transactions by their `refId` value - returns only transactions with `refId` mentioned in the reference."
+              },
+              {
+                "name": "startDate",
+                "value": "2022-04-05",
+                "type": "query",
+                "description": "Returns transactions created on or after this date, inclusive (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)."
+              },
+              {
+                "name": "endDate",
+                "value": "2022-04-05",
+                "type": "query",
+                "description": "Returns transactions created on or before this date, inclusive (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)."
+              },
+              {
+                "name": "amount",
+                "value": "",
+                "type": "query",
+                "description": "Filters transactions by their transaction amount."
+              },
+              {
+                "name": "providerPaymentId",
+                "value": "",
+                "type": "query",
+                "description": "Filters transactions by the provider-payment-id."
+              },
+              {
+                "name": "transactionType",
+                "value": "CREDIT",
+                "type": "query",
+                "description": "Filters transactions by type to include only CREDIT or DEBIT transactions."
+              },
+              {
+                "name": "onBehalfOfId",
+                "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7",
+                "type": "query",
+                "description": "Filters payments by the `onBehalfOfId` value - returns only payments with `onBehalfOfId` specified in this parameter. This field is mandatory for unregulated TPPs."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /virtual-accounts/{accountId}/transactions` endpoint retrieves transcation information in a given settlement account."
+        },
+        {
+          "info": {
+            "name": "Get a settlement account transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/virtual-accounts/:accountId/transactions/:providerPaymentId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The system-generated, unique id which specifies the settlement account."
+              },
+              {
+                "name": "providerPaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The settlement account provider-assigned unique transaction identifier."
+              },
+              {
+                "name": "onBehalfOfId",
+                "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7",
+                "type": "query",
+                "description": "Filters payments by the `onBehalfOfId` value - returns only payments with `onBehalfOfId` specified in this parameter. This field is mandatory for unregulated TPPs."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /virtual-accounts/{accountId}/transactions/{providerPaymentId}` endpoint retrieves information for a specific transaction in a given settlement account."
+        },
+        {
+          "info": {
+            "name": "Create a settlement rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/virtual-accounts/:accountId/settlement-rule",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The system-generated, unique id which specifies the settlement account."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `POST /virtual-accounts/{accountId}/settlement-rule` endpoint creates a settlement rule, for a given settlement account."
+        },
+        {
+          "info": {
+            "name": "Get settlement rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/virtual-accounts/:accountId/settlement-rules",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The system-generated, unique id which specifies the settlement account."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /virtual-accounts/{accountId}/settlement-rules` endpoint retrieves information about settlement rules, for a given settlement account, according to the settlement rule status in the request. If no status is provided, the endpoint retrieves all settlement rules for the settlement account."
+        },
+        {
+          "info": {
+            "name": "Get a settlement rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/virtual-accounts/:accountId/settlement-rules/:settlementRuleId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The system-generated, unique id which specifies the settlement account."
+              },
+              {
+                "name": "settlementRuleId",
+                "value": "",
+                "type": "path",
+                "description": "The id of the settlement rule."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /virtual-accounts/{accountId}/settlement-rules/{settlementRuleId}` endpoint retrieves information for a specific settlement rule, for a given settlement account."
+        },
+        {
+          "info": {
+            "name": "Delete a settlement rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.token.io/virtual-accounts/:accountId/settlement-rules/:settlementRuleId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The system-generated, unique id which specifies the settlement account."
+              },
+              {
+                "name": "settlementRuleId",
+                "value": "",
+                "type": "path",
+                "description": "The id of the settlement rule."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The ` DELETE /virtual-accounts/{accountId}/settlement-rules/{settlementRuleId}` endpoint delete an active settlement rule, for a given settlement account."
+        },
+        {
+          "info": {
+            "name": "Get settlement account payouts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/virtual-accounts/:accountId/settlement-rule-payouts",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The system-generated, unique id which specifies the settlement account."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /virtual-accounts/{accountId}/settlement-rule-payouts` endpoint retrieves information about payouts created by a settlement rule, for a given settlement account."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Verification",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Initiate an account verification check",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/account-verifications",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint allows clients to verify whether the provided account details (such as sort code and account number or IBAN) match the name of the intended account holder, whether an individual or a business"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
