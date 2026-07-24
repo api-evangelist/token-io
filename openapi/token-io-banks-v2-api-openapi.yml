@@ -1,0 +1,917 @@
+openapi: 3.0.1
+info:
+  title: Token.io's Open Banking API for TPPs Account on File Banks v2 API
+  description: '<b>Token.io''s Open Banking API</b><br/><br/>Token.io Support: <a href="https://support.token.io" target="_blank">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user''s account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users'' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href="https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm" target="_blank">developer documentation</a>.'
+  version: ''
+servers:
+- url: https://api.token.io
+tags:
+- name: Banks v2
+  description: This endpoint filters and fetches the list of connected banks, gets information on specific banks, and initiates authorization with user-selected banks using Payments v2.
+paths:
+  /v2/banks:
+    get:
+      tags:
+      - Banks v2
+      summary: Get banks v2
+      description: The `GET /v2/banks` endpoint retrieves a list of connected banks matching the parameters specified.
+      operationId: GetBanksv2
+      parameters:
+      - name: page
+        in: query
+        description: The index of the page currently being retrieved.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+      - name: perPage
+        in: query
+        description: The number of records per page.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          default: 200
+          example: 10
+      - name: sort
+        in: query
+        description: The key to sort the result. This can be `NAME` (Bank's name), `STANDARD` (OpenBankingStandard), `RANK`, or `COUNTRY`.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          enum:
+          - COUNTRY
+          - STANDARD
+          - RANK
+          - NAME
+          example: COUNTRY
+          default: NAME
+      - name: memberId
+        in: query
+        description: The Token.io-assigned member id of the TPP.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: tppId
+        in: query
+        description: Filters for banks for which the TPP represented by this `tppId` has access.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: ids
+        in: query
+        description: Filters for banks with a `bankId` (case-insensitive) matching any of the ids listed, up to a maximum of 1000. Only exact (full string) matches are returned.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: search
+        in: query
+        description: Filters for banks with a name or identifiers containing this search string.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: hsbc
+      - name: bankGroup
+        in: query
+        description: Filters for banks that are members of the bank group specified.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example:
+        - HSBC
+        - Coop
+      - name: bankSubGroup
+        in: query
+        description: Filters for banks that are part of the bank sub-group specified.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example:
+        - CMM Grand
+        - Banque Populaire
+        - La Banque
+      - name: bankCode
+        in: query
+        description: Filters for banks with a BIC (or BLZ, if German) that matches this `bankCode`. The BIC must have a string length of 8 or 11. The BLZ must have a string length of 8.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: openBankingStandards
+        in: query
+        description: Filters for banks that are accessed through any of the listed standards.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - UK_Open_Banking_Standard
+            - Starling_Bank_API
+            - PolishAPI
+            - STET_PSD2_API
+            - Citi_Handlowy_PSD2_API
+            - NextGenPSD2
+            - Slovak_Banking_API_Standard
+            - Czech_Open_Banking_Standard
+            - American_Express_PSD2_API
+            - Budapest_Bank_API
+            - Token
+            example: UK_Open_Banking_Standard
+            default: UK_Open_Banking_Standard
+      - name: countries
+        in: query
+        description: Filters for banks that are located in the countries specified by this list of two-letter country code in upper case (ISO 3166-1 alpha-2).
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: bics
+        in: query
+        description: Filters for banks whose BIC matches any of the listed BICs (case-insensitive), up to a maximum of 1000.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            example: BKENGB2L
+      - name: supportedLocalInstruments
+        in: query
+        description: Filters for banks that support any of the listed payment networks.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+        example:
+        - SEPA
+        - SEPA_INSTANT
+        - FASTER_PAYMENTS
+      - name: supportsAccountList
+        in: query
+        description: Filters for banks that support fetching accounts.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+      - name: supportsAccountDetails
+        in: query
+        description: Filters for banks that support fetching account details.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+      - name: supportsAccountBalance
+        in: query
+        description: Filters for banks that support fetching account balances.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+      - name: supportsTransactionList
+        in: query
+        description: Filters for banks that support fetching transactions.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+      - name: supportsTransactionDetails
+        in: query
+        description: Filters for banks that support fetching transaction details.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+      - name: supportsStandingOrderList
+        in: query
+        description: Filters for banks that support the fetching standing orders.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+      - name: supportsTransactionsDateFilter
+        in: query
+        description: Filters for banks that support feting transactions using a date filter.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+      - name: requiresOneStepPayment
+        in: query
+        description: Filters for banks that only support immediate redemption of transfers.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+      - name: supportsSinglePayment
+        in: query
+        description: Filters for banks that support single immediate payments.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+          example: true
+      - name: supportsScheduledPayment
+        in: query
+        description: Filters for banks that support future dated scheduled payments.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+      - name: supportsStandingOrder
+        in: query
+        description: Filters for banks that support recurring payments/standing orders.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+      - name: supportsReturnRefundAccount
+        in: query
+        description: Filters for the banks that support request of refund account.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+      - name: supportsReturnRefundAccountHolderName
+        in: query
+        description: Filters for banks that support returning the refund account holder name.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+      - name: supportsFundsConfirmation
+        in: query
+        description: Filters for the banks that support confirmation of available funds.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+      - name: supportsVariableRecurringPayment
+        x-internal: true
+        in: query
+        description: Filters for banks that support variable recurring payments.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBanksV2Response'
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400_2'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '403':
+          description: Permission to access this endpoint is denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        '501':
+          description: The operation was not implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_501'
+        '503':
+          description: Service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_503'
+        '504':
+          description: Gateway has timed out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_504'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+components:
+  schemas:
+    inline_response_500:
+      properties:
+        error:
+          allOf:
+          - type: object
+            properties:
+              errorCode:
+                type: string
+                description: This is a textual error code categorising the error.
+                example: InternalServerError
+          - $ref: '#/components/schemas/ServerError'
+    BankV2:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The Token.io bank identifier.
+          example: ob-modelo
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
+          example: BOFIIE2D
+        name:
+          type: string
+          description: The commonly recognised name of the bank.
+          example: GoldBank
+        logoUri:
+          type: string
+          description: The URI of the location of the square bank avatar icon.
+          example: https://example.com/path/full.png
+        bankGroup:
+          type: string
+          description: The name of the banking group in which this bank holds membership.
+          example: XYZ-Bank-Group
+        bankSubGroup:
+          type: string
+          description: The name of the sub-banking group in which this bank holds membership.
+          example: Sub-XYZ-Bank-Group
+        countries:
+          type: array
+          description: A list of two-letter country code in upper case (ISO 3166-1 alpha-2), in which this bank operates.
+          items:
+            type: string
+          example:
+          - DE
+          - IT
+        openBankingStandard:
+          $ref: '#/components/schemas/OpenBankingStandard'
+        initialEmbeddedAuthFields:
+          $ref: '#/components/schemas/RequiredField'
+        mandatoryFields:
+          $ref: '#/components/schemas/MandatoryFieldsv2'
+        maintenanceWindow:
+          $ref: '#/components/schemas/MaintenanceWindow'
+        scaMethods:
+          $ref: '#/components/schemas/scaMethod'
+        fieldsFormatInformation:
+          type: array
+          description: Contains bank-dependent formatting constraints indicating allowable characters, if any.
+          items:
+            $ref: '#/components/schemas/FieldsFormatInformation'
+        supportedLocalInstruments:
+          type: array
+          description: Payment methods/rails supported by the bank.
+          example:
+          - SEPA
+          - SEPA_INSTANT
+          - FASTER_PAYMENTS
+          items:
+            type: string
+        operationalTime:
+          type: string
+          description: Specifies the bank’s days and hours of operation in a normal week. Does not take into account bank-specific public holidays, which may or may not be considered out-of-operation time.
+          example: MON to FRI, 00:00 to 24:00 GMT+1
+        transactionHistoryLimit:
+          type: integer
+          description: Defines the number of transaction history records allowed per page, -1 (unlimited) or a positive integer (record limit).
+          format: int32
+          example: 65
+          default: -1
+        supportsAccountList:
+          type: boolean
+          description: The bank connection supports fetching accounts.
+          format: boolean
+          example: true
+        supportsAccountDetails:
+          type: boolean
+          description: The bank connection supports fetching account details.
+          format: boolean
+          example: true
+        supportsAccountBalance:
+          type: boolean
+          description: The bank connection supports fetching account balances.
+          format: boolean
+          example: true
+        supportsTransactionList:
+          type: boolean
+          description: The bank connection supports fetching transactions.
+          format: boolean
+          example: true
+        supportsTransactionDetails:
+          type: boolean
+          description: The bank connection supports fetching transaction details.
+          format: boolean
+          example: true
+        supportsStandingOrderList:
+          type: boolean
+          description: The bank connection supports the fetching standing orders.
+          format: boolean
+          example: true
+        supportsTransactionsDateFilter:
+          type: boolean
+          description: The bank connection supports feting transactions using a date filter.
+          format: boolean
+          example: true
+        requiresOneStepPayment:
+          type: boolean
+          description: The bank connection only supports immediate redemption of transfers.
+          format: boolean
+          example: true
+        supportsSinglePayment:
+          type: boolean
+          description: The bank connection supports single immediate payments.
+          format: boolean
+          example: true
+        supportsScheduledPayment:
+          type: boolean
+          description: The bank connection supports future dated scheduled payments.
+          format: boolean
+          example: true
+        supportsSendPayment:
+          type: boolean
+          description: The bank connection supports payment initiation.
+          format: boolean
+          example: false
+          default: false
+        supportsReceivePayment:
+          type: boolean
+          description: The bank connection supports the receipt of payments.
+          format: boolean
+          example: false
+          default: false
+        supportsStandingOrder:
+          type: boolean
+          description: The bank connection supports recurring payments/standing orders.
+          format: boolean
+          example: true
+        supportsReturnRefundAccount:
+          type: boolean
+          description: The bank connection supports requesting of refund accounts.
+          format: boolean
+          example: true
+        supportsFundsConfirmation:
+          type: boolean
+          description: The bank connection supports confirmation of available funds.
+          format: boolean
+          example: true
+        supportsVariableRecurringPayment:
+          x-internal: true
+          type: boolean
+          description: The bank connection supports variable recurring payments.
+          format: boolean
+          example: true
+    MandatoryFieldsv2_inner:
+      type: object
+      properties:
+        products:
+          type: array
+          description: The products this mandatory fields entry applies to.
+          items:
+            type: string
+            example: SIP
+        fieldPaths:
+          type: array
+          description: The paths to the mandatory fields for this entry.
+          items:
+            type: string
+            example: initiation.debtor
+        paymentTypes:
+          type: array
+          description: The types of payments (International/Domestic) this mandatory fields entry applies to.
+          items:
+            type: string
+            example: International
+        localInstruments:
+          type: array
+          description: The local instruments this mandatory fields entry applies to.
+          items:
+            type: string
+            example: SEPA
+    inline_response_504:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/GatewayTimeoutError'
+    ServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: 'This could refer to either an error by the payment service provider or the bank. When the bank reports a 5xx error, `"token-external-error": "true"` is set as a header in the HTTP response, indicating that the "internal" error originates from the bank. When one of the payment service providers internal services fails or when the bank reports a 4xx error, this header is not populated. The absence of this response header should be interpreted as `"token-external-error": "false"`.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    MaintenanceWindow:
+      description: Details of the bank's planned or unplanned maintenance window.
+      type: array
+      items:
+        $ref: '#/components/schemas/maintenance'
+    inline_response_501:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/NotImplementedError'
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: The request does not have valid authentication credentials needed to perform the operation.
+    FieldError:
+      title: FieldError
+      required:
+      - paths
+      type: object
+      properties:
+        paths:
+          type: array
+          description: A list of paths to the problematic fields.
+          items:
+            type: string
+            description: A reference to the JSON path of the field that caused the error.
+            example: initiation.refId
+      description: 'An error object providing details about an error caused by a particular field or fields in the request. Possible error code values include: <br/><br/> <b>Field.NotUnique</b> - The field value should be unique, but it isn''t.<br/><br/> <b>Field.Expected</b> - A field is expected/required but is missing altogether. <br/><br/> <b>Field.InvalidFormat</b> - A field is present but has an invalid format. This includes invalid value type (<i>e.g.</i>, not a number where a number is expected) and an invalid format (<i>e.g.</i>, a value is too long). <br/><br/> <b>Field.Invalid</b> - A field is present but has an invalid value. This covers all cases, where a field is present and invalid, that are not covered by `Field.InvalidFormat`.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    OpenBankingStandard:
+      type: string
+      description: Specifies the API standard adopted by the bank.
+      example: UK_Open_Banking_Standard
+      default: Invalid_Standard
+      enum:
+      - Invalid_Standard
+      - UK_Open_Banking_Standard
+      - Starling_Bank_API
+      - PolishApi
+      - STET_PSD2_API
+      - Citi_Handlowy_PSD2_API
+      - NextGenPsd2
+      - Slovak_Banking_API_Standard
+      - Czech_Open_Banking_Standard
+      - American_Express_PSD2_API
+      - Budapest_Bank_API
+    TokenBankError:
+      type: object
+      properties:
+        errorCode:
+          example: FieldBank.RegistrationNotFound
+        bankId:
+          $ref: '#/components/schemas/bankId'
+      description: 'Error object providing details about an error related to the debtor bank. Possible error code values include: <br/><br/> - `Bank.RegistrationNotFound` - unable to find registration of the calling member with the given bank <br/><br/> - `Bank.FeatureNotSupported` - bank does not support VRP <br/><br/>'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    bankId:
+      type: string
+      description: The Token.io id of the bank where the consent is created. **This field is required if the customer is not using Token.io's Hosted Pages for bank selection, <i>i.e.</i>, API-only integration when `EMBEDDED_HOSTED_PAGES` is selected in `flowType`, or Hosted Pages embedded (modal) integration.**
+      example: ob-modelo
+    MandatoryFieldsv2:
+      type: array
+      description: Contains the fields required by the bank, which the TPP must populate in the token request, where applicable.
+      items:
+        $ref: '#/components/schemas/MandatoryFieldsv2_inner'
+    maintenance:
+      type: object
+      properties:
+        startTime:
+          type: string
+          description: The start time of the maintenance window (in <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a> format).
+          example: '2023-05-03T12:28:20.466Z'
+        endTime:
+          type: string
+          description: The end time of the maintenance window (in <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a> format).
+          example: '2023-05-03T12:40:25.47Z'
+        type:
+          type: string
+          description: The bank status:<ul><li><b>NO_DOWNTIME_EXPECTED</b> - the bank is currently connected, accepting API calls, and returning appropriate responses</li><li><b>DOWNTIME_EXPECTED</b> - there is a planned outage between the `startTime` and `endTime` specified</li><li><b>OUTAGE</b> - connection interrupted; the bank cannot currently accept API calls for this service between the `startTime` and `endTime` specified</li></ul>
+          example: OUTAGE
+          default: INVALID
+          enum:
+          - INVALID
+          - NO_DOWNTIME_EXPECTED
+          - DOWNTIME_EXPECTED
+          - OUTAGE
+        productType:
+          type: string
+          description: The bank product:<ul><li><b>AIS</b> - Account Information Services</li><li><b>SIP</b> - all payment services including Single Immediate Payments, Future Dated Payments, Standing Orders</li></ul>
+          example: SIP
+          default: INVALID
+          enum:
+          - INVALID
+          - AIS
+          - SIP
+    ErrorWithCode:
+      required:
+      - errorCode
+      - message
+      type: object
+      properties:
+        errorCode:
+          type: string
+          description: A textual error code categorising the error.
+          example: InternalServerError
+        message:
+          type: string
+          description: A description of the error that occurred and a possible way to fix it.
+          example: '`RefId` should not be longer than 35 symbols.'
+      description: Error object providing details about the error.
+      allOf:
+      - $ref: '#/components/schemas/Error'
+    GetBanksV2Response:
+      type: object
+      properties:
+        banks:
+          type: array
+          description: This field contains information for each bank matching the request criteria.
+          items:
+            $ref: '#/components/schemas/BankV2'
+        paging:
+          $ref: '#/components/schemas/Paging'
+        rank:
+          type: integer
+          description: Sorts banks by rank.
+          example:
+          - 1
+          - 2
+          - 100
+        bankSubGroup:
+          type: string
+          description: Filters for banks that are part of the bank sub-group specified.
+          example:
+          - CMM Grand
+          - Banque Populaire
+          - La Banque
+    FieldsFormatInformation:
+      type: object
+      properties:
+        constraint:
+          type: string
+          description: The regex specifying allowed characters. See <a href=\"https://regexr.com/3cr6f\" target=\"_blank\">https://regexr.com/3cr6f</a>https://regexr.com/3cr6f for more details.
+          example: ^[A-Za-z0-9?:()./,'+\-\s]*$
+        v2Name:
+          type: string
+          description: The name of the field in the Token.io `requestpayload` with bank-imposed formatting constraints.
+          example: description
+        v2Path:
+          type: string
+          description: The `object.field` path indicating the constrained field's position in the Token.io `requestPayload`.
+          example: credentials.credentials1
+      description: Contains bank-dependent formatting constraints indicating allowable characters, if any.
+    Paging:
+      type: object
+      properties:
+        page:
+          type: integer
+          description: The index of the current page.
+          format: int32
+          example: 15
+        pageCount:
+          type: integer
+          description: The number of records per page.
+          format: int32
+          example: 80
+        perPage:
+          type: integer
+          description: The number of total pages.
+          format: int32
+          example: 32
+        totalCount:
+          type: integer
+          description: The number of total records.
+          format: int32
+          example: 2500
+      description: Contains the page information for response content.
+    inline_response_403:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/PermissionDeniedError'
+    inline_response_400_2:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          oneOf:
+          - $ref: '#/components/schemas/FieldError'
+          - $ref: '#/components/schemas/PanDetectedError'
+          - $ref: '#/components/schemas/TokenBankError'
+    RequiredField:
+      required:
+      - displayName
+      - id
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: The `type` determines how the field is presented to the user. <ul><li><b>FIELD</b> - displays a form with a text input field; use `displayName` value to add a label.</li><li><b>PASSWORD</b> - displays a form with a password input field; use `displayName` value to add a label.</li><li><b>CHOICE_FIELD</b> - displays a form that allows the user to choose one of the provided options; use `displayName` value to add a label.</li></ul>
+          enum:
+          - FIELD
+          - PASSWORD
+          - CHOICE_FIELD
+        id:
+          type: string
+          description: The ID used when passing the value of this field to Token.io.
+          example: '67891234'
+        displayName:
+          type: string
+          description: The name of the requested field displayed to the user.
+          example: 'Password:'
+        additionalInformation:
+          type: string
+          description: Additional information about this field.
+          example: This field is required.
+        options:
+          type: array
+          description: A list of options for the user to select from. For example, it can be an SCA method choice (SMS message, phone call <i>etc</i>.), or confirm/decline options for a confirmation page. The customer sends one of the values back to Token.io with the corresponding id.
+          items:
+            type: string
+      description: Contains information used in embedded authentication flows. These are optional credential request fields.
+    ServiceUnavailableError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: UNAVAILABLE
+        paymentId:
+          type: string
+          description: The service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+          example: Unavailable
+      description: Service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    inline_response_401:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    scaMethods:
+      type: string
+      description: 'The SCA (Strong Customer Authentication) method: <ul><li><b>Redirect</b> - User is redirected to bank for SCA.</li><li><b>Decoupled</b> - User receives sms / notification during authentication at bank</li><li><b>Confirmation Page</b> - User is presented with a page where they confirm authentication.</li><li><b>Multi-redirect</b> - Intermediate steps as part of authentication flow for user at bank.</li><li><b>Embedded single step</b> - Capture of fields for credentials in a single step.</li><li><b>Embedded multi-step</b> - Multiple steps in capture of credential fields from user.</li></ul>'
+      example: REDIRECT
+      default: INVALID_SCA_METHOD
+      enum:
+      - INVALID_SCA_METHOD
+      - REDIRECT
+      - DECOUPLED
+      - CONFIRMATION_PAGE
+      - MULTI_REDIRECT
+      - EMBEDDED_SINGLE_STEP
+      - EMBEDDED_MULTI_STEP
+    PermissionDeniedError:
+      type: object
+      properties:
+        errorCode:
+          example: PermissionDenied
+      description: 'The error returned when the member is not authorized to perform the given operation: PermissionDenied. <br/>This error message will be accompanied by the reason from the bank. Typically this means the access token has expired and the user must re-authenticate with the bank.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    scaMethod:
+      type: array
+      items:
+        $ref: '#/components/schemas/scaMethods'
+    GatewayTimeoutError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: DEADLINE_EXCEEDED
+        paymentId:
+          type: string
+          description: The deadline expired before the operation could complete.
+          example: Deadline exceeded.
+      description: The deadline expired before the operation could complete.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    NotImplementedError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: UNIMPLEMENTED
+        paymentId:
+          type: string
+          description: The operation was not implemented,supported or enabled by the bank.
+          example: Not implemented.
+      description: The operation was not implemented, supported or enabled by the bank.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    inline_response_503:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ServiceUnavailableError'
+    PanDetectedError:
+      type: object
+      properties:
+        errorCode:
+          example: PanDetected
+      description: Error object retured when PAN is detected in the submitted initiation payload. The error code value is `PanDetected`.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+  securitySchemes:
+    Bearer:
+      type: http
+      description: '**For Production and Sandbox environments.**<br />When using curl samples the authorization header is given as -H `''Authorization: Bearer + JWT''`<br/>Please substitute your Bearer key here.<br/>For example:<br/> -H `''Authorization: Bearer eyJhbGciOiJFZERTQSIsImtpZCI6IjF4N2RmNHZ1RlVIWVFDYTciLCJtaWQiOiJtOlhUalhlMkFQZTRvdmVaalE4cHoyNGdEbUZEcTo1ekt0WEVBcSIsImhvc3QiOiJsb2NhbGhvc3Q6ODAwMCIsIm1ldGhvZCI6IlBPU1QiLCJwYXRoIjoiL2JhbmtzL2lyb24vdXNlcnMiLCJleHAiOjE1ODYyOTczNDQ3ODd9..bi3wxEoMHIul_F2f7gCDvgjHQKCjIyP9_SkQns-yXpS0UqoaOqSJrW89COexU71gt-mH3jH6mtp2aksEywvFDg''`<br/>Enter the JWT Bearer token only (see <a href="https://developer.token.io/token_rest_api_doc/content/e-rest/authentication.htm#JWT" target="_blank">JWT Authentication</a> for more information).'
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: apiKey
+      description: '**For Sandbox environment only.**<br />When using curl samples the authorization header is given as -H `''Authorization: YOUR_API_KEY_HERE''`<br/>Please substitute your Basic key here.<br/>For example:<br/> -H `''Authorization: Basic bS0zanhoS3pqRjRSWFQ1dHZLTlhMQU14cm80d0E1LTV6S3RYRUFxOmU1MWZjZDQ0LTM5MGQtNDYxZi04YjA0LTEyMjcxOTg4YWYwNg==''`'
+      name: Authorization
+      in: header

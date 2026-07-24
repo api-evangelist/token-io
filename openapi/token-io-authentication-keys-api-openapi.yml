@@ -1,0 +1,639 @@
+openapi: 3.0.1
+info:
+  title: Token.io's Open Banking API for TPPs Account on File Authentication keys API
+  description: '<b>Token.io''s Open Banking API</b><br/><br/>Token.io Support: <a href="https://support.token.io" target="_blank">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user''s account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users'' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href="https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm" target="_blank">developer documentation</a>.'
+  version: ''
+servers:
+- url: https://api.token.io
+tags:
+- name: Authentication keys
+  description: These endpoints are for managing the public keys that are used for JWT authentication.
+paths:
+  /member/{memberId}/keys:
+    post:
+      tags:
+      - Authentication keys
+      summary: Submit a public key
+      description: The `POST /member/{memberId}/keys` endpoint submits a public key for authentication, for the specified member.
+      operationId: GatewayService.AddMemberKey
+      parameters:
+      - name: memberId
+        in: path
+        description: This id specifies the member for whom the public key is to be submitted.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: m:3qVTbXqXZza2VTKa28BPbExmxz9t:5zKtXEAq
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmitKey'
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeyId'
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '403':
+          description: Permission to access this endpoint is denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        '404':
+          description: The requested entity, such as a sub-tpp, was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_429'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        '501':
+          description: The operation was not implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_501'
+        '503':
+          description: Service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_503'
+        '504':
+          description: Gateway has timed out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_504'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+    get:
+      tags:
+      - Authentication keys
+      summary: Get public keys
+      description: The `GET /member/{memberId}/keys` endpoint retrieves a list of all public keys, for the specified member.
+      operationId: GatewayService.GetMemberKeys
+      parameters:
+      - name: memberId
+        in: path
+        description: This id specifies the member for whom the public keys are to be retrieved.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: m:3qVTbXqXZza2VTKa28BPbExmxz9t:5zKtXEAq
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetKeysResponse'
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '403':
+          description: Permission to access this endpoint is denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        '404':
+          description: The requested entity, such as a sub-tpp, was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_429'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        '501':
+          description: The operation was not implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_501'
+        '503':
+          description: Service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_503'
+        '504':
+          description: Gateway has timed out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_504'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+  /member/{memberId}/keys/{keyId}:
+    get:
+      tags:
+      - Authentication keys
+      summary: Get a public key
+      description: The `GET /member/{memberId}/keys/{keyId}` endpoint retrieves the details of a specific public key, for the specified member.
+      operationId: GatewayService.GetMemberKey
+      parameters:
+      - name: memberId
+        in: path
+        description: This id specifies the member for whom the public key is to be retrieved.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: m:3qVTbXqXZza2VTKa28BPbExmxz9t:5zKtXEAq
+      - name: keyId
+        in: path
+        description: This id specifies the public key to be retrieved.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: cJSOA7nQscQBScnE
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetKeyResponse'
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '403':
+          description: Permission to access this endpoint is denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        '404':
+          description: The requested entity, such as a sub-tpp, was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_429'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        '501':
+          description: The operation was not implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_501'
+        '503':
+          description: Service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_503'
+        '504':
+          description: Gateway has timed out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_504'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+    delete:
+      tags:
+      - Authentication keys
+      summary: Delete a public key
+      description: The `DELETE /member/{memberId}/keys/{keyId}` endpoint deletes an existing public key, for the specified member.
+      operationId: GatewayService.DeleteMemberKey
+      parameters:
+      - name: memberId
+        in: path
+        description: This id specifies the member for whom the public key is to be deleted.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: m:3qVTbXqXZza2VTKa28BPbExmxz9t:5zKtXEAq
+      - name: keyId
+        in: path
+        description: This id specifies the public key to be deleted.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: eep-VtCNYXo00LIS
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteKeyResponse'
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '403':
+          description: Permission to access this endpoint is denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        '404':
+          description: The requested entity, such as a sub-tpp, was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_429'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        '501':
+          description: The operation was not implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_501'
+        '503':
+          description: Service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_503'
+        '504':
+          description: Gateway has timed out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_504'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+components:
+  schemas:
+    PaymentNotFoundError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: NOT_FOUND
+        paymentId:
+          type: string
+          description: The requested entity, the `paymentID`, was not found.
+          example: pm2:12345abcd:abcde
+      description: 'The error object returned when given payment cannot be found: ResourceNotFound.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    inline_response_500:
+      properties:
+        error:
+          allOf:
+          - type: object
+            properties:
+              errorCode:
+                type: string
+                description: This is a textual error code categorising the error.
+                example: InternalServerError
+          - $ref: '#/components/schemas/ServerError'
+    inline_response_504:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/GatewayTimeoutError'
+    inline_response_400:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    ServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: 'This could refer to either an error by the payment service provider or the bank. When the bank reports a 5xx error, `"token-external-error": "true"` is set as a header in the HTTP response, indicating that the "internal" error originates from the bank. When one of the payment service providers internal services fails or when the bank reports a 4xx error, this header is not populated. The absence of this response header should be interpreted as `"token-external-error": "false"`.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    inline_response_501:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/NotImplementedError'
+    GetKey:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id of the public key that has been uploaded.
+          example: cJSOA7nQscQBScnE
+        keyAlgorithm:
+          type: string
+          description: The security algorithm designed to protect the public key, <i>e.g.</i> ED25519, ECDSA_SHA256, RS256.
+          example: ED25519
+        publicKey:
+          type: string
+          description: 'The public key of the key pair to be uploaded. This key verifies that the payload has been signed by the owner of the private key. <br/>For example: <ul><li><b>Base64 URL format</b>: _yDSz-_vUL92ezh5fJVhKpdbvwOKghDXQsaqDwGKi_A</li> <li><b>PEM format</b>: -----BEGIN PUBLIC KEY-----
+
+            MCowBQYDK2VwAyEAGxDta2XXlr6Vxqk4kJq3+bLowoimRo+B52stoO7AWNg=
+
+            -----END PUBLIC KEY-----</li></ul>'
+          example: '-----BEGIN PUBLIC KEY-----
+
+            MCowBQYDK2VwAyEAGxDta2XXlr6Vxqk4kJq3+bLowoimRo+B52stoO7AWNg=
+
+            -----END PUBLIC KEY-----'
+        expiresAtMs:
+          type: string
+          description: The expiry date for the public key in epoch format (the number of milliseconds that have elapsed since January 1, 1970).
+          example: 1731530316000
+      description: The details of the public key that has been uploaded.
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: The request does not have valid authentication credentials needed to perform the operation.
+    ResourceExhaustedError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: RESOURCE_EXHAUSTED
+        paymentId:
+          type: string
+          description: The maximum number of requests has been reached.
+          example: Resource exhausted. Check quota.
+      description: Resource exhausted. Too many requests.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    GetKeysResponse:
+      type: object
+      properties:
+        key:
+          type: array
+          description: Contains each public key that has been uploaded.
+          items:
+            $ref: '#/components/schemas/GetKey'
+      description: A list of the public keys retrieved.
+    GetKeyResponse:
+      type: object
+      properties:
+        key:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetKey'
+      description: The details of the specified public key.
+    inline_response_404:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/PaymentNotFoundError'
+    ErrorWithCode:
+      required:
+      - errorCode
+      - message
+      type: object
+      properties:
+        errorCode:
+          type: string
+          description: A textual error code categorising the error.
+          example: InternalServerError
+        message:
+          type: string
+          description: A description of the error that occurred and a possible way to fix it.
+          example: '`RefId` should not be longer than 35 symbols.'
+      description: Error object providing details about the error.
+      allOf:
+      - $ref: '#/components/schemas/Error'
+    inline_response_403:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/PermissionDeniedError'
+    ServiceUnavailableError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: UNAVAILABLE
+        paymentId:
+          type: string
+          description: The service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+          example: Unavailable
+      description: Service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    inline_response_401:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    inline_response_429:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ResourceExhaustedError'
+    PermissionDeniedError:
+      type: object
+      properties:
+        errorCode:
+          example: PermissionDenied
+      description: 'The error returned when the member is not authorized to perform the given operation: PermissionDenied. <br/>This error message will be accompanied by the reason from the bank. Typically this means the access token has expired and the user must re-authenticate with the bank.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    GatewayTimeoutError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: DEADLINE_EXCEEDED
+        paymentId:
+          type: string
+          description: The deadline expired before the operation could complete.
+          example: Deadline exceeded.
+      description: The deadline expired before the operation could complete.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    KeyId:
+      type: object
+      properties:
+        keyId:
+          type: string
+          description: The unique identifier for the public key.
+          example: _NouLPTuo7WBLBV6
+    NotImplementedError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: UNIMPLEMENTED
+        paymentId:
+          type: string
+          description: The operation was not implemented,supported or enabled by the bank.
+          example: Not implemented.
+      description: The operation was not implemented, supported or enabled by the bank.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    inline_response_503:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ServiceUnavailableError'
+    DeleteKeyResponse:
+      type: object
+      description: No data returned in the successful response.
+    SubmitKey:
+      type: object
+      properties:
+        keyAlgorithm:
+          type: string
+          description: The security algorithm designed to protect the public key, <i>e.g.</i> ED25519, ECDSA_SHA256, RS256.
+          example: ED25519
+        publicKey:
+          type: string
+          description: 'The public key of the key pair to be uploaded. This key verifies that the payload has been signed by the owner of the private key. <br/>For example: <ul><li><b>Base64 URL format</b>: _yDSz-_vUL92ezh5fJVhKpdbvwOKghDXQsaqDwGKi_A</li> <li><b>PEM format</b>: -----BEGIN PUBLIC KEY-----
+
+            MCowBQYDK2VwAyEAGxDta2XXlr6Vxqk4kJq3+bLowoimRo+B52stoO7AWNg=
+
+            -----END PUBLIC KEY-----</li></ul>'
+          example: '-----BEGIN PUBLIC KEY-----
+
+            MCowBQYDK2VwAyEAGxDta2XXlr6Vxqk4kJq3+bLowoimRo+B52stoO7AWNg=
+
+            -----END PUBLIC KEY-----'
+      description: Specifies the details of the public key.
+  securitySchemes:
+    Bearer:
+      type: http
+      description: '**For Production and Sandbox environments.**<br />When using curl samples the authorization header is given as -H `''Authorization: Bearer + JWT''`<br/>Please substitute your Bearer key here.<br/>For example:<br/> -H `''Authorization: Bearer eyJhbGciOiJFZERTQSIsImtpZCI6IjF4N2RmNHZ1RlVIWVFDYTciLCJtaWQiOiJtOlhUalhlMkFQZTRvdmVaalE4cHoyNGdEbUZEcTo1ekt0WEVBcSIsImhvc3QiOiJsb2NhbGhvc3Q6ODAwMCIsIm1ldGhvZCI6IlBPU1QiLCJwYXRoIjoiL2JhbmtzL2lyb24vdXNlcnMiLCJleHAiOjE1ODYyOTczNDQ3ODd9..bi3wxEoMHIul_F2f7gCDvgjHQKCjIyP9_SkQns-yXpS0UqoaOqSJrW89COexU71gt-mH3jH6mtp2aksEywvFDg''`<br/>Enter the JWT Bearer token only (see <a href="https://developer.token.io/token_rest_api_doc/content/e-rest/authentication.htm#JWT" target="_blank">JWT Authentication</a> for more information).'
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: apiKey
+      description: '**For Sandbox environment only.**<br />When using curl samples the authorization header is given as -H `''Authorization: YOUR_API_KEY_HERE''`<br/>Please substitute your Basic key here.<br/>For example:<br/> -H `''Authorization: Basic bS0zanhoS3pqRjRSWFQ1dHZLTlhMQU14cm80d0E1LTV6S3RYRUFxOmU1MWZjZDQ0LTM5MGQtNDYxZi04YjA0LTEyMjcxOTg4YWYwNg==''`'
+      name: Authorization
+      in: header

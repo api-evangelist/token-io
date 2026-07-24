@@ -1,0 +1,1159 @@
+openapi: 3.0.1
+info:
+  title: Token.io's Open Banking API for TPPs Account on File Refunds API
+  description: '<b>Token.io''s Open Banking API</b><br/><br/>Token.io Support: <a href="https://support.token.io" target="_blank">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user''s account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users'' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href="https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm" target="_blank">developer documentation</a>.'
+  version: ''
+servers:
+- url: https://api.token.io
+tags:
+- name: Refunds
+  description: These endpoints allow you to handle registration, posting, and retrieval of refunds associated with original transaction account information.
+paths:
+  /refunds:
+    post:
+      tags:
+      - Refunds
+      summary: Initiate a refund
+      description: The `POST /refunds` endpoint initiates a refund. After the refund is settled, the refund status of the original transfer will be updated. <br/> The debtor field can be optional if you're using the debtor in registration. The creditor field can be optional if the information is available in the original payment.
+      operationId: InitiateRefund
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/refunds_body'
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefundResponse'
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '403':
+          description: Permission to access this endpoint is denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        '404':
+          description: The requested entity, such as a payment, was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_429'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        '501':
+          description: The operation was not implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_501'
+        '503':
+          description: Service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_503'
+        '504':
+          description: Gateway has timed out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_504'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+    get:
+      tags:
+      - Refunds
+      summary: Get refunds
+      description: The `GET /refunds` endpoint retrieves a complete or filtered list of refunds.
+      operationId: GetRefunds
+      parameters:
+      - name: limit
+        in: query
+        description: The maximum number of records to return.
+        required: true
+        style: form
+        explode: true
+        schema:
+          maximum: 200
+          minimum: 1
+          type: integer
+          format: int32
+        example: 10
+      - name: offset
+        in: query
+        description: The offset from the previous page.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: LerV6Jmex
+      - name: startDate
+        in: query
+        description: Lower bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or after the given date will be returned.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '2010-01-01'
+      - name: endDate
+        in: query
+        description: Upper bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or before the given date will be returned.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '2010-01-01'
+      - name: ids
+        in: query
+        description: Filters refunds by their ids - returns only refunds with ids listed in this parameter.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+        example:
+        - rf:4QExXrhKTxfShBdcTeqFabqJJhUF:2gFUX1NDgpN
+        - rf:N5cJDFsQzVca3Qvr8kQocgEnjgX:2gFUX1NEdYA
+      - name: invertIds
+        in: query
+        description: Invert ids query - returns only refunds with ids not listed in the ids parameter.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+        example: false
+      - name: statuses
+        in: query
+        description: Filters refunds by their statuses - returns only refunds with statuses listed in this parameter.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+        example:
+        - INITIATION_COMPLETED
+        - INITIATION_REJECTED
+      - name: invertStatuses
+        in: query
+        description: Invert statuses query - returns only refunds with statuses not listed in the statuses parameter.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+        example: true
+      - name: refIds
+        in: query
+        description: Filters refunds by their `refId` values - returns only refunds with `refIds` listed in this parameter.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+        example:
+        - ShBdcTeqFabqJJhUF
+        - N5cJDFsQzVca3Q
+      - name: partial
+        in: query
+        description: Returns refunds in a partial format - with only id and status fields populated.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+        example: true
+      - name: onBehalfOfIds
+        in: query
+        description: Filters payouts by their `onBehalfOfId` values - returns only payouts with the `onBehalfOfId` values specified in this parameter. This field is mandatory for unregulated TPPs.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+        example:
+        - c5a863bc-86f2-4418-a26f-25b24c7983c7
+        - 6f34h397-b29h-23b0-s30g-hkd0d2dk4k1s
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefundsResponse'
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '403':
+          description: Permission to access this endpoint is denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        '404':
+          description: The requested entity, such as a payment, was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_429'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        '501':
+          description: The operation was not implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_501'
+        '503':
+          description: Service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_503'
+        '504':
+          description: Gateway has timed out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_504'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+  /refunds/{id}:
+    get:
+      tags:
+      - Refunds
+      summary: Get a refund
+      description: The `GET /refunds/{id}` endpoint retrieves a given refund.
+      operationId: GetRefund
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          description: The refund id.
+          example: your refund id
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefundResponse'
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '403':
+          description: Permission to access this endpoint is denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        '404':
+          description: The requested entity, such as a payment, was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_429'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        '501':
+          description: The operation was not implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_501'
+        '503':
+          description: Service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_503'
+        '504':
+          description: Gateway has timed out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_504'
+      security:
+      - Bearer: []
+      - BasicAuth: []
+  /transfers/{id}/refunds:
+    get:
+      tags:
+      - Refunds
+      summary: Get all refunds by transfer
+      description: The `GET /transfers/{id}/refunds` endpoint retrieves all refunds associated with a given transfer.
+      operationId: GetTransferRefunds
+      parameters:
+      - name: limit
+        in: query
+        description: The maximum number of records to return.
+        required: true
+        style: form
+        explode: true
+        schema:
+          maximum: 200
+          minimum: 1
+          type: integer
+          format: int32
+        example: 10
+      - name: offset
+        in: query
+        description: The offset from the previous page.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: LerV6Jmex
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          description: The transfer id.
+          example: your transfer id
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefundsResponse'
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '403':
+          description: Permission to access this endpoint is denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        '404':
+          description: The requested entity, such as a payment, was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_429'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        '501':
+          description: The operation was not implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_501'
+        '503':
+          description: Service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_503'
+        '504':
+          description: Gateway has timed out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_504'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+components:
+  schemas:
+    PaymentNotFoundError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: NOT_FOUND
+        paymentId:
+          type: string
+          description: The requested entity, the `paymentID`, was not found.
+          example: pm2:12345abcd:abcde
+      description: 'The error object returned when given payment cannot be found: ResourceNotFound.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    RefundsResponse:
+      type: object
+      properties:
+        refunds:
+          type: array
+          items:
+            $ref: '#/components/schemas/Refund'
+        paging:
+          $ref: '#/components/schemas/PagingInfo'
+    inline_response_500:
+      properties:
+        error:
+          allOf:
+          - type: object
+            properties:
+              errorCode:
+                type: string
+                description: This is a textual error code categorising the error.
+                example: InternalServerError
+          - $ref: '#/components/schemas/ServerError'
+    PLIbanAccount:
+      title: PLIbanAccount
+      required:
+      - iban
+      type: object
+      properties:
+        iban:
+          type: string
+          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
+          example: BOFIIE2D
+      description: Polish account details where the iban is required and the bic is optional.
+    PLAccount:
+      title: PLAccount
+      required:
+      - accountNumber
+      type: object
+      properties:
+        accountNumber:
+          type: string
+          description: The payee's Elixir-registered bank account number.
+          example: FRAX82783423
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
+          example: BOFIIE2D
+      description: Polish account details where the account number is required and the bic is optional.
+    inline_response_504:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/GatewayTimeoutError'
+    inline_response_400:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    ServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: 'This could refer to either an error by the payment service provider or the bank. When the bank reports a 5xx error, `"token-external-error": "true"` is set as a header in the HTTP response, indicating that the "internal" error originates from the bank. When one of the payment service providers internal services fails or when the bank reports a 4xx error, this header is not populated. The absence of this response header should be interpreted as `"token-external-error": "false"`.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    RefundInitiation:
+      required:
+      - amount
+      - localInstrument
+      - originalPaymentId
+      - paymentType
+      - refId
+      - description
+      type: object
+      properties:
+        description:
+          type: string
+          description: The description of the refund.
+          example: refund for some reason
+        refId:
+          $ref: '#/components/schemas/refId'
+        amount:
+          $ref: '#/components/schemas/Amount'
+        originalPaymentId:
+          $ref: '#/components/schemas/originalPaymentId'
+        registrationId:
+          type: string
+          description: The registration id.
+          example: regId
+        localInstrument:
+          type: string
+          description: The bank's payment service to be used for making a payment.
+          example: SEPA_INSTANT
+          enum:
+          - SEPA
+          - SEPA_INSTANT
+          - FASTER_PAYMENTS
+        onBehalfOfId:
+          type: string
+          description: The `onBehalfOfId` is validated against the sub-TPP id of the member before initiating the refund. This field is mandatory for unregulated TPPs.
+          example: c5a863bc-86f2-4418-a26f-25b24c7983c7
+        accountVerificationId:
+          $ref: '#/components/schemas/AccountVerificationId'
+        corporateApiDebtor:
+          $ref: '#/components/schemas/CorporateApiDebtorInformation'
+      description: The Initiation payload for the refund.
+    inline_response_501:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/NotImplementedError'
+    Address:
+      type: object
+      properties:
+        addressLine:
+          type: array
+          items:
+            type: string
+            example: The Coach House
+        streetName:
+          type: string
+          description: Street number
+          example: 221B
+        buildingNumber:
+          type: string
+          description: Building number
+          example: 2C
+        postCode:
+          type: string
+          description: Post Code
+          example: TR26 1EZ
+        townName:
+          type: string
+          description: Town name
+          example: Saint Ives
+        state:
+          type: string
+          description: State
+          example: Cornwall
+        district:
+          type: string
+          description: The district.
+        country:
+          type: string
+          description: Two-letter country code in upper case (ISO 3166-1 alpha-2).
+          example: GB
+      description: Address
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: The request does not have valid authentication credentials needed to perform the operation.
+    refId:
+      type: string
+      description: The TPP-generated reference identifier for the token. This is not to be confused with the `requestId`. The `refId` maps to the `tppRefId` in the bank's `consentRequest`. This is needed to match/verify the originating token request with the bank's consent request. <br/>We recommend that the `refId` should not contain special characters (the allowed characters are the 26-letter Latin alphabet, the numerical digits from 0-9 and the hyphen '-'). This field should not exceed 18 characters in length.
+      example: 9htio4a1sp2akdr1aa
+    ResourceExhaustedError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: RESOURCE_EXHAUSTED
+        paymentId:
+          type: string
+          description: The maximum number of requests has been reached.
+          example: Resource exhausted. Check quota.
+      description: Resource exhausted. Too many requests.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    StatusRefund:
+      title: StatusRefund
+      type: string
+      description: The Token.io Refund Initiation Status. <ul><li> <b>INITIATION_PENDING</b> - Token.io has received the refund initiation and the initiation has passed Token.io's validation.</li><li><b>INITIATION_PROCESSING</b> - the refund is processing on the bank side. The status can be updated to one of `INITIATION_COMPLETED`, `INITIATION_REJECTED` or `INITIATION_FAILED`. If the status is not updated by the bank within a certain period of time, the status will remain as `INITIATION_PROCESSING` and the corresponding status reason information field will reflect this.</li><li><b>INITIATION_COMPLETED</b> - the refund initiation is successful. This does not guarantee the refund is settled.</li><li><b>INITIATION_REJECTED</b> - the refund is rejected by the bank. More details are shared in the corresponding status reason information.</li><li><b>INITIATION_FAILED</b> - Token.io failed to create the initiation as a result of failures on the bank side, <i>e.g.</i> the bank is not available at the moment.</li><li><b>INITIATION_NO_FINAL_STATUS_AVAILABLE</b> - The payment status has not been updated for some time and Token.io has stopped polling it. The recommended maximum polling time is 30 days. The status will change to `INITIATION_NO_FINAL_STATUS_AVAILABLE` after 30 days if the bank doesn't update the status. This is a final status, but it doesn't indicate success or failure. Please contact the bank to check the actual status of the payment.</li></ul>
+      example: INITIATION_COMPLETED
+      default: INITIATION_PENDING
+      enum:
+      - INITIATION_PENDING
+      - INITIATION_PROCESSING
+      - INITIATION_COMPLETED
+      - INITIATION_REJECTED
+      - INITIATION_FAILED
+      - INITIATION_NO_FINAL_STATUS_AVAILABLE
+    memberId:
+      type: string
+      description: The Token.io-assigned member id of the TPP.
+      example: m:123456abcd:abcd
+    inline_response_503:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ServiceUnavailableError'
+    Amount:
+      description: The transaction amount and currency.
+      required:
+      - currency
+      - value
+      type: object
+      properties:
+        value:
+          type: string
+          description: The transaction amount with up to four digits after the decimal point.
+          example: '10.23'
+        currency:
+          type: string
+          description: The <a href="https://www.iso.org/iso-4217-currency-codes.html" target="_blank">ISO 4217</a> three letter currency code.
+          example: EUR
+    inline_response_404:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/PaymentNotFoundError'
+    ResolvedRefundInitiation:
+      required:
+      - amount
+      - creditor
+      - debtor
+      - localInstrument
+      - originalPaymentId
+      - paymentType
+      - refId
+      type: object
+      properties:
+        description:
+          type: string
+          description: The description for the refund.
+          example: refund for some reason
+        refId:
+          $ref: '#/components/schemas/refId'
+        amount:
+          $ref: '#/components/schemas/Amount'
+        originalPaymentId:
+          $ref: '#/components/schemas/originalPaymentId'
+        registrationId:
+          type: string
+          description: The registraion id.
+          example: regId
+        localInstrument:
+          type: string
+          description: The bank's payment service to be used for making a payment.
+          example: SEPA_INSTANT
+          enum:
+          - SEPA
+          - SEPA_INSTANT
+          - FASTER_PAYMENTS
+        debtor:
+          $ref: '#/components/schemas/RefundDebtorInformation'
+        creditor:
+          $ref: '#/components/schemas/CreditorInformation'
+      description: The Initiation payload for the refund.
+    EUDomesticNonEuroAccountCreditor:
+      title: EUDomesticNonEuroAccount
+      oneOf:
+      - $ref: '#/components/schemas/EUIbanAccount'
+      - $ref: '#/components/schemas/BbanAccount'
+      - $ref: '#/components/schemas/ClearingNumberAccount'
+      - $ref: '#/components/schemas/SENoBankIdCreditorAccount'
+      description: The payment system within a European country using that country's non-Euro domestic currency. An IBAN account will require an `iban` and an optional `bic`, a BBAN account will require a `bban` and an optional `bic`, a Clearing Number account will require a `bban` and a `clearingNumber`. A SENoBankId account, where the currency is SEK or NOK, will require an `iban` and `bban` with an optional `bic` and/or `clearingNumber`. This option is only available for an HP flow that doesn't have a preselected `bankId`.
+    RefundDebtorInformation:
+      description: The debtor information. Account information (one of) is required.
+      allOf:
+      - oneOf:
+        - $ref: '#/components/schemas/SepaAccount'
+        - $ref: '#/components/schemas/FasterPaymentsAccount'
+      - type: object
+        properties:
+          name:
+            type: string
+            description: The owner name for the debtor account.
+            example: John Smith
+          ultimateDebtorName:
+            type: string
+            description: The ultimate debtor name.
+            example: John Smith
+          address:
+            $ref: '#/components/schemas/Address'
+    ErrorWithCode:
+      required:
+      - errorCode
+      - message
+      type: object
+      properties:
+        errorCode:
+          type: string
+          description: A textual error code categorising the error.
+          example: InternalServerError
+        message:
+          type: string
+          description: A description of the error that occurred and a possible way to fix it.
+          example: '`RefId` should not be longer than 35 symbols.'
+      description: Error object providing details about the error.
+      allOf:
+      - $ref: '#/components/schemas/Error'
+    RefundResponse:
+      type: object
+      properties:
+        refund:
+          $ref: '#/components/schemas/Refund'
+    ElixirAccountCreditor:
+      title: ElixirAccount
+      oneOf:
+      - $ref: '#/components/schemas/PLAccount'
+      - $ref: '#/components/schemas/PLIbanAccount'
+      description: The Elixir creditor account details.
+    VirtualAccountCreditor:
+      title: VirtualAccount
+      required:
+      - virtualAccountId
+      type: object
+      properties:
+        virtualAccountId:
+          type: string
+          description: The unique identifier for the settlement account. This field is mandatory for unregulated TPPs.
+          example: pa:4TXFcixy9yKfEmhad45Jp6Lb34d1:2gFUX1NEGTG
+      description: The creditor settlement account details.
+    SepaAccount:
+      title: SepaAccount
+      required:
+      - iban
+      type: object
+      properties:
+        iban:
+          type: string
+          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
+          example: BOFIIE2D
+      description: SEPA account details where the iban is required and the bic is optional.
+    ClearingNumberAccount:
+      title: ClearingNumberAccount
+      required:
+      - bban
+      type: object
+      properties:
+        bban:
+          type: string
+          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
+          example: NWBK60161331926819
+        clearingNumber:
+          type: string
+          description: The bank clearing number or BC number is a number used for the identification of financial institutions in Switzerland and Liechtenstein. Bank clearing numbers are connected to the Swiss Interbank Clearing and the EuroSIC system.
+          example: 87654321
+      description: Account details where the bban is required and the clearing number is optional.
+    PagingInfo:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: The limit (maximum number of records to return) that was sent in the request. If the actual number of returned records is less then the limit, there are no more records left to fetch. <br/>The maximum allowed limit is 200. If the passed limit is bigger than this, it will be set to 200.
+          format: int32
+        offset:
+          type: string
+          description: Offset for the next page.
+          example: LerV6Jmex
+    inline_response_403:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/PermissionDeniedError'
+    Refund:
+      required:
+      - createdDateTime
+      - id
+      - memberId
+      - status
+      - updatedDateTime
+      type: object
+      properties:
+        id:
+          type: string
+          description: Token.io-generated refund id.
+          example: rf:12345abcd:abcd
+        bankTransactionId:
+          type: string
+          description: The transaction id from the bank side. This can be empty if it is not available from the bank.
+          example: 2UhwCZ3BMaEcAUK8bZdukor7NL4tH6TBuu6aJMp5KKfX:5zKcENpV
+        memberId:
+          $ref: '#/components/schemas/memberId'
+        createdDateTime:
+          type: string
+          description: The date and time this refund object was created (in <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a> format).
+          example: '2017-04-05T10:43:07.000+00:00'
+        updatedDateTime:
+          type: string
+          description: The date and time the current status, sub status, status reason information and authentication were last updated (in <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a> format).
+          example: '2017-04-05T10:45:07.000+00:00'
+        status:
+          $ref: '#/components/schemas/StatusRefund'
+        bankPaymentStatus:
+          type: string
+          description: The raw bank status. This can be the <a href="https://www.iso20022.org/" target="_blank">ISO 20022</a> payment status code. See <a href="https://developer.token.io/token_rest_api_doc/content/e-rest/iso-20022-statuses.htm" target="_blank">ISO 20022 payment status codes</a> for more information. This field can be empty if no payment status is available on bank side.
+          example: ACCP
+        statusReasonInformation:
+          type: string
+          description: A human-readable description of the reason for the reported status, which may include a message from the bank. This value should not exceed 256 characters in length.
+          example: The payment is settled on debtor side.
+        initiation:
+          $ref: '#/components/schemas/ResolvedRefundInitiation'
+      description: The refund object.
+    ServiceUnavailableError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: UNAVAILABLE
+        paymentId:
+          type: string
+          description: The service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+          example: Unavailable
+      description: Service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    inline_response_401:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    originalPaymentId:
+      type: string
+      description: The original payment id from Token.io payments/transfers. This is required to initiate a refund. Token.io will check the original payment for the refund validation.
+      example: t:sdsds:sdsd
+    inline_response_429:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ResourceExhaustedError'
+    FasterPaymentsAccount:
+      title: FasterPaymentsAccount
+      required:
+      - accountNumber
+      - sortCode
+      type: object
+      properties:
+        accountNumber:
+          type: string
+          description: The unique identifier for the bank account in the UK or Ireland.
+          example: '12345678'
+        sortCode:
+          type: string
+          description: The number assigned to a branch of a bank, typically containing six digits and most commonly used in the UK and Ireland.
+          example: '123456'
+      description: A UK or Irish account where the sort code and account number are required.
+    refunds_body:
+      required:
+      - initiation
+      type: object
+      properties:
+        initiation:
+          $ref: '#/components/schemas/RefundInitiation'
+    BankGiroAccount:
+      title: BankGiroAccount
+      required:
+      - bankgiroNumber
+      type: object
+      properties:
+        bankgiroNumber:
+          type: string
+          description: The unique identifier for the bank account in Sweden (known in Swedish as Bankgironummer), it consists of 7 or 8 digits.
+          example: '56781234'
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
+          example: BOFIIE2D
+      description: Account details where the bankgiroNumber is required and the bic is optional.
+    BbanAccount:
+      title: BbanAccount
+      required:
+      - bban
+      type: object
+      properties:
+        bban:
+          type: string
+          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
+          example: NWBK60161331926819
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
+          example: BOFIIE2D
+      description: Account details where the bban is required and the bic is optional.
+    SepaInstantAccount:
+      title: SepaInstantAccount
+      required:
+      - iban
+      type: object
+      properties:
+        iban:
+          type: string
+          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
+          example: BOFIIE2D
+      description: SEPA Instant account details where the iban is required and the bic is optional.
+    SENoBankIdCreditorAccount:
+      title: SENoBankIdCreditorAccount
+      required:
+      - iban
+      - bban
+      type: object
+      properties:
+        iban:
+          type: string
+          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+        bban:
+          type: string
+          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
+          example: NWBK60161331926819
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
+          example: BOFIIE2D
+        clearingNumber:
+          type: string
+          description: The bank clearing number or BC number is a number used for the identification of financial institutions in Switzerland and Liechtenstein. Bank clearing numbers are connected to the Swiss Interbank Clearing and the EuroSIC system.
+          example: 87654321
+      description: Account details where the iban and bban are required and the bic and clearing number are optional. This is ONLY allowed for an HP flow if there is no `bankId` provided in the initiation AND the currency is SEK or NOK.
+    PermissionDeniedError:
+      type: object
+      properties:
+        errorCode:
+          example: PermissionDenied
+      description: 'The error returned when the member is not authorized to perform the given operation: PermissionDenied. <br/>This error message will be accompanied by the reason from the bank. Typically this means the access token has expired and the user must re-authenticate with the bank.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    CorporateApiDebtorInformation:
+      description: The debtor information.
+      required:
+      - accountId
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: The ID for the debtor settlement account.
+          example: a12345
+    GatewayTimeoutError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: DEADLINE_EXCEEDED
+        paymentId:
+          type: string
+          description: The deadline expired before the operation could complete.
+          example: Deadline exceeded.
+      description: The deadline expired before the operation could complete.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    CreditorInformation:
+      description: The creditor information. The account information (one of) is required.
+      allOf:
+      - oneOf:
+        - $ref: '#/components/schemas/SepaAccount'
+        - $ref: '#/components/schemas/SepaInstantAccount'
+        - $ref: '#/components/schemas/FasterPaymentsAccount'
+        - $ref: '#/components/schemas/ElixirAccountCreditor'
+        - $ref: '#/components/schemas/EUDomesticNonEuroAccountCreditor'
+        - $ref: '#/components/schemas/EUDomesticNonEuroInstantAccountCreditor'
+        - $ref: '#/components/schemas/BankGiroAccount'
+        - $ref: '#/components/schemas/PlusGiroAccount'
+        - $ref: '#/components/schemas/VirtualAccountCreditor'
+      - type: object
+      - required:
+        - name
+        properties:
+          name:
+            type: string
+            description: The owner's name for the creditor account. This parameter is not required for settlement accounts.
+            example: Customer Inc.
+          ultimateCreditorName:
+            type: string
+            description: The ultimate creditor's name.
+            example: Customer Inc.
+          address:
+            $ref: '#/components/schemas/Address'
+          bankName:
+            type: string
+            description: The creditor's bank name.
+          accountVerificationId:
+            $ref: '#/components/schemas/AccountVerificationId'
+    NotImplementedError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: UNIMPLEMENTED
+        paymentId:
+          type: string
+          description: The operation was not implemented,supported or enabled by the bank.
+          example: Not implemented.
+      description: The operation was not implemented, supported or enabled by the bank.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    PlusGiroAccount:
+      title: PlusGiroAccount
+      required:
+      - plusgiroNumber
+      type: object
+      properties:
+        plusgiroNumber:
+          type: string
+          description: The unique identifier for the Swedish money transaction system owned by <a href="https://www.nordea.com" target="blank">Nordea</a>.
+          example: '67812345'
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
+          example: BOFIIE2D
+      description: Account details where the plusgiroNumber is required and the bic is optional.
+    EUDomesticNonEuroInstantAccountCreditor:
+      title: EUDomesticNonEuroInstantAccount
+      oneOf:
+      - $ref: '#/components/schemas/EUIbanAccount'
+      - $ref: '#/components/schemas/BbanAccount'
+      - $ref: '#/components/schemas/ClearingNumberAccount'
+      - $ref: '#/components/schemas/SENoBankIdCreditorAccount'
+      description: The instant payment system within a European country using that country's non-Euro domestic currency. An IBAN account will require an `iban` and an optional `bic`, a BBAN account will require a `bban` and an optional `bic`, a Clearing Number account will require a `bban` and a `clearingNumber`. A SENoBankId account, where the currency is SEK or NOK, will require an `iban` and `bban` with an optional `bic` and/or `clearingNumber`. This option is only available for an HP flow that doesn't have a preselected `bankId`.
+    AccountVerificationId:
+      type: string
+      description: The Id returned from the /account-verifications endpoint and used to identify the account verification relating to the beneficiary of the payment. Only required for EUR payments.
+    EUIbanAccount:
+      title: EUIbanAccount
+      required:
+      - iban
+      type: object
+      properties:
+        iban:
+          type: string
+          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
+          example: BOFIIE2D
+      description: Account details where the iban is required and the bic is optional.
+  securitySchemes:
+    Bearer:
+      type: http
+      description: '**For Production and Sandbox environments.**<br />When using curl samples the authorization header is given as -H `''Authorization: Bearer + JWT''`<br/>Please substitute your Bearer key here.<br/>For example:<br/> -H `''Authorization: Bearer eyJhbGciOiJFZERTQSIsImtpZCI6IjF4N2RmNHZ1RlVIWVFDYTciLCJtaWQiOiJtOlhUalhlMkFQZTRvdmVaalE4cHoyNGdEbUZEcTo1ekt0WEVBcSIsImhvc3QiOiJsb2NhbGhvc3Q6ODAwMCIsIm1ldGhvZCI6IlBPU1QiLCJwYXRoIjoiL2JhbmtzL2lyb24vdXNlcnMiLCJleHAiOjE1ODYyOTczNDQ3ODd9..bi3wxEoMHIul_F2f7gCDvgjHQKCjIyP9_SkQns-yXpS0UqoaOqSJrW89COexU71gt-mH3jH6mtp2aksEywvFDg''`<br/>Enter the JWT Bearer token only (see <a href="https://developer.token.io/token_rest_api_doc/content/e-rest/authentication.htm#JWT" target="_blank">JWT Authentication</a> for more information).'
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: apiKey
+      description: '**For Sandbox environment only.**<br />When using curl samples the authorization header is given as -H `''Authorization: YOUR_API_KEY_HERE''`<br/>Please substitute your Basic key here.<br/>For example:<br/> -H `''Authorization: Basic bS0zanhoS3pqRjRSWFQ1dHZLTlhMQU14cm80d0E1LTV6S3RYRUFxOmU1MWZjZDQ0LTM5MGQtNDYxZi04YjA0LTEyMjcxOTg4YWYwNg==''`'
+      name: Authorization
+      in: header

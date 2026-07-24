@@ -1,0 +1,198 @@
+openapi: 3.0.1
+info:
+  title: Token.io's Open Banking API for TPPs Account on File Verification API
+  description: '<b>Token.io''s Open Banking API</b><br/><br/>Token.io Support: <a href="https://support.token.io" target="_blank">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user''s account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users'' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href="https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm" target="_blank">developer documentation</a>.'
+  version: ''
+servers:
+- url: https://api.token.io
+tags:
+- name: Verification
+paths:
+  /account-verifications:
+    post:
+      summary: Initiate an account verification check
+      tags:
+      - Verification
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountVerificationResponse'
+              examples:
+                'Full Match (EU ACCOUNT) ':
+                  value:
+                    id: avr-01K8R977E2Y0XE5CYQE1608N06
+                    result:
+                      status: MATCH
+                      reasons:
+                      - EXACT_MATCH
+                      details: The account details match.
+                Close Match (EU ACCOUNT):
+                  value:
+                    id: avr-01K8R97M3BZMQAZ8014CABDKVJ
+                    result:
+                      status: CLOSE_MATCH
+                      reasons:
+                      - NAME_MISMATCH
+                      details: The name provided is a close match.
+                      matched:
+                        name: H. C. Andersen
+                No match (EU ACCOUNT):
+                  value:
+                    id: avr-01K8R97W7QTCTV8SSZ53FBPATY
+                    result:
+                      status: NO_MATCH
+                      reasons:
+                      - ACCOUNT_MISMATCH
+                      - NAME_MISMATCH
+                      details: The account and name do not match.
+                Unable to match (EU ACCOUNT):
+                  value:
+                    id: avr-01K8R982QQZ94R58X51GDJRQDE
+                    result:
+                      status: VERIFICATION_NOT_POSSIBLE
+                      reasons:
+                      - UNKNOWN
+                      details: The check cannot be completed.
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+      operationId: post-verification
+      description: This endpoint allows clients to verify whether the provided account details (such as sort code and account number or IBAN) match the name of the intended account holder, whether an individual or a business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountVerificationRequest'
+            examples:
+              UK (GBP) Account Check:
+                value:
+                  account:
+                    name: John Doe
+                    accountNumber: '12345678'
+                    sortCode: '123456'
+                    currency: GBP
+                    accountType: PERSONAL
+                  virtualAccountId: pa:8DbPteGnytmMbKXdnWTReeRB6cYWKXZ84JgLTBC7fKL4:5zKcENpV
+              EU (EUR) Account Check:
+                value:
+                  account:
+                    name: John Doe
+                    iban: GB33BUKB20201555555555
+                    currency: EUR
+                  virtualAccountId: pa:8DbPteGnytmMbKXdnWTReeRB6cYWKXZ84JgLTBC7fKL4:5zKcENpV
+      security:
+      - Bearer: []
+      - BasicAuth: []
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: The request does not have valid authentication credentials needed to perform the operation.
+    inline_response_400:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    AccountVerificationRequest:
+      type: object
+      required:
+      - account
+      properties:
+        account:
+          type: object
+          description: 'Account information for account verification
+
+            '
+          required:
+          - name
+          - currency
+          - iban
+          properties:
+            name:
+              type: string
+              description: Name of account holder
+            currency:
+              type: string
+              description: Specifies the currency of the account being verified, represented in ISO 4217 three-letter format (e.g. EUR). This ensures accurate matching where account validation rules or naming conventions may vary by currency.
+              enum:
+              - EUR
+            iban:
+              type: string
+              description: The International Bank Account Number (IBAN) which identifies a bank account across borders
+        virtualAccountId:
+          type: string
+          description: 'The Token settlement account from which the subsequent payout or refund will be executed.
+
+            > **Conditional** - If this verification check is independent of a Token provided settlement account, this should **NOT** be provided.
+
+            '
+    AccountVerificationResponse:
+      type: object
+      required:
+      - id
+      - result
+      properties:
+        id:
+          type: string
+          example: 01K4SMENHFT2MK5DKVDYWP6M7B
+        result:
+          type: object
+          required:
+          - status
+          - reasons
+          - details
+          properties:
+            status:
+              type: string
+              description: The outcome of the verification
+              enum:
+              - MATCH
+              - NO_MATCH
+              - CLOSE_MATCH
+              - VERIFICATION_NOT_POSSIBLE
+            reasons:
+              type: array
+              description: A more granular reason as to why there was not a full match
+              items:
+                type: string
+                enum:
+                - UNKNOWN
+                - EXACT_MATCH
+                - NAME_MISMATCH
+                - ACCOUNT_MISMATCH
+            details:
+              type: string
+              description: A human readable explanation for the outcome of the verification check
+            matched:
+              type: object
+              description: Further details on the attributes that would result in a full match
+              properties:
+                name:
+                  type: string
+                  description: The name matched to the account provided
+  securitySchemes:
+    Bearer:
+      type: http
+      description: '**For Production and Sandbox environments.**<br />When using curl samples the authorization header is given as -H `''Authorization: Bearer + JWT''`<br/>Please substitute your Bearer key here.<br/>For example:<br/> -H `''Authorization: Bearer eyJhbGciOiJFZERTQSIsImtpZCI6IjF4N2RmNHZ1RlVIWVFDYTciLCJtaWQiOiJtOlhUalhlMkFQZTRvdmVaalE4cHoyNGdEbUZEcTo1ekt0WEVBcSIsImhvc3QiOiJsb2NhbGhvc3Q6ODAwMCIsIm1ldGhvZCI6IlBPU1QiLCJwYXRoIjoiL2JhbmtzL2lyb24vdXNlcnMiLCJleHAiOjE1ODYyOTczNDQ3ODd9..bi3wxEoMHIul_F2f7gCDvgjHQKCjIyP9_SkQns-yXpS0UqoaOqSJrW89COexU71gt-mH3jH6mtp2aksEywvFDg''`<br/>Enter the JWT Bearer token only (see <a href="https://developer.token.io/token_rest_api_doc/content/e-rest/authentication.htm#JWT" target="_blank">JWT Authentication</a> for more information).'
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: apiKey
+      description: '**For Sandbox environment only.**<br />When using curl samples the authorization header is given as -H `''Authorization: YOUR_API_KEY_HERE''`<br/>Please substitute your Basic key here.<br/>For example:<br/> -H `''Authorization: Basic bS0zanhoS3pqRjRSWFQ1dHZLTlhMQU14cm80d0E1LTV6S3RYRUFxOmU1MWZjZDQ0LTM5MGQtNDYxZi04YjA0LTEyMjcxOTg4YWYwNg==''`'
+      name: Authorization
+      in: header

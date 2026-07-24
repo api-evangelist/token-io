@@ -1,0 +1,1636 @@
+openapi: 3.0.1
+info:
+  title: Token.io's Open Banking API for TPPs Account on File Banks v1 API
+  description: '<b>Token.io''s Open Banking API</b><br/><br/>Token.io Support: <a href="https://support.token.io" target="_blank">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user''s account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users'' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href="https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm" target="_blank">developer documentation</a>.'
+  version: ''
+servers:
+- url: https://api.token.io
+tags:
+- name: Banks v1
+  description: These endpoints filter and fetch the list of connected banks, get information on specific banks, and initiate authorization with user-selected banks using Payments v1.
+paths:
+  /banks:
+    get:
+      tags:
+      - Banks v1
+      summary: Get banks v1
+      description: The `GET /banks` endpoint retrieves a list of connected banks matching the parameters specified.
+      operationId: GatewayService.GetBanks
+      parameters:
+      - name: page
+        in: query
+        description: The index of the page currently being retrieved.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+        example: 1
+      - name: perPage
+        in: query
+        description: The number of records per page.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 175
+      - name: sort
+        in: query
+        description: The key to sort the result. This can be `name` (<i>i.e.</i>, bank name), `provider`, or `country`.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: country
+          default: name
+      - name: memberId
+        in: query
+        description: The Token.io-assigned member id of the TPP.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq
+      - name: ids
+        in: query
+        description: Filters for banks with a `bankId` (case-insensitive) matching any of the ids listed, up to a maximum of 1000. Only exact (full string) matches are returned.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          example:
+          - goldbank
+          - opalbank
+          - platinumbank
+          items:
+            type: string
+      - name: search
+        in: query
+        description: Filters for banks with a name or identifiers containing this search string.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: hsbc
+      - name: tppId
+        in: query
+        description: Filters for banks for which the TPP represented by this `tppId` has access.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 4h27g823-g73s-07v3-l49s-prte94bf21v
+      - name: providers
+        in: query
+        description: Filters for banks that are accessed through any of the listed providers.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          example: Token.io
+          items:
+            type: string
+      - name: bankCode
+        in: query
+        description: Filters for banks with a BIC (or BLZ, if German) that matches this `bankCode`. The BIC must have a string length of 8 or 11. The BLZ must have a string length of 8.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: NBAGDE3E
+      - name: countries
+        in: query
+        description: Filters for banks that are located in the countries specified by this list of two-letter country codes in upper case (ISO 3166-1 alpha-2).
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          example:
+          - IT
+          - DE
+          - RO
+          items:
+            type: string
+      - name: bank_features.supports_send_payment.value
+        in: query
+        description: Filters for banks that support payment initiation.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+          example: false
+          default: false
+      - name: bank_features.supports_receive_payment.value
+        in: query
+        description: Filters for banks that support receiving payments.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+          example: false
+          default: false
+      - name: bank_features.supports_balance.value
+        in: query
+        description: Filters for the banks that support retrieving balances.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+          example: false
+          default: false
+      - name: bank_features.supports_scheduled_payment.value
+        in: query
+        description: Filters for banks that support future dated scheduled payments.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+          example: false
+          default: false
+      - name: bank_features.supports_standing_order.value
+        in: query
+        description: Filters for banks that support recurring payments/standing orders.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+          example: false
+          default: false
+      - name: bank_features.requires_one_step_payment.value
+        in: query
+        description: Filters for banks that only support immediate redemption of transfers.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+          example: false
+          default: false
+      - name: bank_features.supports_funds_confirmation.value
+        in: query
+        description: Filters for the banks that support confirmation of available funds.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+          example: false
+          default: false
+      - name: bank_features.supports_return_refund_account.value
+        in: query
+        description: Filters for the banks that support request of refund account.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+          example: false
+          default: false
+      - name: bank_features.supports_transactions_date_filter.value
+        in: query
+        description: Filters for banks that support retrieving transactions by date filter.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+          example: false
+          default: false
+      - name: bank_features.supports_account_information.value
+        in: query
+        description: Filters for banks that support retrieval of account information.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+          example: false
+          default: false
+      - name: bank_features.supports_single_payment.value
+        in: query
+        description: Filters for banks that support single immediate payments.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+          example: false
+          default: false
+      - name: bank_features.supports_variable_recurring_payment.value
+        x-internal: true
+        in: query
+        description: Filters for banks that support variable recurring payments.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+          example: false
+          default: false
+      - name: bics
+        in: query
+        description: Filters for banks whose BIC matches any of the listed BICs (case-insensitive), up to a maximum of 1000.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            example: BKENGB2L, BNPAFRPH, NBAGDE3E
+      - name: supportedPaymentNetworks
+        in: query
+        description: Filters for banks that support any of the listed payment networks.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: bankGroup
+        in: query
+        description: Filters for banks that are part of the bank group specified.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example:
+        - HSBC
+        - Coop
+      - name: bankSubGroup
+        in: query
+        description: Filters for banks that are part of the bank sub-group specified.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example:
+        - CMM Grand
+        - Banque Populaire
+        - La Banque
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBanksResponse'
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '403':
+          description: Permission to access this endpoint is denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        '404':
+          description: The requested entity, such as a payment, was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_429'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        '501':
+          description: The operation was not implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_501'
+        '503':
+          description: Service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_503'
+        '504':
+          description: Gateway has timed out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_504'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+  /bank/countries:
+    get:
+      tags:
+      - Banks v1
+      summary: Get bank countries
+      description: The `GET /banks/countries` endpoint retrieves the list of countries that have connected banks which match the parameters specified.
+      operationId: GatewayService.GetBanksCountries
+      parameters:
+      - name: ids
+        in: query
+        description: Filters for banks with bank ids that are represented in this list of ids (case-insensitive), up to a maximum of 1000.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+        example:
+        - goldbank
+        - opalbank
+        - platinumbank
+      - name: search
+        in: query
+        description: Filters for banks with names or identifiers that contain this search string (case sensitive).
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: banca
+      - name: tppId
+        in: query
+        description: Filters for banks to which the TPP with this `tppId` has access.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: 9fk3m361-f12r-04b9-p39f-rio2m3pw9v8s
+      - name: bankCode
+        in: query
+        description: Filters for banks with a BIC (or BLZ, if German) that matches this `bankCode`. The BIC must have a string length of 8 or 11. The BLZ must have a string length of 8.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: NBAGDE3E
+      - name: countries
+        in: query
+        description: Filters for banks that are located in the countries specified by this list of two-letter country code in upper case (ISO 3166-1 alpha-2).
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            example: GB, RO, AT
+      - name: providers
+        in: query
+        description: Filters for banks that are accessed through any of this list of providers.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          example: Token.io
+          items:
+            type: string
+      - name: bank_features.supports_send_payment.value
+        in: query
+        description: Filters for banks that support payment initiation.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+          example: false
+          default: false
+      - name: bank_features.supports_receive_payment.value
+        in: query
+        description: Filters for banks that support the receipt of payments.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+          example: false
+          default: false
+      - name: bank_features.supports_balance.value
+        in: query
+        description: Filters for the banks that support retrieving account balances.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+          example: false
+          default: false
+      - name: bank_features.supports_scheduled_payment.value
+        in: query
+        description: Filters for banks that support future dated scheduled payments.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+          example: false
+          default: false
+      - name: bank_features.supports_standing_order.value
+        in: query
+        description: Filters for banks that support standing orders/recurring payments.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+          example: false
+          default: false
+      - name: bank_features.requires_one_step_payment.value
+        in: query
+        description: Filters for banks that only support immediate redemption of transfer tokens.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+          example: false
+          default: false
+      - name: bank_features.supports_funds_confirmation.value
+        in: query
+        description: Filters for banks that support confirmation of available funds.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+          example: false
+          default: false
+      - name: bank_features.supports_return_refund_account.value
+        in: query
+        description: Filters for banks that support the request of refund account.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+          example: false
+          default: false
+      - name: bank_features.supports_transactions_date_filter.value
+        in: query
+        description: Filters for banks that support retrieving transactions by date filter.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+          example: false
+          default: false
+      - name: bank_features.supports_account_information.value
+        in: query
+        description: Filters for banks that support retrieving account information using Account Information Services (AIS).
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+          example: false
+          default: false
+      - name: bank_features.supports_single_payment.value
+        in: query
+        description: Filters for banks that support single immediate payments.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+          example: false
+          default: false
+      - name: bank_features.supports_variable_recurring_payment.value
+        in: query
+        description: Filters for banks that support variable recurring payments.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          format: boolean
+          example: false
+          default: false
+      - name: memberId
+        in: query
+        description: The Token.io-assigned member id of the TPP.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq
+        example: m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq
+      - name: supportedPaymentNetworks
+        in: query
+        description: Filters for banks that support any of the listed payment networks.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            example: SEPA
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBanksCountriesResponse'
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '403':
+          description: Permission to access this endpoint is denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        '404':
+          description: The requested entity, such as a payment, was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_429'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        '501':
+          description: The operation was not implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_501'
+        '503':
+          description: Service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_503'
+        '504':
+          description: Gateway has timed out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_504'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+components:
+  schemas:
+    PaymentNotFoundError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: NOT_FOUND
+        paymentId:
+          type: string
+          description: The requested entity, the `paymentID`, was not found.
+          example: pm2:12345abcd:abcde
+      description: 'The error object returned when given payment cannot be found: ResourceNotFound.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    MandatoryFieldsStandingOrderInternational:
+      type: object
+      properties:
+        fields:
+          type: array
+          description: The full path to the field within the international standing order.
+          example:
+          - standing_order_body.instructions.transfer_destinations.customer_data.legal_names
+          - standing_order_body.instructions.source.bic
+          - standing_order_body.instructions.source.account_identifier
+          items:
+            type: string
+        PolishApiFields:
+          type: array
+          description: Lists other Polish API fields which must be included in the international token request.
+          example: standing_order_body.instructions.metadata.provider_transfer_metadata.polish_api_transfer_metadata.delivery_mode
+          items:
+            type: string
+        StetFields:
+          type: array
+          description: Lists other STET API fields which must be included in the international token request.
+          example: standing_order_body.instructions.metadata.provider_transfer_metadata.polish_api_transfer_metadata.delivery_mode
+          items:
+            type: string
+      description: Specifies the mandatory fields for an international standing order.
+    MandatoryFieldsAccessDomestic:
+      type: object
+      properties:
+        fields:
+          type: array
+          description: The full path to the field within the domestic access request.
+          example:
+          - access_body.instructions.access_destinations.customer_data.legal_names
+          - access_body.instructions.source.bic
+          - access_body.instructions.source.account_identifier
+          items:
+            type: string
+        PolishApiFields:
+          type: array
+          description: Lists other Polish API fields which must be included in the domestic access request.
+          example: access_body.instructions.metadata.provider_access_metadata.polish_api_access_metadata.delivery_mode
+          items:
+            type: string
+        StetFields:
+          type: array
+          description: Lists other STET API fields which must be included in the domestic access request.
+          example: access_body.instructions.metadata.provider_access_metadata.stet_access_metadata.beneficiary.creditor_agent
+          items:
+            type: string
+      description: Specifies the mandatory fields for an access request.
+    inline_response_500:
+      properties:
+        error:
+          allOf:
+          - type: object
+            properties:
+              errorCode:
+                type: string
+                description: This is a textual error code categorising the error.
+                example: InternalServerError
+          - $ref: '#/components/schemas/ServerError'
+    TransferDestinationElixir:
+      title: elixir
+      required:
+      - accountNumber
+      type: object
+      properties:
+        accountNumber:
+          type: string
+          description: The payee's Elixir-registered bank account number. You can also enter the iban in this field for iban accounts.
+          example: FRAX82783423
+      description: The interbank payment system in Poland.
+    inline_response_504:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/GatewayTimeoutError'
+    inline_response_400:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    ServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: 'This could refer to either an error by the payment service provider or the bank. When the bank reports a 5xx error, `"token-external-error": "true"` is set as a header in the HTTP response, indicating that the "internal" error originates from the bank. When one of the payment service providers internal services fails or when the bank reports a 4xx error, this header is not populated. The absence of this response header should be interpreted as `"token-external-error": "false"`.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    MaintenanceWindow:
+      description: Details of the bank's planned or unplanned maintenance window.
+      type: array
+      items:
+        $ref: '#/components/schemas/maintenance'
+    inline_response_501:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/NotImplementedError'
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: The request does not have valid authentication credentials needed to perform the operation.
+    ResourceExhaustedError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: RESOURCE_EXHAUSTED
+        paymentId:
+          type: string
+          description: The maximum number of requests has been reached.
+          example: Resource exhausted. Check quota.
+      description: Resource exhausted. Too many requests.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    TransferDestinationEuDomesticNonEuroInstant:
+      title: euDomesticNonEuroInstant
+      oneOf:
+      - $ref: '#/components/schemas/EUIbanAccount'
+      - $ref: '#/components/schemas/BbanAccount'
+      - $ref: '#/components/schemas/ClearingNumberAccount'
+      - $ref: '#/components/schemas/SENoBankIdAccount'
+      description: The instant payment system within a country using that country's non-Euro domestic currency. An IBAN account will require an `iban` and an optional `bic`, a BBAN account will require a `bban` and an optional `bic`, a Clearing Number account will require a `bban` and a `clearingNumber`. A SENoBankId account, where the currency is SEK or NOK, will require an `iban` and `bban` with an optional `bic` and/or `clearingNumber`. This option is only available for an HP flow that doesn't have a preselected `bankId`.
+    BankV1:
+      type: object
+      properties:
+        bankGroup:
+          type: string
+          description: The name of the banking group in which this bank holds membership.
+          example: XYZ-Bank-Group
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long.
+          example: BOFIIE2D
+        countries:
+          type: array
+          description: A list of two-letter country codes in upper case (ISO 3166-1 alpha-2), in which this bank operates.
+          example:
+          - DE
+          - IT
+          - GB
+          items:
+            type: string
+        credentialFields:
+          $ref: '#/components/schemas/CredentialFields'
+        fieldsFormatInformation:
+          type: array
+          description: Contains bank-dependent formatting constraints indicating allowable characters, if any.
+          items:
+            $ref: '#/components/schemas/FieldFormatInformation'
+        fullLogoUri:
+          type: string
+          description: The URI of the location of the full size bank icon.
+          example: https://s3-us-west-2.amazonaws.com/tokenio-assets/1.0.0/logos/gold/gold_full.png
+        id:
+          type: string
+          description: The Token.io bank identifier.
+          example: ob-modelo
+        identifier:
+          type: string
+          description: The optional identifier for the bank. This is not guaranteed to be unique across all banks.
+          example: BLZ
+        logoUri:
+          type: string
+          description: The URI of the location of the square bank avatar icon.
+          example: https://s3-us-west-2.amazonaws.com/tokenio-assets/1.0.0/logos/gold/gold_square.png
+        mandatoryFields:
+          $ref: '#/components/schemas/MandatoryFields'
+        maintenanceWindow:
+          $ref: '#/components/schemas/MaintenanceWindow'
+        name:
+          type: string
+          description: The commonly recognised name of the bank.
+          example: Gold Bank
+        openBankingStandard:
+          $ref: '#/components/schemas/OpenBankingStandard'
+        operationalTime:
+          type: string
+          description: Specifies the bank’s days and hours of operation in a normal week. Does not take into account bank-specific public holidays, which may or may not be considered out-of-operation time.
+          example: MON to FRI, 00:00 to 24:00 GMT+1
+        provider:
+          type: string
+          description: Open Banking SaaS adapter or provider.
+          example: Token.io
+        requiresExternalAuth:
+          type: boolean
+          description: The bank connection requires external authorization for creating transfers.
+          format: boolean
+          example: false
+          default: false
+        requiresOneStepPayment:
+          type: boolean
+          description: The bank connection only supports immediate redemption of transfer tokens.
+          format: boolean
+          example: false
+          default: false
+        scaMethods:
+          $ref: '#/components/schemas/scaMethod'
+        supportedTransferDestinationTypes:
+          type: array
+          description: Payment methods/rails supported by the bank.
+          example:
+          - SWIFT
+          - FASTER_PAYMENTS
+          - SEPA
+          items:
+            type: string
+            oneOf:
+            - $ref: '#/components/schemas/TransferDestinationBankgiro'
+            - $ref: '#/components/schemas/TransferDestinationCustom'
+            - $ref: '#/components/schemas/TransferDestinationElixir'
+            - $ref: '#/components/schemas/TransferDestinationEuDomesticNonEuro'
+            - $ref: '#/components/schemas/TransferDestinationEuDomesticNonEuroInstant'
+            - $ref: '#/components/schemas/TransferDestinationFasterPayments'
+            - $ref: '#/components/schemas/TransferDestinationPlusgiro'
+            - $ref: '#/components/schemas/TransferDestinationSepa'
+            - $ref: '#/components/schemas/TransferDestinationSepaInstant'
+            - $ref: '#/components/schemas/TransferDestinationToken'
+            - $ref: '#/components/schemas/TransferDestinationType'
+        supportsBalance:
+          type: boolean
+          description: The bank connection supports the retrieval of balances.
+          format: boolean
+          example: false
+          default: false
+        supportsFundsConfirmation:
+          type: boolean
+          description: The bank connection supports confirmation of available funds.
+          format: boolean
+          example: false
+          default: false
+        supportsAccountInformation:
+          type: boolean
+          description: The bank connection supports retrieval of information through Account Information Services (AIS).
+          format: boolean
+          example: false
+          default: false
+        supportsReceivePayment:
+          type: boolean
+          description: The bank connection supports the receipt of payments.
+          format: boolean
+          example: false
+          default: false
+        supportsReturnRefundAccount:
+          type: boolean
+          description: The bank connection supports the return of refunds.
+          format: boolean
+          example: false
+          default: false
+        supportsScheduledPayment:
+          type: boolean
+          description: The bank connection supports future dated payments.
+          format: boolean
+          example: false
+          default: false
+        supportsSendPayment:
+          type: boolean
+          description: The bank connection supports payment initiation.
+          format: boolean
+          example: false
+          default: false
+        supportsStandingOrder:
+          type: boolean
+          description: The bank connection supports scheduled recurring payments.
+          format: boolean
+          example: false
+          default: false
+        supportsTransactionsDateFilter:
+          type: boolean
+          description: The bank connection supports specifying startDate and endDate for filtering transaction lookups.
+          format: boolean
+          example: false
+          default: false
+        supportsSinglePayment:
+          type: boolean
+          description: The bank connection supports single immediate payments.
+          format: boolean
+          example: false
+          default: false
+        supportsVariableRecurringPayment:
+          x-internal: true
+          type: boolean
+          description: The bank connection supports variable recurring payments.
+          format: boolean
+          example: false
+          default: false
+        transactionHistoryLimit:
+          type: integer
+          description: Defines the number of transaction history records allowed per page, -1 (unlimited) or a positive integer (record limit).
+          format: int32
+          example: 65
+          default: -1
+    OpenBankingStandard:
+      type: string
+      description: Specifies the API standard adopted by the bank.
+      example: UK_Open_Banking_Standard
+      default: Invalid_Standard
+      enum:
+      - Invalid_Standard
+      - UK_Open_Banking_Standard
+      - Starling_Bank_API
+      - PolishApi
+      - STET_PSD2_API
+      - Citi_Handlowy_PSD2_API
+      - NextGenPsd2
+      - Slovak_Banking_API_Standard
+      - Czech_Open_Banking_Standard
+      - American_Express_PSD2_API
+      - Budapest_Bank_API
+    MandatoryFieldsTransferDomestic:
+      type: object
+      properties:
+        fields:
+          type: array
+          description: The full path to the field within the domestic transfer.
+          example:
+          - transfer_body.instructions.transfer_destinations.customer_data.legal_names
+          - transfer_body.instructions.source.bic
+          - transfer_body.instructions.source.account_identifier
+          items:
+            type: string
+        PolishApiFields:
+          type: array
+          description: Lists other Polish API fields which must be included in the domestic transfer.
+          example: transfer_body.instructions.metadata.provider_transfer_metadata.polish_api_transfer_metadata.delivery_mode
+          items:
+            type: string
+        StetFields:
+          type: array
+          description: Lists other STET API fields which must be included in the domestic transfer.
+          example: transfer_body.instructions.metadata.provider_transfer_metadata.stet_transfer_metadata.beneficiary.creditor_agent
+          items:
+            type: string
+      description: Specifies the mandatory fields for a domestic transfer.
+    TransferDestinationSepa:
+      title: sepa
+      allOf:
+      - description: The Single Euro Payments Area (SEPA), for bank transfers denominated in Euro. This consists of the 27 member states of the European Union, the four member states of the European Free Trade Association (Iceland, Liechtenstein, Norway and Switzerland) and the UK.
+      - $ref: '#/components/schemas/SepaAccount'
+    MandatoryFieldsTransferInternational:
+      type: object
+      properties:
+        fields:
+          type: array
+          description: The full path to the field within the international transfer.
+          example:
+          - transfer_body.instructions.transfer_destinations.customer_data.legal_names
+          - transfer_body.instructions.source.bic
+          - transfer_body.instructions.source.account_identifier
+          items:
+            type: string
+        PolishApiFields:
+          type: array
+          description: Lists other Polish API fields which must be included in the international transfer.
+          example: transfer_body.instructions.metadata.provider_transfer_metadata.polish_api_transfer_metadata.delivery_mode
+          items:
+            type: string
+        StetFields:
+          type: array
+          description: Lists other STET API fields which must be included in the international transfer.
+          example: transfer_body.instructions.metadata.provider_transfer_metadata.stet_transfer_metadata.beneficiary.creditor_agent
+          items:
+            type: string
+      description: Specifies the mandatory fields for an international transfer.
+    bankId:
+      type: string
+      description: The Token.io id of the bank where the consent is created. **This field is required if the customer is not using Token.io's Hosted Pages for bank selection, <i>i.e.</i>, API-only integration when `EMBEDDED_HOSTED_PAGES` is selected in `flowType`, or Hosted Pages embedded (modal) integration.**
+      example: ob-modelo
+    MandatoryFieldsTransfer:
+      type: object
+      properties:
+        domestic:
+          $ref: '#/components/schemas/MandatoryFieldsTransferDomestic'
+        international:
+          $ref: '#/components/schemas/MandatoryFieldsTransferInternational'
+      description: Specifies the mandatory fields for a transfer token request.
+    TransferDestinationBankgiro:
+      title: bankgiro
+      allOf:
+      - description: The identifier for domestic bank accounts in Sweden.
+      - $ref: '#/components/schemas/BankGiroAccount'
+    FieldFormatInformation:
+      type: object
+      properties:
+        constraint:
+          type: string
+          description: The regex specifying allowed characters. See <a href=\"https://regexr.com/3cr6f\" target=\"_blank\">https://regexr.com/3cr6f</a>https://regexr.com/3cr6f for more details.
+          example: ^[A-Za-z0-9?:()./,'+\-\s]*$
+        name:
+          type: string
+          description: The name of the field in the Token.io `requestpayload` with bank-imposed formatting constraints.
+          example: description
+        path:
+          type: string
+          description: The `object.field` path indicating the constrained field's position in the Token.io `requestPayload`.
+          example: credentials.credentials1
+      description: Contains bank-dependent formatting constraints indicating allowable characters, if any.
+    inline_response_404:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/PaymentNotFoundError'
+    TransferDestinationToken:
+      title: token
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: The bank account identifier for a linked account used by Token.io's Bank Integration Account Linking Service.
+        memberId:
+          type: string
+          description: The Token.io-generated member id for the user/account holder.
+          example: m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq
+      description: The primary account number. The cCard identifier found on payment cards, such as credit and debit cards, as well as stored-value cards, gift cards and other similar cards, somtimes referred to as a bank card number.
+    MandatoryFieldsStandingOrder:
+      type: object
+      properties:
+        domestic:
+          $ref: '#/components/schemas/MandatoryFieldsStandingOrderDomestic'
+        international:
+          $ref: '#/components/schemas/MandatoryFieldsStandingOrderInternational'
+      description: Specifies the mandatory fields for a standing order token request.
+    maintenance:
+      type: object
+      properties:
+        startTime:
+          type: string
+          description: The start time of the maintenance window (in <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a> format).
+          example: '2023-05-03T12:28:20.466Z'
+        endTime:
+          type: string
+          description: The end time of the maintenance window (in <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a> format).
+          example: '2023-05-03T12:40:25.47Z'
+        type:
+          type: string
+          description: The bank status:<ul><li><b>NO_DOWNTIME_EXPECTED</b> - the bank is currently connected, accepting API calls, and returning appropriate responses</li><li><b>DOWNTIME_EXPECTED</b> - there is a planned outage between the `startTime` and `endTime` specified</li><li><b>OUTAGE</b> - connection interrupted; the bank cannot currently accept API calls for this service between the `startTime` and `endTime` specified</li></ul>
+          example: OUTAGE
+          default: INVALID
+          enum:
+          - INVALID
+          - NO_DOWNTIME_EXPECTED
+          - DOWNTIME_EXPECTED
+          - OUTAGE
+        productType:
+          type: string
+          description: The bank product:<ul><li><b>AIS</b> - Account Information Services</li><li><b>SIP</b> - all payment services including Single Immediate Payments, Future Dated Payments, Standing Orders</li></ul>
+          example: SIP
+          default: INVALID
+          enum:
+          - INVALID
+          - AIS
+          - SIP
+    ErrorWithCode:
+      required:
+      - errorCode
+      - message
+      type: object
+      properties:
+        errorCode:
+          type: string
+          description: A textual error code categorising the error.
+          example: InternalServerError
+        message:
+          type: string
+          description: A description of the error that occurred and a possible way to fix it.
+          example: '`RefId` should not be longer than 35 symbols.'
+      description: Error object providing details about the error.
+      allOf:
+      - $ref: '#/components/schemas/Error'
+    GetBanksCountriesResponse:
+      type: object
+      properties:
+        countries:
+          type: array
+          description: Two-letter country codes in upper case (ISO 3166-1 alpha-2).
+          items:
+            type: string
+            example: RO, AT, DE, FR
+    Paging:
+      type: object
+      properties:
+        page:
+          type: integer
+          description: The index of the current page.
+          format: int32
+          example: 15
+        pageCount:
+          type: integer
+          description: The number of records per page.
+          format: int32
+          example: 80
+        perPage:
+          type: integer
+          description: The number of total pages.
+          format: int32
+          example: 32
+        totalCount:
+          type: integer
+          description: The number of total records.
+          format: int32
+          example: 2500
+      description: Contains the page information for response content.
+    SepaAccount:
+      title: SepaAccount
+      required:
+      - iban
+      type: object
+      properties:
+        iban:
+          type: string
+          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
+          example: BOFIIE2D
+      description: SEPA account details where the iban is required and the bic is optional.
+    ClearingNumberAccount:
+      title: ClearingNumberAccount
+      required:
+      - bban
+      type: object
+      properties:
+        bban:
+          type: string
+          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
+          example: NWBK60161331926819
+        clearingNumber:
+          type: string
+          description: The bank clearing number or BC number is a number used for the identification of financial institutions in Switzerland and Liechtenstein. Bank clearing numbers are connected to the Swiss Interbank Clearing and the EuroSIC system.
+          example: 87654321
+      description: Account details where the bban is required and the clearing number is optional.
+    CredentialFieldType:
+      type: string
+      description: Specifies the type of credential.
+      example: PASSWORD
+      enum:
+      - INVALID
+      - FIELD
+      - PASSWORD
+      - PSU_MESSAGE
+      - IMAGE
+      - FLICKER
+      - DECOUPLED
+    inline_response_403:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/PermissionDeniedError'
+    TransferDestinationEuDomesticNonEuro:
+      title: euDomesticNonEuro
+      oneOf:
+      - $ref: '#/components/schemas/EUIbanAccount'
+      - $ref: '#/components/schemas/BbanAccount'
+      - $ref: '#/components/schemas/ClearingNumberAccount'
+      - $ref: '#/components/schemas/SENoBankIdAccount'
+      description: The payment system within a country using that country's non-Euro domestic currency. An IBAN account will require an `iban` and an optional `bic`, a BBAN account will require a `bban` and an optional `bic`, a Clearing Number account will require a `bban` and a `clearingNumber`. A SENoBankId account, where the currency is SEK or NOK, will require an `iban` and `bban` with an optional `bic` and/or `clearingNumber`. This option is only available for an HP flow that doesn't have a preselected `bankId`.
+    TransferDestinationType:
+      title: type
+      type: string
+      description: Specifies the type of transfer destination.
+      example: BUSINESS
+      default: UNKNOWN
+      enum:
+      - UNKNOWN
+      - BUSINESS
+      - PERSONAL
+    MandatoryFieldsAccessInternational:
+      type: object
+      properties:
+        fields:
+          type: array
+          description: The full path to the field within the international access request.
+          example:
+          - access_body.instructions.access_destinations.customer_data.legal_names
+          - access_body.instructions.source.bic
+          - access_body.instructions.source.account_identifier
+          items:
+            type: string
+        PolishApiFields:
+          type: array
+          description: Lists other Polish API fields which must be included in the access request.
+          example: access_body.instructions.metadata.provider_access_metadata.polish_api_access_metadata.delivery_mode
+          items:
+            type: string
+        StetFields:
+          type: array
+          description: Lists other STET API fields which must be included in the access request.
+          example: access_body.instructions.metadata.provider_access_metadata.stet_access_metadata.beneficiary.creditor_agent
+          items:
+            type: string
+      description: Specifies the mandatory fields for an international access request.
+    ServiceUnavailableError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: UNAVAILABLE
+        paymentId:
+          type: string
+          description: The service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+          example: Unavailable
+      description: Service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    FasterPaymentsAccount:
+      title: FasterPaymentsAccount
+      required:
+      - accountNumber
+      - sortCode
+      type: object
+      properties:
+        accountNumber:
+          type: string
+          description: The unique identifier for the bank account in the UK or Ireland.
+          example: '12345678'
+        sortCode:
+          type: string
+          description: The number assigned to a branch of a bank, typically containing six digits and most commonly used in the UK and Ireland.
+          example: '123456'
+      description: A UK or Irish account where the sort code and account number are required.
+    BbanAccount:
+      title: BbanAccount
+      required:
+      - bban
+      type: object
+      properties:
+        bban:
+          type: string
+          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
+          example: NWBK60161331926819
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
+          example: BOFIIE2D
+      description: Account details where the bban is required and the bic is optional.
+    inline_response_401:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    TransferDestinationSepaInstant:
+      title: sepaInstant
+      allOf:
+      - description: SEPA Instant Credit, the instant payment processing system with funds made available immediately for the recipient.
+      - $ref: '#/components/schemas/SepaInstantAccount'
+    BankGiroAccount:
+      title: BankGiroAccount
+      required:
+      - bankgiroNumber
+      type: object
+      properties:
+        bankgiroNumber:
+          type: string
+          description: The unique identifier for the bank account in Sweden (known in Swedish as Bankgironummer), it consists of 7 or 8 digits.
+          example: '56781234'
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
+          example: BOFIIE2D
+      description: Account details where the bankgiroNumber is required and the bic is optional.
+    MandatoryFieldsStandingOrderDomestic:
+      type: object
+      properties:
+        fields:
+          type: array
+          description: The full path to the field within the domestic standing order.
+          example:
+          - standing_order_body.instructions.transfer_destinations.customer_data.legal_names
+          - standing_order_body.instructions.source.bic
+          - standing_order_body.instructions.source.account_identifier
+          items:
+            type: string
+        PolishApiFields:
+          type: array
+          description: Lists other Polish API fields which must be included in the domestic standing order.
+          example: standing_order_body.instructions.metadata.provider_transfer_metadata.polish_api_transfer_metadata.delivery_mode
+          items:
+            type: string
+        StetFields:
+          type: array
+          description: Lists other STET API fields which must be included in the domestic standing order.
+          example: standing_order_body.instructions.metadata.provider_transfer_metadata.stet_transfer_metadata.beneficiary.creditor_agent
+          items:
+            type: string
+      description: Specifies the mandatory fields for a domestic standing order.
+    CredentialField:
+      type: object
+      properties:
+        description:
+          type: string
+          description: The description of the credentials.
+          example: User authentication
+        displayName:
+          type: string
+          description: The display name for the credentials.
+          example: Client ID
+        flickerCode:
+          type: string
+          description: The Flicker code displayed to the user.
+          example: FLICKERCODE
+        id:
+          type: string
+          description: Specifies the identifier to be used when passing the value for this credential.
+          example: clientId
+        image:
+          type: string
+          description: A Base64 representation of an image displayed to the user.
+          example: YWJAeXoyWhAeXohteQ
+        options:
+          type: array
+          description: A list of options for the user to select from. For example, it can be an SCA method choice (SMS message, phone call <i>etc</i>.), or confirm/decline options for a confirmation page. The customer sends one of the values back to Token.io with the corresponding id.
+          example:
+          - SMS
+          - Phone call
+          items:
+            type: string
+        type:
+          $ref: '#/components/schemas/CredentialFieldType'
+      description: Contains information used in embedded authentication flows.
+    SepaInstantAccount:
+      title: SepaInstantAccount
+      required:
+      - iban
+      type: object
+      properties:
+        iban:
+          type: string
+          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
+          example: BOFIIE2D
+      description: SEPA Instant account details where the iban is required and the bic is optional.
+    inline_response_429:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ResourceExhaustedError'
+    MandatoryFields:
+      type: object
+      properties:
+        access:
+          $ref: '#/components/schemas/MandatoryFieldsAccess'
+        standingOrder:
+          $ref: '#/components/schemas/MandatoryFieldsStandingOrder'
+        transfer:
+          $ref: '#/components/schemas/MandatoryFieldsTransfer'
+      description: Contains the fields required by the bank, which the TPP must populate in the token request, where applicable.
+    scaMethods:
+      type: string
+      description: 'The SCA (Strong Customer Authentication) method: <ul><li><b>Redirect</b> - User is redirected to bank for SCA.</li><li><b>Decoupled</b> - User receives sms / notification during authentication at bank</li><li><b>Confirmation Page</b> - User is presented with a page where they confirm authentication.</li><li><b>Multi-redirect</b> - Intermediate steps as part of authentication flow for user at bank.</li><li><b>Embedded single step</b> - Capture of fields for credentials in a single step.</li><li><b>Embedded multi-step</b> - Multiple steps in capture of credential fields from user.</li></ul>'
+      example: REDIRECT
+      default: INVALID_SCA_METHOD
+      enum:
+      - INVALID_SCA_METHOD
+      - REDIRECT
+      - DECOUPLED
+      - CONFIRMATION_PAGE
+      - MULTI_REDIRECT
+      - EMBEDDED_SINGLE_STEP
+      - EMBEDDED_MULTI_STEP
+    PermissionDeniedError:
+      type: object
+      properties:
+        errorCode:
+          example: PermissionDenied
+      description: 'The error returned when the member is not authorized to perform the given operation: PermissionDenied. <br/>This error message will be accompanied by the reason from the bank. Typically this means the access token has expired and the user must re-authenticate with the bank.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    scaMethod:
+      type: array
+      items:
+        $ref: '#/components/schemas/scaMethods'
+    SENoBankIdAccount:
+      title: SENoBankIdAccount
+      required:
+      - iban
+      - bban
+      type: object
+      properties:
+        iban:
+          type: string
+          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+        bban:
+          type: string
+          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
+          example: NWBK60161331926819
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
+          example: BOFIIE2D
+        clearingNumber:
+          type: string
+          description: The bank clearing number or BC number is a number used for the identification of financial institutions in Switzerland and Liechtenstein. Bank clearing numbers are connected to the Swiss Interbank Clearing and the EuroSIC system.
+          example: 87654321
+      description: Account details where the iban and bban are required and the bic and clearing number are optional. This is ONLY allowed for an HP flow if there is no `bankId` provided in the initiation AND the currency is SEK or NOK.
+    GatewayTimeoutError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: DEADLINE_EXCEEDED
+        paymentId:
+          type: string
+          description: The deadline expired before the operation could complete.
+          example: Deadline exceeded.
+      description: The deadline expired before the operation could complete.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    EUIbanAccount:
+      title: EUIbanAccount
+      required:
+      - iban
+      type: object
+      properties:
+        iban:
+          type: string
+          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
+          example: BOFIIE2D
+      description: Account details where the iban is required and the bic is optional.
+    NotImplementedError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: UNIMPLEMENTED
+        paymentId:
+          type: string
+          description: The operation was not implemented,supported or enabled by the bank.
+          example: Not implemented.
+      description: The operation was not implemented, supported or enabled by the bank.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    PlusGiroAccount:
+      title: PlusGiroAccount
+      required:
+      - plusgiroNumber
+      type: object
+      properties:
+        plusgiroNumber:
+          type: string
+          description: The unique identifier for the Swedish money transaction system owned by <a href="https://www.nordea.com" target="blank">Nordea</a>.
+          example: '67812345'
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
+          example: BOFIIE2D
+      description: Account details where the plusgiroNumber is required and the bic is optional.
+    TransferDestinationPlusgiro:
+      title: plusgiro
+      allOf:
+      - description: The domestic transaction clearing system in Sweden. The credit transfer function, which is part of <a href="https://www.nordea.com" target="_blank">Nordea</a>, and used for mediating payments between accounts held by companies and individuals.
+      - $ref: '#/components/schemas/PlusGiroAccount'
+    inline_response_503:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ServiceUnavailableError'
+    TransferDestinationFasterPayments:
+      title: fasterPayments
+      allOf:
+      - description: The interbank payment system in the UK, Full Payment Submission (FPS).
+      - $ref: '#/components/schemas/FasterPaymentsAccount'
+    GetBanksResponse:
+      type: object
+      properties:
+        banks:
+          type: array
+          description: Contains information for each bank matching the request criteria.
+          items:
+            $ref: '#/components/schemas/BankV1'
+        paging:
+          $ref: '#/components/schemas/Paging'
+        rank:
+          type: integer
+          description: Sort banks by the value of rank.
+          example:
+          - 1
+          - 2
+          - 100
+        bankSubGroup:
+          type: string
+          description: Filters for banks that are part of the bank sub-group specified.
+          example:
+          - CMM Grand
+          - Banque Populaire
+          - La Banque
+    MandatoryFieldsAccess:
+      type: object
+      properties:
+        domestic:
+          $ref: '#/components/schemas/MandatoryFieldsAccessDomestic'
+        international:
+          $ref: '#/components/schemas/MandatoryFieldsAccessInternational'
+      description: Specifies the mandatory fields for an access token request.
+    CredentialFields:
+      type: object
+      properties:
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/CredentialField'
+          description: Contains information used in embedded authentication flows. These are optional credential request fields. When provided, the TPP should call `initiateBankAuth` again to provide the credentials.
+    TransferDestinationCustom:
+      type: object
+      properties:
+        bankId:
+          $ref: '#/components/schemas/bankId'
+        payload:
+          type: string
+          description: The transfer payload.
+          example: sdfjds12-f85-46b0-8058-343dek543grt
+      description: The custom transfer destination.
+  securitySchemes:
+    Bearer:
+      type: http
+      description: '**For Production and Sandbox environments.**<br />When using curl samples the authorization header is given as -H `''Authorization: Bearer + JWT''`<br/>Please substitute your Bearer key here.<br/>For example:<br/> -H `''Authorization: Bearer eyJhbGciOiJFZERTQSIsImtpZCI6IjF4N2RmNHZ1RlVIWVFDYTciLCJtaWQiOiJtOlhUalhlMkFQZTRvdmVaalE4cHoyNGdEbUZEcTo1ekt0WEVBcSIsImhvc3QiOiJsb2NhbGhvc3Q6ODAwMCIsIm1ldGhvZCI6IlBPU1QiLCJwYXRoIjoiL2JhbmtzL2lyb24vdXNlcnMiLCJleHAiOjE1ODYyOTczNDQ3ODd9..bi3wxEoMHIul_F2f7gCDvgjHQKCjIyP9_SkQns-yXpS0UqoaOqSJrW89COexU71gt-mH3jH6mtp2aksEywvFDg''`<br/>Enter the JWT Bearer token only (see <a href="https://developer.token.io/token_rest_api_doc/content/e-rest/authentication.htm#JWT" target="_blank">JWT Authentication</a> for more information).'
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: apiKey
+      description: '**For Sandbox environment only.**<br />When using curl samples the authorization header is given as -H `''Authorization: YOUR_API_KEY_HERE''`<br/>Please substitute your Basic key here.<br/>For example:<br/> -H `''Authorization: Basic bS0zanhoS3pqRjRSWFQ1dHZLTlhMQU14cm80d0E1LTV6S3RYRUFxOmU1MWZjZDQ0LTM5MGQtNDYxZi04YjA0LTEyMjcxOTg4YWYwNg==''`'
+      name: Authorization
+      in: header

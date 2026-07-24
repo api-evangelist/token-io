@@ -1,0 +1,1719 @@
+openapi: 3.0.1
+info:
+  title: Token.io's Open Banking API for TPPs Account on File Sub-TPPs API
+  description: '<b>Token.io''s Open Banking API</b><br/><br/>Token.io Support: <a href="https://support.token.io" target="_blank">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user''s account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users'' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href="https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm" target="_blank">developer documentation</a>.'
+  version: ''
+servers:
+- url: https://api.token.io
+tags:
+- name: Sub-TPPs
+  description: These endpoints are for resellers using Token.io's licence to create, retrieve and delete sub-TPPs.
+paths:
+  /member/sub-tpps:
+    post:
+      tags:
+      - Sub-TPPs
+      summary: Create a sub-TPP
+      description: The `POST /member/sub-tpps` endpoint creates a new sub-TPP for a reseller.
+      operationId: GatewayService.CreateSubTpp
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSubTppRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateSubTppResponse'
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '403':
+          description: Permission to access this endpoint is denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        '404':
+          description: The requested entity, such as a sub-tpp, was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_429'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        '501':
+          description: The operation was not implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_501'
+        '503':
+          description: Service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_503'
+        '504':
+          description: Gateway has timed out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_504'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+    get:
+      tags:
+      - Sub-TPPs
+      summary: Get sub-TPPs
+      description: The `GET /member/sub-tpps` endpoint retrieves a list of all sub-TPPs for a reseller.
+      operationId: GatewayService.RetrieveSubTpps
+      parameters:
+      - name: page.offset
+        in: query
+        description: The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: LerV6Jmex
+      - name: page.limit
+        in: query
+        description: The maximum number of records to return. This must be less than 200.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 175
+          default: 1
+      - name: filter.byCompanyNames
+        in: query
+        description: Filters the sub-TPPs by the list of company names submitted.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            example: '["Company A","Company B","Company C"]'
+      - name: filter.byRegistrationDates
+        in: query
+        description: Filters the sub-TPPs by the list of registration dates submitted.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            example: '["22-03-21","19-05-21","27-07-21"]'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveSubTppsResponse'
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '403':
+          description: Permission to access this endpoint is denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        '404':
+          description: The requested entity, such as a sub-tpp, was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_429'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        '501':
+          description: The operation was not implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_501'
+        '503':
+          description: Service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_503'
+        '504':
+          description: Gateway has timed out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_504'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+  /member/sub-tpps/{subTppId}:
+    get:
+      tags:
+      - Sub-TPPs
+      summary: Get sub-TPP information
+      description: The `GET /member/sub-tpps/{subTppId}` endpoint retrieves the details of the specified sub-TPP for a reseller.
+      operationId: GatewayService.RetrieveSubTpp
+      parameters:
+      - name: subTppId
+        in: path
+        description: This id specifies the sub-TPP to be retrieved.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: 8d54f066-c14a-47c0-b58b-fec6b0ed6b4c
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveSubTppResponse'
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '403':
+          description: Permission to access this endpoint is denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        '404':
+          description: The requested entity, such as a sub-tpp, was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_429'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        '501':
+          description: The operation was not implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_501'
+        '503':
+          description: Service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_503'
+        '504':
+          description: Gateway has timed out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_504'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+    delete:
+      tags:
+      - Sub-TPPs
+      summary: Delete a sub-TPP
+      description: The `DELETE /member/sub-tpps/{subTppId}` endpoint deletes an existing sub-TPP for a reseller.
+      operationId: GatewayService.DeleteSubTpp
+      parameters:
+      - name: subTppId
+        in: path
+        description: This id specifies the sub-TPP to delete.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: 8d54f066-c14a-47c0-b58b-fec6b0ed6b4c
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteSubTppResponse'
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '403':
+          description: Permission to access this endpoint is denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        '404':
+          description: The requested entity, such as a sub-tpp, was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_429'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        '501':
+          description: The operation was not implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_501'
+        '503':
+          description: Service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_503'
+        '504':
+          description: Gateway has timed out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_504'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+  /member/sub-tpps/{subTppId}/children:
+    get:
+      tags:
+      - Sub-TPPs
+      summary: Get sub-TPP children
+      description: The `GET /member/sub-tpps/{subTppId}/children` endpoint retrieves the sub-TPP children for given sub-TPP.
+      operationId: GatewayService.RetrieveSubTppChildren
+      parameters:
+      - name: subTppId
+        in: path
+        description: This id specifies the sub-TPP for which the children are to be retrieved.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: 8d54f066-c14a-47c0-b58b-fec6b0ed6b4c
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveSubTppChildrenResponse'
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '403':
+          description: Permission to access this endpoint is denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        '404':
+          description: The requested entity, such as a sub-tpp, was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_429'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        '501':
+          description: The operation was not implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_501'
+        '503':
+          description: Service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_503'
+        '504':
+          description: Gateway has timed out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_504'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+components:
+  schemas:
+    PaymentNotFoundError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: NOT_FOUND
+        paymentId:
+          type: string
+          description: The requested entity, the `paymentID`, was not found.
+          example: pm2:12345abcd:abcde
+      description: 'The error object returned when given payment cannot be found: ResourceNotFound.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    member.TokenLicensedNonSoleTraderPrivateMerchantGB:
+      type: object
+      required:
+      - merchantJurisdiction
+      - legalEntityName
+      - companyRegistrationNumber
+      - primaryUseCase
+      - accountNumber
+      - sortCode
+      - ubos
+      - directors
+      properties:
+        merchantJurisdiction:
+          type: string
+          description: The 'merchantJurisdiction' field specifies the jurisdiction in which the merchant operates. Previously, this field was referred to as the 'domicile country'.
+          example: GB
+        legalEntityName:
+          type: string
+          description: Full name of the merchant legal entity.
+          example: Test Merchant Entity Name
+        companyRegistrationNumber:
+          type: string
+          description: Company registration number of merchant legal entity.
+          example: '123456789'
+        primaryUseCase:
+          type: string
+          description: 'Merchant primary use case. Possible values include: AIS: Accounting package integration, AIS: Cash flow management, AIS: Credit risk analysis, AIS: Customer onboarding / verification, AIS: Personal finance management, PIS: eCommerce merchant payment, PIS: Funding an account, PIS: In store merchant payment, PIS: Paying a bill, PIS: Paying off debt'
+          example: 'AIS: Accounting package integration'
+        accountNumber:
+          type: string
+          description: The unique identifier for the bank account in the UK or Ireland.
+          example: '12345678'
+        sortCode:
+          type: string
+          description: The number assigned to a branch of a bank, typically containing six digits and most commonly used in the UK and Ireland.
+          example: '123456'
+        merchantType:
+          type: string
+          description: Type of merchant being onboarded. Determines compliance requirements during onboarding. <ul><li><b>TOKEN_LICENSED_SOLE_TRADER</b>Individually operated business.</li><li><b>LICENSED_TPP_SOLE_TRADER</b>Individually operated business Licensed by TPP.</li><li><b>LICENSED_TPP_NON_SOLE_TRADER</b>Publicly listed company. May require Signatories depending on sub-TPP type.</li><li> <b>TOKEN_LICENSED_NON_SOLE_TRADER_PUBLIC</b>Publicly listed company. May require Signatories depending on sub-TPP type.</li><li><b>TOKEN_LICENSED_NON_SOLE_TRADER_PRIVATE</b>Privately held company. UBOs, Directors, and Signatories will be required depending on sub-TPP type.</li></ul>
+          example: TOKEN_LICENSED_NON_SOLE_TRADER_PRIVATE
+          enum:
+          - TOKEN_LICENSED_NON_SOLE_TRADER_PRIVATE
+        mccSubType:
+          type: string
+          description: Merchant Category Code Subtype, for certain industry this field needs to be provided.
+        ubos:
+          type: array
+          items:
+            $ref: '#/components/schemas/member.PersonDetail'
+        directors:
+          type: array
+          items:
+            $ref: '#/components/schemas/member.PersonDetail'
+      description: Contains information about the merchant member.
+    inline_response_500:
+      properties:
+        error:
+          allOf:
+          - type: object
+            properties:
+              errorCode:
+                type: string
+                description: This is a textual error code categorising the error.
+                example: InternalServerError
+          - $ref: '#/components/schemas/ServerError'
+    inline_response_504:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/GatewayTimeoutError'
+    inline_response_400:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    ServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: 'This could refer to either an error by the payment service provider or the bank. When the bank reports a 5xx error, `"token-external-error": "true"` is set as a header in the HTTP response, indicating that the "internal" error originates from the bank. When one of the payment service providers internal services fails or when the bank reports a 4xx error, this header is not populated. The absence of this response header should be interpreted as `"token-external-error": "false"`.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    inline_response_501:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/NotImplementedError'
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: The request does not have valid authentication credentials needed to perform the operation.
+    ResourceExhaustedError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: RESOURCE_EXHAUSTED
+        paymentId:
+          type: string
+          description: The maximum number of requests has been reached.
+          example: Resource exhausted. Check quota.
+      description: Resource exhausted. Too many requests.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    OldMerchantOnboarding:
+      title: Old Merchant Onboarding Flow
+      type: object
+      required:
+      - name
+      - domain
+      - merchant
+      properties:
+        domain:
+          type: string
+          description: The fully qualified domain name of the sub-TPP, also referred to as the absolute domain name. This specifies an exact location in the tree hierarchy of the Domain Name System (DNS). It must include all domain levels, including the top-level domain and the root zone.
+          example: somehost.example.com
+        logo:
+          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
+          type: string
+          description: This field specifies the image file containing the sub-TPP's logo as a byte array (click <a href="https://thewebdev.info/2021/08/01/how-to-convert-a-file-input-value-to-a-byte-array-with-javascript" target="_blank">here</a> for the JavaScript FileReader instance needed to convert the selected file into a byte array).
+          format: byte
+          example: b0Y5cVl6aDc3RkE5blZyQ24yamlh
+        merchant:
+          $ref: '#/components/schemas/member.Merchant'
+        name:
+          type: string
+          description: The recognised business name or DBA of the sub-TPP.
+          example: Sub-TPP Business Ltd
+        parentSubTppId:
+          $ref: '#/components/schemas/parentSubTppId'
+        mccCode:
+          type: string
+          description: Merchant Category Code is a four-digit number that classifies the type of goods or services a business offers.
+        useNewFlow:
+          type: boolean
+          example: false
+          description: When useNewFlow is set to true, the request is handled by the new merchant onboarding flow, rather than by the old flow.
+    CreateSubTppRequest:
+      type: object
+      oneOf:
+      - $ref: '#/components/schemas/OldMerchantOnboarding'
+      - $ref: '#/components/schemas/OldMerchantOnboardingGB'
+      - $ref: '#/components/schemas/TokenLicensedSoleTrader'
+      - $ref: '#/components/schemas/LicensedTppNonSoleTrader'
+      - $ref: '#/components/schemas/LicensedTppSoleTrader'
+      - $ref: '#/components/schemas/TokenLicensedNonSoleTraderPublic'
+      - $ref: '#/components/schemas/TokenLicensedNonSoleTraderPrivate'
+      - $ref: '#/components/schemas/TokenLicensedSoleTraderGB'
+      - $ref: '#/components/schemas/LicensedTppNonSoleTraderGB'
+      - $ref: '#/components/schemas/LicensedTppSoleTraderGB'
+      - $ref: '#/components/schemas/TokenLicensedNonSoleTraderPublicGB'
+      - $ref: '#/components/schemas/TokenLicensedNonSoleTraderPrivateGB'
+    member.SubTpp.Status:
+      type: string
+      example: ACTIVATED
+      default: INVALID_STATUS
+      enum:
+      - INVALID_STATUS
+      - ACTIVATED
+      - REJECTED
+      - AWAITING_APPROVAL
+      - DEACTIVATED
+      description: The status of the sub-TPP.
+    member.TokenLicensedNonSoleTraderPublicMerchantGB:
+      type: object
+      required:
+      - merchantJurisdiction
+      - legalEntityName
+      - companyRegistrationNumber
+      - primaryUseCase
+      - iban
+      properties:
+        merchantJurisdiction:
+          type: string
+          description: The 'merchantJurisdiction' field specifies the jurisdiction in which the merchant operates. Previously, this field was referred to as the 'domicile country'.
+          example: GB
+        legalEntityName:
+          type: string
+          description: Full name of the merchant legal entity.
+          example: Test Merchant Entity Name
+        companyRegistrationNumber:
+          type: string
+          description: Company registration number of merchant legal entity.
+          example: '123456789'
+        primaryUseCase:
+          type: string
+          description: 'Merchant primary use case. Possible values include: AIS: Accounting package integration, AIS: Cash flow management, AIS: Credit risk analysis, AIS: Customer onboarding / verification, AIS: Personal finance management, PIS: eCommerce merchant payment, PIS: Funding an account, PIS: In store merchant payment, PIS: Paying a bill, PIS: Paying off debt'
+          example: 'AIS: Accounting package integration'
+        accountNumber:
+          type: string
+          description: The unique identifier for the bank account in the UK or Ireland.
+          example: '12345678'
+        sortCode:
+          type: string
+          description: The number assigned to a branch of a bank, typically containing six digits and most commonly used in the UK and Ireland.
+          example: '123456'
+        merchantType:
+          type: string
+          description: Type of merchant being onboarded. Determines compliance requirements during onboarding. <ul><li><b>TOKEN_LICENSED_SOLE_TRADER</b>Individually operated business.</li><li><b>LICENSED_TPP_SOLE_TRADER</b>Individually operated business Licensed by TPP.</li><li><b>LICENSED_TPP_NON_SOLE_TRADER</b>Publicly listed company. May require Signatories depending on sub-TPP type.</li><li> <b>TOKEN_LICENSED_NON_SOLE_TRADER_PUBLIC</b>Publicly listed company. May require Signatories depending on sub-TPP type.</li><li><b>TOKEN_LICENSED_NON_SOLE_TRADER_PRIVATE</b>Privately held company. UBOs, Directors, and Signatories will be required depending on sub-TPP type.</li></ul>
+          example: TOKEN_LICENSED_NON_SOLE_TRADER_PUBLIC
+          enum:
+          - TOKEN_LICENSED_NON_SOLE_TRADER_PUBLIC
+        mccSubType:
+          type: string
+          description: Merchant Category Code Subtype, for certain industry this field needs to be provided.
+      description: Contains information about the merchant member.
+    inline_response_503:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ServiceUnavailableError'
+    RetrieveSubTppsResponse:
+      type: object
+      properties:
+        offset:
+          type: string
+          description: The offset of the first item returned in the collection.
+          example: LerV6Jmex
+        subTpps:
+          type: array
+          description: Contains each sub-TPP member onboarded by the reseller.
+          items:
+            $ref: '#/components/schemas/member.SubTpp'
+    subTppId:
+      type: string
+      description: The Token.io-generated identifier for the sub-TPP used by the reseller as the `actingAs.refId` in token requests.
+      example: 8d54f066-c14a-47c0-b58b-fec6b0ed6b4c
+    inline_response_404:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/PaymentNotFoundError'
+    TokenLicensedNonSoleTraderPublic:
+      title: Token Licensed Tpp Non Sole Trader Public
+      type: object
+      required:
+      - name
+      - domain
+      - merchant
+      properties:
+        domain:
+          type: string
+          description: The fully qualified domain name of the sub-TPP, also referred to as the absolute domain name. This specifies an exact location in the tree hierarchy of the Domain Name System (DNS). It must include all domain levels, including the top-level domain and the root zone.
+          example: somehost.example.com
+        logo:
+          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
+          type: string
+          description: This field specifies the image file containing the sub-TPP's logo as a byte array (click <a href="https://thewebdev.info/2021/08/01/how-to-convert-a-file-input-value-to-a-byte-array-with-javascript" target="_blank">here</a> for the JavaScript FileReader instance needed to convert the selected file into a byte array).
+          format: byte
+          example: b0Y5cVl6aDc3RkE5blZyQ24yamlh
+        merchant:
+          $ref: '#/components/schemas/member.TokenLicensedNonSoleTraderPublicMerchant'
+        name:
+          type: string
+          description: The recognised business name or DBA of the sub-TPP.
+          example: Sub-TPP Business Ltd
+        parentSubTppId:
+          $ref: '#/components/schemas/parentSubTppId'
+        mccCode:
+          type: string
+          description: Merchant Category Code is a four-digit number that classifies the type of goods or services a business offers.
+        useNewFlow:
+          type: boolean
+          description: When useNewFlow is set to true, the request is handled by the new merchant onboarding flow, rather than by the old flow.
+    LicensedTppNonSoleTrader:
+      title: Licensed Tpp Non Sole Trader
+      type: object
+      required:
+      - name
+      - domain
+      - merchant
+      properties:
+        domain:
+          type: string
+          description: The fully qualified domain name of the sub-TPP, also referred to as the absolute domain name. This specifies an exact location in the tree hierarchy of the Domain Name System (DNS). It must include all domain levels, including the top-level domain and the root zone.
+          example: somehost.example.com
+        logo:
+          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
+          type: string
+          description: This field specifies the image file containing the sub-TPP's logo as a byte array (click <a href="https://thewebdev.info/2021/08/01/how-to-convert-a-file-input-value-to-a-byte-array-with-javascript" target="_blank">here</a> for the JavaScript FileReader instance needed to convert the selected file into a byte array).
+          format: byte
+          example: b0Y5cVl6aDc3RkE5blZyQ24yamlh
+        merchant:
+          $ref: '#/components/schemas/member.LicensedTppNonSoleTraderMerchant'
+        name:
+          type: string
+          description: The recognised business name or DBA of the sub-TPP.
+          example: Sub-TPP Business Ltd
+        parentSubTppId:
+          $ref: '#/components/schemas/parentSubTppId'
+        mccCode:
+          type: string
+          description: Merchant Category Code is a four-digit number that classifies the type of goods or services a business offers.
+        useNewFlow:
+          type: boolean
+          description: When useNewFlow is set to true, the request is handled by the new merchant onboarding flow, rather than by the old flow.
+    member.LicensedTppSoleTraderMerchantGB:
+      type: object
+      required:
+      - merchantJurisdiction
+      - legalEntityName
+      - companyRegistrationNumber
+      - primaryUseCase
+      - accountNumber
+      - sortCode
+      properties:
+        merchantJurisdiction:
+          type: string
+          description: The 'merchantJurisdiction' field specifies the jurisdiction in which the merchant operates. Previously, this field was referred to as the 'domicile country'.
+          example: GB
+        legalEntityName:
+          type: string
+          description: Full name of the merchant legal entity.
+          example: Test Merchant Entity Name
+        companyRegistrationNumber:
+          type: string
+          description: Company registration number of merchant legal entity.
+          example: '123456789'
+        primaryUseCase:
+          type: string
+          description: 'Merchant primary use case. Possible values include: AIS: Accounting package integration, AIS: Cash flow management, AIS: Credit risk analysis, AIS: Customer onboarding / verification, AIS: Personal finance management, PIS: eCommerce merchant payment, PIS: Funding an account, PIS: In store merchant payment, PIS: Paying a bill, PIS: Paying off debt'
+          example: 'AIS: Accounting package integration'
+        accountNumber:
+          type: string
+          description: The unique identifier for the bank account in the UK or Ireland.
+          example: '12345678'
+        sortCode:
+          type: string
+          description: The number assigned to a branch of a bank, typically containing six digits and most commonly used in the UK and Ireland.
+          example: '123456'
+        merchantType:
+          type: string
+          description: Type of merchant being onboarded. Determines compliance requirements during onboarding. <ul><li><b>TOKEN_LICENSED_SOLE_TRADER</b>Individually operated business.</li><li><b>LICENSED_TPP_SOLE_TRADER</b>Individually operated business Licensed by TPP.</li><li><b>LICENSED_TPP_NON_SOLE_TRADER</b>Publicly listed company. May require Signatories depending on sub-TPP type.</li><li> <b>TOKEN_LICENSED_NON_SOLE_TRADER_PUBLIC</b>Publicly listed company. May require Signatories depending on sub-TPP type.</li><li><b>TOKEN_LICENSED_NON_SOLE_TRADER_PRIVATE</b>Privately held company. UBOs, Directors, and Signatories will be required depending on sub-TPP type.</li></ul>
+          example: LICENSED_TPP_SOLE_TRADER
+          enum:
+          - LICENSED_TPP_SOLE_TRADER
+        mccSubType:
+          type: string
+          description: Merchant Category Code Subtype, for certain industry this field needs to be provided.
+      description: Contains information about the merchant member.
+    ErrorWithCode:
+      required:
+      - errorCode
+      - message
+      type: object
+      properties:
+        errorCode:
+          type: string
+          description: A textual error code categorising the error.
+          example: InternalServerError
+        message:
+          type: string
+          description: A description of the error that occurred and a possible way to fix it.
+          example: '`RefId` should not be longer than 35 symbols.'
+      description: Error object providing details about the error.
+      allOf:
+      - $ref: '#/components/schemas/Error'
+    member.TokenLicensedNonSoleTraderPublicMerchant:
+      type: object
+      required:
+      - merchantJurisdiction
+      - legalEntityName
+      - companyRegistrationNumber
+      - primaryUseCase
+      - iban
+      - signatories
+      properties:
+        merchantJurisdiction:
+          type: string
+          description: The 'merchantJurisdiction' field specifies the jurisdiction in which the merchant operates. Previously, this field was referred to as the 'domicile country'.
+          example: DE
+        legalEntityName:
+          type: string
+          description: Full name of the merchant legal entity.
+          example: Test Merchant Entity Name
+        companyRegistrationNumber:
+          type: string
+          description: Company registration number of merchant legal entity.
+          example: '123456789'
+        primaryUseCase:
+          type: string
+          description: 'Merchant primary use case. Possible values include: AIS: Accounting package integration, AIS: Cash flow management, AIS: Credit risk analysis, AIS: Customer onboarding / verification, AIS: Personal finance management, PIS: eCommerce merchant payment, PIS: Funding an account, PIS: In store merchant payment, PIS: Paying a bill, PIS: Paying off debt'
+          example: 'AIS: Accounting package integration'
+        iban:
+          type: string
+          description: The IBAN of the bank where the payments are settled. The IBAN used will depend on the specific setup for each TPP/sub-TPP. </br>For example, this will be:<ul><li>The sub-TPP's IBAN for cases where settlement is to the merchant.</li><li>The TPP's IBAN when the sub-TPP settles directly with the TPP.</li><li>A proxy for jurisdictions involved in the transaction.</li></ul>Token.io checks the jurisdiction of the bank account and, where possible, confirms that the name on the account is valid; this name can be either the client's or the merchant's. </br>You must use a valid IBAN if you're testing in Sandbox.
+          example: DE0000000000000000000
+        bic:
+          type: string
+          description: BIC of merchant’s recipient bank account. You must use a valid IBAN if you're testing in sandbox.
+          example: BOFIIE2D
+        merchantType:
+          type: string
+          description: Type of merchant being onboarded. Determines compliance requirements during onboarding. <ul><li><b>TOKEN_LICENSED_SOLE_TRADER</b>Individually operated business.</li><li><b>LICENSED_TPP_SOLE_TRADER</b>Individually operated business Licensed by TPP.</li><li><b>LICENSED_TPP_NON_SOLE_TRADER</b>Publicly listed company. May require Signatories depending on sub-TPP type.</li><li> <b>TOKEN_LICENSED_NON_SOLE_TRADER_PUBLIC</b>Publicly listed company. May require Signatories depending on sub-TPP type.</li><li><b>TOKEN_LICENSED_NON_SOLE_TRADER_PRIVATE</b>Privately held company. UBOs, Directors, and Signatories will be required depending on sub-TPP type.</li></ul>
+          example: TOKEN_LICENSED_NON_SOLE_TRADER_PUBLIC
+          enum:
+          - TOKEN_LICENSED_NON_SOLE_TRADER_PUBLIC
+        mccSubType:
+          type: string
+          description: Merchant Category Code Subtype, for certain industry this field needs to be provided.
+        signatories:
+          type: array
+          items:
+            $ref: '#/components/schemas/member.PersonDetail'
+      description: Contains information about the merchant member.
+    OldMerchantOnboardingGB:
+      title: Old Merchant Onboarding Flow GB
+      type: object
+      required:
+      - name
+      - domain
+      - merchant
+      properties:
+        domain:
+          type: string
+          description: The fully qualified domain name of the sub-TPP, also referred to as the absolute domain name. This specifies an exact location in the tree hierarchy of the Domain Name System (DNS). It must include all domain levels, including the top-level domain and the root zone.
+          example: somehost.example.com
+        logo:
+          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
+          type: string
+          description: This field specifies the image file containing the sub-TPP's logo as a byte array (click <a href="https://thewebdev.info/2021/08/01/how-to-convert-a-file-input-value-to-a-byte-array-with-javascript" target="_blank">here</a> for the JavaScript FileReader instance needed to convert the selected file into a byte array).
+          format: byte
+          example: b0Y5cVl6aDc3RkE5blZyQ24yamlh
+        merchant:
+          $ref: '#/components/schemas/member.MerchantGB'
+        name:
+          type: string
+          description: The recognised business name or DBA of the sub-TPP.
+          example: Sub-TPP Business Ltd
+        parentSubTppId:
+          $ref: '#/components/schemas/parentSubTppId'
+        mccCode:
+          type: string
+          description: Merchant Category Code is a four-digit number that classifies the type of goods or services a business offers.
+        useNewFlow:
+          type: boolean
+          example: false
+          description: When useNewFlow is set to true, the request is handled by the new merchant onboarding flow, rather than by the old flow.
+    parentSubTppId:
+      type: string
+      description: The Token.io-generated identifier for the parent sub-TPP.
+      example: 6f34h397-b29h-23b0-s30g-hkd0d2dk4k1s
+    member.TokenLicensedNonSoleTraderPrivateMerchant:
+      type: object
+      required:
+      - merchantJurisdiction
+      - legalEntityName
+      - companyRegistrationNumber
+      - primaryUseCase
+      - iban
+      - ubos
+      - directors
+      - signatories
+      properties:
+        merchantJurisdiction:
+          type: string
+          description: The 'merchantJurisdiction' field specifies the jurisdiction in which the merchant operates. Previously, this field was referred to as the 'domicile country'.
+          example: DE
+        legalEntityName:
+          type: string
+          description: Full name of the merchant legal entity.
+          example: Test Merchant Entity Name
+        companyRegistrationNumber:
+          type: string
+          description: Company registration number of merchant legal entity.
+          example: '123456789'
+        primaryUseCase:
+          type: string
+          description: 'Merchant primary use case. Possible values include: AIS: Accounting package integration, AIS: Cash flow management, AIS: Credit risk analysis, AIS: Customer onboarding / verification, AIS: Personal finance management, PIS: eCommerce merchant payment, PIS: Funding an account, PIS: In store merchant payment, PIS: Paying a bill, PIS: Paying off debt'
+          example: 'AIS: Accounting package integration'
+        iban:
+          type: string
+          description: The IBAN of the bank where the payments are settled. The IBAN used will depend on the specific setup for each TPP/sub-TPP. </br>For example, this will be:<ul><li>The sub-TPP's IBAN for cases where settlement is to the merchant.</li><li>The TPP's IBAN when the sub-TPP settles directly with the TPP.</li><li>A proxy for jurisdictions involved in the transaction.</li></ul>Token.io checks the jurisdiction of the bank account and, where possible, confirms that the name on the account is valid; this name can be either the client's or the merchant's. </br>You must use a valid IBAN if you're testing in Sandbox.
+          example: DE0000000000000000000
+        bic:
+          type: string
+          description: BIC of merchant’s recipient bank account. You must use a valid IBAN if you're testing in sandbox.
+          example: BOFIIE2D
+        merchantType:
+          type: string
+          description: Type of merchant being onboarded. Determines compliance requirements during onboarding. <ul><li><b>TOKEN_LICENSED_SOLE_TRADER</b>Individually operated business.</li><li><b>LICENSED_TPP_SOLE_TRADER</b>Individually operated business Licensed by TPP.</li><li><b>LICENSED_TPP_NON_SOLE_TRADER</b>Publicly listed company. May require Signatories depending on sub-TPP type.</li><li> <b>TOKEN_LICENSED_NON_SOLE_TRADER_PUBLIC</b>Publicly listed company. May require Signatories depending on sub-TPP type.</li><li><b>TOKEN_LICENSED_NON_SOLE_TRADER_PRIVATE</b>Privately held company. UBOs, Directors, and Signatories will be required depending on sub-TPP type.</li></ul>
+          example: TOKEN_LICENSED_NON_SOLE_TRADER_PRIVATE
+          enum:
+          - TOKEN_LICENSED_NON_SOLE_TRADER_PRIVATE
+        mccSubType:
+          type: string
+          description: Merchant Category Code Subtype, for certain industry this field needs to be provided.
+        ubos:
+          type: array
+          items:
+            $ref: '#/components/schemas/member.PersonDetail'
+        directors:
+          type: array
+          items:
+            $ref: '#/components/schemas/member.PersonDetail'
+        signatories:
+          type: array
+          items:
+            $ref: '#/components/schemas/member.PersonDetail'
+      description: Contains information about the merchant member.
+    member.TokenLicensedSoleTraderMerchantGB:
+      type: object
+      required:
+      - merchantJurisdiction
+      - legalEntityName
+      - primaryUseCase
+      - soleTrader
+      - accountNumber
+      - sortCode
+      properties:
+        merchantJurisdiction:
+          type: string
+          description: The 'merchantJurisdiction' field specifies the jurisdiction in which the merchant operates. Previously, this field was referred to as the 'domicile country'.
+          example: GB
+        legalEntityName:
+          type: string
+          description: Full name of the merchant legal entity.
+          example: Test Merchant Entity Name
+        companyRegistrationNumber:
+          type: string
+          description: Company registration number of merchant legal entity.
+          example: '123456789'
+        primaryUseCase:
+          type: string
+          description: 'Merchant primary use case. Possible values include: AIS: Accounting package integration, AIS: Cash flow management, AIS: Credit risk analysis, AIS: Customer onboarding / verification, AIS: Personal finance management, PIS: eCommerce merchant payment, PIS: Funding an account, PIS: In store merchant payment, PIS: Paying a bill, PIS: Paying off debt'
+          example: 'AIS: Accounting package integration'
+        accountNumber:
+          type: string
+          description: The unique identifier for the bank account in the UK or Ireland.
+          example: '12345678'
+        sortCode:
+          type: string
+          description: The number assigned to a branch of a bank, typically containing six digits and most commonly used in the UK and Ireland.
+          example: '123456'
+        merchantType:
+          type: string
+          description: Type of merchant being onboarded. Determines compliance requirements during onboarding. <ul><li><b>TOKEN_LICENSED_SOLE_TRADER</b>Individually operated business.</li><li><b>LICENSED_TPP_SOLE_TRADER</b>Individually operated business Licensed by TPP.</li><li><b>LICENSED_TPP_NON_SOLE_TRADER</b>Publicly listed company. May require Signatories depending on sub-TPP type.</li><li> <b>TOKEN_LICENSED_NON_SOLE_TRADER_PUBLIC</b>Publicly listed company. May require Signatories depending on sub-TPP type.</li><li><b>TOKEN_LICENSED_NON_SOLE_TRADER_PRIVATE</b>Privately held company. UBOs, Directors, and Signatories will be required depending on sub-TPP type.</li></ul>
+          example: TOKEN_LICENSED_SOLE_TRADER
+          enum:
+          - TOKEN_LICENSED_SOLE_TRADER
+        mccSubType:
+          type: string
+          description: Merchant Category Code Subtype, for certain industry this field needs to be provided.
+        soleTrader:
+          $ref: '#/components/schemas/member.PersonDetail'
+    inline_response_403:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/PermissionDeniedError'
+    member.LicensedTppSoleTraderMerchant:
+      type: object
+      required:
+      - merchantJurisdiction
+      - legalEntityName
+      - companyRegistrationNumber
+      - primaryUseCase
+      - iban
+      properties:
+        merchantJurisdiction:
+          type: string
+          description: The 'merchantJurisdiction' field specifies the jurisdiction in which the merchant operates. Previously, this field was referred to as the 'domicile country'.
+          example: DE
+        legalEntityName:
+          type: string
+          description: Full name of the merchant legal entity.
+          example: Test Merchant Entity Name
+        companyRegistrationNumber:
+          type: string
+          description: Company registration number of merchant legal entity.
+          example: '123456789'
+        primaryUseCase:
+          type: string
+          description: 'Merchant primary use case. Possible values include: AIS: Accounting package integration, AIS: Cash flow management, AIS: Credit risk analysis, AIS: Customer onboarding / verification, AIS: Personal finance management, PIS: eCommerce merchant payment, PIS: Funding an account, PIS: In store merchant payment, PIS: Paying a bill, PIS: Paying off debt'
+          example: 'AIS: Accounting package integration'
+        iban:
+          type: string
+          description: The IBAN of the bank where the payments are settled. The IBAN used will depend on the specific setup for each TPP/sub-TPP. </br>For example, this will be:<ul><li>The sub-TPP's IBAN for cases where settlement is to the merchant.</li><li>The TPP's IBAN when the sub-TPP settles directly with the TPP.</li><li>A proxy for jurisdictions involved in the transaction.</li></ul>Token.io checks the jurisdiction of the bank account and, where possible, confirms that the name on the account is valid; this name can be either the client's or the merchant's. </br>You must use a valid IBAN if you're testing in Sandbox.
+          example: DE0000000000000000000
+        bic:
+          type: string
+          description: BIC of merchant’s recipient bank account. You must use a valid IBAN if you're testing in sandbox.
+          example: BOFIIE2D
+        merchantType:
+          type: string
+          description: Type of merchant being onboarded. Determines compliance requirements during onboarding. <ul><li><b>TOKEN_LICENSED_SOLE_TRADER</b>Individually operated business.</li><li><b>LICENSED_TPP_SOLE_TRADER</b>Individually operated business Licensed by TPP.</li><li><b>LICENSED_TPP_NON_SOLE_TRADER</b>Publicly listed company. May require Signatories depending on sub-TPP type.</li><li> <b>TOKEN_LICENSED_NON_SOLE_TRADER_PUBLIC</b>Publicly listed company. May require Signatories depending on sub-TPP type.</li><li><b>TOKEN_LICENSED_NON_SOLE_TRADER_PRIVATE</b>Privately held company. UBOs, Directors, and Signatories will be required depending on sub-TPP type.</li></ul>
+          example: LICENSED_TPP_SOLE_TRADER
+          enum:
+          - LICENSED_TPP_SOLE_TRADER
+        mccSubType:
+          type: string
+          description: Merchant Category Code Subtype, for certain industry this field needs to be provided.
+      description: Contains information about the merchant member.
+    member.TokenLicensedSoleTraderMerchant:
+      type: object
+      required:
+      - merchantJurisdiction
+      - legalEntityName
+      - primaryUseCase
+      - soleTrader
+      - iban
+      properties:
+        merchantJurisdiction:
+          type: string
+          description: The 'merchantJurisdiction' field specifies the jurisdiction in which the merchant operates. Previously, this field was referred to as the 'domicile country'.
+          example: DE
+        legalEntityName:
+          type: string
+          description: Full name of the merchant legal entity.
+          example: Test Merchant Entity Name
+        companyRegistrationNumber:
+          type: string
+          description: Company registration number of merchant legal entity.
+          example: '123456789'
+        primaryUseCase:
+          type: string
+          description: 'Merchant primary use case. Possible values include: AIS: Accounting package integration, AIS: Cash flow management, AIS: Credit risk analysis, AIS: Customer onboarding / verification, AIS: Personal finance management, PIS: eCommerce merchant payment, PIS: Funding an account, PIS: In store merchant payment, PIS: Paying a bill, PIS: Paying off debt'
+          example: 'AIS: Accounting package integration'
+        iban:
+          type: string
+          description: The IBAN of the bank where the payments are settled. The IBAN used will depend on the specific setup for each TPP/sub-TPP. </br>For example, this will be:<ul><li>The sub-TPP's IBAN for cases where settlement is to the merchant.</li><li>The TPP's IBAN when the sub-TPP settles directly with the TPP.</li><li>A proxy for jurisdictions involved in the transaction.</li></ul>Token.io checks the jurisdiction of the bank account and, where possible, confirms that the name on the account is valid; this name can be either the client's or the merchant's. </br>You must use a valid IBAN if you're testing in Sandbox.
+          example: DE0000000000000000000
+        bic:
+          type: string
+          description: BIC of merchant’s recipient bank account. You must use a valid IBAN if you're testing in sandbox.
+          example: BOFIIE2D
+        merchantType:
+          type: string
+          description: Type of merchant being onboarded. Determines compliance requirements during onboarding. <ul><li><b>TOKEN_LICENSED_SOLE_TRADER</b>Individually operated business.</li><li><b>LICENSED_TPP_SOLE_TRADER</b>Individually operated business Licensed by TPP.</li><li><b>LICENSED_TPP_NON_SOLE_TRADER</b>Publicly listed company. May require Signatories depending on sub-TPP type.</li><li> <b>TOKEN_LICENSED_NON_SOLE_TRADER_PUBLIC</b>Publicly listed company. May require Signatories depending on sub-TPP type.</li><li><b>TOKEN_LICENSED_NON_SOLE_TRADER_PRIVATE</b>Privately held company. UBOs, Directors, and Signatories will be required depending on sub-TPP type.</li></ul>
+          example: TOKEN_LICENSED_SOLE_TRADER
+          enum:
+          - TOKEN_LICENSED_SOLE_TRADER
+        mccSubType:
+          type: string
+          description: Merchant Category Code Subtype, for certain industry this field needs to be provided.
+        soleTrader:
+          $ref: '#/components/schemas/member.PersonDetail'
+    ServiceUnavailableError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: UNAVAILABLE
+        paymentId:
+          type: string
+          description: The service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+          example: Unavailable
+      description: Service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    TokenLicensedNonSoleTraderPublicGB:
+      title: Token Licensed Tpp Non Sole Trader Public GB
+      type: object
+      required:
+      - name
+      - domain
+      - merchant
+      properties:
+        domain:
+          type: string
+          description: The fully qualified domain name of the sub-TPP, also referred to as the absolute domain name. This specifies an exact location in the tree hierarchy of the Domain Name System (DNS). It must include all domain levels, including the top-level domain and the root zone.
+          example: somehost.example.com
+        logo:
+          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
+          type: string
+          description: This field specifies the image file containing the sub-TPP's logo as a byte array (click <a href="https://thewebdev.info/2021/08/01/how-to-convert-a-file-input-value-to-a-byte-array-with-javascript" target="_blank">here</a> for the JavaScript FileReader instance needed to convert the selected file into a byte array).
+          format: byte
+          example: b0Y5cVl6aDc3RkE5blZyQ24yamlh
+        merchant:
+          $ref: '#/components/schemas/member.TokenLicensedNonSoleTraderPublicMerchantGB'
+        name:
+          type: string
+          description: The recognised business name or DBA of the sub-TPP.
+          example: Sub-TPP Business Ltd
+        parentSubTppId:
+          $ref: '#/components/schemas/parentSubTppId'
+        mccCode:
+          type: string
+          description: Merchant Category Code is a four-digit number that classifies the type of goods or services a business offers.
+        useNewFlow:
+          type: boolean
+          description: When useNewFlow is set to true, the request is handled by the new merchant onboarding flow, rather than by the old flow.
+    inline_response_401:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    member.PersonDetail:
+      type: object
+      properties:
+        fullName:
+          type: string
+          description: Full name.
+          example: John Smith
+        address:
+          type: string
+          description: Personal Address Details.
+          example: 110 Long Lane, ....
+        dateOfBirth:
+          type: string
+          description: Date of Birth in ISO format (YYYY-MM-DD).
+          example: '2001-01-01'
+      description: Contains personal details of a Sole Trader, Ubos, Directors, or Signatories.
+    inline_response_429:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ResourceExhaustedError'
+    member.SubTpp:
+      type: object
+      properties:
+        childSubTppIds:
+          type: array
+          description: The list of sub-TPP ids returned.
+          items:
+            type: string
+            example: '["8d54f066-c14a-47c0-b58b-fec6b0ed6b4c","3d46h823-g02s-20m5-k19c-kes4ekkc2p5x","0c55fwgs-s1e2-dloa-0j36-sat2b9kw4s8g"]'
+        createdAt:
+          type: string
+          description: Represents the creation date for the sub-TPP, in <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a> format.
+          format: string
+          example: '2022-09-22T17:00:00.000Z'
+        domain:
+          type: string
+          description: The fully qualified domain name of the sub-TPP, also referred to as an absolute domain name. This specifies an exact location in the tree hierarchy of the Domain Name System (DNS). It must include all domain levels, including the top-level domain and the root zone.
+          example: somehost.example.com
+        id:
+          type: string
+          description: The Token.io-generated `subTPPId` used by the reseller as `actingAs.refId` in token requests to identify the sub-TPP.
+          example: 8d54f066-c14a-47c0-b58b-fec6b0ed6b4c
+        logo:
+          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
+          type: string
+          description: Specifies the image file containing the sub-TPP's logo as a byte array. Click <a href="https://gist.github.com/taterbase/2784890" target="_blank">here</a> for the JavaScript `fromCharCode` function needed to convert the byte array to a UTF-8 string.
+          format: byte
+        memberId:
+          type: string
+          description: The Token.io-generated member id for the reseller.
+          example: m:213xyzabc3453434
+        merchant:
+          $ref: '#/components/schemas/member.Merchant'
+        name:
+          type: string
+          description: The recognised business name or DBA of the sub-TPP.
+          example: Sub-TPP Business Ltd
+        parentSubTppId:
+          $ref: '#/components/schemas/parentSubTppId'
+        restrictedCountries:
+          type: array
+          description: A list of two-letter country codes in upper case (ISO 3166-1 alpha-2), in which this bank operates.
+          items:
+            type: string
+          example:
+          - DE
+          - FR
+          - GB
+        status:
+          $ref: '#/components/schemas/member.SubTpp.Status'
+        statusReasonInformation:
+          type: string
+          description: A human-readable description of the reason for the reported status, which may include a message from the bank. This value should not exceed 256 characters in length.
+          example: This sub-TPP has been activated.
+        mccCode:
+          type: string
+          description: Merchant Category Code is a four-digit number that classifies the type of goods or service a business offers.
+        updatedAt:
+          type: string
+          description: The string representing the last update for the sub-TPP details, in <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a> format.
+          format: string
+          example: '2022-09-22T17:00:00.000Z'
+      description: Contains the sub-TPP details.
+    member.Merchant:
+      type: object
+      required:
+      - merchantJurisdiction
+      - legalEntityName
+      - companyRegistrationNumber
+      - industry
+      - primaryUseCase
+      - iban
+      properties:
+        merchantJurisdiction:
+          type: string
+          description: The 'merchantJurisdiction' field specifies the jurisdiction in which the merchant operates. Previously, this field was referred to as the 'domicile country'.
+          example: DE
+        legalEntityName:
+          type: string
+          description: Full name of the merchant legal entity.
+          example: Test Merchant Entity Name
+        companyRegistrationNumber:
+          type: string
+          description: Company registration number of merchant legal entity.
+          example: '123456789'
+        primaryUseCase:
+          type: string
+          description: 'Merchant primary use case. Possible values include: AIS: Accounting package integration, AIS: Cash flow management, AIS: Credit risk analysis, AIS: Customer onboarding / verification, AIS: Personal finance management, PIS: eCommerce merchant payment, PIS: Funding an account, PIS: In store merchant payment, PIS: Paying a bill, PIS: Paying off debt'
+          example: 'AIS: Accounting package integration'
+        iban:
+          type: string
+          description: The IBAN of the bank where the payments are settled. The IBAN used will depend on the specific setup for each TPP/sub-TPP. </br>For example, this will be:<ul><li>The sub-TPP's IBAN for cases where settlement is to the merchant.</li><li>The TPP's IBAN when the sub-TPP settles directly with the TPP.</li><li>A proxy for jurisdictions involved in the transaction.</li></ul>Token.io checks the jurisdiction of the bank account and, where possible, confirms that the name on the account is valid; this name can be either the client's or the merchant's. </br>You must use a valid IBAN if you're testing in Sandbox.
+          example: DE0000000000000000000
+        bic:
+          type: string
+          description: BIC of merchant’s recipient bank account. You must use a valid IBAN if you're testing in sandbox.
+          example: BOFIIE2D
+      description: Contains information about the merchant member.
+    PermissionDeniedError:
+      type: object
+      properties:
+        errorCode:
+          example: PermissionDenied
+      description: 'The error returned when the member is not authorized to perform the given operation: PermissionDenied. <br/>This error message will be accompanied by the reason from the bank. Typically this means the access token has expired and the user must re-authenticate with the bank.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    CreateSubTppResponse:
+      type: object
+      properties:
+        subTppId:
+          $ref: '#/components/schemas/subTppId'
+    TokenLicensedNonSoleTraderPrivateGB:
+      title: Token Licensed Tpp Non Sole Trader Private GB
+      type: object
+      required:
+      - name
+      - domain
+      - merchant
+      properties:
+        domain:
+          type: string
+          description: The fully qualified domain name of the sub-TPP, also referred to as the absolute domain name. This specifies an exact location in the tree hierarchy of the Domain Name System (DNS). It must include all domain levels, including the top-level domain and the root zone.
+          example: somehost.example.com
+        logo:
+          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
+          type: string
+          description: This field specifies the image file containing the sub-TPP's logo as a byte array (click <a href="https://thewebdev.info/2021/08/01/how-to-convert-a-file-input-value-to-a-byte-array-with-javascript" target="_blank">here</a> for the JavaScript FileReader instance needed to convert the selected file into a byte array).
+          format: byte
+          example: b0Y5cVl6aDc3RkE5blZyQ24yamlh
+        merchant:
+          $ref: '#/components/schemas/member.TokenLicensedNonSoleTraderPrivateMerchantGB'
+        name:
+          type: string
+          description: The recognised business name or DBA of the sub-TPP.
+          example: Sub-TPP Business Ltd
+        parentSubTppId:
+          $ref: '#/components/schemas/parentSubTppId'
+        mccCode:
+          type: string
+          description: Merchant Category Code is a four-digit number that classifies the type of goods or services a business offers.
+        useNewFlow:
+          type: boolean
+          description: When useNewFlow is set to true, the request is handled by the new merchant onboarding flow, rather than by the old flow.
+    member.LicensedTppNonSoleTraderMerchantGB:
+      type: object
+      required:
+      - merchantJurisdiction
+      - legalEntityName
+      - companyRegistrationNumber
+      - primaryUseCase
+      - accountNumber
+      - sortCode
+      properties:
+        merchantJurisdiction:
+          type: string
+          description: The 'merchantJurisdiction' field specifies the jurisdiction in which the merchant operates. Previously, this field was referred to as the 'domicile country'.
+          example: GB
+        legalEntityName:
+          type: string
+          description: Full name of the merchant legal entity.
+          example: Test Merchant Entity Name
+        companyRegistrationNumber:
+          type: string
+          description: Company registration number of merchant legal entity.
+          example: '123456789'
+        primaryUseCase:
+          type: string
+          description: 'Merchant primary use case. Possible values include: AIS: Accounting package integration, AIS: Cash flow management, AIS: Credit risk analysis, AIS: Customer onboarding / verification, AIS: Personal finance management, PIS: eCommerce merchant payment, PIS: Funding an account, PIS: In store merchant payment, PIS: Paying a bill, PIS: Paying off debt'
+          example: 'AIS: Accounting package integration'
+        accountNumber:
+          type: string
+          description: The unique identifier for the bank account in the UK or Ireland.
+          example: '12345678'
+        sortCode:
+          type: string
+          description: The number assigned to a branch of a bank, typically containing six digits and most commonly used in the UK and Ireland.
+          example: '123456'
+        merchantType:
+          type: string
+          description: Type of merchant being onboarded. Determines compliance requirements during onboarding. <ul><li><b>TOKEN_LICENSED_SOLE_TRADER</b>Individually operated business.</li><li><b>LICENSED_TPP_SOLE_TRADER</b>Individually operated business Licensed by TPP.</li><li><b>LICENSED_TPP_NON_SOLE_TRADER</b>Publicly listed company. May require Signatories depending on sub-TPP type.</li><li> <b>TOKEN_LICENSED_NON_SOLE_TRADER_PUBLIC</b>Publicly listed company. May require Signatories depending on sub-TPP type.</li><li><b>TOKEN_LICENSED_NON_SOLE_TRADER_PRIVATE</b>Privately held company. UBOs, Directors, and Signatories will be required depending on sub-TPP type.</li></ul>
+          example: LICENSED_TPP_NON_SOLE_TRADER
+          enum:
+          - LICENSED_TPP_NON_SOLE_TRADER
+        mccSubType:
+          type: string
+          description: Merchant Category Code Subtype, for certain industry this field needs to be provided.
+      description: Contains information about the merchant member.
+    GatewayTimeoutError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: DEADLINE_EXCEEDED
+        paymentId:
+          type: string
+          description: The deadline expired before the operation could complete.
+          example: Deadline exceeded.
+      description: The deadline expired before the operation could complete.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    RetrieveSubTppChildrenResponse:
+      type: object
+      properties:
+        subTpps:
+          type: array
+          items:
+            $ref: '#/components/schemas/member.SubTpp'
+      description: Contains each sub-TPP member onboarded by the reseller.
+    LicensedTppSoleTrader:
+      title: Licensed Tpp Sole Trader
+      type: object
+      required:
+      - name
+      - domain
+      - merchant
+      properties:
+        domain:
+          type: string
+          description: The fully qualified domain name of the sub-TPP, also referred to as the absolute domain name. This specifies an exact location in the tree hierarchy of the Domain Name System (DNS). It must include all domain levels, including the top-level domain and the root zone.
+          example: somehost.example.com
+        logo:
+          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
+          type: string
+          description: This field specifies the image file containing the sub-TPP's logo as a byte array (click <a href="https://thewebdev.info/2021/08/01/how-to-convert-a-file-input-value-to-a-byte-array-with-javascript" target="_blank">here</a> for the JavaScript FileReader instance needed to convert the selected file into a byte array).
+          format: byte
+          example: b0Y5cVl6aDc3RkE5blZyQ24yamlh
+        merchant:
+          $ref: '#/components/schemas/member.LicensedTppSoleTraderMerchant'
+        name:
+          type: string
+          description: The recognised business name or DBA of the sub-TPP.
+          example: Sub-TPP Business Ltd
+        parentSubTppId:
+          $ref: '#/components/schemas/parentSubTppId'
+        mccCode:
+          type: string
+          description: Merchant Category Code is a four-digit number that classifies the type of goods or services a business offers.
+        useNewFlow:
+          type: boolean
+          description: When useNewFlow is set to true, the request is handled by the new merchant onboarding flow, rather than by the old flow.
+    LicensedTppSoleTraderGB:
+      title: Licensed Tpp Sole Trader GB
+      type: object
+      required:
+      - name
+      - domain
+      - merchant
+      properties:
+        domain:
+          type: string
+          description: The fully qualified domain name of the sub-TPP, also referred to as the absolute domain name. This specifies an exact location in the tree hierarchy of the Domain Name System (DNS). It must include all domain levels, including the top-level domain and the root zone.
+          example: somehost.example.com
+        logo:
+          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
+          type: string
+          description: This field specifies the image file containing the sub-TPP's logo as a byte array (click <a href="https://thewebdev.info/2021/08/01/how-to-convert-a-file-input-value-to-a-byte-array-with-javascript" target="_blank">here</a> for the JavaScript FileReader instance needed to convert the selected file into a byte array).
+          format: byte
+          example: b0Y5cVl6aDc3RkE5blZyQ24yamlh
+        merchant:
+          $ref: '#/components/schemas/member.LicensedTppSoleTraderMerchantGB'
+        name:
+          type: string
+          description: The recognised business name or DBA of the sub-TPP.
+          example: Sub-TPP Business Ltd
+        parentSubTppId:
+          $ref: '#/components/schemas/parentSubTppId'
+        mccCode:
+          type: string
+          description: Merchant Category Code is a four-digit number that classifies the type of goods or services a business offers.
+        useNewFlow:
+          type: boolean
+          description: When useNewFlow is set to true, the request is handled by the new merchant onboarding flow, rather than by the old flow.
+    DeleteSubTppResponse:
+      type: object
+      description: No data returned in the successful response.
+    NotImplementedError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: UNIMPLEMENTED
+        paymentId:
+          type: string
+          description: The operation was not implemented,supported or enabled by the bank.
+          example: Not implemented.
+      description: The operation was not implemented, supported or enabled by the bank.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    TokenLicensedSoleTraderGB:
+      title: Token Licensed Sole Trader GB
+      type: object
+      required:
+      - name
+      - domain
+      - merchant
+      properties:
+        domain:
+          type: string
+          description: The fully qualified domain name of the sub-TPP, also referred to as the absolute domain name. This specifies an exact location in the tree hierarchy of the Domain Name System (DNS). It must include all domain levels, including the top-level domain and the root zone.
+          example: somehost.example.com
+        logo:
+          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
+          type: string
+          description: This field specifies the image file containing the sub-TPP's logo as a byte array (click <a href="https://thewebdev.info/2021/08/01/how-to-convert-a-file-input-value-to-a-byte-array-with-javascript" target="_blank">here</a> for the JavaScript FileReader instance needed to convert the selected file into a byte array).
+          format: byte
+          example: b0Y5cVl6aDc3RkE5blZyQ24yamlh
+        merchant:
+          $ref: '#/components/schemas/member.TokenLicensedSoleTraderMerchantGB'
+        name:
+          type: string
+          description: The recognised business name or DBA of the sub-TPP.
+          example: Sub-TPP Business Ltd
+        parentSubTppId:
+          $ref: '#/components/schemas/parentSubTppId'
+        mccCode:
+          type: string
+          description: Merchant Category Code is a four-digit number that classifies the type of goods or services a business offers.
+        useNewFlow:
+          type: boolean
+          description: When useNewFlow is set to true, the request is handled by the new merchant onboarding flow, rather than by the old flow.
+    TokenLicensedNonSoleTraderPrivate:
+      title: Token Licensed Tpp Non Sole Trader Private
+      type: object
+      required:
+      - name
+      - domain
+      - merchant
+      properties:
+        domain:
+          type: string
+          description: The fully qualified domain name of the sub-TPP, also referred to as the absolute domain name. This specifies an exact location in the tree hierarchy of the Domain Name System (DNS). It must include all domain levels, including the top-level domain and the root zone.
+          example: somehost.example.com
+        logo:
+          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
+          type: string
+          description: This field specifies the image file containing the sub-TPP's logo as a byte array (click <a href="https://thewebdev.info/2021/08/01/how-to-convert-a-file-input-value-to-a-byte-array-with-javascript" target="_blank">here</a> for the JavaScript FileReader instance needed to convert the selected file into a byte array).
+          format: byte
+          example: b0Y5cVl6aDc3RkE5blZyQ24yamlh
+        merchant:
+          $ref: '#/components/schemas/member.TokenLicensedNonSoleTraderPrivateMerchant'
+        name:
+          type: string
+          description: The recognised business name or DBA of the sub-TPP.
+          example: Sub-TPP Business Ltd
+        parentSubTppId:
+          $ref: '#/components/schemas/parentSubTppId'
+        mccCode:
+          type: string
+          description: Merchant Category Code is a four-digit number that classifies the type of goods or services a business offers.
+        useNewFlow:
+          type: boolean
+          description: When useNewFlow is set to true, the request is handled by the new merchant onboarding flow, rather than by the old flow.
+    member.MerchantGB:
+      type: object
+      required:
+      - merchantJurisdiction
+      - legalEntityName
+      - companyRegistrationNumber
+      - industry
+      - primaryUseCase
+      - accountNumber
+      - sortCode
+      properties:
+        merchantJurisdiction:
+          type: string
+          description: The 'merchantJurisdiction' field specifies the jurisdiction in which the merchant operates. Previously, this field was referred to as the 'domicile country'.
+          example: GB
+        legalEntityName:
+          type: string
+          description: Full name of the merchant legal entity.
+          example: Test Merchant Entity Name
+        companyRegistrationNumber:
+          type: string
+          description: Company registration number of merchant legal entity.
+          example: '123456789'
+        primaryUseCase:
+          type: string
+          description: 'Merchant primary use case. Possible values include: AIS: Accounting package integration, AIS: Cash flow management, AIS: Credit risk analysis, AIS: Customer onboarding / verification, AIS: Personal finance management, PIS: eCommerce merchant payment, PIS: Funding an account, PIS: In store merchant payment, PIS: Paying a bill, PIS: Paying off debt'
+          example: 'AIS: Accounting package integration'
+        accountNumber:
+          type: string
+          description: The unique identifier for the bank account in the UK or Ireland.
+          example: '12345678'
+        sortCode:
+          type: string
+          description: The number assigned to a branch of a bank, typically containing six digits and most commonly used in the UK and Ireland.
+          example: '123456'
+      description: Contains information about the merchant member.
+    member.LicensedTppNonSoleTraderMerchant:
+      type: object
+      required:
+      - merchantJurisdiction
+      - legalEntityName
+      - companyRegistrationNumber
+      - primaryUseCase
+      - iban
+      properties:
+        merchantJurisdiction:
+          type: string
+          description: The 'merchantJurisdiction' field specifies the jurisdiction in which the merchant operates. Previously, this field was referred to as the 'domicile country'.
+          example: DE
+        legalEntityName:
+          type: string
+          description: Full name of the merchant legal entity.
+          example: Test Merchant Entity Name
+        companyRegistrationNumber:
+          type: string
+          description: Company registration number of merchant legal entity.
+          example: '123456789'
+        primaryUseCase:
+          type: string
+          description: 'Merchant primary use case. Possible values include: AIS: Accounting package integration, AIS: Cash flow management, AIS: Credit risk analysis, AIS: Customer onboarding / verification, AIS: Personal finance management, PIS: eCommerce merchant payment, PIS: Funding an account, PIS: In store merchant payment, PIS: Paying a bill, PIS: Paying off debt'
+          example: 'AIS: Accounting package integration'
+        iban:
+          type: string
+          description: The IBAN of the bank where the payments are settled. The IBAN used will depend on the specific setup for each TPP/sub-TPP. </br>For example, this will be:<ul><li>The sub-TPP's IBAN for cases where settlement is to the merchant.</li><li>The TPP's IBAN when the sub-TPP settles directly with the TPP.</li><li>A proxy for jurisdictions involved in the transaction.</li></ul>Token.io checks the jurisdiction of the bank account and, where possible, confirms that the name on the account is valid; this name can be either the client's or the merchant's. </br>You must use a valid IBAN if you're testing in Sandbox.
+          example: DE0000000000000000000
+        bic:
+          type: string
+          description: BIC of merchant’s recipient bank account. You must use a valid IBAN if you're testing in sandbox.
+          example: BOFIIE2D
+        merchantType:
+          type: string
+          description: Type of merchant being onboarded. Determines compliance requirements during onboarding. <ul><li><b>TOKEN_LICENSED_SOLE_TRADER</b>Individually operated business.</li><li><b>LICENSED_TPP_SOLE_TRADER</b>Individually operated business Licensed by TPP.</li><li><b>LICENSED_TPP_NON_SOLE_TRADER</b>Publicly listed company. May require Signatories depending on sub-TPP type.</li><li> <b>TOKEN_LICENSED_NON_SOLE_TRADER_PUBLIC</b>Publicly listed company. May require Signatories depending on sub-TPP type.</li><li><b>TOKEN_LICENSED_NON_SOLE_TRADER_PRIVATE</b>Privately held company. UBOs, Directors, and Signatories will be required depending on sub-TPP type.</li></ul>
+          example: LICENSED_TPP_NON_SOLE_TRADER
+          enum:
+          - LICENSED_TPP_NON_SOLE_TRADER
+        mccSubType:
+          type: string
+          description: Merchant Category Code Subtype, for certain industry this field needs to be provided.
+      description: Contains information about the merchant member.
+    LicensedTppNonSoleTraderGB:
+      title: Licensed Non Sole Trader GB
+      type: object
+      required:
+      - name
+      - domain
+      - merchant
+      properties:
+        domain:
+          type: string
+          description: The fully qualified domain name of the sub-TPP, also referred to as the absolute domain name. This specifies an exact location in the tree hierarchy of the Domain Name System (DNS). It must include all domain levels, including the top-level domain and the root zone.
+          example: somehost.example.com
+        logo:
+          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
+          type: string
+          description: This field specifies the image file containing the sub-TPP's logo as a byte array (click <a href="https://thewebdev.info/2021/08/01/how-to-convert-a-file-input-value-to-a-byte-array-with-javascript" target="_blank">here</a> for the JavaScript FileReader instance needed to convert the selected file into a byte array).
+          format: byte
+          example: b0Y5cVl6aDc3RkE5blZyQ24yamlh
+        merchant:
+          $ref: '#/components/schemas/member.LicensedTppNonSoleTraderMerchantGB'
+        name:
+          type: string
+          description: The recognised business name or DBA of the sub-TPP.
+          example: Sub-TPP Business Ltd
+        parentSubTppId:
+          $ref: '#/components/schemas/parentSubTppId'
+        mccCode:
+          type: string
+          description: Merchant Category Code is a four-digit number that classifies the type of goods or services a business offers.
+        useNewFlow:
+          type: boolean
+          description: When useNewFlow is set to true, the request is handled by the new merchant onboarding flow, rather than by the old flow.
+    TokenLicensedSoleTrader:
+      title: Token Licensed Tpp Sole Trader
+      type: object
+      required:
+      - name
+      - domain
+      - merchant
+      properties:
+        domain:
+          type: string
+          description: The fully qualified domain name of the sub-TPP, also referred to as the absolute domain name. This specifies an exact location in the tree hierarchy of the Domain Name System (DNS). It must include all domain levels, including the top-level domain and the root zone.
+          example: somehost.example.com
+        logo:
+          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
+          type: string
+          description: This field specifies the image file containing the sub-TPP's logo as a byte array (click <a href="https://thewebdev.info/2021/08/01/how-to-convert-a-file-input-value-to-a-byte-array-with-javascript" target="_blank">here</a> for the JavaScript FileReader instance needed to convert the selected file into a byte array).
+          format: byte
+          example: b0Y5cVl6aDc3RkE5blZyQ24yamlh
+        merchant:
+          $ref: '#/components/schemas/member.TokenLicensedSoleTraderMerchant'
+        name:
+          type: string
+          description: The recognised business name or DBA of the sub-TPP.
+          example: Sub-TPP Business Ltd
+        parentSubTppId:
+          $ref: '#/components/schemas/parentSubTppId'
+        mccCode:
+          type: string
+          description: Merchant Category Code is a four-digit number that classifies the type of goods or services a business offers.
+        useNewFlow:
+          type: boolean
+          description: When useNewFlow is set to true, the request is handled by the new merchant onboarding flow, rather than by the old flow.
+    RetrieveSubTppResponse:
+      type: object
+      properties:
+        subTpp:
+          $ref: '#/components/schemas/member.SubTpp'
+  securitySchemes:
+    Bearer:
+      type: http
+      description: '**For Production and Sandbox environments.**<br />When using curl samples the authorization header is given as -H `''Authorization: Bearer + JWT''`<br/>Please substitute your Bearer key here.<br/>For example:<br/> -H `''Authorization: Bearer eyJhbGciOiJFZERTQSIsImtpZCI6IjF4N2RmNHZ1RlVIWVFDYTciLCJtaWQiOiJtOlhUalhlMkFQZTRvdmVaalE4cHoyNGdEbUZEcTo1ekt0WEVBcSIsImhvc3QiOiJsb2NhbGhvc3Q6ODAwMCIsIm1ldGhvZCI6IlBPU1QiLCJwYXRoIjoiL2JhbmtzL2lyb24vdXNlcnMiLCJleHAiOjE1ODYyOTczNDQ3ODd9..bi3wxEoMHIul_F2f7gCDvgjHQKCjIyP9_SkQns-yXpS0UqoaOqSJrW89COexU71gt-mH3jH6mtp2aksEywvFDg''`<br/>Enter the JWT Bearer token only (see <a href="https://developer.token.io/token_rest_api_doc/content/e-rest/authentication.htm#JWT" target="_blank">JWT Authentication</a> for more information).'
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: apiKey
+      description: '**For Sandbox environment only.**<br />When using curl samples the authorization header is given as -H `''Authorization: YOUR_API_KEY_HERE''`<br/>Please substitute your Basic key here.<br/>For example:<br/> -H `''Authorization: Basic bS0zanhoS3pqRjRSWFQ1dHZLTlhMQU14cm80d0E1LTV6S3RYRUFxOmU1MWZjZDQ0LTM5MGQtNDYxZi04YjA0LTEyMjcxOTg4YWYwNg==''`'
+      name: Authorization
+      in: header

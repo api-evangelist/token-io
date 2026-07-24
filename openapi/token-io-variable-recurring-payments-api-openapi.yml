@@ -1,0 +1,1249 @@
+openapi: 3.0.1
+info:
+  title: Token.io's Open Banking API for TPPs Account on File Variable Recurring Payments API
+  description: '<b>Token.io''s Open Banking API</b><br/><br/>Token.io Support: <a href="https://support.token.io" target="_blank">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user''s account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users'' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href="https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm" target="_blank">developer documentation</a>.'
+  version: ''
+servers:
+- url: https://api.token.io
+tags:
+- name: Variable Recurring Payments
+  description: These endpoints enable you to initiate Variable Recurring Payments (VRP). Note, that VRP is also available in Payments v2 API.
+  x-internal: true
+paths:
+  /vrp-consents:
+    post:
+      tags:
+      - Variable Recurring Payments
+      summary: Create a VRP consent
+      description: The `POST /vrp-consents` endpoint creates a new VRP consent.
+      operationId: CreateVrpConsent
+      x-internal: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/vrpconsents_body'
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VrpConsentResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400_2'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '403':
+          description: Permission to access this endpoint is denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+    get:
+      tags:
+      - Variable Recurring Payments
+      summary: Get VRP consents
+      description: The `GET /vrp-consents` endpoint retrieves all VRP consents created by the calling member.
+      operationId: GetVrpConsents
+      x-internal: true
+      parameters:
+      - name: limit
+        in: query
+        description: The maximum number of records to return.
+        required: true
+        style: form
+        explode: true
+        schema:
+          maximum: 200
+          minimum: 1
+          type: integer
+          format: int32
+        example: 10
+      - name: offset
+        in: query
+        description: The offset from the previous page.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: LerV6Jmex
+      - name: createdAfter
+        in: query
+        description: Returns only Vrp consents created after this time (in <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a> format).
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '2022-04-05T17:00:00.000Z'
+      - name: createdBefore
+        in: query
+        description: Returns only Vrp consents created before this time (in <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a> format).
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '2023-04-05T17:00:00.000Z'
+      - name: statuses
+        in: query
+        description: Filters Vrp consents by statuses
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/VrpConsentStatus'
+        example:
+        - PENDING
+        - AUTHORIZED
+      - name: scheme
+        in: query
+        description: Filters Vrp consents by Vrp scheme (only OBL_SWEEPING is currently supported)
+        required: false
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/VrpScheme'
+        example: OBL_SWEEPING
+      - name: onBehalfOfId
+        in: query
+        description: Filters Vrp consents by their `onBehalfOfId` value.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: c5a863bc-86f2-4418-a26f-25b24c7983c7
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VrpConsentsResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400_1'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+  /vrp-consents/{id}:
+    get:
+      tags:
+      - Variable Recurring Payments
+      summary: Get a VRP consent
+      description: The `GET /vrp-consents/{id}` endpoint retrieves the details for an individual VRP consent.
+      operationId: GetVrpConsent
+      x-internal: true
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          description: VRP consent id
+          example: vc:12345abcd:abcde
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VrpConsentResponse'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '404':
+          description: VRP consent not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404_1'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+    delete:
+      tags:
+      - Variable Recurring Payments
+      summary: Revoke a VRP consent
+      description: The `DELETE /vrp-consents/{id}` endpoint revokes an individual VRP consent.
+      operationId: RevokeVrpConsent
+      x-internal: true
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          description: VRP consent id
+          example: vc:12345abcd:abcde
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VrpConsentResponse'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '404':
+          description: VRP consent not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404_1'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+  /vrp-consents/{id}/payments:
+    get:
+      tags:
+      - Variable Recurring Payments
+      summary: Get payments under a VRP consent
+      description: The `GET /vrp-consents/{id}/payments` endpoint retrieves the payments under a given VRP consent.
+      operationId: GetVrpConsentPayments
+      x-internal: true
+      parameters:
+      - name: id
+        in: path
+        description: VRP consent id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: vc:12345abcd:abcde
+      - name: limit
+        in: query
+        description: The maximum number of records to return.
+        required: true
+        style: form
+        explode: true
+        schema:
+          maximum: 200
+          minimum: 1
+          type: integer
+          format: int32
+        example: 10
+      - name: offset
+        in: query
+        description: The offset from the previous page.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: LerV6Jmex
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VrpsResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400_1'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+  /vrps/{id}/confirm-funds:
+    get:
+      tags:
+      - Variable Recurring Payments
+      summary: Verify if funds are available or not
+      description: The `GET /vrps/{id}/confirm-funds` endpoint confirms whether the funds are available to initiate VRP.
+      operationId: ConfirmFunds
+      x-internal: true
+      parameters:
+      - name: id
+        in: path
+        description: The VRP consent id.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: vc:12345abcd:abcde
+      - name: amount
+        in: query
+        required: true
+        description: The amount to confirm availability for.
+        schema:
+          type: string
+          example: 1
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfirmFundsResponse'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404_2'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+components:
+  schemas:
+    remittanceInformationSecondary:
+      type: string
+      description: The secondary field for remittance information. The information supplied should enable the reconciliation of an entry in an unstructured form. Depending on the payment network, information from this field may or may not be included in the bank statement and reconciliation file. <br/>We recommend that the `remittanceInformationSecondary` field should not contain special characters (the allowed characters are the 26-letter Latin alphabet, the numerical digits from 0-9 and the hyphen '-') as banks may remove these when sending this field to the beneficiary. This field should not exceed 140 characters in length.
+      example: Secondary remittance information.
+    callbackUrl:
+      type: string
+      description: The TPP's url that Token.io calls back to. This url should not be under the token.io domain and must be https/SSL secure.
+      example: https://tpp.com/callback
+    inline_response_500:
+      properties:
+        error:
+          allOf:
+          - type: object
+            properties:
+              errorCode:
+                type: string
+                description: This is a textual error code categorising the error.
+                example: InternalServerError
+          - $ref: '#/components/schemas/ServerError'
+    pispConsentAccepted:
+      type: boolean
+      description: This flag indicates whether the user has granted consent for the payment in the TPP's user interface.
+      example: false
+      default: false
+    PaymentContextCode:
+      type: string
+      description: This field describes the context of the payment context. This field is an <a href="https://www.openbanking.org.uk" target="_blank">OBIE</a> standard and also maps to <a href="https://bankio.at/openbanking/knowledge-base/NextGenPSD2" target="_blank">NextGenPsd2</a>'s `purposeCode` and `categoryPurposeCode` fields. We recommend that the TPP populates this field.
+      example: PISP_PAYEE
+      enum:
+      - INVALID_PAYMENT_CONTEXT_CODE
+      - BILLING_GOODS_AND_SERVICES_IN_ADVANCE
+      - BILLING_GOODS_AND_SERVICES_IN_ARREARS
+      - PISP_PAYEE
+      - ECOMMERCE_MERCHANT_INITIATED_PAYMENT
+      - FACE_TO_FACE_POINT_OF_SALE
+      - TRANSFER_TO_SELF
+      - TRANSFER_TO_THIRD_PARTY
+    ServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: 'This could refer to either an error by the payment service provider or the bank. When the bank reports a 5xx error, `"token-external-error": "true"` is set as a header in the HTTP response, indicating that the "internal" error originates from the bank. When one of the payment service providers internal services fails or when the bank reports a 4xx error, this header is not populated. The absence of this response header should be interpreted as `"token-external-error": "false"`.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    VrpScheme:
+      type: string
+      description: Vrp scheme, only OBL_SWEEPING is supported currently.
+      example: OBL_SWEEPING
+      default: OBL_SWEEPING
+      enum:
+      - OBL_SWEEPING
+    Address:
+      type: object
+      properties:
+        addressLine:
+          type: array
+          items:
+            type: string
+            example: The Coach House
+        streetName:
+          type: string
+          description: Street number
+          example: 221B
+        buildingNumber:
+          type: string
+          description: Building number
+          example: 2C
+        postCode:
+          type: string
+          description: Post Code
+          example: TR26 1EZ
+        townName:
+          type: string
+          description: Town name
+          example: Saint Ives
+        state:
+          type: string
+          description: State
+          example: Cornwall
+        district:
+          type: string
+          description: The district.
+        country:
+          type: string
+          description: Two-letter country code in upper case (ISO 3166-1 alpha-2).
+          example: GB
+      description: Address
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: The request does not have valid authentication credentials needed to perform the operation.
+    refId:
+      type: string
+      description: The TPP-generated reference identifier for the token. This is not to be confused with the `requestId`. The `refId` maps to the `tppRefId` in the bank's `consentRequest`. This is needed to match/verify the originating token request with the bank's consent request. <br/>We recommend that the `refId` should not contain special characters (the allowed characters are the 26-letter Latin alphabet, the numerical digits from 0-9 and the hyphen '-'). This field should not exceed 18 characters in length.
+      example: 9htio4a1sp2akdr1aa
+    RefundAccount:
+      description: The account to which the refund should be sent.
+      allOf:
+      - oneOf:
+        - $ref: '#/components/schemas/SepaInstantAccount'
+        - $ref: '#/components/schemas/SepaAccount'
+        - $ref: '#/components/schemas/FasterPaymentsAccount'
+      - type: object
+        properties:
+          name:
+            type: string
+            description: The name of the account owner.
+            example: John Smith
+    VRPCreditorInformation:
+      description: The creditor information. The account information (one of) is required.
+      allOf:
+      - oneOf:
+        - $ref: '#/components/schemas/FasterPaymentsAccount'
+      - type: object
+      - required:
+        - name
+        properties:
+          name:
+            type: string
+            description: The owner's name for the creditor account.
+            example: Customer Inc.
+          ultimateCreditorName:
+            type: string
+            description: The ultimate creditor's name.
+            example: Customer Inc.
+          address:
+            $ref: '#/components/schemas/Address'
+          bankName:
+            type: string
+            description: The creditor's bank name.
+    remittanceInformationPrimary:
+      type: string
+      description: The primary field for remittance information. This should contain a reference, as assigned by the creditor, to unambiguously refer to the payment transactions under this consent. The value of this field should appear on the bank statement and reconciliation file, irrespective of the payment network being used. <br/>We recommend that the `remittanceInformationPrimary` field should not contain special characters (the allowed characters are the 26-letter Latin alphabet, the numerical digits from 0-9 and the hyphen '-') as banks may remove these when sending this field to the beneficiary. This field should not exceed 35 characters in length (18 characters for UK Faster Payments).
+      example: Sweepco
+    VrpNotFoundError:
+      required:
+      - vrpId
+      type: object
+      properties:
+        errorCode:
+          example: Resource.NotFound
+        vrpId:
+          type: string
+          description: VRP id.
+          example: vrp:12345abcd:abcde
+      description: Error object returned when the given VRP cannot be found. The error code value is `Resource.NotFound`.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    FieldError:
+      title: FieldError
+      required:
+      - paths
+      type: object
+      properties:
+        paths:
+          type: array
+          description: A list of paths to the problematic fields.
+          items:
+            type: string
+            description: A reference to the JSON path of the field that caused the error.
+            example: initiation.refId
+      description: 'An error object providing details about an error caused by a particular field or fields in the request. Possible error code values include: <br/><br/> <b>Field.NotUnique</b> - The field value should be unique, but it isn''t.<br/><br/> <b>Field.Expected</b> - A field is expected/required but is missing altogether. <br/><br/> <b>Field.InvalidFormat</b> - A field is present but has an invalid format. This includes invalid value type (<i>e.g.</i>, not a number where a number is expected) and an invalid format (<i>e.g.</i>, a value is too long). <br/><br/> <b>Field.Invalid</b> - A field is present but has an invalid value. This covers all cases, where a field is present and invalid, that are not covered by `Field.InvalidFormat`.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    memberId:
+      type: string
+      description: The Token.io-assigned member id of the TPP.
+      example: m:123456abcd:abcd
+    TokenBankError:
+      type: object
+      properties:
+        errorCode:
+          example: FieldBank.RegistrationNotFound
+        bankId:
+          $ref: '#/components/schemas/bankId'
+      description: 'Error object providing details about an error related to the debtor bank. Possible error code values include: <br/><br/> - `Bank.RegistrationNotFound` - unable to find registration of the calling member with the given bank <br/><br/> - `Bank.FeatureNotSupported` - bank does not support VRP <br/><br/>'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    Amount:
+      description: The transaction amount and currency.
+      required:
+      - currency
+      - value
+      type: object
+      properties:
+        value:
+          type: string
+          description: The transaction amount with up to four digits after the decimal point.
+          example: '10.23'
+        currency:
+          type: string
+          description: The <a href="https://www.iso.org/iso-4217-currency-codes.html" target="_blank">ISO 4217</a> three letter currency code.
+          example: EUR
+    bankId:
+      type: string
+      description: The Token.io id of the bank where the consent is created. **This field is required if the customer is not using Token.io's Hosted Pages for bank selection, <i>i.e.</i>, API-only integration when `EMBEDDED_HOSTED_PAGES` is selected in `flowType`, or Hosted Pages embedded (modal) integration.**
+      example: ob-modelo
+    vrpconsents_body:
+      required:
+      - initiation
+      type: object
+      properties:
+        initiation:
+          $ref: '#/components/schemas/VrpConsentInitiation'
+        pispConsentAccepted:
+          $ref: '#/components/schemas/pispConsentAccepted'
+    VrpConsentsResponse:
+      required:
+      - pageInfo
+      - vrpConsents
+      type: object
+      properties:
+        vrpConsents:
+          type: array
+          items:
+            $ref: '#/components/schemas/VrpConsent'
+        pageInfo:
+          $ref: '#/components/schemas/PageInfo'
+    inline_response_404_2:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/VrpNotFoundError'
+    ConfirmFundsResponse:
+      type: object
+      properties:
+        fundsAvailable:
+          type: boolean
+          description: A flag indicating whether funds are available or not. If set to `true`, funds are available for transfer.
+          format: boolean
+          example: false
+          default: false
+      description: A flag indicating whether funds are available or not. If set to `true`, funds are available for transfer.
+    ErrorWithCode:
+      required:
+      - errorCode
+      - message
+      type: object
+      properties:
+        errorCode:
+          type: string
+          description: A textual error code categorising the error.
+          example: InternalServerError
+        message:
+          type: string
+          description: A description of the error that occurred and a possible way to fix it.
+          example: '`RefId` should not be longer than 35 symbols.'
+      description: Error object providing details about the error.
+      allOf:
+      - $ref: '#/components/schemas/Error'
+    Vrp:
+      required:
+      - createdDateTime
+      - id
+      - initiation
+      - memberId
+      - status
+      - updatedDateTime
+      type: object
+      properties:
+        id:
+          type: string
+          description: The Token.io generated VRP id.
+          example: vrp:12345abcd:abcd
+        memberId:
+          $ref: '#/components/schemas/memberId'
+        initiation:
+          $ref: '#/components/schemas/VrpInitiation'
+        createdDateTime:
+          type: string
+          description: The time when this VRP object was created (in <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a> format).
+          example: '2017-04-05T10:43:07.123Z'
+        updatedDateTime:
+          type: string
+          description: The date and time this VRP object was last updated (in <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a> format).
+          example: '2017-04-05T10:45:07.123Z'
+        status:
+          $ref: '#/components/schemas/VrpStatus'
+        bankVrpId:
+          type: string
+          description: The VRP id from the bank. This field can be empty if the VRP id isn't available on the bank's side.
+          example: 4vn6aDyMiwBYbPDN
+        bankVrpStatus:
+          type: string
+          description: The raw bank status. This field can be empty if payment status isn't available on the bank's side.
+          example: AcceptedCreditSettlementCompleted
+        statusReasonInformation:
+          type: string
+          description: A human-readable description of the reason for the reported status, which may include a message from the bank. This value should not exceed 256 characters in length.
+          example: The payment is settled on the debtor's side.
+        refundDetails:
+          $ref: '#/components/schemas/RefundDetails'
+      description: The VRP object.
+    PeriodicLimit:
+      required:
+      - maximumAmount
+      - periodType
+      type: object
+      properties:
+        maximumAmount:
+          type: string
+          description: The transaction amount with up to four digits after the decimal point.
+          example: '100.00'
+        periodType:
+          type: string
+          example: DAY
+          enum:
+          - DAY
+          - WEEK
+          - MONTH
+          - YEAR
+        periodAlignment:
+          type: string
+          description: This field specifies whether the period starts on the consent start date or lines up with a calendar. If not specified, the CONSENT alignment is used.<br/> The consent start date is defined by the `startDateTime` field of the consent (the time element is disregarded) or the date when consent is created if the startDateTime is not specified.
+          example: CALENDAR
+          enum:
+          - CONSENT
+          - CALENDAR
+      description: The maximum total amount of payments in a given period under this VRP consent. If the `periodAlignment` is `CALENDAR`, the limit is pro-rated in the first period to the remaining number of days.
+    RefundDetails:
+      required:
+      - refundAccount
+      type: object
+      properties:
+        refundAccount:
+          $ref: '#/components/schemas/RefundAccount'
+        paymentRefundStatus:
+          type: string
+          description: The refund status for this payment.
+          example: NONE
+          enum:
+          - NONE
+          - PARTIAL
+          - FULL
+        settledRefundAmount:
+          allOf:
+          - description: The total amount of settled refunds (with status INITIATION_COMPLETED).
+          - $ref: '#/components/schemas/Amount'
+        remainingRefundAmount:
+          allOf:
+          - description: The remaining amount to be refunded (the payment amount minus the total amount of non-failed refunds).
+          - $ref: '#/components/schemas/Amount'
+      description: The refund-related information for this payment. This field requires specific permission and is only available if `paymentInitiation.returnRefundAccount` is set to `true`.
+    VrpConsent:
+      required:
+      - createdDateTime
+      - id
+      - initiation
+      - memberId
+      - status
+      - updatedDateTime
+      type: object
+      properties:
+        id:
+          type: string
+          description: The Token.io generated VRP consent id.
+          example: vc:12345abcd:abcde
+        memberId:
+          $ref: '#/components/schemas/memberId'
+        initiation:
+          $ref: '#/components/schemas/VrpConsentInitiation'
+        createdDateTime:
+          type: string
+          description: The time this VRP consent object was created (in <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a> format).
+          example: '2017-04-05T10:43:07.123Z'
+        updatedDateTime:
+          type: string
+          description: The last time this VRP consent object was updated (in <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a> format).
+          example: '2017-04-05T10:45:07.123Z'
+        status:
+          $ref: '#/components/schemas/VrpConsentStatus'
+        bankVrpConsentId:
+          type: string
+          description: The VRP consent id from the bank. This field can be empty if the consent id isn't available on the bank side.
+          example: 4jq34dwjgi9MCK2MXB9f7v
+        bankVrpConsentStatus:
+          type: string
+          description: The raw bank status. This field can be empty if the consent status isn't available on the bank side.
+          example: AwaitingAuthorization
+        statusReasonInformation:
+          type: string
+          description: A human-readable description of the reason for the reported status, which may include a message from the bank. This value should not exceed 256 characters in length.
+          example: The consent resource is awaiting user authorization.
+        authentication:
+          $ref: '#/components/schemas/Authentication'
+      description: The VRP consent object.
+    SepaAccount:
+      title: SepaAccount
+      required:
+      - iban
+      type: object
+      properties:
+        iban:
+          type: string
+          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
+          example: BOFIIE2D
+      description: SEPA account details where the iban is required and the bic is optional.
+    VrpConsentStatus:
+      type: string
+      description: The Token.io VRP consent status. <br/><ul><li><b>PENDING</b> - Token.io has received the request to create a VRP consent and the request has passed Token.io's validation.</li><li><b>PENDING_MORE_INFO</b> - The initiaion lacks mandatory fields (<i>e.g.</i>, `bankId`) that must be collected before connecting to the bank.</li><li><b>PENDING_REDIRECT_AUTH</b> - The consent request has been acknowledged by the bank and Token.io is awaiting user confirmation at the bank's page.</li><li><b>PENDING_REDIRECT_AUTH_VERIFICATION</b> - Token.io has received the callback information from the bank and is currently verifying it with the bank.</li><li><b>AUTHORIZED</b> - the VRP consent has been successfully authorized.</li><li><b>REJECTED</b> - The VRP consent has been rejected. More details are shared in the corresponding `statusReasonInformation` field.</li><li><b>REVOKED</b> - The VRP consent has been revoked by the user.</li><li><b>FAILED</b> - Token.io failed to proceed with the consent as a result of problems with the bank, or because the user has abandoned the request. All `PENDING` statuses convert to `FAILED` 30 minutes after consent creation.</li></ul>
+      example: AUTHORIZED
+      default: PENDING
+      enum:
+      - PENDING
+      - PENDING_MORE_INFO
+      - PENDING_REDIRECT_AUTH
+      - PENDING_REDIRECT_AUTH_VERIFICATION
+      - AUTHORIZED
+      - REJECTED
+      - REVOKED
+      - FAILED
+    inline_response_403:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/PermissionDeniedError'
+    VrpStatus:
+      type: string
+      description: The Token.io VRP status. <ul><li><b>INITIATION_PENDING</b> - Token.io has received the payment initiation request and it has passed Token.io's validation.</li><li><b>INITIATION_PROCESSING</b> - The VRP request has been acknowledged by the bank and is now being processed.</li><li><b>INITIATION_COMPLETED</b> - Payment initiation has been completed.</li> <b>INITIATION_REJECTED</b> - The payment has been rejected.</li><li><b>INITIATION_REJECTED_INSUFFICIENT_FUNDS</b> - The payment has been rejected because the funds check returned a negative result.</li><li><b>INITIATION_FAILED</b> - Token.io failed to proceed with the initiation as a result of problems reaching the bank.</li><li><b>INITIATION_NO_FINAL_STATUS_AVAILABLE</b> - The payment status has not been updated for some time and Token.io has stopped polling it. The recommended maximum polling time is 30 days. The status will change to `INITIATION_NO_FINAL_STATUS_AVAILABLE` after 30 days if the bank does not update the status. This is a final status, but it does not indicate success or failure. Please contact the bank to check the actual status of the payment.</li></ul>
+      example: INITIATION_COMPLETED
+      default: INITIATION_PENDING
+      enum:
+      - INITIATION_PENDING
+      - INITIATION_PROCESSING
+      - INITIATION_COMPLETED
+      - INITIATION_REJECTED
+      - INITIATION_REJECTED_INSUFFICIENT_FUNDS
+      - INITIATION_FAILED
+      - INITIATION_NO_FINAL_STATUS_AVAILABLE
+    inline_response_400_2:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          oneOf:
+          - $ref: '#/components/schemas/FieldError'
+          - $ref: '#/components/schemas/PanDetectedError'
+          - $ref: '#/components/schemas/TokenBankError'
+    VrpConsentInitiation:
+      required:
+      - callbackState
+      - callbackUrl
+      - creditor
+      - currency
+      - localInstrument
+      - maximumIndividualAmount
+      - periodicLimits
+      - refId
+      - remittanceInformationPrimary
+      - scheme
+      type: object
+      properties:
+        bankId:
+          $ref: '#/components/schemas/bankId'
+        refId:
+          $ref: '#/components/schemas/refId'
+        remittanceInformationPrimary:
+          $ref: '#/components/schemas/remittanceInformationPrimary'
+        remittanceInformationSecondary:
+          $ref: '#/components/schemas/remittanceInformationSecondary'
+        startDateTime:
+          type: string
+          description: The date and time from which payments can be made (in <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a> format). Payments initiated before this time will be rejected. If not provided, the time of consent creation is used as a default. The date and time cannot be earlier than the current time.
+          example: '2017-04-05T10:43:07.123+01:00'
+        endDateTime:
+          type: string
+          description: The date and time before which payments can be made (in <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a> format). Payments initiated after this time will be rejected.
+          example: '2017-04-05T10:43:07.132+01:00'
+        onBehalfOfId:
+          type: string
+          description: The id of the ultimate client on whose behalf the consent is created. If the consent is created on behalf of a sub-TPP, this field should contain the sub-TPP `referenceId`. This field is mandatory for unregulated TPPs.
+          example: 6f34h397-b29h-23b0-s30g-hkd0d2dk4k1s
+        scheme:
+          type: string
+          description: The types of payments that can be made under this VRP consent.
+          example: OBL_SWEEPING
+          enum:
+          - OBL_SWEEPING
+        localInstrument:
+          type: string
+          description: The bank's payment service used for making a payment. Presently only Faster Payments are supported.
+          example: FASTER_PAYMENTS
+          enum:
+          - FASTER_PAYMENTS
+        debtor:
+          $ref: '#/components/schemas/VRPDebtorInformation'
+        creditor:
+          $ref: '#/components/schemas/VRPCreditorInformation'
+        currency:
+          type: string
+          description: The <a href="https://www.iso.org/iso-4217-currency-codes.html" target="_blank">ISO 4217</a> three letter currency code for this VRP consent. All amounts specified in this consent are in this currency. All payments created under this consent should use this currency.
+          example: EUR
+        minimumIndividualAmount:
+          type: string
+          description: The minimum amount for individual payments made under this consent, with up to four digits after the decimal point It should not exceed the `maximumIndividualAmount` or any of the periodic limits `maximumAmount`.
+          example: '5.0'
+        maximumIndividualAmount:
+          type: string
+          description: The maximum amount for individual payments made under this consent, with up to four digits after the decimal point.
+          example: '10000.0'
+        periodicLimits:
+          type: array
+          description: A list of periodic limits that are applied together as an intersection. At least one should be specified.
+          items:
+            $ref: '#/components/schemas/PeriodicLimit'
+        maximumOccurrences:
+          type: integer
+          description: The total number of payments that can be initiated under this consent. Any new payments will be rejected if the number is over this limit. This cannot be negative, 0 value is considered as not set.
+          example: 3
+        callbackUrl:
+          $ref: '#/components/schemas/callbackUrl'
+        callbackState:
+          $ref: '#/components/schemas/callbackStatev2'
+        returnRefundAccount:
+          type: boolean
+          description: This field indicates whether the `RefundAccount` object should be included in the VRP created under this consent.
+          example: true
+          default: false
+        risk:
+          $ref: '#/components/schemas/Risk'
+      description: The initiation payload for the VRP consent.
+    VrpConsentNotFoundError:
+      required:
+      - vrpConsentId
+      type: object
+      properties:
+        errorCode:
+          example: Resource.NotFound
+        vrpConsentId:
+          type: string
+          description: VRP consent id.
+          example: vc:12345abcd:abcde
+      description: Error object returned when given VRP consent cannot be found. The error code value is `Resource.NotFound`.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    FasterPaymentsAccount:
+      title: FasterPaymentsAccount
+      required:
+      - accountNumber
+      - sortCode
+      type: object
+      properties:
+        accountNumber:
+          type: string
+          description: The unique identifier for the bank account in the UK or Ireland.
+          example: '12345678'
+        sortCode:
+          type: string
+          description: The number assigned to a branch of a bank, typically containing six digits and most commonly used in the UK and Ireland.
+          example: '123456'
+      description: A UK or Irish account where the sort code and account number are required.
+    inline_response_401:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    VrpConsentResponse:
+      required:
+      - vrpConsent
+      type: object
+      properties:
+        vrpConsent:
+          $ref: '#/components/schemas/VrpConsent'
+    Risk:
+      type: object
+      properties:
+        psuId:
+          type: string
+          description: The merchant's unique customer identifier for the user.
+          example: 0000789123
+        paymentContextCode:
+          $ref: '#/components/schemas/PaymentContextCode'
+        paymentPurposeCode:
+          type: string
+          description: The category code conforming to the Recommended UK Purpose Code in the <a href="https://www.iso.org/standard/55005.html" target="_blank">ISO 20022</a> Payment Messaging List, related to the type of services or goods corresponding to the underlying purpose of the payment. This list applies to all banks that follow ISO 20022. <ul><li><b>CASH</b> - CashManagementTransfer</li><li><b>CORT</b> - TradeSettlementPayment</li><li><b>DVPM</b> - DeliveryAgainstPayment</li><li><b>INTC</b> - IntraCompanyPayment</li><li><b>TREA</b> - TreasuryPayment</li><li><b>SUPP</b> - SupplierPayment</li></ul>
+          default: CASH
+          example: DVPM
+          enum:
+          - CASH
+          - CORT
+          - DVPM
+          - INTC
+          - TREA
+          - SUPP
+        merchantCategoryCode:
+          type: string
+          description: The category code conforming to <a href="https://www.iso.org/standard/33365.html" target="_blank">ISO 18245</a>, relating to the type of services or goods provided by the merchant. A list of codes can be purchased <a href="https://www.iso.org/standard/79450.html" target="_blank">here</a>."
+          example: '4812'
+        beneficiaryAccountType:
+          type: string
+          description: This information should be provided if the `AccountType` is known.
+          example: BUSINESS
+          enum:
+          - PERSONAL
+          - JOINT_PERSONAL
+          - PERSONAL_SAVINGS_ACCOUNT
+          - BUSINESS
+          - BUSINESS_SAVINGS_ACCOUNT
+          - CHARITY
+          - COLLECTION
+          - CORPORATE
+          - GOVERNMENT
+          - EWALLET
+          - INVESTMENT
+          - ISA
+          - PREMIER
+          - WEALTH
+          - PENSION
+        contractPresentIndicator:
+          type: boolean
+          description: This field indicates whether a Payee has a contractual relationship with the Payment Initiation Service Provider (PISP).
+          example: true
+        beneficiaryPrepopulatedIndicator:
+          type: boolean
+          description: This field indicates whether the Payment Initiation Service Provider (PISP) has immutably prepopulated payment details for the user.
+          example: true
+        deliveryAddress:
+          $ref: '#/components/schemas/DeliveryAddress'
+      description: This field is used to specify additional details for the risk scoring of payments.
+    VrpsResponse:
+      required:
+      - pageInfo
+      - vrps
+      type: object
+      properties:
+        vrps:
+          type: array
+          items:
+            $ref: '#/components/schemas/Vrp'
+        pageInfo:
+          $ref: '#/components/schemas/PageInfo'
+    SepaInstantAccount:
+      title: SepaInstantAccount
+      required:
+      - iban
+      type: object
+      properties:
+        iban:
+          type: string
+          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
+          example: BOFIIE2D
+      description: SEPA Instant account details where the iban is required and the bic is optional.
+    Authentication:
+      required:
+      - redirectUrl
+      type: object
+      properties:
+        redirectUrl:
+          type: string
+          description: This URL redirects the user in order to authorize the consent creation.
+          example: http://psu-redirect.com
+      description: The authentication operation required to proceed with consent creation. This is present when the consent initiation request has been created at the bank, but the consent hasn't been authorized or rejected yet.
+    callbackStatev2:
+      type: string
+      description: The uniquely-generated string included as part of the URL when communicating with the bank. It is sent to the bank during payment initiation and is also returned in the callback from the bank. You can use it to identify which payment the callback refers to, ensuring that the callback can be reliably matched to the original payment request.
+      example: 6242e45e-3063-4c42-8376
+    PermissionDeniedError:
+      type: object
+      properties:
+        errorCode:
+          example: PermissionDenied
+      description: 'The error returned when the member is not authorized to perform the given operation: PermissionDenied. <br/>This error message will be accompanied by the reason from the bank. Typically this means the access token has expired and the user must re-authenticate with the bank.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    VrpInitiation:
+      required:
+      - amount
+      - consentId
+      - refId
+      - remittanceInformationPrimary
+      type: object
+      properties:
+        consentId:
+          type: string
+          description: The id of the VRP consent.
+          example: vc:12345abcd:abcd
+        refId:
+          $ref: '#/components/schemas/refId'
+        remittanceInformationPrimary:
+          $ref: '#/components/schemas/remittanceInformationPrimary'
+        remittanceInformationSecondary:
+          $ref: '#/components/schemas/remittanceInformationSecondary'
+        amount:
+          $ref: '#/components/schemas/Amount'
+        confirmFunds:
+          type: boolean
+          description: A flag indicating whether the bank should do a funds confirmation check before accepting the payment. If set to `true`, the funds will be checked.
+          example: false
+          default: false
+        risk:
+          $ref: '#/components/schemas/Risk'
+      description: The VRP initiation object.
+    DeliveryAddress:
+      type: object
+      properties:
+        addressLine:
+          type: array
+          description: Specifies the delivery address using multiple lines, as necessary.
+          example:
+          - Flat 2, The Red Lodge, 1 High Street
+          items:
+            type: string
+        addressType:
+          type: string
+          description: Specifies the type of address.
+          example: BUSINESS
+          default: INVALID_ADDRESS_TYPE
+          enum:
+          - INVALID_ADDRESS_TYPE
+          - BUSINESS
+          - CORRESPONDENCE
+          - DELIVERYTO
+          - MAILTO
+          - POBOX
+          - POSTAL
+          - RESIDENTIAL
+          - STATEMENT
+        buildingNumber:
+          type: string
+          description: The building number within the delivery address.
+          example: '1'
+        country:
+          type: string
+          description: Two-letter country code in upper case (ISO 3166-1 alpha-2).
+          example: GB
+        countrySubDivision:
+          type: array
+          description: Identifies a subdivision of a country; for instance, a state, region, or county.
+          example:
+          - North Yorkshire
+          items:
+            type: string
+        department:
+          type: string
+          description: This <a href="https://openbankinguk.github.io/read-write-api-site3/v3.1.6/resources-and-data-models/pisp/international-payment-consents.html" target="_blank">OBIE specification</a> maps to house number.
+          example: '1'
+        postCode:
+          type: string
+          description: An identifier consisting of a group of letters and/or numbers that is added to a postal address to assist the sorting of mail.
+          example: YO62 5JB
+        streetName:
+          type: string
+          description: The name of the respective street or thoroughfare in which the dwelling or business is located or where mail is received.
+          example: High Street
+        subDepartment:
+          type: string
+          description: This <a href="https://openbankinguk.github.io/read-write-api-site3/v3.1.6/resources-and-data-models/pisp/international-payment-consents.html" target="_blank">OBIE specification</a> maps to flats.
+          example: Flat 2
+        townName:
+          type: string
+          description: The name of a built-up area with defined boundaries and a local government.
+          example: York
+      description: Specifies the recipient's delivery address details.
+    VRPDebtorInformation:
+      description: The debtor information. The account identifier (one of) is required if it's mandatory for the specific bank, or if the TPP decides to pass in the `debtor` information.
+      allOf:
+      - oneOf:
+        - $ref: '#/components/schemas/FasterPaymentsAccount'
+      - type: object
+        properties:
+          name:
+            type: string
+            description: The owner's name for the debtor account.
+            example: John Smith
+          ultimateDebtorName:
+            type: string
+            description: The ultimate debtor's name.
+            example: John Smith
+          address:
+            $ref: '#/components/schemas/Address'
+    inline_response_400_1:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/FieldError'
+    inline_response_404_1:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/VrpConsentNotFoundError'
+    PanDetectedError:
+      type: object
+      properties:
+        errorCode:
+          example: PanDetected
+      description: Error object retured when PAN is detected in the submitted initiation payload. The error code value is `PanDetected`.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    PageInfo:
+      required:
+      - limit
+      type: object
+      properties:
+        limit:
+          maximum: 200
+          minimum: 1
+          type: integer
+          description: The limit (maximum number of objects to return) applied to this page. <br/>The default and maximum allowed limit is 200. If this limit is exceeded, was not set or was set to 0, it will be set to 200.
+          format: int32
+          example: 20
+          default: 200
+        offset:
+          type: string
+          description: The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset is provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to the dynamic nature of the data. <br/>The offset is opaque to a user and should not be parsed and/or understood in any way.
+          example: LerV6Jmex
+        nextOffset:
+          type: string
+          description: The offset for the next page. If the page is empty, it is equal to this page offset. If the page is not empty, but there are no more objects to load (haveMore = false), it will be empty.<br/>The offset is opaque to a user and should not be parsed and/or understood in any way.
+          example: KgwG8Qkat
+        haveMore:
+          type: boolean
+          description: This field indicates whether there are more objects to load, <i>i.e.</i> whether the next page exists.
+          example: false
+          default: false
+      description: The information about the current page, which also indicates whether the next page exists.
+  securitySchemes:
+    Bearer:
+      type: http
+      description: '**For Production and Sandbox environments.**<br />When using curl samples the authorization header is given as -H `''Authorization: Bearer + JWT''`<br/>Please substitute your Bearer key here.<br/>For example:<br/> -H `''Authorization: Bearer eyJhbGciOiJFZERTQSIsImtpZCI6IjF4N2RmNHZ1RlVIWVFDYTciLCJtaWQiOiJtOlhUalhlMkFQZTRvdmVaalE4cHoyNGdEbUZEcTo1ekt0WEVBcSIsImhvc3QiOiJsb2NhbGhvc3Q6ODAwMCIsIm1ldGhvZCI6IlBPU1QiLCJwYXRoIjoiL2JhbmtzL2lyb24vdXNlcnMiLCJleHAiOjE1ODYyOTczNDQ3ODd9..bi3wxEoMHIul_F2f7gCDvgjHQKCjIyP9_SkQns-yXpS0UqoaOqSJrW89COexU71gt-mH3jH6mtp2aksEywvFDg''`<br/>Enter the JWT Bearer token only (see <a href="https://developer.token.io/token_rest_api_doc/content/e-rest/authentication.htm#JWT" target="_blank">JWT Authentication</a> for more information).'
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: apiKey
+      description: '**For Sandbox environment only.**<br />When using curl samples the authorization header is given as -H `''Authorization: YOUR_API_KEY_HERE''`<br/>Please substitute your Basic key here.<br/>For example:<br/> -H `''Authorization: Basic bS0zanhoS3pqRjRSWFQ1dHZLTlhMQU14cm80d0E1LTV6S3RYRUFxOmU1MWZjZDQ0LTM5MGQtNDYxZi04YjA0LTEyMjcxOTg4YWYwNg==''`'
+      name: Authorization
+      in: header

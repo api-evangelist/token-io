@@ -1,0 +1,2772 @@
+openapi: 3.0.1
+info:
+  title: Token.io's Open Banking API for TPPs Account on File Accounts API
+  description: '<b>Token.io''s Open Banking API</b><br/><br/>Token.io Support: <a href="https://support.token.io" target="_blank">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user''s account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users'' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href="https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm" target="_blank">developer documentation</a>.'
+  version: ''
+servers:
+- url: https://api.token.io
+tags:
+- name: Accounts
+  description: These endpoints provide authorized access to an authenticated user's account information.
+paths:
+  /accounts:
+    get:
+      tags:
+      - Accounts
+      summary: Get information for all accounts
+      description: The `GET /accounts` endpoint retrieves information for all bank accounts.
+      operationId: GatewayService.GetAccounts
+      parameters:
+      - name: on-behalf-of
+        in: header
+        description: The `tokenId` represents the consent granted by the user (PSU).
+        schema:
+          type: string
+        required: true
+        example: ta:3eYPU1BEKKunfmYgQuSKXFCeo851C5Y3XiZW3XA465TU:5zKtXEAq
+      - name: token-customer-ip-address
+        in: header
+        description: The user's IP address if the user is currently logged in with the TPP. If the customer IP address is supplied (recommended), it is inferred that the user is present during the session (<i>i.e.</i>, the request is user-initiated; adding a `customer-initiated` = `true` header makes this explicit). For AIS calls, if the customer's IP address is not provided in the request, the bank assumes it is a TPP-initiated request and may limit the TPP to four TPP-initiated access attempts within a given 24-hour period.
+        schema:
+          type: string
+          format: ipv4
+        required: false
+        example: 172.16.254.1
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountsResponse'
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '403':
+          description: Permission to access this endpoint is denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        '404':
+          description: The requested entity, such as a payment, was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_429'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        '501':
+          description: The operation was not implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_501'
+        '503':
+          description: Service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_503'
+        '504':
+          description: Gateway has timed out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_504'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+  /accounts/{accountId}:
+    get:
+      tags:
+      - Accounts
+      summary: Get account information
+      description: The `GET /accounts/{accountId}` endpoint retrieves the information for a specific bank account.
+      operationId: GatewayService.GetAccount
+      parameters:
+      - name: on-behalf-of
+        in: header
+        description: The `tokenId` represents the consent granted by the user (PSU).
+        schema:
+          type: string
+        required: true
+        example: ta:3eYPU1BEKKunfmYgQuSKXFCeo851C5Y3XiZW3XA465TU:5zKtXEAq
+      - name: accountId
+        in: path
+        description: The system-generated, unique bank account id, which specifies the account for which the information is requested.
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: a:8DbPteGnytmMbKXdnWTReeRB6cYWKXZ84JgLTBC7fKL4:5zKcENpV
+      - name: token-customer-ip-address
+        in: header
+        description: The user's IP address if the user is currently logged in with the TPP. If the customer  IP address is supplied (recommended), it is inferred that the user is present during the session (<i>i.e.</i>, the request is user-initiated; adding a `customer-initiated` = `true` header makes this explicit). For AIS calls, if the customer's IP address is not provided in the request, the bank assumes it is a TPP-initiated request and may limit the TPP to 4 TPP-initiated access attempts within a given 24-hour period.
+        schema:
+          type: string
+          format: ipv4
+        required: false
+        example: 172.16.254.1
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountResponse'
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '403':
+          description: Permission to access this endpoint is denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        '404':
+          description: The requested entity, such as a payment, was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_429'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        '501':
+          description: The operation was not implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_501'
+        '503':
+          description: Service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_503'
+        '504':
+          description: Gateway has timed out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_504'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+  /account-balance:
+    get:
+      tags:
+      - Accounts
+      summary: Get account balances
+      description: The `GET /account-balance` endpoint retrieves the balances for multiple bank accounts.
+      operationId: GatewayService.GetBalances
+      parameters:
+      - name: on-behalf-of
+        in: header
+        description: The `tokenId` represents the consent granted by the user (PSU).
+        schema:
+          type: string
+        required: true
+        example: ta:3eYPU1BEKKunfmYgQuSKXFCeo851C5Y3XiZW3XA465TU:5zKtXEAq
+      - name: token-customer-ip-address
+        in: header
+        description: The user's IP address if the user is currently logged in with the TPP. If the customer  IP address is supplied (recommended), it is inferred that the user is present during the session (<i>i.e.</i>, the request is user-initiated; adding a `customer-initiated` = `true` header makes this explicit). For AIS calls, if the customer's IP address is not provided in the request, the bank assumes it is a TPP-initiated request and may limit the TPP to 4 TPP-initiated access attempts within a given 24-hour period.
+        schema:
+          type: string
+          format: ipv4
+        required: false
+        example: 172.16.254.1
+      - name: accountId
+        in: query
+        description: A list of account ids for which you wish to retrieve account balances. Each `accountId` should be specified separately as accountId=a:xxx:xxx&accountId=a:yyy:yyy.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+        example:
+        - a:8DbPteGnytmMbKXdnWTReeRB6cYWKXZ84JgLTBC7fKL4:5zKcENpV
+        - a:9TFpwkcQmcsMbdjQcpdjfsEBosDw28503fAAGPEMF2MVF19hfk3nc
+        - a:rtmv254gaskGLdkadQvdNesk2Y9ferbvpaom5mvepm0mv2nfGnaix
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBalancesResponse'
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '403':
+          description: Permission to access this endpoint is denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        '404':
+          description: The requested entity, such as a payment, was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_429'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        '501':
+          description: The operation was not implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_501'
+        '503':
+          description: Service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_503'
+        '504':
+          description: Gateway has timed out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_504'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+  /accounts/{accountId}/balance:
+    get:
+      tags:
+      - Accounts
+      summary: Get an account balance
+      description: The `GET /accounts/{accountId}/balance` endpoint retrieves the balance for a given bank account.
+      operationId: GatewayService.GetBalance
+      parameters:
+      - name: on-behalf-of
+        in: header
+        description: The `tokenId` represents the consent granted by the user (PSU).
+        schema:
+          type: string
+        required: true
+        example: ta:3eYPU1BEKKunfmYgQuSKXFCeo851C5Y3XiZW3XA465TU:5zKtXEAq
+      - name: token-customer-ip-address
+        in: header
+        description: The user's IP address if the user is currently logged in with the TPP. If the customer  IP address is supplied (recommended), it is inferred that the user is present during the session (<i>i.e.</i>, the request is user-initiated; adding a `customer-initiated` = `true` header makes this explicit). For AIS calls, if the customer's IP address is not provided in the request, the bank assumes it is a TPP-initiated request and may limit the TPP to 4 TPP-initiated access attempts within a given 24-hour period.
+        schema:
+          type: string
+          format: ipv4
+        required: false
+        example: 172.16.254.1
+      - name: accountId
+        in: path
+        description: The unique bank account id, which specifies the account for which the information is requested.
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: a:8DbPteGnytmMbKXdnWTReeRB6cYWKXZ84JgLTBC7fKL4:5zKcENpV
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBalanceResponse'
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '403':
+          description: Permission to access this endpoint is denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        '404':
+          description: The requested entity, such as a payment, was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_429'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        '501':
+          description: The operation was not implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_501'
+        '503':
+          description: Service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_503'
+        '504':
+          description: Gateway has timed out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_504'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+  /accounts/{accountId}/standing-orders:
+    get:
+      tags:
+      - Accounts
+      summary: Get information for all standing orders
+      description: The `GET /accounts/{accountId}/standing-orders` endpoint retrieves information for all standing orders in a given account, once consent has been given.
+      operationId: GatewayService.GetStandingOrders
+      parameters:
+      - name: on-behalf-of
+        in: header
+        description: The `tokenId` represents the consent granted by the user (PSU).
+        schema:
+          type: string
+        required: true
+        example: ta:3eYPU1BEKKunfmYgQuSKXFCeo851C5Y3XiZW3XA465TU:5zKtXEAq
+      - name: token-customer-ip-address
+        in: header
+        description: The user's IP address if the user is currently logged in with the TPP. If the customer  IP address is supplied (recommended), it is inferred that the user is present during the session (<i>i.e.</i>, the request is user-initiated; adding a `customer-initiated` = `true` header makes this explicit). For AIS calls, if the customer's IP address is not provided in the request, the bank assumes it is a TPP-initiated request and may limit the TPP to 4 TPP-initiated access attempts within a given 24-hour period.
+        schema:
+          type: string
+          format: ipv4
+        required: false
+        example: 172.16.254.1
+      - name: accountId
+        in: path
+        description: The unique bank account id, which specifies the account for which the information is requested.
+        required: false
+        schema:
+          type: string
+        example: a:8DbPteGnytmMbKXdnWTReeRB6cYWKXZ84JgLTBC7fKL4:5zKcENpV
+      - name: page.offset
+        in: query
+        description: The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br>The offset is not visible to a user and should not be parsed and/or understood in any way.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: LerV6Jmex
+      - name: page.limit
+        in: query
+        description: The maximum number of records to return. This must be less than 200.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 175
+          default: 1
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetStandingOrdersResponse'
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        '403':
+          description: Permission to access this endpoint is denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        '404':
+          description: The requested entity, such as a payment, was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_429'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        '501':
+          description: The operation was not implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_501'
+        '503':
+          description: Service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_503'
+        '504':
+          description: Gateway has timed out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_504'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+      x-internal: true
+  /accounts/{accountId}/standing-orders/{standingOrderId}:
+    get:
+      tags:
+      - Accounts
+      summary: Get standing order information
+      description: The `GET /accounts/{accountId}/standing-orders/{standingOrderId}` endpoint retrieves information for a specific standing order in a given account, once consent has been given.
+      operationId: GatewayService.GetStandingOrder
+      parameters:
+      - name: on-behalf-of
+        in: header
+        description: The `tokenId` represents the consent granted by the user (PSU).
+        schema:
+          type: string
+        required: true
+        example: ta:3eYPU1BEKKunfmYgQuSKXFCeo851C5Y3XiZW3XA465TU:5zKtXEAq
+      - name: token-customer-ip-address
+        in: header
+        description: The user's IP address if the user is currently logged in with the TPP. If the customer  IP address is supplied (recommended), it is inferred that the user is present during the session (<i>i.e.</i>, the request is user-initiated; adding a `customer-initiated` = `true` header makes this explicit). For AIS calls, if the customer's IP address is not provided in the request, the bank assumes it is a TPP-initiated request and may limit the TPP to 4 TPP-initiated access attempts within a given 24-hour period.
+        schema:
+          type: string
+          format: ipv4
+        required: false
+        example: 172.16.254.1
+      - name: accountId
+        in: path
+        description: The system-generated, unique bank account id, which specifies the account for which the information is requested.
+        required: false
+        schema:
+          type: string
+        example: a:8DbPteGnytmMbKXdnWTReeRB6cYWKXZ84JgLTBC7fKL4:5zKcENpV
+      - name: standingOrderId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The unique standing order identifier, which specifies the standing order requested.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetStandingOrderResponse'
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+      x-internal: true
+  /accounts/{accountId}/transactions:
+    get:
+      tags:
+      - Accounts
+      summary: Get account transactions
+      description: The `GET /accounts/{accountId}/transactions` endpoint retrieves information for all transactions in a given account.
+      operationId: GatewayService.GetTransactions
+      parameters:
+      - name: on-behalf-of
+        in: header
+        description: The `tokenId` represents the consent granted by the user (PSU).
+        schema:
+          type: string
+        required: true
+        example: ta:3eYPU1BEKKunfmYgQuSKXFCeo851C5Y3XiZW3XA465TU:5zKtXEAq
+      - name: token-customer-ip-address
+        in: header
+        description: The user's IP address if the user is currently logged in with the TPP. If the customer  IP address is supplied (recommended), it is inferred that the user is present during the session (<i>i.e.</i>, the request is user-initiated; adding a `customer-initiated` = `true` header makes this explicit). For AIS calls, if the customer's IP address is not provided in the request, the bank assumes it is a TPP-initiated request and may limit the TPP to 4 TPP-initiated access attempts within a given 24-hour period.
+        schema:
+          type: string
+          format: ipv4
+        required: false
+        example: 172.16.254.1
+      - name: accountId
+        in: path
+        description: The system-generated unique bank account id, which specifies the account for which the information is requested.
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: a:8DbPteGnytmMbKXdnWTReeRB6cYWKXZ84JgLTBC7fKL4:5zKcENpV
+      - name: page.offset
+        in: query
+        description: The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: LerV6Jmex
+      - name: page.limit
+        in: query
+        description: The maximum number of records to return. This must be less than 200.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 175
+          default: 1
+      - name: startDate
+        in: query
+        description: The earliest transaction date requested, in <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a> format.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: '2022-06-15'
+      - name: endDate
+        in: query
+        description: The latest transaction date requested, in <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a> format.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: '2022-11-30'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTransactionsResponse'
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '403':
+          description: Permission to access this endpoint is denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        '404':
+          description: The requested entity, such as a payment, was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_429'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        '501':
+          description: The operation was not implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_501'
+        '503':
+          description: Service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_503'
+        '504':
+          description: Gateway has timed out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_504'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+  /accounts/{accountId}/transaction/{transactionId}:
+    get:
+      tags:
+      - Accounts
+      summary: Get transaction information
+      description: The `GET /accounts/{accountId}/transaction/{transactionId}` endpoint retrieves information for a specific transaction in a given account.
+      operationId: GatewayService.GetTransaction
+      parameters:
+      - name: on-behalf-of
+        in: header
+        description: The `tokenId` represents the consent granted by the user (PSU).
+        schema:
+          type: string
+        required: true
+        example: ta:3eYPU1BEKKunfmYgQuSKXFCeo851C5Y3XiZW3XA465TU:5zKtXEAq
+      - name: token-customer-ip-address
+        in: header
+        description: The user's IP address if the user is currently logged in with the TPP. If the customer  IP address is supplied (recommended), it is inferred that the user is present during the session (<i>i.e.</i>, the request is user-initiated; adding a `customer-initiated` = `true` header makes this explicit). For AIS calls, if the customer's IP address is not provided in the request, the bank assumes it is a TPP-initiated request and may limit the TPP to 4 TPP-initiated access attempts within a given 24-hour period.
+        schema:
+          type: string
+          format: ipv4
+        required: false
+        example: 172.16.254.1
+      - name: accountId
+        in: path
+        description: The unique bank account id, which specifies the account for which the information is requested.
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: a:8DbPteGnytmMbKXdnWTReeRB6cYWKXZ84JgLTBC7fKL4:5zKcENpV
+      - name: transactionId
+        in: path
+        description: The unique transaction identifier, which specifies the transaction requested.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: 42909b155d4942299c39017686b5dc36
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTransactionResponse'
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '403':
+          description: Permission to access this endpoint is denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        '404':
+          description: The requested entity, such as a payment, was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_429'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        '501':
+          description: The operation was not implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_501'
+        '503':
+          description: Service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_503'
+        '504':
+          description: Gateway has timed out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_504'
+      deprecated: false
+      security:
+      - Bearer: []
+      - BasicAuth: []
+      x-hideTryItPanel: true
+components:
+  schemas:
+    Account:
+      type: object
+      required:
+      - bankId
+      - id
+      properties:
+        accountDetails:
+          $ref: '#/components/schemas/AccountDetails'
+        accountFeatures:
+          $ref: '#/components/schemas/AccountFeatures'
+        bankId:
+          $ref: '#/components/schemas/bankId'
+        id:
+          type: string
+          description: The system-generated, unique identifier for this account.
+          example: a:8DbPteGnytmMbKXdnWTReeRB6cYWKXZ84JgLTBC7fKL4:5zKcENpV
+        isLocked:
+          x-internal: true
+          type: boolean
+          description: All services are locked out for this account if `isLocked` = true. This setting is only used in conjunction with the legacy Token.io mobile app. The account will be locked if, for example, the user has lost their phone. Instead of removing the account, Token.io locks it so that the user can still see the account after recovery. A re-linking is enforced before the account can be used again.
+          format: boolean
+          example: false
+          default: false
+        name:
+          type: string
+          description: The unique name of this account.
+          example: John A Smith
+      description: Contains information about the requested bank account.
+    inline_response_500:
+      properties:
+        error:
+          allOf:
+          - type: object
+            properties:
+              errorCode:
+                type: string
+                description: This is a textual error code categorising the error.
+                example: InternalServerError
+          - $ref: '#/components/schemas/ServerError'
+    StandingOrderMetadataEntry:
+      type: object
+      additionalProperties:
+        type: string
+      description: Additional fields returned by the bank at its option in response to your particular request. The presence and type of metadata are entirely dependent on the bank and generally comprise additional information about the account or the transaction pertinent to your specific use case. How you use this information, when included in the bank's response, is at your discretion.
+    inline_response_400:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    TransferCreditorEndpoint:
+      type: object
+      required:
+      - accountIdentifier
+      properties:
+        accountIdentifier:
+          $ref: '#/components/schemas/AccountIdentifier'
+        bankId:
+          $ref: '#/components/schemas/bankId'
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long.
+          example: BOFIIE2D
+        customerData:
+          $ref: '#/components/schemas/CustomerDataCreditor'
+      description: Contains information about the payee account.
+    AccountIdentifierPlusgiro:
+      type: object
+      properties:
+        plusgiroNumber:
+          type: string
+          description: The account number (minimum 2 and maximum 8 digits) for a PlusGiro account. The clearing code is not used.
+          example: '987654'
+      description: The domestic transaction clearing system in Sweden. The credit transfer function, which is part of <a href="https://www.nordea.com" target="blank">Nordea</a>, and used for mediating payments between accounts held by companies and individuals.
+    AccountIdentifierMsisdn:
+      type: object
+      properties:
+        msisdn:
+          type: string
+          description: The MSISDN is composed of the country code and the national destination code. Ensure you remove the + sign and any 0 before the mobile number.
+          example: '447949123456'
+      description: The Mobile Station International Subscriber Director Number (MSISDN) is the user's mobile phone number, used as a unique identifier to enable routing of voice and SMS traffic to and from a specific subscription/device on a wireless/mobile network.
+    TransactionStatus:
+      title: TransactionStatus
+      type: string
+      example: PROCESSING
+      description: Filters by transaction status. <ul> <li><b>PROCESSING</b> – This status indicates that the transaction is in process and that the final status has not been received from the bank.</li> <li><b>SUCCESS</b> – This status indicates that successful payment initiation has been received from the bank. Settlement might not be complete.</li> <li><b>INITIATED</b> – This status is set when the previous status has remained as `PROCESSING` for 30 days and cannot be updated. The transaction has been initiated but the result is unknown. This is the final status and will not get updated later because Token.io has stopped polling the bank.<br/> This status is also returned in a two-step payment flow in the event that a user’s request has been authorized at the bank but the payment confirmation has subsequently failed.</li> <li><b>PENDING</b> – This status indicates that the user has successfully completed the authorization process at the bank and the transfer is pending redemption. This status is only relevant for two-step payment flows.</li> <li><b>PENDING_EXTERNAL_AUTHORIZATION</b> – This status indicates that the user has been sent to the bank to complete the authorization process. If not completed within the allowed timeframe (usually around 15 mins, but there are variations between banks) the transaction will expire and transition to `FAILURE_EXPIRED`. This status is only relevant for 1-step payment flows.</li> <li><b>FAILURE_GENERIC</b> – This status usually indicates a technical failure. Possibly, a failure callback was received from the bank, with no transaction status and no further information.</li> <li><b>FAILURE_PERMISSION_DENIED</b> – This status indicates that the user has been denied authorization at the bank This status is only relevant for two-step payment flows.</li> <li><b>FAILURE_CANCELED</b> – This status indicates that the payment initiation has been cancelled before execution.</li> <li><b>FAILURE_EXPIRED</b> – This status indicates that the user did not complete the authorization process within the allowed timeframe (usually around 15 mins, but there are variations between banks) and the payment has expired.</li> <li><b>FAILURE_INSUFFICIENT_FUNDS</b> – This status indicates that the payment initiation request has been rejected due to insufficient funds.</li> <li><b>FAILURE_DECLINED</b> – This status indicates that the payment initiation has been rejected by the bank.</li> <li><b>SETTLEMENT_IN_PROGRESS</b> – This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Token.io is waiting for the payment to reach the payee bank. No action is required; await the next step, <i>e.g.</i>, Token.io sends a webhook with the status update, or a polling call. The status will change to `SETTLEMENT_IN_PROGRESS` soon after Token.io receives the final status from the debtor bank.</li> <li><b>SETTLEMENT_COMPLETED</b> – This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. The payment has reached the payee bank and Token.io has matched the transaction in the TPP’s settlement account to the initiated payment. For instant payments, `SETTLEMENT_COMPLETED` will be achieved within 30-45 minutes from payment initiation, at the latest. For non-instant payments, the time to reach `SETTLEMENT_COMPLETED` will depend on the clearing period for the payment.</li> <li><b>SETTLEMENT_INCOMPLETE</b> – This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Reconciliation has failed. This happens when Token.io doesn't find the corresponding transaction in the TPP’s settlement account automatically.</li></ul><br/>During settlement of a settlement accounts payment, the status update job will run first for up to 30 days. Payment will then enter into a 'final' status, normally `SUCCESS`.<br/>Once the status update job has run, the reconciliation job looks for matching inbound payments.<br/>For SEPA payments:<ul><li>if a matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>For SEPA Instant payments:<ul><li>if a matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>
+      enum:
+      - PROCESSING
+      - SUCCESS
+      - INITIATED
+      - PENDING
+      - PENDING_EXTERNAL_AUTHORIZATION
+      - FAILURE_GENERIC
+      - FAILURE_PERMISSION_DENIED
+      - FAILURE_CANCELED
+      - FAILURE_EXPIRED
+      - FAILURE_INSUFFICIENT_FUNDS
+      - FAILURE_DECLINED
+      - SETTLEMENT_IN_PROGRESS
+      - SETTLEMENT_COMPLETED
+      - SETTLEMENT_INCOMPLETE
+    Cma9MerchantDetails:
+      type: object
+      properties:
+        merchantCategoryCode:
+          type: string
+          description: The category code conforming to <a href="https://www.iso.org/standard/33365.html" target="_blank">ISO 18245</a>, relating to the type of services or goods provided by the merchant. A list of codes can be purchased <a href="https://www.iso.org/standard/79450.html" target="_blank">here</a>."
+          example: 5699-V
+        merchantName:
+          type: string
+          description: The name of the merchant.
+          example: Merchants R US
+    PolishApiTransactionInfoTax:
+      type: object
+      properties:
+        formCode:
+          type: string
+          description: The data for a tax transfer to the Tax Office or Customs Chamber.
+          example: 49DtA9CoF9qYzh77FA9nVrCn2jia:5zKtXEAq
+        obligationId:
+          type: string
+          description: The identifier of the liability from which the tax is due; <i>e.g.</i>, decision, executive title, resolution.
+          example: DECISION
+        payerInfo:
+          $ref: '#/components/schemas/PolishApiPayer'
+        periodId:
+          type: string
+          description: The tax period number.
+          example: '11'
+        periodType:
+          type: string
+          description: The tax period type.
+          example: Month
+        year:
+          type: integer
+          description: The tax year (YYYY).
+          format: int32
+          example: 2022
+      description: The data for a tax transfer to the Tax Office or Customs Chamber.
+    GetAccountsResponse:
+      type: object
+      properties:
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Account'
+      description: Each object represents a unique bank account.
+    NextGenPsd2AccountDetails:
+      type: object
+      properties:
+        cashAccountType:
+          type: string
+          description: The `ExternalCashAccountType1Code` from the <a href="https://www.iso.org/standard/55005.html" target="_blank">ISO 20022</a> code.
+        currency:
+          type: string
+          description: The <a href="https://www.iso.org/iso-4217-currency-codes.html" target="_blank">ISO 4217</a> three letter currency code.
+          example: EUR
+        details:
+          type: string
+          description: The details provided by the bank regarding characteristics of the account or characteristics of the relevant card.
+        linkedAccounts:
+          type: string
+          description: In the case of a set of pending card transactions, the relevant cash account the card is set up on; this is the same as the `resourceId` of the relevant cash account.
+        product:
+          type: string
+          description: The bank-defined product name for this account; the proprietary definition.
+        usage:
+          type: string
+          description: Specifies the usage of the account (PRIV = private personal account, ORGA = professional account).
+          example: PRIV
+      description: Provider account details required under the <a href="https://www.berlin-group.org/nextgenpsd2-downloads" target="_blank">NextGenPSD2 standard</a>.
+    StandingOrderStatus:
+      type: string
+      example: PROCESSING
+      description: The current status of the standing order.
+      default: INVALID
+      enum:
+      - INVALID
+      - ACTIVE
+      - INACTIVE
+      - PROCESSING
+      - FAILED
+      - UNKNOWN
+    Custom:
+      type: object
+      properties:
+        bankId:
+          $ref: '#/components/schemas/bankId'
+        payload:
+          type: string
+          description: The standing order payload.
+          example: sdfjds12-f85-46b0-8058-343dek543grt
+      description: Custom authorization.
+    PolishApiBank:
+      type: object
+      properties:
+        address:
+          type: array
+          description: The physical/mailing address of the bank.
+          example: 45, Torunska, Gdansk
+          items:
+            type: string
+        bicOrSwift:
+          type: string
+          description: The standard format for business identifier codes (BIC), used to identify banks and financial institutions globally.
+          example: HBUKGB7F261
+        code:
+          type: string
+          description: The bank code for foreign transfers.
+          example: BKAFEWFK564
+        countryCode:
+          type: string
+          description: Two-letter country code in upper case (ISO 3166-1 alpha-2).
+          example: PL
+        name:
+          type: string
+          description: The official name of the bank corresponding to its SWIFT/BIC code.
+          example: Polska Bank
+      description: Specifies information about the bank itself.
+    BankTransactionCodeDomain:
+      type: object
+      properties:
+        code:
+          type: string
+          description: The domain code.
+          example: PMNT
+        familyCode:
+          type: string
+          description: The family code.
+          example: RCDT
+        subFamilyCode:
+          type: string
+          description: The sub-family code.
+          example: ESCT
+      description: 'Bank transaction code using the sub-elements of the structured code defined by <a href="https://www.iso.org/standard/55005.html" target="_blank">ISO 20022</a>. It concatenates the three ISO 20022 Codes: Domain Code, Family Code, and SubFamiliy Code with hyphens, resulting in ''DomainCode''-''FamilyCode''-''SubFamilyCode''; <i>e.g.</i>, "PMNT-RDDT-ESDD".'
+    PolishApiSenderRecipient:
+      type: object
+      properties:
+        accountMassPayment:
+          type: string
+          description: The settlement account number of the recipient/settlement account name.
+        accountNumber:
+          type: string
+          description: The recipient's account number.
+          example: 87654321
+        bank:
+          $ref: '#/components/schemas/PolishApiBank'
+        nameAddress:
+          $ref: '#/components/schemas/PolishApiNameAddress'
+      description: Information about the recipient.
+    Cma9DebtorAgent:
+      type: object
+      properties:
+        debtorAgentAddress:
+          $ref: '#/components/schemas/DeliveryAddress'
+        debtorAgentName:
+          type: string
+          description: The name of financial institution servicing an account for the debtor.
+          example: Debtor bank.
+        identification:
+          type: string
+          description: The unique identifier for financial institution servicing an account for the debtor.
+        schemeName:
+          type: string
+          description: The creditor-defined recurring payment scheme name.
+          example: Purchase instalment plan
+      description: The unique and unambiguous identification of a financial institution, as assigned under an internationally recognised or proprietary identification scheme.
+    inline_response_429:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ResourceExhaustedError'
+    AccountIdentifierPan:
+      type: object
+      properties:
+        pan:
+          type: string
+          description: The 14, 15, or 16 digit number generated as a unique identifier for a primary account.
+          example: '4658552288550023'
+      description: The Primary Account Number (PAN). The card identifier found on payment cards, such as credit cards and debit cards, as well as stored-value cards, gift cards and other similar card, sometimes referred to as a bank card number.
+    Cma9StandingOrderDetails:
+      type: object
+      properties:
+        creditorAccount:
+          allOf:
+          - $ref: '#/components/schemas/CashAccount'
+          - description: Specifies the payee's account with the creditor.
+        finalPaymentAmount:
+          allOf:
+          - $ref: '#/components/schemas/Money'
+          - description: The amount of the final payment.
+        finalPaymentDateTime:
+          type: string
+          description: The date and time of the final payment made under the standing order.
+        firstPaymentAmount:
+          allOf:
+          - $ref: '#/components/schemas/Money'
+          - description: The amount of the first payment.
+        firstPaymentDateTime:
+          type: string
+          description: The date and time of the first payment made under the standing order.
+        frequency:
+          type: string
+          description: Specifies the <a href="https://www.iso.org/standard/55005.html" target="_blank">ISO 20022</a> code for the scheduled frequency of standing order payments occurring between the first and final payments. Options:<ul><li>DAIL - daily/once a day</li><li>WEEK - weekly/once a week</li><li>TOWK - twice weekly/two times a week</li><li>MNTH - monthly/once a month</li><li>TOMN - twice monthly/two times a month</li><li>QUTR - quarterly/once every three months</li><li>SEMI - semi-annually/twice a year</li><li>YEAR - annually/once a year</li></ul>
+          example: WEEK
+        nextPaymentAmount:
+          allOf:
+          - $ref: '#/components/schemas/Money'
+          - description: The amount of the next payment.
+        nextPaymentDateTime:
+          type: string
+          description: The Date and time of the next standing order payment.
+        numberOfPayments:
+          type: integer
+          format: int32
+          description: The number of payments made under the standing order.
+        reference:
+          type: string
+          description: The reference for the CMA9 standing order.
+      description: Specifies applicable non-standard (varied frequency and payment amount) recurring payment instructions and schedule.
+    Cma9AccountDetailsAddress:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/AddressInfo'
+        addressType:
+          $ref: '#/components/schemas/Cma9AccountDetailsAddressType'
+      description: The complete postal address of a party.
+    CreditorEndpoint:
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/BankAccount'
+        accountFeatures:
+          $ref: '#/components/schemas/AccountFeatures'
+        metadata:
+          $ref: '#/components/schemas/StandingOrderMetadataEntry'
+        accountIdentifier:
+          $ref: '#/components/schemas/AccountIdentifier'
+        bankId:
+          $ref: '#/components/schemas/bankId'
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
+          example: BOFIIE2D
+        customerData:
+          $ref: '#/components/schemas/CustomerData'
+    slovakApiDebtorAccountReference:
+      type: object
+      properties:
+        iban:
+          type: string
+          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+        bban:
+          type: string
+          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
+          example: NWBK60161331926819
+      description: Information about the payer/debtor's account.
+    BudapestApiTransactionDetails:
+      type: object
+      properties:
+        creditorAccount:
+          $ref: '#/components/schemas/BudapestApiAccountReference'
+        creditorName:
+          type: string
+          description: The name of the creditor/payee.
+          example: ACME Company
+        debtorAccount:
+          $ref: '#/components/schemas/BudapestApiAccountReference'
+        debtorName:
+          type: string
+          description: The name of the debtor/payer.
+          example: John Smith
+        transactionCategory:
+          type: string
+          description: The category for the transaction, <i>e.g.</i>, Debit, Credit.
+          example: Credit
+      description: Provider transaction details required under the Budapest Bank API standards.
+    BudapestApiAccountReference:
+      type: object
+      properties:
+        iban:
+          type: string
+          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+      description: The unique provider account identifier required under the Budapest Bank API standards.
+    AccountIdentifierBban:
+      type: object
+      properties:
+        bban:
+          type: string
+          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
+          example: NWBK60161331926819
+        clearingNumber:
+          type: string
+          description: The bank clearing number or BC number is a number used for the identification of financial institutions in Switzerland and Liechtenstein. Bank clearing numbers are connected to the Swiss Interbank Clearing and the EuroSIC system.
+          example: 87654321
+    NotImplementedError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: UNIMPLEMENTED
+        paymentId:
+          type: string
+          description: The operation was not implemented,supported or enabled by the bank.
+          example: Not implemented.
+      description: The operation was not implemented, supported or enabled by the bank.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    PolishApiTransactionInfoCard:
+      type: object
+      properties:
+        cardHolder:
+          type: string
+          description: The name of the cardholder.
+          example: Piotr Brama
+        cardNumber:
+          type: string
+          description: The card account number.
+          example: '5687243201834817'
+      description: The information about the card used in/for the transaction.
+    PolishApiAccountDetailsAuxDataEntry:
+      type: object
+      additionalProperties:
+        type: string
+        description: Bank-defined | [*] – bank-dependent fields 0 .. n; each respective data type is also bank-dependent (string, number, boolean, null/empty, object, or array).
+      description: The bank-defined auxiliary data associated with the account.
+    AccountDetails:
+      type: object
+      required:
+      - identifier
+      - accountIdentifiers
+      - type
+      - accountFeautures
+      properties:
+        accountHolderName:
+          type: string
+          description: The name of the account holder/owner.
+          example: John Arthur Smith
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
+          example: BOFIIE2D
+        identifier:
+          type: string
+          description: The type of `accountIdentifier` being used, <i>e.g.</i>, bban, gbDomestic, iban, msisdn, pan or token. The `identifier` is displayed if an account is returned by the bank.
+          example: iban
+        accountIdentifiers:
+          type: array
+          description: The account numbers and other strings that identify this as a unique bank account. The `accountidentifiers` are displayed if an account is returned by the bank
+          items:
+            $ref: '#/components/schemas/AccountIdentifier'
+        metadata:
+          type: array
+          description: Additional fields returned by the bank in response to your particular request. The presence and type of metadata are dependent on the bank and generally comprise additional information about the account or the transaction pertinent to your specific use case. You define how this information is used when included in the bank's response.
+          items:
+            $ref: '#/components/schemas/AccountDetailsMetadataEntry'
+        ProviderAccountDetails:
+          type: object
+          oneOf:
+          - title: CMA9 API
+            properties:
+              cma9AccountDetails:
+                $ref: '#/components/schemas/Cma9AccountDetails'
+          - title: NextGenPSD2
+            properties:
+              nextGenPsd2AccountDetails:
+                $ref: '#/components/schemas/NextGenPsd2AccountDetails'
+          - title: Polish API
+            properties:
+              polishApiAccountDetails:
+                $ref: '#/components/schemas/PolishApiAccountDetails'
+          - title: French PSD2
+            properties:
+              stetAccountDetails:
+                $ref: '#/components/schemas/StetAccountDetails'
+          description: Specific information regarding the bank required by the respective Open Banking API standard adopted (CMA9, NextGenPSD2, PolishAPI, or STET).
+        status:
+          type: string
+          description: Specifies the bank-defined status of the account (open, closed, active, inactive, <i>etc</i>.)
+          example: Active
+        type:
+          type: array
+          description: Specifies the type of account. The `type` is displayed if an account is returned by the bank
+          items:
+            $ref: '#/components/schemas/AccountDetailsAccountType'
+        currency:
+          type: string
+          description: The <a href="https://www.iso.org/iso-4217-currency-codes.html" target="_blank">ISO 4217</a> three letter currency code. The `currency` is displayed if an account is returned by the bank
+          example: EUR
+      description: Contains the details needed to identify, correlate and validate the bank account.
+    PolishApiAccountHolderType:
+      type: string
+      description: Specifies the type of account holder.
+      example: INDIVIDUAL
+      default: INVALID_ACCOUNT_HOLDER_TYPE
+      enum:
+      - INVALID_ACCOUNT_HOLDER_TYPE
+      - INDIVIDUAL
+      - CORPORATION
+    Cma9CardInstrument:
+      type: object
+      properties:
+        accountIdentification:
+          type: string
+          example: a:J72REftaRoiaDYRDU7M9FDgf8jeh3eqek9DvKeyBWbuA:3VMczyq7r7b6HwC
+        authorizationType:
+          type: string
+        cardSchemeName:
+          type: string
+        name:
+          type: string
+      description: Card instrument details required under the <a href="https://openbanking.atlassian.net/wiki/spaces/DZ/pages/432800080/CMA+SQM+API+Specification+-+v1.0.1" target="_blank">CMA9 API standard</a>.
+    Cma9AccountDetailsAccountType:
+      type: string
+      description: Specifies the type of account.
+      example: PERSONAL_ACCOUNT
+      default: INVALID_ACCOUNT_TYPE
+      enum:
+      - INVALID_ACCOUNT_TYPE
+      - BUSINESS_ACCOUNT
+      - PERSONAL_ACCOUNT
+    inline_response_501:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/NotImplementedError'
+    TransactionType:
+      type: string
+      description: Specifies the type of transaction.
+      default: INVALID_TYPE
+      enum:
+      - INVALID_TYPE
+      - DEBIT
+      - CREDIT
+    BankTransactionCode:
+      type: object
+      properties:
+        domain:
+          $ref: '#/components/schemas/BankTransactionCodeDomain'
+        proprietary:
+          $ref: '#/components/schemas/BankTransactionCodeProprietary'
+      description: The Bank transaction code, created using the sub-elements of the structured code defined by <a href="https://www.iso.org/standard/55005.html" target="_blank">ISO 20022</a>; it concatenates the three ISO 20022 Codes - Domain Code, Family Code, and SubFamiliy Code by hyphens, resulting in 'DomainCode'-'FamilyCode'-'SubFamilyCode'; <i>e.g.</i>, "PMNT-RDDT-ESDD".
+    bankId:
+      type: string
+      description: The Token.io id of the bank where the consent is created. **This field is required if the customer is not using Token.io's Hosted Pages for bank selection, <i>i.e.</i>, API-only integration when `EMBEDDED_HOSTED_PAGES` is selected in `flowType`, or Hosted Pages embedded (modal) integration.**
+      example: ob-modelo
+    PolishApiAccountDetails:
+      type: object
+      properties:
+        accountHolderType:
+          $ref: '#/components/schemas/PolishApiAccountHolderType'
+        accountNameClient:
+          type: string
+          description: Account nickname set by the account holder.
+        auxData:
+          $ref: '#/components/schemas/PolishApiAccountDetailsAuxDataEntry'
+        bank:
+          $ref: '#/components/schemas/PolishApiBankAccountInfo'
+        currency:
+          type: string
+          description: The <a href="https://www.iso.org/iso-4217-currency-codes.html" target="_blank">ISO 4217</a> three letter currency code.
+          example: EUR
+        nameAddress:
+          $ref: '#/components/schemas/PolishApiNameAddress'
+        psuRelations:
+          type: array
+          description: The bank-provided information concerning the relationship between the user and an account.
+          items:
+            $ref: '#/components/schemas/PolishApiAccountPsuRelation'
+      description: The provider account details required under the <a href="https://polishapi.org/en/dokumentacja-standardu/" target="_blank">Polish API standard</a>.
+    CashAccount:
+      type: object
+      properties:
+        identification:
+          type: string
+        name:
+          type: string
+        schemeName:
+          type: string
+    Cma9AccountDetails:
+      type: object
+      properties:
+        accountType:
+          $ref: '#/components/schemas/Cma9AccountDetailsAccountType'
+        accountSubtype:
+          $ref: '#/components/schemas/Cma9AccountDetailsAccountSubtype'
+        address:
+          type: array
+          items:
+            $ref: '#/components/schemas/Cma9AccountDetailsAddress'
+        description:
+          type: string
+          description: A description of the account type.
+          example: Personal
+        emailAddress:
+          type: string
+          description: The electronic mail address associated with the account.
+          example: john.smith@email.com
+        mobile:
+          type: string
+          description: The mobile phone number associated with the account.
+          example: 07999 123456
+        name:
+          type: string
+          description: Name of the account, as assigned by the account servicing institution. The account name is the name or names of the account owner(s) represented at an account level. The account name is not the product name or the nickname of the account.
+          example: John Smith
+        partyId:
+          type: string
+          description: The unique and immutable identifier used to identify the TPP resource; this identifier has no meaning to the account owner.
+          example: '68973542'
+        partyNumber:
+          type: string
+          description: The number assigned by an agent to identify its customer.
+          example: '24354657'
+        partyType:
+          $ref: '#/components/schemas/Cma9AccountDetailsPartyType'
+        phone:
+          type: string
+          description: The collection of information that identifies a phone number, as defined by the telecom service.
+          example: 020 123 4567
+      description: Provider account details required under the <a href="https://openbanking.atlassian.net/wiki/spaces/DZ/pages/432800080/CMA+SQM+API+Specification+-+v1.0.1" target="_blank">CMA9 API standard</a>.
+    GetTransactionResponse:
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          $ref: '#/components/schemas/RequestStatus'
+        transaction:
+          $ref: '#/components/schemas/Transaction'
+    Cma9CreditorAgent:
+      type: object
+      properties:
+        creditorAgentAddress:
+          $ref: '#/components/schemas/DeliveryAddress'
+        creditorAgentName:
+          type: string
+          description: The name of financial institution servicing an account for the creditor.
+          example: Creditor bank
+        identification:
+          type: string
+          description: The unique identifier for financial institution servicing an account for the creditor.
+          example: '98765432'
+        schemeName:
+          description: The creditor-defined recurring payment scheme name.
+          example: Purchase instalment plan
+      description: The unique and unambiguous identification of a financial institution, as assigned under an internationally recognised or proprietary identification scheme.
+    Cma9AccountDetailsAccountSubtype:
+      type: string
+      description: This specifies the sub type of the account.
+      example: CURRENT_ACCOUNT
+      default: INVALID_ACCOUNT_SUBTYPE
+      enum:
+      - INVALID_ACCOUNT_SUBTYPE
+      - CHARGE_CARD
+      - CREDIT_CARD
+      - CURRENT_ACCOUNT
+      - EMONEY
+      - LOAN
+      - MORTGAGE
+      - PREPAID_CARD
+      - SAVINGS
+    GetStandingOrdersResponse:
+      type: object
+      properties:
+        offset:
+          type: string
+          description: The offset of the first item returned in the collection.
+          example: LerV6Jmex
+        standingOrders:
+          type: array
+          items:
+            $ref: '#/components/schemas/StandingOrder'
+        status:
+          $ref: '#/components/schemas/RequestStatus'
+    StetAccountIdentification:
+      type: object
+      properties:
+        currency:
+          type: string
+          description: The <a href="https://www.iso.org/iso-4217-currency-codes.html" target="_blank">ISO 4217</a> three letter currency code.
+          example: EUR
+        other:
+          $ref: '#/components/schemas/StetGenericIdentification'
+      description: Bank-defined account identifiers.
+    inline_response_403:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/PermissionDeniedError'
+    PolishApiNameAddress:
+      type: object
+      properties:
+        value:
+          type: array
+          description: The bank-defined name and postal address.
+          items:
+            type: string
+            example: ACME Business Ltd, 299 Zywiecka, Gdansk
+      description: Doing Business As (DBA) and/or other names and addresses of the company.
+    PolishApiTransactionDetails.AuxDataEntry:
+      type: object
+      additionalProperties:
+        type: string
+        description: Bank-defined | [*] – bank-dependent fields 0 .. n; each respective data type is also bank-dependent (string, number, boolean, null/empty, object, or array).
+      description: The bank-defined auxiliary data associated with the account.
+    StetDebtorAccountReference:
+      type: object
+      properties:
+        iban:
+          type: string
+          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+      description: Information about the payer/debtor's account.
+    GetStandingOrderResponse:
+      type: object
+      properties:
+        standingOrder:
+          $ref: '#/components/schemas/StandingOrder'
+        status:
+          $ref: '#/components/schemas/RequestStatus'
+    GetAccountResponse:
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/Account'
+      description: Operation completed successfully.
+    PermissionDeniedError:
+      type: object
+      properties:
+        errorCode:
+          example: PermissionDenied
+      description: 'The error returned when the member is not authorized to perform the given operation: PermissionDenied. <br/>This error message will be accompanied by the reason from the bank. Typically this means the access token has expired and the user must re-authenticate with the bank.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    PolishApiCurrencyRate:
+      type: object
+      properties:
+        fromCurrency:
+          type: string
+          description: The <a href="https://www.iso.org/iso-4217-currency-codes.html" target="_blank">ISO 4217</a> three letter currency code for the convert-from currency.
+          example: EUR
+        rate:
+          type: number
+          description: The currency exchange rate.
+          format: double
+        toCurrency:
+          type: string
+          description: The <a href="https://www.iso.org/iso-4217-currency-codes.html" target="_blank">ISO 4217</a> three letter currency code for the convert-to currency.
+          example: EUR
+      description: The currency conversion rate information.
+    StetGenericIdentification:
+      type: object
+      properties:
+        identification:
+          type: string
+          description: The alias of the account.
+        issuer:
+          type: string
+          description: The entity that assigned the identification; country code or any organisation name or identifier that can be recognized by both parties.
+        schemeName:
+          type: string
+          description: 'The name of the identification scheme. Possible values for the scheme name, partially based on <a href="https://www.iso.org/standard/55005.html" target="_blank">ISO 20022</a> external code list, are (a) BANK (BankPartyIdentification): Unique and unambiguous assignment made by a specific bank or similar financial institution to identify a relationship as defined between the bank and its client; (b) COID (CountryIdentificationCode) : Country authority given organisation identification; <i>e.g.</i>, corporate registration number; (c) SREN (SIREN): 9-digit code assigned by INSEE, the French National Institute for Statistics and Economic Studies, to identify an organisation in France; (d) SRET (SIRET): 14-digit code assigned by INSEE, the French National Institute for Statistics and Economic Studies, to identify an organisation unit in France; consists of the SIREN number, followed by a five digit classification number, to identify the local geographical unit of that entity; (e) NIDN (NationalIdentityNumber): assigned by an authority to identify the national identity number of a person. Other values are also permitted, for instance: - OAUT (OAUTH2): OAUTH2 access token that is owned by the Payment Initiation Service Provider (PISP) being also an Account Information Service Provider (AISP) and that can be used in order to identify the user - CPAN (CardPan): Card PAN.'
+      description: Bank-defined account information.
+    inline_response_503:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ServiceUnavailableError'
+    CzechApiAccountReference:
+      type: object
+      properties:
+        iban:
+          type: string
+          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+        bban:
+          type: string
+          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
+          example: NWBK60161331926819
+      description: The unique provider account identifier required under the Czech Standard for Open Banking.
+    PaymentNotFoundError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: NOT_FOUND
+        paymentId:
+          type: string
+          description: The requested entity, the `paymentID`, was not found.
+          example: pm2:12345abcd:abcde
+      description: 'The error object returned when given payment cannot be found: ResourceNotFound.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    GetBalanceResponse:
+      type: object
+      properties:
+        balance:
+          $ref: '#/components/schemas/Balance'
+        status:
+          $ref: '#/components/schemas/RequestStatus'
+    Money:
+      type: object
+      required:
+      - currency
+      - value
+      properties:
+        currency:
+          type: string
+          description: The <a href="https://www.iso.org/iso-4217-currency-codes.html" target="_blank">ISO 4217</a> three letter currency code.
+          example: EUR
+        value:
+          type: string
+          description: The transaction amount with up to four digits after the decimal point.
+          example: '10.23'
+      description: The balance currency and value.
+    CustomerDataCreditor:
+      type: object
+      required:
+      - legalNames
+      properties:
+        address:
+          $ref: '#/components/schemas/AddressInfo'
+        legalNames:
+          type: array
+          description: The legal owner name for the creditor account.
+          example: Mr John Arthur Smith
+          items:
+            type: string
+      description: Specifies the legal identity information for the payee. This information is not required for settlement accounts.
+    Cma9AccountDetailsPartyType:
+      type: string
+      description: The party type, in a coded form.
+      example: JOINT
+      default: INVALID_PARTY_TYPE
+      enum:
+      - INVALID_PARTY_TYPE
+      - DELEGATE
+      - JOINT
+      - SOLE
+    ServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: 'This could refer to either an error by the payment service provider or the bank. When the bank reports a 5xx error, `"token-external-error": "true"` is set as a header in the HTTP response, indicating that the "internal" error originates from the bank. When one of the payment service providers internal services fails or when the bank reports a 4xx error, this header is not populated. The absence of this response header should be interpreted as `"token-external-error": "false"`.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: The request does not have valid authentication credentials needed to perform the operation.
+    PolishApiTransactionInfoZus:
+      type: object
+      properties:
+        contributionId:
+          type: string
+          description: The declaration number/contribution identifier.
+        contributionPeriod:
+          type: string
+          description: The declaration period/contribution period in MMYYYY format.
+        contributionType:
+          type: string
+          description: The contribution type.
+        obligationId:
+          type: string
+          description: The execution title number/obligation identifier or number.
+        payerInfo:
+          $ref: '#/components/schemas/PolishApiSocialSecurityPayer'
+        paymentTypeId:
+          type: string
+          description: The payment type identifier.
+      description: Data information for transfers to <a href="https://www.zus.pl" target="_blank">ZUS</a>.
+    Cma9CreditorAccount:
+      type: object
+      properties:
+        accountIdentification:
+          type: string
+          description: The payee's creditor account id or number.
+        creditorName:
+          type: string
+          description: The name of the payee listed for the creditor account.
+        schemeName:
+          type: string
+          description: The creditor-defined recurring payment scheme name.
+          example: Purchase instalment plan
+        secondaryIdentification:
+          type: string
+          description: Secondary identification required for the transaction.
+      description: Specifies the payee's account with the creditor.
+    ProviderStandingOrderDetails:
+      type: object
+      properties:
+        cma9StandingOrderDetails:
+          $ref: '#/components/schemas/Cma9StandingOrderDetails'
+    GetBalancesResponse:
+      type: object
+      properties:
+        response:
+          type: array
+          description: An array of objects containing balance information for each account requested.
+          items:
+            $ref: '#/components/schemas/GetBalanceResponse'
+    PolishApiPayer:
+      type: object
+      properties:
+        payerId:
+          type: string
+          description: The payer's tax id.
+          example: '444433332211'
+        payerIdType:
+          type: string
+          description: The type of tax payer id.
+          example: R
+          default: N
+          enum:
+          - N
+          - P
+          - R
+          - '1'
+          - '2'
+          - '3'
+      description: Information about the tax payer.
+    AccountDetailsMetadataEntry:
+      type: object
+      additionalProperties:
+        type: string
+        description: Bank-defined | [*] – bank-dependent fields 0 .. n; each respective data type is also bank-dependent (string, number, boolean, null/empty, object, or array).
+      description: Additional fields returned by the bank in response to your particular request. The presence and type of metadata are dependent on the bank and generally comprise additional information about the account or the transaction pertinent to your specific use case. You define how this information is used when included in the bank's response.
+    CustomerData:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/AddressInfo'
+        legalNames:
+          type: array
+          description: The legal owner name for the account.
+          example: Mr John Arthur Smith
+          items:
+            type: string
+      description: Specifies the legal identity information for the account. This information is not required for settlement accounts.
+    PolishApiTypeOfRelation:
+      type: string
+      description: The type of relation between the user and the account.
+      example: OWNER
+      default: INVALID_TYPE_OF_RELATION
+      enum:
+      - INVALID_TYPE_OF_RELATION
+      - OWNER
+      - BORROWER
+      - GUARANTOR
+      - PROXY_OWNER
+      - BENEFICIARY
+      - TRUSTEE
+    ErrorWithCode:
+      required:
+      - errorCode
+      - message
+      type: object
+      properties:
+        errorCode:
+          type: string
+          description: A textual error code categorising the error.
+          example: InternalServerError
+        message:
+          type: string
+          description: A description of the error that occurred and a possible way to fix it.
+          example: '`RefId` should not be longer than 35 symbols.'
+      description: Error object providing details about the error.
+      allOf:
+      - $ref: '#/components/schemas/Error'
+    Transaction:
+      type: object
+      required:
+      - amount
+      - createdAtMs
+      - description
+      - id
+      - status
+      - tokenId
+      - type
+      properties:
+        amount:
+          allOf:
+          - description: The transaction currency and value. The `amount` is only displayed if a transaction is returned.
+          - $ref: '#/components/schemas/Money'
+        bankTransactionCode:
+          $ref: '#/components/schemas/BankTransactionCode'
+        bankTransactionId:
+          type: string
+          description: The bank-assigned unique identifier for the transaction.
+          example: 83KiRJuXmEDV5m2b8ZvLGE91ELf7PPw5BaDab98kMguu:3VMczyq7r7b6HwC
+        createdAtMs:
+          type: string
+          description: Specifies the time the transfer was created; timestamp (UTC) in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.
+          format: string
+          example: 1729212980771
+        creditorEndpoint:
+          $ref: '#/components/schemas/TransferCreditorEndpoint'
+        description:
+          type: string
+          description: The description of the transaction.
+          example: Payment
+        id:
+          type: string
+          description: The transaction identifier; transaction id.
+          example: tt:83KiRJuXmEDV5m2b8ZvLGE91ELf7PPw5BaDab98kMguu:3VMczyq7r7b6HwC
+        metadata:
+          $ref: '#/components/schemas/MetadataEntry'
+        providerTransactionDetails:
+          $ref: '#/components/schemas/ProviderTransactionDetails'
+        status:
+          $ref: '#/components/schemas/TransactionStatus'
+        tokenId:
+          type: string
+          description: Identifies the authorization token for the transfer.
+          example: tt:8zK1dic95omjWb72gvc3z3ELKbTNfnGd89MbDnM73er4:ZhBVAJSH8DeU1
+        tokenTransferId:
+          type: string
+          description: The transfer identifier for the payment.
+          example: t:2UhwCZ3BMaEcAUK8bZdukor7NL4tH6TBuu6aJMp5KKfX:5zKcENpV
+        type:
+          $ref: '#/components/schemas/TransactionType'
+      description: Information about the requested transaction.
+    Cma9ApiTransactionDetails:
+      type: object
+      properties:
+        creditorAccount:
+          $ref: '#/components/schemas/Cma9CreditorAccount'
+        creditorAgent:
+          $ref: '#/components/schemas/Cma9CreditorAgent'
+        debtorAccount:
+          $ref: '#/components/schemas/Cma9DebtorAccount'
+        debtorAgent:
+          $ref: '#/components/schemas/Cma9DebtorAgent'
+        merchantDetails:
+          $ref: '#/components/schemas/Cma9MerchantDetails'
+      description: Provider transaction details required under the <a href=https://openbanking.atlassian.net/wiki/spaces/DZ/pages/937656404/Read+Write+Data+API+Specification+-+v3.1 target="_blank">CMA9 API standard</a>.
+    MetadataEntry:
+      type: object
+      additionalProperties:
+        type: string
+        description: Bank-defined | [*] – bank-dependent fields 0 .. n; each respective data type is also bank-dependent (string, number, boolean, null/empty, object, or array).
+      description: The bank-defined data associated with the account.
+    StetAccountDetails:
+      type: object
+      properties:
+        accountId:
+          $ref: '#/components/schemas/StetAccountIdentification'
+        cashAccountType:
+          type: string
+          description: Specifies the type of account.
+        details:
+          type: string
+          description: The bank-defined characteristics of the account or characteristics of the card.
+        linkedAccount:
+          type: string
+          description: The relevant cash account that the card is set up on.
+        product:
+          type: string
+          description: The bank-defined product name for this account; the proprietary definition.
+          example: Green Savings Account
+        psuStatus:
+          type: string
+          description: The relationship between the user and the account; <i>e.g.</i>, Account Holder, Co-account Holder, Attorney.
+          example: Account Holder
+        usage:
+          type: string
+          description: Specifies the usage of the account (PRIV = private personal account, ORGA = professional account).
+          example: PRIV
+      description: The provider account details required under the <a href="https://www.stet.eu/en/psd2/" target="_blank">French PSD2 API standard</a>.
+    AccountIdentifierBankgiro:
+      type: object
+      properties:
+        bankgiroNumber:
+          type: string
+          description: The unique identifier for the bank account in Sweden (known in Swedish as Bankgironummer); it consists of 7 or 8 digits; the clearing code is not used.
+          example: '56781234'
+      description: The identifier for domestic bank accounts in Sweden.
+    AccountIdentifierIban:
+      type: object
+      properties:
+        iban:
+          type: string
+          description: The International Bank Account Number. This consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+      description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders.
+    ServiceUnavailableError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: UNAVAILABLE
+        paymentId:
+          type: string
+          description: The service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+          example: Unavailable
+      description: Service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    Cma9AccountDetailsAddressType:
+      type: string
+      description: Specifies the type of address.
+      example: BUSINESS
+      default: INVALID_ADDRESS_TYPE
+      enum:
+      - INVALID_ADDRESS_TYPE
+      - BUSINESS
+      - CORRESPONDENCE
+      - DELIVERYTO
+      - MAILTO
+      - POBOX
+      - POSTAL
+      - RESIDENTIAL
+      - STATEMENT
+    ProviderTransactionDetails:
+      type: object
+      properties:
+        budapestApiTransactionDetails:
+          $ref: '#/components/schemas/BudapestApiTransactionDetails'
+        cma9ApiTransactionDetails:
+          $ref: '#/components/schemas/Cma9ApiTransactionDetails'
+        czechApiTransactionDetails:
+          $ref: '#/components/schemas/CzechApiTransactionDetails'
+        nextGenPsd2TransactionDetails:
+          $ref: '#/components/schemas/NextGenPsd2TransactionDetails'
+        polishApiTransactionDetails:
+          $ref: '#/components/schemas/PolishApiTransactionDetails'
+        slovakApiTransactionDetails:
+          $ref: '#/components/schemas/SlovakApiTransactionDetails'
+        stetTransactionDetails:
+          $ref: '#/components/schemas/StetTransactionDetails'
+      description: Specific information regarding the bank required by the respective Open Banking API standard adopted.
+    PolishApiBankAccountInfo:
+      type: object
+      properties:
+        address:
+          type: array
+          description: The physical/mailing address of the bank.
+          items:
+            type: string
+            example: 123 Torunska, Srodmiescie, Gdansk, 62-345
+        name:
+          type: string
+          description: The official name of the bank corresponding to its SWIFT/BIC code.
+          example: Polska Bank
+      description: Specifies information about the bank itself.
+    slovakApiCreditorAccountReference:
+      type: object
+      properties:
+        iban:
+          type: string
+          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+        bban:
+          type: string
+          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
+          example: NWBK60161331926819
+      description: Information about the payee/creditor's account.
+    BalanceTypedBalance:
+      type: object
+      properties:
+        amount:
+          allOf:
+          - description: The balance currency and value.
+          - $ref: '#/components/schemas/Money'
+        type:
+          type: string
+          description: A bank-defined type of other balance.
+          example: Trial
+        updatedAtMs:
+          type: string
+          description: The last update timestamp in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000
+          format: string
+          example: '581458935'
+    StandingOrderToken:
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: The account id. Available account ids can be found in the account info consent.
+        memberId:
+          type: string
+          description: The Token.io-generated member id for the user/account holder.
+          example: m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq
+    PolishApiAccountPsuRelation:
+      type: object
+      properties:
+        stake:
+          type: integer
+          description: The total value, expressed as a percentage, specifying the user's share of the funds on the account or its liability in the case of credit products; applies to the Owner, Borrower, Guarantor relationship.
+          format: int32
+        typeOfProxy:
+          $ref: '#/components/schemas/PolishApiTypeOfProxy'
+        typeOfRelation:
+          $ref: '#/components/schemas/PolishApiTypeOfRelation'
+      description: The bank-provided information concerning the relationship between the user and an account.
+    DeliveryAddress:
+      type: object
+      properties:
+        addressLine:
+          type: array
+          description: Specifies the delivery address using multiple lines, as necessary.
+          example:
+          - Flat 2, The Red Lodge, 1 High Street
+          items:
+            type: string
+        addressType:
+          type: string
+          description: Specifies the type of address.
+          example: BUSINESS
+          default: INVALID_ADDRESS_TYPE
+          enum:
+          - INVALID_ADDRESS_TYPE
+          - BUSINESS
+          - CORRESPONDENCE
+          - DELIVERYTO
+          - MAILTO
+          - POBOX
+          - POSTAL
+          - RESIDENTIAL
+          - STATEMENT
+        buildingNumber:
+          type: string
+          description: The building number within the delivery address.
+          example: '1'
+        country:
+          type: string
+          description: Two-letter country code in upper case (ISO 3166-1 alpha-2).
+          example: GB
+        countrySubDivision:
+          type: array
+          description: Identifies a subdivision of a country; for instance, a state, region, or county.
+          example:
+          - North Yorkshire
+          items:
+            type: string
+        department:
+          type: string
+          description: This <a href="https://openbankinguk.github.io/read-write-api-site3/v3.1.6/resources-and-data-models/pisp/international-payment-consents.html" target="_blank">OBIE specification</a> maps to house number.
+          example: '1'
+        postCode:
+          type: string
+          description: An identifier consisting of a group of letters and/or numbers that is added to a postal address to assist the sorting of mail.
+          example: YO62 5JB
+        streetName:
+          type: string
+          description: The name of the respective street or thoroughfare in which the dwelling or business is located or where mail is received.
+          example: High Street
+        subDepartment:
+          type: string
+          description: This <a href="https://openbankinguk.github.io/read-write-api-site3/v3.1.6/resources-and-data-models/pisp/international-payment-consents.html" target="_blank">OBIE specification</a> maps to flats.
+          example: Flat 2
+        townName:
+          type: string
+          description: The name of a built-up area with defined boundaries and a local government.
+          example: York
+      description: Specifies the recipient's delivery address details.
+    GetTransactionsResponse:
+      type: object
+      required:
+      - status
+      properties:
+        offset:
+          type: string
+          description: The offset of the first item returned in the collection.
+          example: LerV6Jmex
+        status:
+          $ref: '#/components/schemas/RequestStatus'
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+    inline_response_504:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/GatewayTimeoutError'
+    StetTransactionDetails:
+      type: object
+      properties:
+        creditorAccount:
+          $ref: '#/components/schemas/StetCreditorAccountReference'
+        creditorName:
+          type: string
+          description: The name of creditor/payee.
+        debtorAccount:
+          $ref: '#/components/schemas/StetDebtorAccountReference'
+        debtorName:
+          type: string
+          description: The name of the debtor/payer.
+        entryReference:
+          type: string
+          description: The technical incremental identification of the transaction for reconciliation by the TPP.
+        transactionDate:
+          type: string
+          description: <ul><li>For card transaction - date of the commercial transaction</li><li>for credit transfer - acquiring date of the transaction</li><li>for direct debit - receiving date of the transaction</li></ul>
+        valueDate:
+          type: string
+          description: The value date of the transaction on the account.
+          example: '2023-08-11'
+      description: The provider account details required under the <a href="https://www.stet.eu/en/psd2/" target="_blank">French PSD2 API standard</a>.
+    ResourceExhaustedError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: RESOURCE_EXHAUSTED
+        paymentId:
+          type: string
+          description: The maximum number of requests has been reached.
+          example: Resource exhausted. Check quota.
+      description: Resource exhausted. Too many requests.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    StetCreditorAccountReference:
+      type: object
+      properties:
+        iban:
+          type: string
+          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+      description: Information about the payee/creditor's account.
+    Cma9DebtorAccount:
+      type: object
+      properties:
+        accountIdentification:
+          type: string
+          description: The payer's debtor account id or number.
+        cardInstrument:
+          $ref: '#/components/schemas/Cma9CardInstrument'
+        debtorName:
+          type: string
+          description: The name of the payee listed for the creditor account.
+        schemeName:
+          type: string
+          description: The creditor-defined recurring payment scheme name.
+          example: Purchase instalment plan
+        secondaryIdentification:
+          type: string
+          description: Additional identification required.
+      description: The source account information for the payment, the payer's bank account.
+    inline_response_404:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/PaymentNotFoundError'
+    AccountDetailsAccountType:
+      type: string
+      description: Specifies the type of account.
+      example: SAVINGS
+      default: INVALID
+      enum:
+      - INVALID
+      - OTHER
+      - CHECKING
+      - SAVINGS
+      - LOAN
+      - CARD
+    PolishApiTransactionDetails:
+      type: object
+      properties:
+        accountBaseCurrency:
+          type: string
+          description: The <a href="https://www.iso.org/iso-4217-currency-codes.html" target="_blank">ISO 4217</a> three letter currency code for the account's currency.
+          example: EUR
+        auxData:
+          $ref: '#/components/schemas/PolishApiTransactionDetails.AuxDataEntry'
+        baseCurrency:
+          type: string
+          description: The <a href="https://www.iso.org/iso-4217-currency-codes.html" target="_blank">ISO 4217</a> three letter currency code for the transaction's currency.
+          example: EUR
+        cardInfo:
+          $ref: '#/components/schemas/PolishApiTransactionInfoCard'
+        currencyDate:
+          type: string
+          description: The transaction currency valuation date.
+        holdExpirationDate:
+          type: string
+          description: The date the bank hold expires, in < <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a> format.
+          example: '2022-11-12T17:00:00.000Z'
+        initiator:
+          $ref: '#/components/schemas/PolishApiNameAddress'
+        mcc:
+          type: string
+          description: The code for each transaction or operation performed by card.
+          example: 5699-V
+        postTransactionBalance:
+          type: string
+          description: The account balance after the transaction.
+        recipient:
+          $ref: '#/components/schemas/PolishApiSenderRecipient'
+        rejectionDate:
+          type: string
+          description: The date, in <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a> format, when the transaction was rejected.
+          example: '2022-10-23T17:00:00.000Z'
+        rejectionReason:
+          type: string
+          description: The reason the transaction was rejected.
+        sender:
+          $ref: '#/components/schemas/PolishApiSenderRecipient'
+        taxInfo:
+          $ref: '#/components/schemas/PolishApiTransactionInfoTax'
+        tppName:
+          type: string
+          description: The name of the third-party provider.
+          example: Mario's Pizzas
+        tppTransactionId:
+          type: string
+          description: The TPP's unique transaction Identifier.
+          example: esaWvvr4l32iaDRqvrekkfwe212vsfvkcddEaVFaVR:4DVLaMVWER4VC6b
+        tradeDate:
+          type: string
+          description: The date of the transaction operation, in <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a> format.
+          example: '2022-11-30T17:00:00.000Z'
+        transactionRate:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolishApiCurrencyRate'
+        transactionType:
+          type: string
+          description: The type of transaction.
+          example: CREDIT
+          default: CREDIT
+          enum:
+          - CREDIT
+          - DEBIT
+        usedPaymentInstrumentId:
+          type: string
+          description: The unique identifier of the payment instrument used to execute the transaction/payment instrument id.
+        zusInfo:
+          $ref: '#/components/schemas/PolishApiTransactionInfoZus'
+      description: The provider transaction details required under the <a href="https://polishapi.org/en/dokumentacja-standardu/" target="_blank">Polish API standard</a>.
+    StandingOrder:
+      type: object
+      properties:
+        createdAtMs:
+          type: string
+          description: Specifies the time the transfer was created; timestamp (UTC) in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.
+          format: string
+          example: 1729212980771
+        creditorEndpoint:
+          $ref: '#/components/schemas/CreditorEndpoint'
+        frequency:
+          type: string
+          description: Specifies the <a href="https://www.iso.org/standard/55005.html" target="_blank">ISO 20022</a> code for the scheduled frequency of standing order payments occurring between the first and final payments. Options:<ul><li>DAIL - daily/once a day</li><li>WEEK - weekly/once a week</li><li>TOWK - twice weekly/two times a week</li><li>MNTH - monthly/once a month</li><li>TOMN - twice monthly/two times a month</li><li>QUTR - quarterly/once every three months</li><li>SEMI - semi-annually/twice a year</li><li>YEAR - annually/once a year</li></ul>
+          example: WEEK
+        id:
+          type: string
+          description: The standing order identifier; labelled standingOrderId in specific standing order access requests.
+          example: tt:83KiRJuXmEDV5m2b8ZvLGE91ELf7PPw5BaDab98kMguu:3VMczyq7r7b6HwC
+        providerStandingOrderDetails:
+          $ref: '#/components/schemas/ProviderStandingOrderDetails'
+        status:
+          $ref: '#/components/schemas/StandingOrderStatus'
+        tokenId:
+          type: string
+          description: Access token ID of the account information request authorised by the account holder.
+          example: tt:8zK1dic95omjWb72gvc3z3ELKbTNfnGd89MbDnM73er4:ZhBVAJSH8DeU1
+        tokenSubmissionId:
+          type: string
+          description: The submission ID of the standing order information request; it points to the token submission and is only set for Token.io standing orders.
+          example: '12345678'
+      description: Contains the list of requested standing order records retrieved.
+    RequestStatus:
+      type: string
+      description: Specifies the status of the request.
+      example: SUCCESSFUL_REQUEST
+      default: INVALID_REQUEST
+      enum:
+      - INVALID_REQUEST
+      - SUCCESSFUL_REQUEST
+      - MORE_SIGNATURES_NEEDED
+    SlovakApiTransactionDetails:
+      type: object
+      properties:
+        creditorAccount:
+          $ref: '#/components/schemas/slovakApiCreditorAccountReference'
+        creditorName:
+          type: string
+          description: The name of creditor/payee.
+        debtorAccount:
+          $ref: '#/components/schemas/slovakApiDebtorAccountReference'
+        debtorName:
+          type: string
+          description: The name of the debtor/payer.
+      description: Provider transaction details required under the <a href="https://www.sbaonline.sk/projekt/slovak-banking-api-standard/" target="_blank">Slovak Banking API Standard</a>.
+    NextGenPsd2TransactionDetails:
+      type: object
+      properties:
+        additionalInformation:
+          type: string
+          description: Additional bank-provided information about the transaction.
+          example: Additional bank information
+        domain:
+          $ref: '#/components/schemas/BankTransactionCodeDomain'
+        checkId:
+          type: string
+          description: The identifier for the electronic check, where applicable.
+          example: 4vn6aDyMiwBYbP
+        creditorAccount:
+          $ref: '#/components/schemas/NextGenPsd2AccountReference'
+        creditorId:
+          type: string
+          description: The creditor/payee identifier provided by the bank.
+          example: 4vn6aDyMiwBYbP
+        creditorName:
+          type: string
+          description: The name of the creditor/payee.
+          example: ACME Company
+        currencyExchange:
+          type: array
+          description: The currency exchange rate.
+          items:
+            $ref: '#/components/schemas/NextGenPsd2ReportExchangeRate'
+        debtorAccount:
+          $ref: '#/components/schemas/NextGenPsd2AccountReference'
+        debtorName:
+          type: string
+          description: The name of the debtor/payer.
+          example: John Smith
+        endToEndId:
+          type: string
+          description: A short reference field to share an invoice or receipt number for your records; this reference is important to the debtor (could be an internal reference ID against the transaction) but it Is NOT the reference information that will be primarily populated on the statement of the creditor (beneficiary).
+          example: 6aDyMiwB
+        entryReference:
+          type: string
+          description: The identification of the transaction referencing delta function on an application level; same id used within camt.05x messages.
+          example: 72REftaRoiaDYRDU
+        mandateId:
+          type: string
+          description: The identifier for mandates; <i>e.g.</i>, a SEPA Mandate id.
+          example: DE452399865089
+        purposeCode:
+          type: string
+          description: The <a href=\"https://www.iso.org/standard/55005.html\" target=\"_blank\">ISO 20022</a> external purpose code. Purpose Codes are four letter codes which are carried across the payment chain, providing information to all users in the payments chain to indicate the reason a payment is being made. Purpose Codes are one of the policy areas of Enhanced Data that can deliver the benefits of the ISO 20022 payment messaging standard. <ul><li><b>CASH</b> - CashManagementTransfer</li><li><b>CORT</b> - TradeSettlementPayment</li><li><b>DVPM</b> - DeliveryAgainstPayment</li><li><b>INTC</b> - IntraCompanyPayment</li><li><b>TREA</b> - TreasuryPayment</li><li><b>SUPP</b> - SupplierPayment</li></ul>"
+          default: CASH
+          example: DVPM
+          enum:
+          - CASH
+          - CORT
+          - DVPM
+          - INTC
+          - TREA
+          - SUPP
+        remittanceInformationStructured:
+          type: string
+          description: Structured remittance information; a reference issued by the seller used to establish a link between the payment of an invoice and the invoice instance.
+          example: REf:taRoiaDY34DU
+        ultimateCreditor:
+          type: string
+          description: The ultimate party to which the transfer is due.
+          example: ACME GmbH
+        ultimateDebtor:
+          type: string
+          description: The ultimate party that owes that owes money to the (ultimate) creditor.
+          example: John Smith
+        valueDate:
+          type: string
+          description: The date, in <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a> format, when funds are posted to an account and available for immediate use.
+          example: '2022-03-27T17:00:00.000Z'
+      description: Provider transaction details required under the <a href="https://www.berlin-group.org/nextgenpsd2-downloads" target="_blank">NextGenPSD2 standard</a>.
+    BankAccount:
+      type: object
+      description: Specifies information about the bank account.
+      oneOf:
+      - title: Custom
+        properties:
+          custom:
+            $ref: '#/components/schemas/Custom'
+      - title: Domestic
+        properties:
+          domestic:
+            $ref: '#/components/schemas/Domestic'
+      - title: Iban
+        properties:
+          iban:
+            $ref: '#/components/schemas/Iban'
+      - title: token
+        properties:
+          token:
+            $ref: '#/components/schemas/StandingOrderToken'
+    CzechApiTransactionDetails:
+      type: object
+      properties:
+        creditorAccount:
+          $ref: '#/components/schemas/CzechApiAccountReference'
+        creditorName:
+          type: string
+          description: The name of the creditor/payee.
+        debtorAccount:
+          $ref: '#/components/schemas/CzechApiAccountReference'
+        debtorName:
+          type: string
+          description: The name of the debtor/payer.
+      description: Provider transaction details required under the <a href="https://cbaonline.cz/upload/838-czech-standard-for-open-banking-v3-0.pdf" target="_blank">Czech Standard for Open Banking</a>.
+    AccountIdentifier:
+      type: object
+      required:
+      - bankgiro
+      - bban
+      - gbDomestic
+      - iban
+      - msisdn
+      - pan
+      - plus giro
+      - token
+      oneOf:
+      - title: bankgiro
+        properties:
+          bankgiro:
+            $ref: '#/components/schemas/AccountIdentifierBankgiro'
+      - title: bban
+        properties:
+          bban:
+            $ref: '#/components/schemas/AccountIdentifierBban'
+      - title: gbDomestic
+        properties:
+          gbDomestic:
+            $ref: '#/components/schemas/AccountIdentifierGbDomestic'
+      - title: iban
+        properties:
+          iban:
+            $ref: '#/components/schemas/AccountIdentifierIban'
+      - title: msisdn
+        properties:
+          msisdn:
+            $ref: '#/components/schemas/AccountIdentifierMsisdn'
+      - title: pan
+        properties:
+          pan:
+            $ref: '#/components/schemas/AccountIdentifierPan'
+      - title: plusgiro
+        properties:
+          plusgiro:
+            $ref: '#/components/schemas/AccountIdentifierPlusgiro'
+      - title: token
+        properties:
+          token:
+            $ref: '#/components/schemas/AccountIdentifierToken'
+      description: Account numbers and other strings that identify this as a unique bank account.
+    PolishApiTypeOfProxy:
+      type: string
+      description: The type of user's power of attorney for the payment account; required when the relationship type is an account representative.
+      example: GENERAL
+      default: INVALID_TYPE_OF_PROXY
+      enum:
+      - INVALID_TYPE_OF_PROXY
+      - GENERAL
+      - SPECIAL
+      - ADMINISTRATOR
+      - USER
+    AccountIdentifierGbDomestic:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+          description: The unique identifier for the bank account in the UK or Ireland.
+          example: '12345678'
+        sortCode:
+          type: string
+          description: The number assigned to a branch of a bank, typically containing six digits and most commonly used in the UK and Ireland.
+          example: 123456
+      description: A domestic bank account in the UK.
+    Domestic:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+          description: The unique identifier for the bank account.
+          example: '12345678'
+        bankCode:
+          type: string
+          description: The number assigned to a branch of a bank, typically containing six digits and most commonly used in the UK and Ireland.
+          example: '123456'
+        country:
+          type: string
+          description: Two-letter country code in upper case (ISO 3166-1 alpha-2).
+          example: GB
+      description: A domestic bank account in the UK.
+    PolishApiSocialSecurityPayer:
+      type: object
+      properties:
+        additionalPayerId:
+          type: string
+          description: The payer's additional identification number.
+        additionalPayerIdType:
+          type: string
+          description: The type of additional payer id.
+        nip:
+          type: string
+          description: The payer's tax identification number.
+          example: '444433332211'
+      description: The information associated with payer social security; <i>i.e.</i>, Polish Security Institution (ZUS).
+    inline_response_401:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    BankTransactionCodeProprietary:
+      type: object
+      properties:
+        code:
+          type: string
+          description: The bank code.
+          example: XXXX
+        issuer:
+          type: string
+          description: The issuer code.
+          example: XXXX
+      description: A bank transaction code used within a community or within a bank; <i>e.g.</i>, for MT94x based transaction reports.
+    AddressInfo:
+      type: object
+      properties:
+        city:
+          type: string
+          description: Name of the city as given in postal addresses of the building/area.
+          example: Berlin
+        conscriptionNumber:
+          type: string
+          description: A special kind of house number. This relates to a settlement instead of a street. Conscription numbers are in use in some parts of Europe, sometimes together with street-related house numbers, which are also called orientation numbers.
+          example: '2831'
+        country:
+          type: string
+          description: Two-letter country code in upper case (ISO 3166-1 alpha-2).
+          example: DE
+        district:
+          type: string
+          description: A defined district within the city or country containing the address.
+          example: Friedrichshain
+        flats:
+          type: string
+          description: House numbers (range or list) of flats behind a door.
+          example: 21A - 21C
+        full:
+          type: string
+          description: This is used for a full-text, often multi-line address if you find the structured address fields unsuitable for denoting the address of this particular location. Typically such strings cannot be parsed by software.
+          example: Fifth house on the left after the village oak, Smalltown, Smallcountry
+        hamlet:
+          type: string
+          description: A small settlement. In different jurisdictions and geographies, a hamlet may be the size of a town, village, or parish, or may be considered to be a smaller settlement or subdivision or satellite entity to a larger settlement.
+          example: Botzowviertel
+        houseName:
+          type: string
+          description: The name of a house. Sometimes used in countries like England instead of (or in addition to) a house number.
+          example: Grossen Blauen Haus
+        houseNumber:
+          type: string
+          description: The house number (may contain letters, dashes, or other characters). This identifies a single building with multiple addresses.
+          example: '123'
+        place:
+          type: string
+          description: The part of an address which refers to the name of some territorial zone (like an island or square) instead of a street. It should not be included together with `street`.
+          example: Arnswalder Platz
+        postCode:
+          type: string
+          description: An identifier consisting of a group of letters and/or numbers that is added to a postal address to assist the sorting of mail.
+          example: '10243'
+        province:
+          type: string
+          description: For Canada, uppercase two-letter postal abbreviations, <i>e.g.</i>, BC, AB, ON, QC.
+          example: BC
+        state:
+          type: string
+          description: For the US, uppercase two-letter postal abbreviations, <i>e.g.</i>, AK, CA, HI, NY, TX, WY.
+          example: CA
+        street:
+          type: string
+          description: the name of the respective street in which the dwelling or business is located or where mail is received.
+          example: Hans-Otto-Strasse
+        subdistrict:
+          type: string
+          description: A smaller, readily identifiable part of a district.
+          example: Friedrichshain Nord
+        suburb:
+          type: string
+          description: Suburbs and localities are the names of geographic subdivisions of urban areas in Australia.
+          example: Altona Meadows Suburb
+      description: The complete postal address of a party.
+    GatewayTimeoutError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: DEADLINE_EXCEEDED
+        paymentId:
+          type: string
+          description: The deadline expired before the operation could complete.
+          example: Deadline exceeded.
+      description: The deadline expired before the operation could complete.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    AccountFeatures:
+      type: object
+      properties:
+        supportsInformation:
+          type: boolean
+          description: An account available for AIS operations.
+          format: boolean
+          example: false
+          default: false
+        supportsReceivePayment:
+          type: boolean
+          description: An account that can receive money transfers.
+          format: boolean
+          example: false
+          default: false
+        supportsSendPayment:
+          type: boolean
+          description: An account that can send money transfers.
+          format: boolean
+          example: false
+          default: false
+      description: Open Banking features supported for this account.
+    Balance:
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: The unique identifier for the account.
+          example: a:8DbPteGnytmMbKXdnWTReeRB6cYWKXZ84JgLTBC7fKL4:5zKcENpV4
+        available:
+          allOf:
+          - description: The account's balance available to the account holder.
+          - $ref: '#/components/schemas/Money'
+        current:
+          allOf:
+          - description: The account's total current balance, both available and on-hold.
+          - $ref: '#/components/schemas/Money'
+        otherBalances:
+          type: array
+          description: Other bank-defined balances associated with the account, where applicable.
+          items:
+            $ref: '#/components/schemas/BalanceTypedBalance'
+      description: Relevant information associated with the monetary balance of an individual account.
+    Iban:
+      type: object
+      properties:
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
+          example: BOFIIE2D
+        iban:
+          type: string
+          description: The International Bank Account Number. This consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+    NextGenPsd2ReportExchangeRate:
+      type: object
+      properties:
+        contractIdentification:
+          type: string
+          description: Identifies the forward or spot exchange contract.
+        exchangeRate:
+          type: string
+          description: The rate of exchange between the `sourceCurrencyand` the `targetCurrency`.
+        quotationDate:
+          type: string
+          description: The date of the FX quote, in <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a> format.
+          example: '2022-04-05T17:00:00.000Z'
+        sourceCurrency:
+          type: string
+          description: The <a href="https://www.iso.org/iso-4217-currency-codes.html" target="_blank">ISO 4217</a> three letter currency code.
+          example: EUR
+        targetCurrency:
+          type: string
+          description: The <a href="https://www.iso.org/iso-4217-currency-codes.html" target="_blank">ISO 4217</a> three letter currency code.
+          example: EUR
+        unitCurrency:
+          type: string
+          description: The price of one currency expressed in terms of another currency.
+          example: 1.4 to 1.
+      description: The currency exchange rate.
+    AccountIdentifierToken:
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: The bank account identifier for a linked account used by Token.io's Bank Integration Account Linking Service.
+          example: a:b6037206ca7311ed:afa1
+        memberId:
+          type: string
+          description: The Token.io-generated member id for the user/account holder.
+          example: m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq
+      description: The primary account number; the card identifier found on payment cards, such as credit cards and debit cards, as well as stored-value cards, gift cards and other similar card, sometimes referred to as a bank card number.
+    NextGenPsd2AccountReference:
+      type: object
+      properties:
+        bban:
+          type: string
+          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length; 10 to 30 characters comprising the bank code (including the account number) and a checksum key. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
+          example: NWBK60161331926819
+        currency:
+          type: string
+          description: The <a href="https://www.iso.org/iso-4217-currency-codes.html" target="_blank">ISO 4217</a> three letter currency code.
+          example: EUR
+        iban:
+          type: string
+          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+        maskedPan:
+          type: string
+          description: The masked primary account number; tokenised identification for data protection.
+        msisdn:
+          type: string
+          description: The Mobile Station International Subscriber Director Number (MSISDN) is the user's mobile phone number, used as a unique identifier to enable routing of voice and SMS traffic to and from a specific subscription/device on a wireless/mobile network. It's composed of the country code and the national destination code. Ensure you remove the + sign and any 0 before the mobile number.
+          example: '447949123456'
+        pan:
+          type: string
+          description: The primary account number. The card identifier found on payment cards, such as credit cards and debit cards, as well as stored-value cards, gift cards and other similar card, sometimes referred to as a bank card number.
+          example: '4658552288550023'
+      description: The unique provider account identifier required under the <a href="https://www.berlin-group.org/nextgenpsd2-downloads" target="_blank">NextGenPSD2 standard</a>.
+  securitySchemes:
+    Bearer:
+      type: http
+      description: '**For Production and Sandbox environments.**<br />When using curl samples the authorization header is given as -H `''Authorization: Bearer + JWT''`<br/>Please substitute your Bearer key here.<br/>For example:<br/> -H `''Authorization: Bearer eyJhbGciOiJFZERTQSIsImtpZCI6IjF4N2RmNHZ1RlVIWVFDYTciLCJtaWQiOiJtOlhUalhlMkFQZTRvdmVaalE4cHoyNGdEbUZEcTo1ekt0WEVBcSIsImhvc3QiOiJsb2NhbGhvc3Q6ODAwMCIsIm1ldGhvZCI6IlBPU1QiLCJwYXRoIjoiL2JhbmtzL2lyb24vdXNlcnMiLCJleHAiOjE1ODYyOTczNDQ3ODd9..bi3wxEoMHIul_F2f7gCDvgjHQKCjIyP9_SkQns-yXpS0UqoaOqSJrW89COexU71gt-mH3jH6mtp2aksEywvFDg''`<br/>Enter the JWT Bearer token only (see <a href="https://developer.token.io/token_rest_api_doc/content/e-rest/authentication.htm#JWT" target="_blank">JWT Authentication</a> for more information).'
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: apiKey
+      description: '**For Sandbox environment only.**<br />When using curl samples the authorization header is given as -H `''Authorization: YOUR_API_KEY_HERE''`<br/>Please substitute your Basic key here.<br/>For example:<br/> -H `''Authorization: Basic bS0zanhoS3pqRjRSWFQ1dHZLTlhMQU14cm80d0E1LTV6S3RYRUFxOmU1MWZjZDQ0LTM5MGQtNDYxZi04YjA0LTEyMjcxOTg4YWYwNg==''`'
+      name: Authorization
+      in: header
