@@ -1,0 +1,2149 @@
+{
+  "info": {
+    "_postman_id": "58be8325-7e26-4325-9a3d-33913233ae6e",
+    "name": "Token.io's Open Banking API for TPPs Account on File Payments v2 API",
+    "description": "<b>Token.io's Open Banking API</b><br/><br/>Token.io Support: <a href=\"https://support.token.io\" target=\"_blank\">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user's account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href=\"https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm\" target=\"_blank\">developer documentation</a>.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T11:04:44.000Z",
+    "updatedAt": "2026-07-28T11:04:44.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-58be8325-7e26-4325-9a3d-33913233ae6e"
+  },
+  "item": [
+    {
+      "name": "v2",
+      "item": [
+        {
+          "name": "payments",
+          "item": [
+            {
+              "name": "{paymentId}",
+              "item": [
+                {
+                  "name": "embedded-auth",
+                  "item": [
+                    {
+                      "name": "Provide information for embedded authentication",
+                      "id": "871152b5-a868-41bb-9b4b-69f196fe55fc",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{bearerToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                            "key": "request-timeout",
+                            "value": "<integer>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"embeddedAuth\": {\n    \"aute_0\": \"<string>\"\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/payments/:paymentId/embedded-auth",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "payments",
+                            ":paymentId",
+                            "embedded-auth"
+                          ],
+                          "variable": [
+                            {
+                              "id": "4b962259-49df-4f0c-9863-379e1d74dbdd",
+                              "key": "paymentId",
+                              "value": "<string>",
+                              "description": "(Required) The payment id."
+                            }
+                          ]
+                        },
+                        "description": "The `POST /v2/payments/{paymentId}/embedded-auth` endpoint provides you with the requested information when the payment status is `INITIATION_PENDING_EMBEDDED_AUTH`. The requested information can be found in the authentication field of the payment. <br/> <br/> It's possible that some banks might request the user's input multiple times. In this case you might need to call this endpoint again for a new field set."
+                      },
+                      "response": [
+                        {
+                          "id": "903032e8-4f9f-44ba-957c-e84a935c23fa",
+                          "name": "Successful response",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                                "key": "request-timeout",
+                                "value": "<integer>"
+                              },
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"embeddedAuth\": {\n    \"aute_0\": \"<string>\"\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/payments/:paymentId/embedded-auth",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "payments",
+                                ":paymentId",
+                                "embedded-auth"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "paymentId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"payment\": {\n    \"createdDateTime\": \"<string>\",\n    \"id\": \"<string>\",\n    \"initiation\": {\n      \"flowType\": \"EMBEDDED_HOSTED_PAGES\",\n      \"callbackUrl\": \"<string>\",\n      \"creditor\": {\n        \"iban\": \"<string>\",\n        \"name\": \"<string>\",\n        \"bic\": \"<string>\",\n        \"ultimateCreditorName\": \"<string>\",\n        \"address\": {\n          \"addressLine\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"streetName\": \"<string>\",\n          \"buildingNumber\": \"<string>\",\n          \"postCode\": \"<string>\",\n          \"townName\": \"<string>\",\n          \"state\": \"<string>\",\n          \"district\": \"<string>\",\n          \"country\": \"<string>\"\n        },\n        \"bankName\": \"<string>\",\n        \"accountVerificationId\": \"<string>\"\n      },\n      \"localInstrument\": \"EU_DOMESTIC_NON_EURO\",\n      \"refId\": \"<string>\",\n      \"amount\": {\n        \"currency\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      \"remittanceInformationPrimary\": \"<string>\",\n      \"bankId\": \"<string>\",\n      \"remittanceInformationSecondary\": \"<string>\",\n      \"onBehalfOfId\": \"<string>\",\n      \"vrpConsentId\": \"<string>\",\n      \"debtor\": {\n        \"iban\": \"<string>\",\n        \"name\": \"<string>\",\n        \"bic\": \"<string>\",\n        \"ultimateDebtorName\": \"<string>\",\n        \"address\": {\n          \"addressLine\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"streetName\": \"<string>\",\n          \"buildingNumber\": \"<string>\",\n          \"postCode\": \"<string>\",\n          \"townName\": \"<string>\",\n          \"state\": \"<string>\",\n          \"district\": \"<string>\",\n          \"country\": \"<string>\"\n        }\n      },\n      \"executionDate\": \"<string>\",\n      \"confirmFunds\": \"<boolean>\",\n      \"returnRefundAccount\": \"<boolean>\",\n      \"disableFutureDatedPaymentConversion\": \"<boolean>\",\n      \"returnTokenizedAccount\": \"<boolean>\",\n      \"callbackState\": \"<string>\",\n      \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n      \"risk\": {\n        \"psuId\": \"<string>\",\n        \"paymentContextCode\": \"INVALID_PAYMENT_CONTEXT_CODE\",\n        \"paymentPurposeCode\": \"CASH\",\n        \"merchantCategoryCode\": \"<string>\",\n        \"beneficiaryAccountType\": \"CHARITY\",\n        \"contractPresentIndicator\": \"<boolean>\",\n        \"beneficiaryPrepopulatedIndicator\": \"<boolean>\",\n        \"deliveryAddress\": {\n          \"addressLine\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"addressType\": \"INVALID_ADDRESS_TYPE\",\n          \"buildingNumber\": \"<string>\",\n          \"country\": \"<string>\",\n          \"countrySubDivision\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"department\": \"<string>\",\n          \"postCode\": \"<string>\",\n          \"streetName\": \"<string>\",\n          \"subDepartment\": \"<string>\",\n          \"townName\": \"<string>\"\n        }\n      },\n      \"externalPsuReference\": \"<string>\"\n    },\n    \"memberId\": \"<string>\",\n    \"status\": \"CANCELED\",\n    \"updatedDateTime\": \"<string>\",\n    \"convertedToFutureDatedPayment\": false,\n    \"refundDetails\": {\n      \"refundAccount\": {\n        \"iban\": \"<string>\",\n        \"bic\": \"<string>\",\n        \"name\": \"<string>\"\n      },\n      \"paymentRefundStatus\": \"PARTIAL\",\n      \"settledRefundAmount\": {\n        \"currency\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      \"remainingRefundAmount\": {\n        \"currency\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    },\n    \"statusReasonInformation\": \"<string>\",\n    \"bankPaymentStatus\": \"<string>\",\n    \"bankPaymentId\": \"<string>\",\n    \"bankTransactionId\": \"<string>\",\n    \"bankVrpId\": \"<string>\",\n    \"bankVrpStatus\": \"<string>\",\n    \"authentication\": {\n      \"redirectUrl\": \"<string>\"\n    },\n    \"errorInfo\": {\n      \"httpErrorCode\": \"<integer>\",\n      \"message\": \"<string>\",\n      \"tokenExternalError\": \"<boolean>\",\n      \"tokenTraceId\": \"<string>\"\n    },\n    \"paymentLinkStatus\": \"LINK_EXPIRED\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:44.000Z",
+                          "updatedAt": "2026-07-28T11:04:44.000Z",
+                          "uid": "35240-903032e8-4f9f-44ba-957c-e84a935c23fa"
+                        },
+                        {
+                          "id": "f7bcf81b-bace-46d2-8e05-00f088ebc730",
+                          "name": "The client specified an invalid argument.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                                "key": "request-timeout",
+                                "value": "<integer>"
+                              },
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"embeddedAuth\": {\n    \"aute_0\": \"<string>\"\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/payments/:paymentId/embedded-auth",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "payments",
+                                ":paymentId",
+                                "embedded-auth"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "paymentId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"errorCode\": \"id dolore\",\n    \"message\": \"<string>\",\n    \"paths\": [\n      \"nisi labore consectetur id nulla\",\n      \"dolor Excepteur sed dolor quis\"\n    ],\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:44.000Z",
+                          "updatedAt": "2026-07-28T11:04:44.000Z",
+                          "uid": "35240-f7bcf81b-bace-46d2-8e05-00f088ebc730"
+                        },
+                        {
+                          "id": "ea453a93-439f-42b9-8ab6-d70f0489477c",
+                          "name": "The authorization information is missing or invalid",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                                "key": "request-timeout",
+                                "value": "<integer>"
+                              },
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"embeddedAuth\": {\n    \"aute_0\": \"<string>\"\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/payments/:paymentId/embedded-auth",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "payments",
+                                ":paymentId",
+                                "embedded-auth"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "paymentId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:44.000Z",
+                          "updatedAt": "2026-07-28T11:04:44.000Z",
+                          "uid": "35240-ea453a93-439f-42b9-8ab6-d70f0489477c"
+                        },
+                        {
+                          "id": "060882fc-8097-45da-a837-38c2d2ee0393",
+                          "name": "Permission to access this endpoint is denied",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                                "key": "request-timeout",
+                                "value": "<integer>"
+                              },
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"embeddedAuth\": {\n    \"aute_0\": \"<string>\"\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/payments/:paymentId/embedded-auth",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "payments",
+                                ":paymentId",
+                                "embedded-auth"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "paymentId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Forbidden",
+                          "code": 403,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"errorCode\": \"adipisicing magna in\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:44.000Z",
+                          "updatedAt": "2026-07-28T11:04:44.000Z",
+                          "uid": "35240-060882fc-8097-45da-a837-38c2d2ee0393"
+                        },
+                        {
+                          "id": "882b374a-0b6f-4b87-927f-5e2f644994ad",
+                          "name": "The requested entity, such as a payment, was not found",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                                "key": "request-timeout",
+                                "value": "<integer>"
+                              },
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"embeddedAuth\": {\n    \"aute_0\": \"<string>\"\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/payments/:paymentId/embedded-auth",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "payments",
+                                ":paymentId",
+                                "embedded-auth"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "paymentId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"errorCode\": \"irure anim reprehenderit proident deserunt\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"anim Ut\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:44.000Z",
+                          "updatedAt": "2026-07-28T11:04:44.000Z",
+                          "uid": "35240-882b374a-0b6f-4b87-927f-5e2f644994ad"
+                        },
+                        {
+                          "id": "ec4b65d7-0f3f-47db-b641-ba9724bbc2ec",
+                          "name": "An unexpected or internal server error",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                                "key": "request-timeout",
+                                "value": "<integer>"
+                              },
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"embeddedAuth\": {\n    \"aute_0\": \"<string>\"\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v2/payments/:paymentId/embedded-auth",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v2",
+                                "payments",
+                                ":paymentId",
+                                "embedded-auth"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "paymentId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:44.000Z",
+                          "updatedAt": "2026-07-28T11:04:44.000Z",
+                          "uid": "35240-ec4b65d7-0f3f-47db-b641-ba9724bbc2ec"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T11:04:44.000Z",
+                      "updatedAt": "2026-07-28T11:04:44.000Z",
+                      "uid": "35240-871152b5-a868-41bb-9b4b-69f196fe55fc"
+                    }
+                  ],
+                  "id": "a8a3ac81-b93a-45d6-8722-9c8af54da445",
+                  "createdAt": "2026-07-28T11:04:44.000Z",
+                  "updatedAt": "2026-07-28T11:04:44.000Z",
+                  "uid": "35240-a8a3ac81-b93a-45d6-8722-9c8af54da445"
+                },
+                {
+                  "name": "Get a payment",
+                  "id": "5ffa2545-4ad0-4ec0-bc0c-253ce395cafa",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                        "key": "request-timeout",
+                        "value": "<integer>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/payments/:paymentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "payments",
+                        ":paymentId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "d44ff7b9-5850-4064-8c9a-c3e37c4a1f9a",
+                          "key": "paymentId",
+                          "value": "<string>",
+                          "description": "(Required) The payment id."
+                        }
+                      ]
+                    },
+                    "description": "The `GET /v2/payments/{paymentId}` endpoint provides you with details of an individual payment and checks the payment status for the next step, if any."
+                  },
+                  "response": [
+                    {
+                      "id": "4e26ed71-ba2d-4972-a48e-c9ec44ee0abe",
+                      "name": "Successful response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                            "key": "request-timeout",
+                            "value": "<integer>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/payments/:paymentId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "payments",
+                            ":paymentId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"payment\": {\n    \"createdDateTime\": \"<string>\",\n    \"id\": \"<string>\",\n    \"initiation\": {\n      \"flowType\": \"EMBEDDED_HOSTED_PAGES\",\n      \"callbackUrl\": \"<string>\",\n      \"creditor\": {\n        \"iban\": \"<string>\",\n        \"name\": \"<string>\",\n        \"bic\": \"<string>\",\n        \"ultimateCreditorName\": \"<string>\",\n        \"address\": {\n          \"addressLine\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"streetName\": \"<string>\",\n          \"buildingNumber\": \"<string>\",\n          \"postCode\": \"<string>\",\n          \"townName\": \"<string>\",\n          \"state\": \"<string>\",\n          \"district\": \"<string>\",\n          \"country\": \"<string>\"\n        },\n        \"bankName\": \"<string>\",\n        \"accountVerificationId\": \"<string>\"\n      },\n      \"localInstrument\": \"EU_DOMESTIC_NON_EURO\",\n      \"refId\": \"<string>\",\n      \"amount\": {\n        \"currency\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      \"remittanceInformationPrimary\": \"<string>\",\n      \"bankId\": \"<string>\",\n      \"remittanceInformationSecondary\": \"<string>\",\n      \"onBehalfOfId\": \"<string>\",\n      \"vrpConsentId\": \"<string>\",\n      \"debtor\": {\n        \"iban\": \"<string>\",\n        \"name\": \"<string>\",\n        \"bic\": \"<string>\",\n        \"ultimateDebtorName\": \"<string>\",\n        \"address\": {\n          \"addressLine\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"streetName\": \"<string>\",\n          \"buildingNumber\": \"<string>\",\n          \"postCode\": \"<string>\",\n          \"townName\": \"<string>\",\n          \"state\": \"<string>\",\n          \"district\": \"<string>\",\n          \"country\": \"<string>\"\n        }\n      },\n      \"executionDate\": \"<string>\",\n      \"confirmFunds\": \"<boolean>\",\n      \"returnRefundAccount\": \"<boolean>\",\n      \"disableFutureDatedPaymentConversion\": \"<boolean>\",\n      \"returnTokenizedAccount\": \"<boolean>\",\n      \"callbackState\": \"<string>\",\n      \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n      \"risk\": {\n        \"psuId\": \"<string>\",\n        \"paymentContextCode\": \"INVALID_PAYMENT_CONTEXT_CODE\",\n        \"paymentPurposeCode\": \"CASH\",\n        \"merchantCategoryCode\": \"<string>\",\n        \"beneficiaryAccountType\": \"CHARITY\",\n        \"contractPresentIndicator\": \"<boolean>\",\n        \"beneficiaryPrepopulatedIndicator\": \"<boolean>\",\n        \"deliveryAddress\": {\n          \"addressLine\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"addressType\": \"INVALID_ADDRESS_TYPE\",\n          \"buildingNumber\": \"<string>\",\n          \"country\": \"<string>\",\n          \"countrySubDivision\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"department\": \"<string>\",\n          \"postCode\": \"<string>\",\n          \"streetName\": \"<string>\",\n          \"subDepartment\": \"<string>\",\n          \"townName\": \"<string>\"\n        }\n      },\n      \"externalPsuReference\": \"<string>\"\n    },\n    \"memberId\": \"<string>\",\n    \"status\": \"CANCELED\",\n    \"updatedDateTime\": \"<string>\",\n    \"convertedToFutureDatedPayment\": false,\n    \"refundDetails\": {\n      \"refundAccount\": {\n        \"iban\": \"<string>\",\n        \"bic\": \"<string>\",\n        \"name\": \"<string>\"\n      },\n      \"paymentRefundStatus\": \"PARTIAL\",\n      \"settledRefundAmount\": {\n        \"currency\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      \"remainingRefundAmount\": {\n        \"currency\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    },\n    \"statusReasonInformation\": \"<string>\",\n    \"bankPaymentStatus\": \"<string>\",\n    \"bankPaymentId\": \"<string>\",\n    \"bankTransactionId\": \"<string>\",\n    \"bankVrpId\": \"<string>\",\n    \"bankVrpStatus\": \"<string>\",\n    \"authentication\": {\n      \"redirectUrl\": \"<string>\"\n    },\n    \"errorInfo\": {\n      \"httpErrorCode\": \"<integer>\",\n      \"message\": \"<string>\",\n      \"tokenExternalError\": \"<boolean>\",\n      \"tokenTraceId\": \"<string>\"\n    },\n    \"paymentLinkStatus\": \"LINK_EXPIRED\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:44.000Z",
+                      "updatedAt": "2026-07-28T11:04:44.000Z",
+                      "uid": "35240-4e26ed71-ba2d-4972-a48e-c9ec44ee0abe"
+                    },
+                    {
+                      "id": "14c49eab-4fce-4aa7-a4c5-89a1e906f42b",
+                      "name": "The authorization information is missing or invalid",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                            "key": "request-timeout",
+                            "value": "<integer>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/payments/:paymentId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "payments",
+                            ":paymentId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:44.000Z",
+                      "updatedAt": "2026-07-28T11:04:44.000Z",
+                      "uid": "35240-14c49eab-4fce-4aa7-a4c5-89a1e906f42b"
+                    },
+                    {
+                      "id": "ec1b6c4f-b882-4024-9ddb-fba61f1df8f0",
+                      "name": "The requested entity, such as a payment, was not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                            "key": "request-timeout",
+                            "value": "<integer>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/payments/:paymentId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "payments",
+                            ":paymentId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"irure anim reprehenderit proident deserunt\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"anim Ut\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:44.000Z",
+                      "updatedAt": "2026-07-28T11:04:44.000Z",
+                      "uid": "35240-ec1b6c4f-b882-4024-9ddb-fba61f1df8f0"
+                    },
+                    {
+                      "id": "fe45fb91-66fa-43bc-955b-1ef1620635f6",
+                      "name": "An unexpected or internal server error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                            "key": "request-timeout",
+                            "value": "<integer>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/payments/:paymentId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "payments",
+                            ":paymentId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:44.000Z",
+                      "updatedAt": "2026-07-28T11:04:44.000Z",
+                      "uid": "35240-fe45fb91-66fa-43bc-955b-1ef1620635f6"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T11:04:44.000Z",
+                  "updatedAt": "2026-07-28T11:04:44.000Z",
+                  "uid": "35240-5ffa2545-4ad0-4ec0-bc0c-253ce395cafa"
+                }
+              ],
+              "id": "40127555-ad80-4848-9c29-827b06250f1a",
+              "createdAt": "2026-07-28T11:04:44.000Z",
+              "updatedAt": "2026-07-28T11:04:44.000Z",
+              "uid": "35240-40127555-ad80-4848-9c29-827b06250f1a"
+            },
+            {
+              "name": "Initiate a payment",
+              "id": "257e3efe-aef4-4de4-83ca-62cd1cba722d",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                    "key": "request-timeout",
+                    "value": "<integer>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"flowType\": \"FULL_HOSTED_PAGES\",\n    \"callbackUrl\": \"<string>\",\n    \"creditor\": {\n      \"iban\": \"<string>\",\n      \"name\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"ultimateCreditorName\": \"<string>\",\n      \"address\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"streetName\": \"<string>\",\n        \"buildingNumber\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"townName\": \"<string>\",\n        \"state\": \"<string>\",\n        \"district\": \"<string>\",\n        \"country\": \"<string>\"\n      },\n      \"bankName\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"localInstrument\": \"FASTER_PAYMENTS\",\n    \"refId\": \"<string>\",\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"remittanceInformationPrimary\": \"<string>\",\n    \"bankId\": \"<string>\",\n    \"remittanceInformationSecondary\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\",\n    \"vrpConsentId\": \"<string>\",\n    \"debtor\": {\n      \"iban\": \"<string>\",\n      \"name\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"ultimateDebtorName\": \"<string>\",\n      \"address\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"streetName\": \"<string>\",\n        \"buildingNumber\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"townName\": \"<string>\",\n        \"state\": \"<string>\",\n        \"district\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    },\n    \"executionDate\": \"<string>\",\n    \"confirmFunds\": \"<boolean>\",\n    \"returnRefundAccount\": \"<boolean>\",\n    \"disableFutureDatedPaymentConversion\": \"<boolean>\",\n    \"returnTokenizedAccount\": \"<boolean>\",\n    \"callbackState\": \"<string>\",\n    \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"PISP_PAYEE\",\n      \"paymentPurposeCode\": \"CASH\",\n      \"merchantCategoryCode\": \"<string>\",\n      \"beneficiaryAccountType\": \"JOINT_PERSONAL\",\n      \"contractPresentIndicator\": \"<boolean>\",\n      \"beneficiaryPrepopulatedIndicator\": \"<boolean>\",\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"addressType\": \"INVALID_ADDRESS_TYPE\",\n        \"buildingNumber\": \"<string>\",\n        \"country\": \"<string>\",\n        \"countrySubDivision\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"department\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"streetName\": \"<string>\",\n        \"subDepartment\": \"<string>\",\n        \"townName\": \"<string>\"\n      }\n    },\n    \"externalPsuReference\": \"<string>\"\n  },\n  \"pispConsentAccepted\": false,\n  \"initialEmbeddedAuth\": {\n    \"eiusmod_fd2\": \"<string>\",\n    \"consectetur_44f\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v2/payments",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "payments"
+                  ]
+                },
+                "description": "The `POST /v2/payments` endpoint enables you to initiate a payment with a bank.<br/><br/>Once the payment has been initiated, the end user needs to authenticate themselves with their bank.<br/><br/><b>Check payment status:</b><br/><ol><li>If the status in the initiation response is `INITIATION_PENDING_REDIRECT_AUTH` or `INITIATION_PENDING_REDIRECT_HP`, redirect the user to the redirect url found in the authentication payload of the payment, to authenticate at the bank or at Token.io's Hosted Pages.</li><br/><li>If the status in the initiation response is `INITIATION_PENDING_REDIRECT_PBL`, redirect the user to the payment link (redirect URL) found in the authentication payload. The user will be taken to Token.io\u2019s Hosted Pages, where any missing information (such as amount or reference) can be provided before proceeding with payment authentication.</li><br/><li>If the status in the initiation response is `INITIATION_PENDING_EMBEDDED_AUTH`, collect the requested data listed in the authentication payload of the payment and use the `POST /v2/payments/{paymentId}/embedded-auth` endpoint to provide the requested field values.</li><br/><li>If the status in the initiation response is `INITIATION_PENDING`, Token.io needs more time to process this request with the bank. In the case of a successful scenario, the status will be updated to `INITIATION_PENDING_REDIRECT_AUTH`, `INITIATION_PENDING_EMBEDDED_AUTH` or `INITIATION_PENDING_DECOUPLED_AUTH` when the authentication details are ready. The update can be checked by the `GET /v2/payments/{paymentId}` endpoint or received via a webhook (see <a href=\"https://developer.token.io/token_rest_api_doc/content/e-rest/webhooks.htm\" target=\"_blank\">Webhooks</a>).</li><br/><li>If the status is `INITIATION_PENDING_DECOUPLED_AUTH`, the bank has requested a decoupled authentication from the user and Token.io is awaiting the result. No further action is required.</li></ol><br/><b>`request-timeout` header:</b><br/><br/>Banks may take some time to respond when a request is made. Therefore, Token.io recommends that you set a `request-timeout` header in your API-only `POST /v2/payments` requests to match the timeout of your client and avoid `DEADLINE_EXCEEDED` errors. If this is set, Token.io sends a response when this timeout period has passed and will update payment status as soon as the bank has responded.<br/>The following example demonstrates what happens when you set a timeout of 10 seconds and the call to the bank takes 15 seconds:<br/><br/><ol><li>The TPP makes a `POST /v2/payments` call.</li><br/><li>Token.io creates a resource with the status `INITIATION_PENDING`.</li><br/><li>Token.io starts the call to the bank.</li><br/><li>After 10 seconds from (1): Token.io returns the payment status `INITIATION_PENDING`.</li><br/><li>After 15 seconds from (3): Token.io receives a response from the bank and changes the status to, for example, `INITIATION_PENDING_REDIRECT_AUTH`. The update will be sent in a webhook, if TPP is subscribed for webhooks.</li><br/><li>The TPP makes the `GET /v2/payments/{id}` call and receives the payment with the status `INITIATION_PENDING_REDIRECT_AUTH`.</li></ol>"
+              },
+              "response": [
+                {
+                  "id": "40476d5f-232f-4d79-b2d0-b183de03f20e",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                        "key": "request-timeout",
+                        "value": "<integer>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"initiation\": {\n    \"flowType\": \"FULL_HOSTED_PAGES\",\n    \"callbackUrl\": \"<string>\",\n    \"creditor\": {\n      \"iban\": \"<string>\",\n      \"name\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"ultimateCreditorName\": \"<string>\",\n      \"address\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"streetName\": \"<string>\",\n        \"buildingNumber\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"townName\": \"<string>\",\n        \"state\": \"<string>\",\n        \"district\": \"<string>\",\n        \"country\": \"<string>\"\n      },\n      \"bankName\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"localInstrument\": \"FASTER_PAYMENTS\",\n    \"refId\": \"<string>\",\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"remittanceInformationPrimary\": \"<string>\",\n    \"bankId\": \"<string>\",\n    \"remittanceInformationSecondary\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\",\n    \"vrpConsentId\": \"<string>\",\n    \"debtor\": {\n      \"iban\": \"<string>\",\n      \"name\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"ultimateDebtorName\": \"<string>\",\n      \"address\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"streetName\": \"<string>\",\n        \"buildingNumber\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"townName\": \"<string>\",\n        \"state\": \"<string>\",\n        \"district\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    },\n    \"executionDate\": \"<string>\",\n    \"confirmFunds\": \"<boolean>\",\n    \"returnRefundAccount\": \"<boolean>\",\n    \"disableFutureDatedPaymentConversion\": \"<boolean>\",\n    \"returnTokenizedAccount\": \"<boolean>\",\n    \"callbackState\": \"<string>\",\n    \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"PISP_PAYEE\",\n      \"paymentPurposeCode\": \"CASH\",\n      \"merchantCategoryCode\": \"<string>\",\n      \"beneficiaryAccountType\": \"JOINT_PERSONAL\",\n      \"contractPresentIndicator\": \"<boolean>\",\n      \"beneficiaryPrepopulatedIndicator\": \"<boolean>\",\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"addressType\": \"INVALID_ADDRESS_TYPE\",\n        \"buildingNumber\": \"<string>\",\n        \"country\": \"<string>\",\n        \"countrySubDivision\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"department\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"streetName\": \"<string>\",\n        \"subDepartment\": \"<string>\",\n        \"townName\": \"<string>\"\n      }\n    },\n    \"externalPsuReference\": \"<string>\"\n  },\n  \"pispConsentAccepted\": false,\n  \"initialEmbeddedAuth\": {\n    \"eiusmod_fd2\": \"<string>\",\n    \"consectetur_44f\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/payments",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "payments"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"payment\": {\n    \"createdDateTime\": \"<string>\",\n    \"id\": \"<string>\",\n    \"initiation\": {\n      \"flowType\": \"EMBEDDED_HOSTED_PAGES\",\n      \"callbackUrl\": \"<string>\",\n      \"creditor\": {\n        \"iban\": \"<string>\",\n        \"name\": \"<string>\",\n        \"bic\": \"<string>\",\n        \"ultimateCreditorName\": \"<string>\",\n        \"address\": {\n          \"addressLine\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"streetName\": \"<string>\",\n          \"buildingNumber\": \"<string>\",\n          \"postCode\": \"<string>\",\n          \"townName\": \"<string>\",\n          \"state\": \"<string>\",\n          \"district\": \"<string>\",\n          \"country\": \"<string>\"\n        },\n        \"bankName\": \"<string>\",\n        \"accountVerificationId\": \"<string>\"\n      },\n      \"localInstrument\": \"EU_DOMESTIC_NON_EURO\",\n      \"refId\": \"<string>\",\n      \"amount\": {\n        \"currency\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      \"remittanceInformationPrimary\": \"<string>\",\n      \"bankId\": \"<string>\",\n      \"remittanceInformationSecondary\": \"<string>\",\n      \"onBehalfOfId\": \"<string>\",\n      \"vrpConsentId\": \"<string>\",\n      \"debtor\": {\n        \"iban\": \"<string>\",\n        \"name\": \"<string>\",\n        \"bic\": \"<string>\",\n        \"ultimateDebtorName\": \"<string>\",\n        \"address\": {\n          \"addressLine\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"streetName\": \"<string>\",\n          \"buildingNumber\": \"<string>\",\n          \"postCode\": \"<string>\",\n          \"townName\": \"<string>\",\n          \"state\": \"<string>\",\n          \"district\": \"<string>\",\n          \"country\": \"<string>\"\n        }\n      },\n      \"executionDate\": \"<string>\",\n      \"confirmFunds\": \"<boolean>\",\n      \"returnRefundAccount\": \"<boolean>\",\n      \"disableFutureDatedPaymentConversion\": \"<boolean>\",\n      \"returnTokenizedAccount\": \"<boolean>\",\n      \"callbackState\": \"<string>\",\n      \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n      \"risk\": {\n        \"psuId\": \"<string>\",\n        \"paymentContextCode\": \"INVALID_PAYMENT_CONTEXT_CODE\",\n        \"paymentPurposeCode\": \"CASH\",\n        \"merchantCategoryCode\": \"<string>\",\n        \"beneficiaryAccountType\": \"CHARITY\",\n        \"contractPresentIndicator\": \"<boolean>\",\n        \"beneficiaryPrepopulatedIndicator\": \"<boolean>\",\n        \"deliveryAddress\": {\n          \"addressLine\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"addressType\": \"INVALID_ADDRESS_TYPE\",\n          \"buildingNumber\": \"<string>\",\n          \"country\": \"<string>\",\n          \"countrySubDivision\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"department\": \"<string>\",\n          \"postCode\": \"<string>\",\n          \"streetName\": \"<string>\",\n          \"subDepartment\": \"<string>\",\n          \"townName\": \"<string>\"\n        }\n      },\n      \"externalPsuReference\": \"<string>\"\n    },\n    \"memberId\": \"<string>\",\n    \"status\": \"CANCELED\",\n    \"updatedDateTime\": \"<string>\",\n    \"convertedToFutureDatedPayment\": false,\n    \"refundDetails\": {\n      \"refundAccount\": {\n        \"iban\": \"<string>\",\n        \"bic\": \"<string>\",\n        \"name\": \"<string>\"\n      },\n      \"paymentRefundStatus\": \"PARTIAL\",\n      \"settledRefundAmount\": {\n        \"currency\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      \"remainingRefundAmount\": {\n        \"currency\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    },\n    \"statusReasonInformation\": \"<string>\",\n    \"bankPaymentStatus\": \"<string>\",\n    \"bankPaymentId\": \"<string>\",\n    \"bankTransactionId\": \"<string>\",\n    \"bankVrpId\": \"<string>\",\n    \"bankVrpStatus\": \"<string>\",\n    \"authentication\": {\n      \"redirectUrl\": \"<string>\"\n    },\n    \"errorInfo\": {\n      \"httpErrorCode\": \"<integer>\",\n      \"message\": \"<string>\",\n      \"tokenExternalError\": \"<boolean>\",\n      \"tokenTraceId\": \"<string>\"\n    },\n    \"paymentLinkStatus\": \"LINK_EXPIRED\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:44.000Z",
+                  "updatedAt": "2026-07-28T11:04:44.000Z",
+                  "uid": "35240-40476d5f-232f-4d79-b2d0-b183de03f20e"
+                },
+                {
+                  "id": "6a192871-d186-472e-b15e-31e0be8c0923",
+                  "name": "The client specified an invalid argument",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                        "key": "request-timeout",
+                        "value": "<integer>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"initiation\": {\n    \"flowType\": \"FULL_HOSTED_PAGES\",\n    \"callbackUrl\": \"<string>\",\n    \"creditor\": {\n      \"iban\": \"<string>\",\n      \"name\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"ultimateCreditorName\": \"<string>\",\n      \"address\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"streetName\": \"<string>\",\n        \"buildingNumber\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"townName\": \"<string>\",\n        \"state\": \"<string>\",\n        \"district\": \"<string>\",\n        \"country\": \"<string>\"\n      },\n      \"bankName\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"localInstrument\": \"FASTER_PAYMENTS\",\n    \"refId\": \"<string>\",\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"remittanceInformationPrimary\": \"<string>\",\n    \"bankId\": \"<string>\",\n    \"remittanceInformationSecondary\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\",\n    \"vrpConsentId\": \"<string>\",\n    \"debtor\": {\n      \"iban\": \"<string>\",\n      \"name\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"ultimateDebtorName\": \"<string>\",\n      \"address\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"streetName\": \"<string>\",\n        \"buildingNumber\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"townName\": \"<string>\",\n        \"state\": \"<string>\",\n        \"district\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    },\n    \"executionDate\": \"<string>\",\n    \"confirmFunds\": \"<boolean>\",\n    \"returnRefundAccount\": \"<boolean>\",\n    \"disableFutureDatedPaymentConversion\": \"<boolean>\",\n    \"returnTokenizedAccount\": \"<boolean>\",\n    \"callbackState\": \"<string>\",\n    \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"PISP_PAYEE\",\n      \"paymentPurposeCode\": \"CASH\",\n      \"merchantCategoryCode\": \"<string>\",\n      \"beneficiaryAccountType\": \"JOINT_PERSONAL\",\n      \"contractPresentIndicator\": \"<boolean>\",\n      \"beneficiaryPrepopulatedIndicator\": \"<boolean>\",\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"addressType\": \"INVALID_ADDRESS_TYPE\",\n        \"buildingNumber\": \"<string>\",\n        \"country\": \"<string>\",\n        \"countrySubDivision\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"department\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"streetName\": \"<string>\",\n        \"subDepartment\": \"<string>\",\n        \"townName\": \"<string>\"\n      }\n    },\n    \"externalPsuReference\": \"<string>\"\n  },\n  \"pispConsentAccepted\": false,\n  \"initialEmbeddedAuth\": {\n    \"eiusmod_fd2\": \"<string>\",\n    \"consectetur_44f\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/payments",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "payments"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"id dolore\",\n    \"message\": \"<string>\",\n    \"paths\": [\n      \"nisi labore consectetur id nulla\",\n      \"dolor Excepteur sed dolor quis\"\n    ],\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:44.000Z",
+                  "updatedAt": "2026-07-28T11:04:44.000Z",
+                  "uid": "35240-6a192871-d186-472e-b15e-31e0be8c0923"
+                },
+                {
+                  "id": "229abe87-6357-4cac-9937-c028c23c3593",
+                  "name": "The authorization information is missing or invalid",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                        "key": "request-timeout",
+                        "value": "<integer>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"initiation\": {\n    \"flowType\": \"FULL_HOSTED_PAGES\",\n    \"callbackUrl\": \"<string>\",\n    \"creditor\": {\n      \"iban\": \"<string>\",\n      \"name\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"ultimateCreditorName\": \"<string>\",\n      \"address\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"streetName\": \"<string>\",\n        \"buildingNumber\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"townName\": \"<string>\",\n        \"state\": \"<string>\",\n        \"district\": \"<string>\",\n        \"country\": \"<string>\"\n      },\n      \"bankName\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"localInstrument\": \"FASTER_PAYMENTS\",\n    \"refId\": \"<string>\",\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"remittanceInformationPrimary\": \"<string>\",\n    \"bankId\": \"<string>\",\n    \"remittanceInformationSecondary\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\",\n    \"vrpConsentId\": \"<string>\",\n    \"debtor\": {\n      \"iban\": \"<string>\",\n      \"name\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"ultimateDebtorName\": \"<string>\",\n      \"address\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"streetName\": \"<string>\",\n        \"buildingNumber\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"townName\": \"<string>\",\n        \"state\": \"<string>\",\n        \"district\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    },\n    \"executionDate\": \"<string>\",\n    \"confirmFunds\": \"<boolean>\",\n    \"returnRefundAccount\": \"<boolean>\",\n    \"disableFutureDatedPaymentConversion\": \"<boolean>\",\n    \"returnTokenizedAccount\": \"<boolean>\",\n    \"callbackState\": \"<string>\",\n    \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"PISP_PAYEE\",\n      \"paymentPurposeCode\": \"CASH\",\n      \"merchantCategoryCode\": \"<string>\",\n      \"beneficiaryAccountType\": \"JOINT_PERSONAL\",\n      \"contractPresentIndicator\": \"<boolean>\",\n      \"beneficiaryPrepopulatedIndicator\": \"<boolean>\",\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"addressType\": \"INVALID_ADDRESS_TYPE\",\n        \"buildingNumber\": \"<string>\",\n        \"country\": \"<string>\",\n        \"countrySubDivision\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"department\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"streetName\": \"<string>\",\n        \"subDepartment\": \"<string>\",\n        \"townName\": \"<string>\"\n      }\n    },\n    \"externalPsuReference\": \"<string>\"\n  },\n  \"pispConsentAccepted\": false,\n  \"initialEmbeddedAuth\": {\n    \"eiusmod_fd2\": \"<string>\",\n    \"consectetur_44f\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/payments",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "payments"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:44.000Z",
+                  "updatedAt": "2026-07-28T11:04:44.000Z",
+                  "uid": "35240-229abe87-6357-4cac-9937-c028c23c3593"
+                },
+                {
+                  "id": "75c4a605-270b-4edb-9e8f-c0470a4b7ac5",
+                  "name": "Permission to access this endpoint is denied",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                        "key": "request-timeout",
+                        "value": "<integer>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"initiation\": {\n    \"flowType\": \"FULL_HOSTED_PAGES\",\n    \"callbackUrl\": \"<string>\",\n    \"creditor\": {\n      \"iban\": \"<string>\",\n      \"name\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"ultimateCreditorName\": \"<string>\",\n      \"address\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"streetName\": \"<string>\",\n        \"buildingNumber\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"townName\": \"<string>\",\n        \"state\": \"<string>\",\n        \"district\": \"<string>\",\n        \"country\": \"<string>\"\n      },\n      \"bankName\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"localInstrument\": \"FASTER_PAYMENTS\",\n    \"refId\": \"<string>\",\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"remittanceInformationPrimary\": \"<string>\",\n    \"bankId\": \"<string>\",\n    \"remittanceInformationSecondary\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\",\n    \"vrpConsentId\": \"<string>\",\n    \"debtor\": {\n      \"iban\": \"<string>\",\n      \"name\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"ultimateDebtorName\": \"<string>\",\n      \"address\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"streetName\": \"<string>\",\n        \"buildingNumber\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"townName\": \"<string>\",\n        \"state\": \"<string>\",\n        \"district\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    },\n    \"executionDate\": \"<string>\",\n    \"confirmFunds\": \"<boolean>\",\n    \"returnRefundAccount\": \"<boolean>\",\n    \"disableFutureDatedPaymentConversion\": \"<boolean>\",\n    \"returnTokenizedAccount\": \"<boolean>\",\n    \"callbackState\": \"<string>\",\n    \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"PISP_PAYEE\",\n      \"paymentPurposeCode\": \"CASH\",\n      \"merchantCategoryCode\": \"<string>\",\n      \"beneficiaryAccountType\": \"JOINT_PERSONAL\",\n      \"contractPresentIndicator\": \"<boolean>\",\n      \"beneficiaryPrepopulatedIndicator\": \"<boolean>\",\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"addressType\": \"INVALID_ADDRESS_TYPE\",\n        \"buildingNumber\": \"<string>\",\n        \"country\": \"<string>\",\n        \"countrySubDivision\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"department\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"streetName\": \"<string>\",\n        \"subDepartment\": \"<string>\",\n        \"townName\": \"<string>\"\n      }\n    },\n    \"externalPsuReference\": \"<string>\"\n  },\n  \"pispConsentAccepted\": false,\n  \"initialEmbeddedAuth\": {\n    \"eiusmod_fd2\": \"<string>\",\n    \"consectetur_44f\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/payments",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "payments"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"adipisicing magna in\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:44.000Z",
+                  "updatedAt": "2026-07-28T11:04:44.000Z",
+                  "uid": "35240-75c4a605-270b-4edb-9e8f-c0470a4b7ac5"
+                },
+                {
+                  "id": "da7ec1d6-2f86-432b-8970-1b8d0d76aba3",
+                  "name": "An unexpected or internal server error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                        "key": "request-timeout",
+                        "value": "<integer>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"initiation\": {\n    \"flowType\": \"FULL_HOSTED_PAGES\",\n    \"callbackUrl\": \"<string>\",\n    \"creditor\": {\n      \"iban\": \"<string>\",\n      \"name\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"ultimateCreditorName\": \"<string>\",\n      \"address\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"streetName\": \"<string>\",\n        \"buildingNumber\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"townName\": \"<string>\",\n        \"state\": \"<string>\",\n        \"district\": \"<string>\",\n        \"country\": \"<string>\"\n      },\n      \"bankName\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"localInstrument\": \"FASTER_PAYMENTS\",\n    \"refId\": \"<string>\",\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"remittanceInformationPrimary\": \"<string>\",\n    \"bankId\": \"<string>\",\n    \"remittanceInformationSecondary\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\",\n    \"vrpConsentId\": \"<string>\",\n    \"debtor\": {\n      \"iban\": \"<string>\",\n      \"name\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"ultimateDebtorName\": \"<string>\",\n      \"address\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"streetName\": \"<string>\",\n        \"buildingNumber\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"townName\": \"<string>\",\n        \"state\": \"<string>\",\n        \"district\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    },\n    \"executionDate\": \"<string>\",\n    \"confirmFunds\": \"<boolean>\",\n    \"returnRefundAccount\": \"<boolean>\",\n    \"disableFutureDatedPaymentConversion\": \"<boolean>\",\n    \"returnTokenizedAccount\": \"<boolean>\",\n    \"callbackState\": \"<string>\",\n    \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"PISP_PAYEE\",\n      \"paymentPurposeCode\": \"CASH\",\n      \"merchantCategoryCode\": \"<string>\",\n      \"beneficiaryAccountType\": \"JOINT_PERSONAL\",\n      \"contractPresentIndicator\": \"<boolean>\",\n      \"beneficiaryPrepopulatedIndicator\": \"<boolean>\",\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"addressType\": \"INVALID_ADDRESS_TYPE\",\n        \"buildingNumber\": \"<string>\",\n        \"country\": \"<string>\",\n        \"countrySubDivision\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"department\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"streetName\": \"<string>\",\n        \"subDepartment\": \"<string>\",\n        \"townName\": \"<string>\"\n      }\n    },\n    \"externalPsuReference\": \"<string>\"\n  },\n  \"pispConsentAccepted\": false,\n  \"initialEmbeddedAuth\": {\n    \"eiusmod_fd2\": \"<string>\",\n    \"consectetur_44f\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/payments",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "payments"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:44.000Z",
+                  "updatedAt": "2026-07-28T11:04:44.000Z",
+                  "uid": "35240-da7ec1d6-2f86-432b-8970-1b8d0d76aba3"
+                }
+              ],
+              "createdAt": "2026-07-28T11:04:44.000Z",
+              "updatedAt": "2026-07-28T11:04:44.000Z",
+              "uid": "35240-257e3efe-aef4-4de4-83ca-62cd1cba722d"
+            },
+            {
+              "name": "Get payments",
+              "id": "24d3059e-40f6-4851-92a2-66f362a581d5",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/v2/payments?limit=<integer>&offset=<string>&ids=<string>&ids=<string>&invertIds=<boolean>&statuses=INITIATION_REJECTED_INSUFFICIENT_FUNDS&statuses=INITIATION_PENDING_REDIRECT_AUTH_VERIFICATION&invertStatuses=<boolean>&createdAfter=<string>&createdBefore=<string>&refIds=<string>&refIds=<string>&onBehalfOfId=<string>&refundStatuses=FULL&refundStatuses=FULL&partial=<boolean>&externalPsuReference=<string>&type=<string>&vrpConsentId=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "payments"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The maximum number of records to return.",
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The offset from the previous page.",
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters payments by their ids - returns only payments with ids listed in this parameter.",
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters payments by their ids - returns only payments with ids listed in this parameter.",
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Invert ids query - returns only payments with ids not listed in the ids parameter.",
+                      "key": "invertIds",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payments by their statuses - returns only payments with statuses listed in this parameter. For VRP payments (when type=VARIABLE_RECURRING_PAYMENT), only the following PaymentStatus values are supported:<br/>\u2022 INITIATION_PENDING<br/>\u2022 INITIATION_PROCESSING<br/>\u2022 INITIATION_COMPLETED<br/>\u2022 INITIATION_REJECTED<br/>\u2022 INITIATION_REJECTED_INSUFFICIENT_FUNDS<br/>\u2022 INITIATION_FAILED<br/>\u2022 INITIATION_NO_FINAL_STATUS_AVAILABLE<br/>Using unsupported statuses for VRP payments will result in an error.<br/><br/>For single immediate payments, all PaymentStatus values are supported.",
+                      "key": "statuses",
+                      "value": "INITIATION_REJECTED_INSUFFICIENT_FUNDS"
+                    },
+                    {
+                      "description": "Filters payments by their statuses - returns only payments with statuses listed in this parameter. For VRP payments (when type=VARIABLE_RECURRING_PAYMENT), only the following PaymentStatus values are supported:<br/>\u2022 INITIATION_PENDING<br/>\u2022 INITIATION_PROCESSING<br/>\u2022 INITIATION_COMPLETED<br/>\u2022 INITIATION_REJECTED<br/>\u2022 INITIATION_REJECTED_INSUFFICIENT_FUNDS<br/>\u2022 INITIATION_FAILED<br/>\u2022 INITIATION_NO_FINAL_STATUS_AVAILABLE<br/>Using unsupported statuses for VRP payments will result in an error.<br/><br/>For single immediate payments, all PaymentStatus values are supported.",
+                      "key": "statuses",
+                      "value": "INITIATION_PENDING_REDIRECT_AUTH_VERIFICATION"
+                    },
+                    {
+                      "description": "Invert statuses query - returns only payments with statuses not listed in the statuses parameter.",
+                      "key": "invertStatuses",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Returns only payments created after this time (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format).",
+                      "key": "createdAfter",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Returns only payments created before this time (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format).",
+                      "key": "createdBefore",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters payments by their `refId` values - returns only payments with `refIds` listed in this parameter.",
+                      "key": "refIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters payments by their `refId` values - returns only payments with `refIds` listed in this parameter.",
+                      "key": "refIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters payments by the `onBehalfOfId` value - returns only payments with the `onBehalfOfId` value specified in this parameter. This field is mandatory for unregulated TPPs.",
+                      "key": "onBehalfOfId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters payments by their refund status values - returns only payments with refund statuses listed in this parameter. Not supported for Vrp.",
+                      "key": "refundStatuses",
+                      "value": "FULL"
+                    },
+                    {
+                      "description": "Filters payments by their refund status values - returns only payments with refund statuses listed in this parameter. Not supported for Vrp.",
+                      "key": "refundStatuses",
+                      "value": "FULL"
+                    },
+                    {
+                      "description": "Returns payments in a partial format - with only id and status fields populated.",
+                      "key": "partial",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "externalPsuReference",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by payment type - single immediate or variable recurring payment. Defaults to SINGLE_IMMEDIATE_PAYMENT if not specified.",
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by Vrp consent id value. Only applied if type is VARIABLE_RECURRING_PAYMENT.",
+                      "key": "vrpConsentId",
+                      "value": "<string>"
+                    }
+                  ]
+                },
+                "description": "The `GET /v2/payments` endpoint provides you with a list of payments and their details."
+              },
+              "response": [
+                {
+                  "id": "6d2c7256-ba00-43bc-a571-6fea40d66b70",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/payments?limit=<integer>&offset=<string>&ids=<string>&invertIds=<boolean>&statuses=INITIATION_PENDING_REDIRECT_AUTH_VERIFICATION&invertStatuses=<boolean>&createdAfter=<string>&createdBefore=<string>&refIds=<string>&onBehalfOfId=<string>&refundStatuses=FULL&partial=<boolean>&externalPsuReference=<string>&type=<string>&vrpConsentId=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "payments"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) The maximum number of records to return.",
+                          "key": "limit",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "The offset from the previous page.",
+                          "key": "offset",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters payments by their ids - returns only payments with ids listed in this parameter.",
+                          "key": "ids",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Invert ids query - returns only payments with ids not listed in the ids parameter.",
+                          "key": "invertIds",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters payments by their statuses - returns only payments with statuses listed in this parameter. For VRP payments (when type=VARIABLE_RECURRING_PAYMENT), only the following PaymentStatus values are supported:<br/>\u2022 INITIATION_PENDING<br/>\u2022 INITIATION_PROCESSING<br/>\u2022 INITIATION_COMPLETED<br/>\u2022 INITIATION_REJECTED<br/>\u2022 INITIATION_REJECTED_INSUFFICIENT_FUNDS<br/>\u2022 INITIATION_FAILED<br/>\u2022 INITIATION_NO_FINAL_STATUS_AVAILABLE<br/>Using unsupported statuses for VRP payments will result in an error.<br/><br/>For single immediate payments, all PaymentStatus values are supported.",
+                          "key": "statuses",
+                          "value": "INITIATION_PENDING_REDIRECT_AUTH_VERIFICATION"
+                        },
+                        {
+                          "description": "Invert statuses query - returns only payments with statuses not listed in the statuses parameter.",
+                          "key": "invertStatuses",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Returns only payments created after this time (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format).",
+                          "key": "createdAfter",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Returns only payments created before this time (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format).",
+                          "key": "createdBefore",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters payments by their `refId` values - returns only payments with `refIds` listed in this parameter.",
+                          "key": "refIds",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters payments by the `onBehalfOfId` value - returns only payments with the `onBehalfOfId` value specified in this parameter. This field is mandatory for unregulated TPPs.",
+                          "key": "onBehalfOfId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters payments by their refund status values - returns only payments with refund statuses listed in this parameter. Not supported for Vrp.",
+                          "key": "refundStatuses",
+                          "value": "FULL"
+                        },
+                        {
+                          "description": "Returns payments in a partial format - with only id and status fields populated.",
+                          "key": "partial",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "key": "externalPsuReference",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by payment type - single immediate or variable recurring payment. Defaults to SINGLE_IMMEDIATE_PAYMENT if not specified.",
+                          "key": "type",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by Vrp consent id value. Only applied if type is VARIABLE_RECURRING_PAYMENT.",
+                          "key": "vrpConsentId",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"pageInfo\": {\n    \"limit\": 200,\n    \"offset\": \"<string>\",\n    \"nextOffset\": \"<string>\",\n    \"haveMore\": false\n  },\n  \"payments\": [\n    {\n      \"createdDateTime\": \"<string>\",\n      \"id\": \"<string>\",\n      \"initiation\": {\n        \"flowType\": \"EMBEDDED_HOSTED_PAGES\",\n        \"callbackUrl\": \"<string>\",\n        \"creditor\": {\n          \"iban\": \"<string>\",\n          \"name\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"ultimateCreditorName\": \"<string>\",\n          \"address\": {\n            \"addressLine\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"streetName\": \"<string>\",\n            \"buildingNumber\": \"<string>\",\n            \"postCode\": \"<string>\",\n            \"townName\": \"<string>\",\n            \"state\": \"<string>\",\n            \"district\": \"<string>\",\n            \"country\": \"<string>\"\n          },\n          \"bankName\": \"<string>\",\n          \"accountVerificationId\": \"<string>\"\n        },\n        \"localInstrument\": \"EU_DOMESTIC_NON_EURO\",\n        \"refId\": \"<string>\",\n        \"amount\": {\n          \"currency\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        \"remittanceInformationPrimary\": \"<string>\",\n        \"bankId\": \"<string>\",\n        \"remittanceInformationSecondary\": \"<string>\",\n        \"onBehalfOfId\": \"<string>\",\n        \"vrpConsentId\": \"<string>\",\n        \"debtor\": {\n          \"iban\": \"<string>\",\n          \"name\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"ultimateDebtorName\": \"<string>\",\n          \"address\": {\n            \"addressLine\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"streetName\": \"<string>\",\n            \"buildingNumber\": \"<string>\",\n            \"postCode\": \"<string>\",\n            \"townName\": \"<string>\",\n            \"state\": \"<string>\",\n            \"district\": \"<string>\",\n            \"country\": \"<string>\"\n          }\n        },\n        \"executionDate\": \"<string>\",\n        \"confirmFunds\": \"<boolean>\",\n        \"returnRefundAccount\": \"<boolean>\",\n        \"disableFutureDatedPaymentConversion\": \"<boolean>\",\n        \"returnTokenizedAccount\": \"<boolean>\",\n        \"callbackState\": \"<string>\",\n        \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n        \"risk\": {\n          \"psuId\": \"<string>\",\n          \"paymentContextCode\": \"FACE_TO_FACE_POINT_OF_SALE\",\n          \"paymentPurposeCode\": \"CASH\",\n          \"merchantCategoryCode\": \"<string>\",\n          \"beneficiaryAccountType\": \"ISA\",\n          \"contractPresentIndicator\": \"<boolean>\",\n          \"beneficiaryPrepopulatedIndicator\": \"<boolean>\",\n          \"deliveryAddress\": {\n            \"addressLine\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"addressType\": \"INVALID_ADDRESS_TYPE\",\n            \"buildingNumber\": \"<string>\",\n            \"country\": \"<string>\",\n            \"countrySubDivision\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"department\": \"<string>\",\n            \"postCode\": \"<string>\",\n            \"streetName\": \"<string>\",\n            \"subDepartment\": \"<string>\",\n            \"townName\": \"<string>\"\n          }\n        },\n        \"externalPsuReference\": \"<string>\"\n      },\n      \"memberId\": \"<string>\",\n      \"status\": \"INITIATION_REJECTED\",\n      \"updatedDateTime\": \"<string>\",\n      \"convertedToFutureDatedPayment\": false,\n      \"refundDetails\": {\n        \"refundAccount\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"paymentRefundStatus\": \"FULL\",\n        \"settledRefundAmount\": {\n          \"currency\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        \"remainingRefundAmount\": {\n          \"currency\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      },\n      \"statusReasonInformation\": \"<string>\",\n      \"bankPaymentStatus\": \"<string>\",\n      \"bankPaymentId\": \"<string>\",\n      \"bankTransactionId\": \"<string>\",\n      \"bankVrpId\": \"<string>\",\n      \"bankVrpStatus\": \"<string>\",\n      \"authentication\": {\n        \"redirectUrl\": \"<string>\"\n      },\n      \"errorInfo\": {\n        \"httpErrorCode\": \"<integer>\",\n        \"message\": \"<string>\",\n        \"tokenExternalError\": \"<boolean>\",\n        \"tokenTraceId\": \"<string>\"\n      },\n      \"paymentLinkStatus\": \"LINK_EXPIRED\"\n    },\n    {\n      \"createdDateTime\": \"<string>\",\n      \"id\": \"<string>\",\n      \"initiation\": {\n        \"flowType\": \"API_ONLY\",\n        \"callbackUrl\": \"<string>\",\n        \"creditor\": {\n          \"iban\": \"<string>\",\n          \"name\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"ultimateCreditorName\": \"<string>\",\n          \"address\": {\n            \"addressLine\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"streetName\": \"<string>\",\n            \"buildingNumber\": \"<string>\",\n            \"postCode\": \"<string>\",\n            \"townName\": \"<string>\",\n            \"state\": \"<string>\",\n            \"district\": \"<string>\",\n            \"country\": \"<string>\"\n          },\n          \"bankName\": \"<string>\",\n          \"accountVerificationId\": \"<string>\"\n        },\n        \"localInstrument\": \"EU_DOMESTIC_NON_EURO\",\n        \"refId\": \"<string>\",\n        \"amount\": {\n          \"currency\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        \"remittanceInformationPrimary\": \"<string>\",\n        \"bankId\": \"<string>\",\n        \"remittanceInformationSecondary\": \"<string>\",\n        \"onBehalfOfId\": \"<string>\",\n        \"vrpConsentId\": \"<string>\",\n        \"debtor\": {\n          \"iban\": \"<string>\",\n          \"name\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"ultimateDebtorName\": \"<string>\",\n          \"address\": {\n            \"addressLine\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"streetName\": \"<string>\",\n            \"buildingNumber\": \"<string>\",\n            \"postCode\": \"<string>\",\n            \"townName\": \"<string>\",\n            \"state\": \"<string>\",\n            \"district\": \"<string>\",\n            \"country\": \"<string>\"\n          }\n        },\n        \"executionDate\": \"<string>\",\n        \"confirmFunds\": \"<boolean>\",\n        \"returnRefundAccount\": \"<boolean>\",\n        \"disableFutureDatedPaymentConversion\": \"<boolean>\",\n        \"returnTokenizedAccount\": \"<boolean>\",\n        \"callbackState\": \"<string>\",\n        \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n        \"risk\": {\n          \"psuId\": \"<string>\",\n          \"paymentContextCode\": \"INVALID_PAYMENT_CONTEXT_CODE\",\n          \"paymentPurposeCode\": \"CASH\",\n          \"merchantCategoryCode\": \"<string>\",\n          \"beneficiaryAccountType\": \"JOINT_PERSONAL\",\n          \"contractPresentIndicator\": \"<boolean>\",\n          \"beneficiaryPrepopulatedIndicator\": \"<boolean>\",\n          \"deliveryAddress\": {\n            \"addressLine\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"addressType\": \"INVALID_ADDRESS_TYPE\",\n            \"buildingNumber\": \"<string>\",\n            \"country\": \"<string>\",\n            \"countrySubDivision\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"department\": \"<string>\",\n            \"postCode\": \"<string>\",\n            \"streetName\": \"<string>\",\n            \"subDepartment\": \"<string>\",\n            \"townName\": \"<string>\"\n          }\n        },\n        \"externalPsuReference\": \"<string>\"\n      },\n      \"memberId\": \"<string>\",\n      \"status\": \"INITIATION_PENDING_REDIRECT_AUTH\",\n      \"updatedDateTime\": \"<string>\",\n      \"convertedToFutureDatedPayment\": false,\n      \"refundDetails\": {\n        \"refundAccount\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        \"paymentRefundStatus\": \"NONE\",\n        \"settledRefundAmount\": {\n          \"currency\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        \"remainingRefundAmount\": {\n          \"currency\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      },\n      \"statusReasonInformation\": \"<string>\",\n      \"bankPaymentStatus\": \"<string>\",\n      \"bankPaymentId\": \"<string>\",\n      \"bankTransactionId\": \"<string>\",\n      \"bankVrpId\": \"<string>\",\n      \"bankVrpStatus\": \"<string>\",\n      \"authentication\": {\n        \"redirectUrl\": \"<string>\"\n      },\n      \"errorInfo\": {\n        \"httpErrorCode\": \"<integer>\",\n        \"message\": \"<string>\",\n        \"tokenExternalError\": \"<boolean>\",\n        \"tokenTraceId\": \"<string>\"\n      },\n      \"paymentLinkStatus\": \"LINK_REDEEMED\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T11:04:44.000Z",
+                  "updatedAt": "2026-07-28T11:04:44.000Z",
+                  "uid": "35240-6d2c7256-ba00-43bc-a571-6fea40d66b70"
+                },
+                {
+                  "id": "ba47eb1d-f0a7-41cc-bf82-9e52cbfa671f",
+                  "name": "The client specified an invalid argument.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/payments?limit=<integer>&offset=<string>&ids=<string>&invertIds=<boolean>&statuses=INITIATION_PENDING_REDIRECT_AUTH_VERIFICATION&invertStatuses=<boolean>&createdAfter=<string>&createdBefore=<string>&refIds=<string>&onBehalfOfId=<string>&refundStatuses=FULL&partial=<boolean>&externalPsuReference=<string>&type=<string>&vrpConsentId=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "payments"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) The maximum number of records to return.",
+                          "key": "limit",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "The offset from the previous page.",
+                          "key": "offset",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters payments by their ids - returns only payments with ids listed in this parameter.",
+                          "key": "ids",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Invert ids query - returns only payments with ids not listed in the ids parameter.",
+                          "key": "invertIds",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters payments by their statuses - returns only payments with statuses listed in this parameter. For VRP payments (when type=VARIABLE_RECURRING_PAYMENT), only the following PaymentStatus values are supported:<br/>\u2022 INITIATION_PENDING<br/>\u2022 INITIATION_PROCESSING<br/>\u2022 INITIATION_COMPLETED<br/>\u2022 INITIATION_REJECTED<br/>\u2022 INITIATION_REJECTED_INSUFFICIENT_FUNDS<br/>\u2022 INITIATION_FAILED<br/>\u2022 INITIATION_NO_FINAL_STATUS_AVAILABLE<br/>Using unsupported statuses for VRP payments will result in an error.<br/><br/>For single immediate payments, all PaymentStatus values are supported.",
+                          "key": "statuses",
+                          "value": "INITIATION_PENDING_REDIRECT_AUTH_VERIFICATION"
+                        },
+                        {
+                          "description": "Invert statuses query - returns only payments with statuses not listed in the statuses parameter.",
+                          "key": "invertStatuses",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Returns only payments created after this time (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format).",
+                          "key": "createdAfter",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Returns only payments created before this time (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format).",
+                          "key": "createdBefore",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters payments by their `refId` values - returns only payments with `refIds` listed in this parameter.",
+                          "key": "refIds",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters payments by the `onBehalfOfId` value - returns only payments with the `onBehalfOfId` value specified in this parameter. This field is mandatory for unregulated TPPs.",
+                          "key": "onBehalfOfId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters payments by their refund status values - returns only payments with refund statuses listed in this parameter. Not supported for Vrp.",
+                          "key": "refundStatuses",
+                          "value": "FULL"
+                        },
+                        {
+                          "description": "Returns payments in a partial format - with only id and status fields populated.",
+                          "key": "partial",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "key": "externalPsuReference",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by payment type - single immediate or variable recurring payment. Defaults to SINGLE_IMMEDIATE_PAYMENT if not specified.",
+                          "key": "type",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by Vrp consent id value. Only applied if type is VARIABLE_RECURRING_PAYMENT.",
+                          "key": "vrpConsentId",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errorCode\": \"mollit\",\n  \"message\": \"<string>\",\n  \"paths\": [\n    \"Lorem\",\n    \"eu amet\"\n  ],\n  \"tokenTraceId\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T11:04:44.000Z",
+                  "updatedAt": "2026-07-28T11:04:44.000Z",
+                  "uid": "35240-ba47eb1d-f0a7-41cc-bf82-9e52cbfa671f"
+                },
+                {
+                  "id": "1151bb16-4c13-4408-bd54-14ea774a8cb0",
+                  "name": "The authorization information is missing or invalid",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/payments?limit=<integer>&offset=<string>&ids=<string>&invertIds=<boolean>&statuses=INITIATION_PENDING_REDIRECT_AUTH_VERIFICATION&invertStatuses=<boolean>&createdAfter=<string>&createdBefore=<string>&refIds=<string>&onBehalfOfId=<string>&refundStatuses=FULL&partial=<boolean>&externalPsuReference=<string>&type=<string>&vrpConsentId=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "payments"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) The maximum number of records to return.",
+                          "key": "limit",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "The offset from the previous page.",
+                          "key": "offset",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters payments by their ids - returns only payments with ids listed in this parameter.",
+                          "key": "ids",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Invert ids query - returns only payments with ids not listed in the ids parameter.",
+                          "key": "invertIds",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters payments by their statuses - returns only payments with statuses listed in this parameter. For VRP payments (when type=VARIABLE_RECURRING_PAYMENT), only the following PaymentStatus values are supported:<br/>\u2022 INITIATION_PENDING<br/>\u2022 INITIATION_PROCESSING<br/>\u2022 INITIATION_COMPLETED<br/>\u2022 INITIATION_REJECTED<br/>\u2022 INITIATION_REJECTED_INSUFFICIENT_FUNDS<br/>\u2022 INITIATION_FAILED<br/>\u2022 INITIATION_NO_FINAL_STATUS_AVAILABLE<br/>Using unsupported statuses for VRP payments will result in an error.<br/><br/>For single immediate payments, all PaymentStatus values are supported.",
+                          "key": "statuses",
+                          "value": "INITIATION_PENDING_REDIRECT_AUTH_VERIFICATION"
+                        },
+                        {
+                          "description": "Invert statuses query - returns only payments with statuses not listed in the statuses parameter.",
+                          "key": "invertStatuses",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Returns only payments created after this time (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format).",
+                          "key": "createdAfter",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Returns only payments created before this time (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format).",
+                          "key": "createdBefore",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters payments by their `refId` values - returns only payments with `refIds` listed in this parameter.",
+                          "key": "refIds",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters payments by the `onBehalfOfId` value - returns only payments with the `onBehalfOfId` value specified in this parameter. This field is mandatory for unregulated TPPs.",
+                          "key": "onBehalfOfId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters payments by their refund status values - returns only payments with refund statuses listed in this parameter. Not supported for Vrp.",
+                          "key": "refundStatuses",
+                          "value": "FULL"
+                        },
+                        {
+                          "description": "Returns payments in a partial format - with only id and status fields populated.",
+                          "key": "partial",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "key": "externalPsuReference",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by payment type - single immediate or variable recurring payment. Defaults to SINGLE_IMMEDIATE_PAYMENT if not specified.",
+                          "key": "type",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by Vrp consent id value. Only applied if type is VARIABLE_RECURRING_PAYMENT.",
+                          "key": "vrpConsentId",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:44.000Z",
+                  "updatedAt": "2026-07-28T11:04:44.000Z",
+                  "uid": "35240-1151bb16-4c13-4408-bd54-14ea774a8cb0"
+                },
+                {
+                  "id": "b6b02b02-8514-4bc8-bac8-ed1fbf6d7cb6",
+                  "name": "An unexpected or internal server error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/payments?limit=<integer>&offset=<string>&ids=<string>&invertIds=<boolean>&statuses=INITIATION_PENDING_REDIRECT_AUTH_VERIFICATION&invertStatuses=<boolean>&createdAfter=<string>&createdBefore=<string>&refIds=<string>&onBehalfOfId=<string>&refundStatuses=FULL&partial=<boolean>&externalPsuReference=<string>&type=<string>&vrpConsentId=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "payments"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) The maximum number of records to return.",
+                          "key": "limit",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "The offset from the previous page.",
+                          "key": "offset",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters payments by their ids - returns only payments with ids listed in this parameter.",
+                          "key": "ids",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Invert ids query - returns only payments with ids not listed in the ids parameter.",
+                          "key": "invertIds",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters payments by their statuses - returns only payments with statuses listed in this parameter. For VRP payments (when type=VARIABLE_RECURRING_PAYMENT), only the following PaymentStatus values are supported:<br/>\u2022 INITIATION_PENDING<br/>\u2022 INITIATION_PROCESSING<br/>\u2022 INITIATION_COMPLETED<br/>\u2022 INITIATION_REJECTED<br/>\u2022 INITIATION_REJECTED_INSUFFICIENT_FUNDS<br/>\u2022 INITIATION_FAILED<br/>\u2022 INITIATION_NO_FINAL_STATUS_AVAILABLE<br/>Using unsupported statuses for VRP payments will result in an error.<br/><br/>For single immediate payments, all PaymentStatus values are supported.",
+                          "key": "statuses",
+                          "value": "INITIATION_PENDING_REDIRECT_AUTH_VERIFICATION"
+                        },
+                        {
+                          "description": "Invert statuses query - returns only payments with statuses not listed in the statuses parameter.",
+                          "key": "invertStatuses",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Returns only payments created after this time (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format).",
+                          "key": "createdAfter",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Returns only payments created before this time (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format).",
+                          "key": "createdBefore",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters payments by their `refId` values - returns only payments with `refIds` listed in this parameter.",
+                          "key": "refIds",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters payments by the `onBehalfOfId` value - returns only payments with the `onBehalfOfId` value specified in this parameter. This field is mandatory for unregulated TPPs.",
+                          "key": "onBehalfOfId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters payments by their refund status values - returns only payments with refund statuses listed in this parameter. Not supported for Vrp.",
+                          "key": "refundStatuses",
+                          "value": "FULL"
+                        },
+                        {
+                          "description": "Returns payments in a partial format - with only id and status fields populated.",
+                          "key": "partial",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "key": "externalPsuReference",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by payment type - single immediate or variable recurring payment. Defaults to SINGLE_IMMEDIATE_PAYMENT if not specified.",
+                          "key": "type",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by Vrp consent id value. Only applied if type is VARIABLE_RECURRING_PAYMENT.",
+                          "key": "vrpConsentId",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:44.000Z",
+                  "updatedAt": "2026-07-28T11:04:44.000Z",
+                  "uid": "35240-b6b02b02-8514-4bc8-bac8-ed1fbf6d7cb6"
+                }
+              ],
+              "createdAt": "2026-07-28T11:04:44.000Z",
+              "updatedAt": "2026-07-28T11:04:44.000Z",
+              "uid": "35240-24d3059e-40f6-4851-92a2-66f362a581d5"
+            }
+          ],
+          "id": "6029b091-6ae2-4983-9de8-2046b791f6fc",
+          "createdAt": "2026-07-28T11:04:44.000Z",
+          "updatedAt": "2026-07-28T11:04:44.000Z",
+          "uid": "35240-6029b091-6ae2-4983-9de8-2046b791f6fc"
+        }
+      ],
+      "id": "946e05e6-98b1-4cf7-92f5-d6ddc5d620a5",
+      "createdAt": "2026-07-28T11:04:44.000Z",
+      "updatedAt": "2026-07-28T11:04:44.000Z",
+      "uid": "35240-946e05e6-98b1-4cf7-92f5-d6ddc5d620a5"
+    },
+    {
+      "name": "qr-code",
+      "item": [
+        {
+          "name": "Generate QR code",
+          "id": "75c216e5-1a27-455f-bf88-ef1442f2b951",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "image/svg+xml"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/qr-code?data=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "qr-code"
+              ],
+              "query": [
+                {
+                  "description": "(Required) The encoded URL to use while generating the QR code. The link must be URL encoded.",
+                  "key": "data",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "The `GET /qr-code` endpoint generates a QR code in fixed SVG format (240x240 px). This allows TPPs to programmatically obtain a scannable QR code ."
+          },
+          "response": [
+            {
+              "id": "1f644afd-081d-4896-abfb-217fcfe5f0ec",
+              "name": "QR code successfully generated",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "image/svg+xml"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/qr-code?data=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "qr-code"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The encoded URL to use while generating the QR code. The link must be URL encoded.",
+                      "key": "data",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "image/svg+xml"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "<string>",
+              "createdAt": "2026-07-28T11:04:44.000Z",
+              "updatedAt": "2026-07-28T11:04:44.000Z",
+              "uid": "35240-1f644afd-081d-4896-abfb-217fcfe5f0ec"
+            },
+            {
+              "id": "d3c9f384-b0c0-4cb9-99d0-4a0dd8675811",
+              "name": "The client specified an invalid argument (e.g., size too small)",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/qr-code?data=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "qr-code"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The encoded URL to use while generating the QR code. The link must be URL encoded.",
+                      "key": "data",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:44.000Z",
+              "updatedAt": "2026-07-28T11:04:44.000Z",
+              "uid": "35240-d3c9f384-b0c0-4cb9-99d0-4a0dd8675811"
+            },
+            {
+              "id": "c59e85be-1c44-4b80-8307-f38e96b849c6",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/qr-code?data=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "qr-code"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The encoded URL to use while generating the QR code. The link must be URL encoded.",
+                      "key": "data",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:44.000Z",
+              "updatedAt": "2026-07-28T11:04:44.000Z",
+              "uid": "35240-c59e85be-1c44-4b80-8307-f38e96b849c6"
+            },
+            {
+              "id": "aeadf741-132d-4012-bea7-d360f93d4111",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/qr-code?data=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "qr-code"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The encoded URL to use while generating the QR code. The link must be URL encoded.",
+                      "key": "data",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"adipisicing magna in\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:44.000Z",
+              "updatedAt": "2026-07-28T11:04:44.000Z",
+              "uid": "35240-aeadf741-132d-4012-bea7-d360f93d4111"
+            },
+            {
+              "id": "760688cb-ecbb-4e38-8fac-3b29e7b3b4bd",
+              "name": "The requested payment was not found or does not have a link",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/qr-code?data=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "qr-code"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The encoded URL to use while generating the QR code. The link must be URL encoded.",
+                      "key": "data",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"irure anim reprehenderit proident deserunt\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"anim Ut\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:44.000Z",
+              "updatedAt": "2026-07-28T11:04:44.000Z",
+              "uid": "35240-760688cb-ecbb-4e38-8fac-3b29e7b3b4bd"
+            },
+            {
+              "id": "9011315e-bd50-4cc9-8c8e-845b05e3f86a",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/qr-code?data=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "qr-code"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The encoded URL to use while generating the QR code. The link must be URL encoded.",
+                      "key": "data",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:44.000Z",
+              "updatedAt": "2026-07-28T11:04:44.000Z",
+              "uid": "35240-9011315e-bd50-4cc9-8c8e-845b05e3f86a"
+            }
+          ],
+          "createdAt": "2026-07-28T11:04:44.000Z",
+          "updatedAt": "2026-07-28T11:04:44.000Z",
+          "uid": "35240-75c216e5-1a27-455f-bf88-ef1442f2b951"
+        }
+      ],
+      "id": "9a031394-d3ed-412f-809e-dcd37425753d",
+      "createdAt": "2026-07-28T11:04:44.000Z",
+      "updatedAt": "2026-07-28T11:04:44.000Z",
+      "uid": "35240-9a031394-d3ed-412f-809e-dcd37425753d"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.token.io"
+    }
+  ]
+}

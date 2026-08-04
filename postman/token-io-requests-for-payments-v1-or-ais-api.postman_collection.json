@@ -1,0 +1,2446 @@
+{
+  "info": {
+    "_postman_id": "7e331e26-601e-4a2e-8a11-30abc661089e",
+    "name": "Token.io's Open Banking API for TPPs Account on File Requests - for Payments v1 or AIS API",
+    "description": "<b>Token.io's Open Banking API</b><br/><br/>Token.io Support: <a href=\"https://support.token.io\" target=\"_blank\">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user's account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href=\"https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm\" target=\"_blank\">developer documentation</a>.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T11:04:52.000Z",
+    "updatedAt": "2026-07-28T11:04:52.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-7e331e26-601e-4a2e-8a11-30abc661089e"
+  },
+  "item": [
+    {
+      "name": "token-requests",
+      "item": [
+        {
+          "name": "{requestId}",
+          "item": [
+            {
+              "name": "Get a token request",
+              "id": "4087031b-6606-4f00-a6fc-37aa70c8baf8",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/token-requests/:requestId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "token-requests",
+                    ":requestId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "c5b76a0e-aedb-4dc1-88ab-81aa49e64366",
+                      "key": "requestId",
+                      "value": "<string>",
+                      "description": "(Required) The request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "description": "The `GET /token-requests/{requestId}` endpoint retrieves a specific token request by its id."
+              },
+              "response": [
+                {
+                  "id": "53afd1a3-dc07-4b3b-9533-c93f822af34d",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/token-requests/:requestId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "token-requests",
+                        ":requestId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "requestId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"tokenRequest\": {\n    \"id\": \"<string>\",\n    \"requestOptions\": {\n      \"bankId\": \"<string>\",\n      \"from\": {\n        \"id\": \"<string>\",\n        \"alias\": {\n          \"realmId\": \"<string>\",\n          \"type\": \"INVALID\",\n          \"value\": \"<string>\"\n        }\n      },\n      \"psuId\": \"<string>\",\n      \"receiptRequested\": false,\n      \"tokenInternal\": {\n        \"redirectUrl\": \"<string>\",\n        \"usingWebApp\": false\n      }\n    },\n    \"requestPayload\": {\n      \"transferBody\": {\n        \"currency\": \"<string>\",\n        \"lifetimeAmount\": \"<string>\",\n        \"instructions\": {\n          \"transferDestinations\": [\n            {\n              \"sepa\": {\n                \"iban\": \"<string>\",\n                \"bic\": \"<string>\"\n              }\n            }\n          ],\n          \"metadata\": {\n            \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n            \"providerTransferMetadata\": {\n              \"cma9TransferMetadata\": {\n                \"endToEndIdentification\": \"<string>\",\n                \"instructionIdentification\": \"<string>\",\n                \"risk\": {\n                  \"deliveryAddress\": {\n                    \"addressLine\": [\n                      \"<string>\",\n                      \"<string>\"\n                    ],\n                    \"addressType\": \"INVALID_ADDRESS_TYPE\",\n                    \"buildingNumber\": \"<string>\",\n                    \"country\": \"<string>\",\n                    \"countrySubDivision\": [\n                      \"<string>\",\n                      \"<string>\"\n                    ],\n                    \"department\": \"<string>\",\n                    \"postCode\": \"<string>\",\n                    \"streetName\": \"<string>\",\n                    \"subDepartment\": \"<string>\",\n                    \"townName\": \"<string>\"\n                  },\n                  \"merchantCustomerIdentification\": \"<string>\",\n                  \"paymentContextCode\": \"FACE_TO_FACE_POINT_OF_SALE\",\n                  \"paymentPurposeCode\": \"CASH\",\n                  \"beneficiaryAccountType\": \"GOVERNMENT\",\n                  \"contractPresentIndicator\": \"<string>\",\n                  \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n                }\n              }\n            },\n            \"purposeCode\": \"CASH\",\n            \"ultimateCreditor\": \"<string>\",\n            \"ultimateDebtor\": \"<string>\"\n          },\n          \"source\": {\n            \"accountIdentifier\": {\n              \"bankgiro\": {\n                \"bankgiroNumber\": \"<string>\"\n              }\n            },\n            \"bankId\": \"<string>\",\n            \"bic\": \"<string>\",\n            \"customerData\": {\n              \"legalNames\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"address\": {\n                \"city\": \"<string>\",\n                \"conscriptionNumber\": \"<string>\",\n                \"country\": \"<string>\",\n                \"district\": \"<string>\",\n                \"flats\": \"<string>\",\n                \"full\": \"<string>\",\n                \"hamlet\": \"<string>\",\n                \"houseName\": \"<string>\",\n                \"houseNumber\": \"<string>\",\n                \"place\": \"<string>\",\n                \"postCode\": \"<string>\",\n                \"province\": \"<string>\",\n                \"state\": \"<string>\",\n                \"street\": \"<string>\",\n                \"subdistrict\": \"<string>\",\n                \"suburb\": \"<string>\"\n              }\n            }\n          }\n        },\n        \"confirmFunds\": false,\n        \"executionDate\": \"<string>\",\n        \"remittanceReference\": \"<string>\",\n        \"returnRefundAccount\": false,\n        \"setTransferDestinationsUrl\": \"<string>\"\n      }\n    }\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:52.000Z",
+                  "updatedAt": "2026-07-28T11:04:52.000Z",
+                  "uid": "35240-53afd1a3-dc07-4b3b-9533-c93f822af34d"
+                },
+                {
+                  "id": "2fc96c0e-3d61-47f9-bcd2-398549debc4a",
+                  "name": "The client specified an invalid argument",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/token-requests/:requestId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "token-requests",
+                        ":requestId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "requestId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:52.000Z",
+                  "updatedAt": "2026-07-28T11:04:52.000Z",
+                  "uid": "35240-2fc96c0e-3d61-47f9-bcd2-398549debc4a"
+                },
+                {
+                  "id": "e4d97971-2889-4bb9-9973-b339a001eab5",
+                  "name": "The authorization information is missing or invalid",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/token-requests/:requestId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "token-requests",
+                        ":requestId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "requestId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:52.000Z",
+                  "updatedAt": "2026-07-28T11:04:52.000Z",
+                  "uid": "35240-e4d97971-2889-4bb9-9973-b339a001eab5"
+                },
+                {
+                  "id": "25548656-1673-425c-8cb0-1aaed4485218",
+                  "name": "Permission to access this endpoint is denied",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/token-requests/:requestId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "token-requests",
+                        ":requestId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "requestId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"Duis id magna ipsum est\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:52.000Z",
+                  "updatedAt": "2026-07-28T11:04:52.000Z",
+                  "uid": "35240-25548656-1673-425c-8cb0-1aaed4485218"
+                },
+                {
+                  "id": "ad970214-6bb2-4167-b957-f7d8a5c1ffe5",
+                  "name": "The requested entity, such as a token request, was not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/token-requests/:requestId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "token-requests",
+                        ":requestId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "requestId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"nulla in incididunt\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"velit\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:52.000Z",
+                  "updatedAt": "2026-07-28T11:04:52.000Z",
+                  "uid": "35240-ad970214-6bb2-4167-b957-f7d8a5c1ffe5"
+                },
+                {
+                  "id": "e0276ef6-6a0c-4302-925f-d235f519d705",
+                  "name": "Too many requests",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/token-requests/:requestId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "token-requests",
+                        ":requestId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "requestId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"sunt adipisicing\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"consequat consectetur officia\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:52.000Z",
+                  "updatedAt": "2026-07-28T11:04:52.000Z",
+                  "uid": "35240-e0276ef6-6a0c-4302-925f-d235f519d705"
+                },
+                {
+                  "id": "bd4789d3-4861-46d2-ac60-e846370bf71d",
+                  "name": "An unexpected or internal server error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/token-requests/:requestId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "token-requests",
+                        ":requestId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "requestId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:52.000Z",
+                  "updatedAt": "2026-07-28T11:04:52.000Z",
+                  "uid": "35240-bd4789d3-4861-46d2-ac60-e846370bf71d"
+                },
+                {
+                  "id": "e31945c9-dcc3-41fd-996e-bc2ed2bdbc66",
+                  "name": "The operation was not implemented",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/token-requests/:requestId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "token-requests",
+                        ":requestId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "requestId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Implemented",
+                  "code": 501,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"dolor\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"officia pariatur voluptate tempor aliquip\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:52.000Z",
+                  "updatedAt": "2026-07-28T11:04:52.000Z",
+                  "uid": "35240-e31945c9-dcc3-41fd-996e-bc2ed2bdbc66"
+                },
+                {
+                  "id": "cca6f3cb-00ea-4381-9b91-2287d16dadc5",
+                  "name": "Service is unavailable",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/token-requests/:requestId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "token-requests",
+                        ":requestId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "requestId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Service Unavailable",
+                  "code": 503,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"culpa dolor\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"laboris non in\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:52.000Z",
+                  "updatedAt": "2026-07-28T11:04:52.000Z",
+                  "uid": "35240-cca6f3cb-00ea-4381-9b91-2287d16dadc5"
+                },
+                {
+                  "id": "edef5d23-f198-4707-b4b0-2b16bd6c0423",
+                  "name": "Gateway has timed out",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/token-requests/:requestId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "token-requests",
+                        ":requestId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "requestId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Gateway Timeout",
+                  "code": 504,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"aliquip consequat\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"ex magna consectetur id\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:52.000Z",
+                  "updatedAt": "2026-07-28T11:04:52.000Z",
+                  "uid": "35240-edef5d23-f198-4707-b4b0-2b16bd6c0423"
+                }
+              ],
+              "createdAt": "2026-07-28T11:04:52.000Z",
+              "updatedAt": "2026-07-28T11:04:52.000Z",
+              "uid": "35240-4087031b-6606-4f00-a6fc-37aa70c8baf8"
+            }
+          ],
+          "id": "776ec294-35ba-4539-b069-91cc814d4618",
+          "createdAt": "2026-07-28T11:04:52.000Z",
+          "updatedAt": "2026-07-28T11:04:52.000Z",
+          "uid": "35240-776ec294-35ba-4539-b069-91cc814d4618"
+        },
+        {
+          "name": "{tokenRequestId}",
+          "item": [
+            {
+              "name": "result",
+              "item": [
+                {
+                  "name": "Get a token request result",
+                  "id": "701342ac-2e10-41a0-9f04-11d4006e84b1",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/token-requests/:tokenRequestId/result",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "token-requests",
+                        ":tokenRequestId",
+                        "result"
+                      ],
+                      "variable": [
+                        {
+                          "id": "48dda1bb-d14f-4aca-8c28-e80fe51c122b",
+                          "key": "tokenRequestId",
+                          "value": "<string>",
+                          "description": "(Required) The token request id received in response to the original token request."
+                        }
+                      ]
+                    },
+                    "description": "The `GET /token-requests/{tokenRequestId}/result` endpoint checks whether a token request result is available. This endpoint will return a `PENDING` status while the result is not available. The status will become `PROCESSED` once the result is available. If the request is rejected by the bank, the status will become `REJECTED`. The status will become `EXPIRED` if the request is not processed or rejected before the token request expiration."
+                  },
+                  "response": [
+                    {
+                      "id": "c286693c-b06b-4d6d-a9e9-c6765e082fae",
+                      "name": "Successful response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/token-requests/:tokenRequestId/result",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "token-requests",
+                            ":tokenRequestId",
+                            "result"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenRequestId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"status\": \"REJECTED\",\n  \"transferId\": \"<string>\",\n  \"tokenId\": \"<string>\",\n  \"signature\": {\n    \"keyId\": \"<string>\",\n    \"memberId\": \"<string>\",\n    \"signature\": \"<string>\"\n  },\n  \"statusReasonInformation\": \"<string>\",\n  \"bankId\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T11:04:52.000Z",
+                      "updatedAt": "2026-07-28T11:04:52.000Z",
+                      "uid": "35240-c286693c-b06b-4d6d-a9e9-c6765e082fae"
+                    },
+                    {
+                      "id": "04043dac-69fc-419a-9a24-757183a69259",
+                      "name": "The client specified an invalid argument",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/token-requests/:tokenRequestId/result",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "token-requests",
+                            ":tokenRequestId",
+                            "result"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenRequestId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:52.000Z",
+                      "updatedAt": "2026-07-28T11:04:52.000Z",
+                      "uid": "35240-04043dac-69fc-419a-9a24-757183a69259"
+                    },
+                    {
+                      "id": "a5aee453-ec09-4f82-a964-1f6e7ef74808",
+                      "name": "The authorization information is missing or invalid",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/token-requests/:tokenRequestId/result",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "token-requests",
+                            ":tokenRequestId",
+                            "result"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenRequestId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:52.000Z",
+                      "updatedAt": "2026-07-28T11:04:52.000Z",
+                      "uid": "35240-a5aee453-ec09-4f82-a964-1f6e7ef74808"
+                    },
+                    {
+                      "id": "93ad403a-66ae-486d-9826-6dec7e1eef47",
+                      "name": "Permission to access this endpoint is denied",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/token-requests/:tokenRequestId/result",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "token-requests",
+                            ":tokenRequestId",
+                            "result"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenRequestId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"Duis id magna ipsum est\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:52.000Z",
+                      "updatedAt": "2026-07-28T11:04:52.000Z",
+                      "uid": "35240-93ad403a-66ae-486d-9826-6dec7e1eef47"
+                    },
+                    {
+                      "id": "c8b96b86-e2fd-4167-8b1f-52eb1a84cdc5",
+                      "name": "The requested entity, such as a token request, was not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/token-requests/:tokenRequestId/result",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "token-requests",
+                            ":tokenRequestId",
+                            "result"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenRequestId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"nulla in incididunt\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"velit\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:52.000Z",
+                      "updatedAt": "2026-07-28T11:04:52.000Z",
+                      "uid": "35240-c8b96b86-e2fd-4167-8b1f-52eb1a84cdc5"
+                    },
+                    {
+                      "id": "ca415443-6ffc-43db-984b-6981f55c9c68",
+                      "name": "Too many requests",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/token-requests/:tokenRequestId/result",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "token-requests",
+                            ":tokenRequestId",
+                            "result"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenRequestId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"sunt adipisicing\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"consequat consectetur officia\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:52.000Z",
+                      "updatedAt": "2026-07-28T11:04:52.000Z",
+                      "uid": "35240-ca415443-6ffc-43db-984b-6981f55c9c68"
+                    },
+                    {
+                      "id": "89d8c188-7925-46f2-99df-ad9c4e647da3",
+                      "name": "An unexpected or internal server error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/token-requests/:tokenRequestId/result",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "token-requests",
+                            ":tokenRequestId",
+                            "result"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenRequestId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:52.000Z",
+                      "updatedAt": "2026-07-28T11:04:52.000Z",
+                      "uid": "35240-89d8c188-7925-46f2-99df-ad9c4e647da3"
+                    },
+                    {
+                      "id": "2eff6278-8296-49e2-a859-0d7d0645cfe3",
+                      "name": "The operation was not implemented",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/token-requests/:tokenRequestId/result",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "token-requests",
+                            ":tokenRequestId",
+                            "result"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenRequestId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Implemented",
+                      "code": 501,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"dolor\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"officia pariatur voluptate tempor aliquip\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:52.000Z",
+                      "updatedAt": "2026-07-28T11:04:52.000Z",
+                      "uid": "35240-2eff6278-8296-49e2-a859-0d7d0645cfe3"
+                    },
+                    {
+                      "id": "7759118b-3492-4b4d-ba0c-e332365e2697",
+                      "name": "Service is unavailable",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/token-requests/:tokenRequestId/result",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "token-requests",
+                            ":tokenRequestId",
+                            "result"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenRequestId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Service Unavailable",
+                      "code": 503,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"culpa dolor\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"laboris non in\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:52.000Z",
+                      "updatedAt": "2026-07-28T11:04:52.000Z",
+                      "uid": "35240-7759118b-3492-4b4d-ba0c-e332365e2697"
+                    },
+                    {
+                      "id": "e18e909f-0cc2-4ef5-90fc-79d90ca13780",
+                      "name": "Gateway has timed out",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/token-requests/:tokenRequestId/result",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "token-requests",
+                            ":tokenRequestId",
+                            "result"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenRequestId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Gateway Timeout",
+                      "code": 504,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"aliquip consequat\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"ex magna consectetur id\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:52.000Z",
+                      "updatedAt": "2026-07-28T11:04:52.000Z",
+                      "uid": "35240-e18e909f-0cc2-4ef5-90fc-79d90ca13780"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T11:04:52.000Z",
+                  "updatedAt": "2026-07-28T11:04:52.000Z",
+                  "uid": "35240-701342ac-2e10-41a0-9f04-11d4006e84b1"
+                }
+              ],
+              "id": "5f1e0fa6-0643-41d5-8e23-e5863121f82f",
+              "createdAt": "2026-07-28T11:04:52.000Z",
+              "updatedAt": "2026-07-28T11:04:52.000Z",
+              "uid": "35240-5f1e0fa6-0643-41d5-8e23-e5863121f82f"
+            },
+            {
+              "name": "authorization",
+              "item": [
+                {
+                  "name": "Initiate bank authorization",
+                  "id": "feda7eb0-2d48-4c62-ad66-14506c2c6ebd",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"consentAccepted\": false,\n  \"credentials\": {\n    \"culpa_b\": \"<string>\"\n  },\n  \"useCredentialFlow\": false,\n  \"useWebappCredentialsFlow\": false\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/token-requests/:tokenRequestId/authorization",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "token-requests",
+                        ":tokenRequestId",
+                        "authorization"
+                      ],
+                      "variable": [
+                        {
+                          "id": "cf1cf0e3-0be0-4c45-8184-65e4af28cf7f",
+                          "key": "tokenRequestId",
+                          "value": "<string>",
+                          "description": "(Required) The token request id received in response to the original token request."
+                        }
+                      ]
+                    },
+                    "description": "The `POST /token-requests/{tokenRequestId}/authorization` endpoint initiates the bank authorization process with a given bank id and token request id."
+                  },
+                  "response": [
+                    {
+                      "id": "4d080a1e-926c-4ff3-a208-e7f88aa509a3",
+                      "name": "Successful response",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"consentAccepted\": false,\n  \"credentials\": {\n    \"culpa_b\": \"<string>\"\n  },\n  \"useCredentialFlow\": false,\n  \"useWebappCredentialsFlow\": false\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/token-requests/:tokenRequestId/authorization",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "token-requests",
+                            ":tokenRequestId",
+                            "authorization"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenRequestId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"fields\": {\n    \"fields\": [\n      {\n        \"description\": \"<string>\",\n        \"displayName\": \"<string>\",\n        \"flickerCode\": \"<string>\",\n        \"id\": \"<string>\",\n        \"image\": \"<string>\",\n        \"options\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"type\": \"INVALID\"\n      },\n      {\n        \"description\": \"<string>\",\n        \"displayName\": \"<string>\",\n        \"flickerCode\": \"<string>\",\n        \"id\": \"<string>\",\n        \"image\": \"<string>\",\n        \"options\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"type\": \"PSU_MESSAGE\"\n      }\n    ]\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:52.000Z",
+                      "updatedAt": "2026-07-28T11:04:52.000Z",
+                      "uid": "35240-4d080a1e-926c-4ff3-a208-e7f88aa509a3"
+                    },
+                    {
+                      "id": "456b01a8-1550-469d-ad2a-68eb8b582e23",
+                      "name": "The client specified an invalid argument",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"consentAccepted\": false,\n  \"credentials\": {\n    \"culpa_b\": \"<string>\"\n  },\n  \"useCredentialFlow\": false,\n  \"useWebappCredentialsFlow\": false\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/token-requests/:tokenRequestId/authorization",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "token-requests",
+                            ":tokenRequestId",
+                            "authorization"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenRequestId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:52.000Z",
+                      "updatedAt": "2026-07-28T11:04:52.000Z",
+                      "uid": "35240-456b01a8-1550-469d-ad2a-68eb8b582e23"
+                    },
+                    {
+                      "id": "d1b05069-19b2-468d-8f1d-9aa0ba48f606",
+                      "name": "The authorization information is missing or invalid",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"consentAccepted\": false,\n  \"credentials\": {\n    \"culpa_b\": \"<string>\"\n  },\n  \"useCredentialFlow\": false,\n  \"useWebappCredentialsFlow\": false\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/token-requests/:tokenRequestId/authorization",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "token-requests",
+                            ":tokenRequestId",
+                            "authorization"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenRequestId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:52.000Z",
+                      "updatedAt": "2026-07-28T11:04:52.000Z",
+                      "uid": "35240-d1b05069-19b2-468d-8f1d-9aa0ba48f606"
+                    },
+                    {
+                      "id": "c5192888-5d96-4877-96e9-a595349523ce",
+                      "name": "Permission to access this endpoint is denied",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"consentAccepted\": false,\n  \"credentials\": {\n    \"culpa_b\": \"<string>\"\n  },\n  \"useCredentialFlow\": false,\n  \"useWebappCredentialsFlow\": false\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/token-requests/:tokenRequestId/authorization",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "token-requests",
+                            ":tokenRequestId",
+                            "authorization"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenRequestId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"Duis id magna ipsum est\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:52.000Z",
+                      "updatedAt": "2026-07-28T11:04:52.000Z",
+                      "uid": "35240-c5192888-5d96-4877-96e9-a595349523ce"
+                    },
+                    {
+                      "id": "04346f28-4977-4f0f-b51c-75d5f3da80c6",
+                      "name": "The requested entity, such as a payment, was not found",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"consentAccepted\": false,\n  \"credentials\": {\n    \"culpa_b\": \"<string>\"\n  },\n  \"useCredentialFlow\": false,\n  \"useWebappCredentialsFlow\": false\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/token-requests/:tokenRequestId/authorization",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "token-requests",
+                            ":tokenRequestId",
+                            "authorization"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenRequestId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"nulla in incididunt\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"velit\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:52.000Z",
+                      "updatedAt": "2026-07-28T11:04:52.000Z",
+                      "uid": "35240-04346f28-4977-4f0f-b51c-75d5f3da80c6"
+                    },
+                    {
+                      "id": "47173df4-723f-4793-9cd9-37f41820c2dd",
+                      "name": "Too many requests",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"consentAccepted\": false,\n  \"credentials\": {\n    \"culpa_b\": \"<string>\"\n  },\n  \"useCredentialFlow\": false,\n  \"useWebappCredentialsFlow\": false\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/token-requests/:tokenRequestId/authorization",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "token-requests",
+                            ":tokenRequestId",
+                            "authorization"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenRequestId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"sunt adipisicing\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"consequat consectetur officia\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:52.000Z",
+                      "updatedAt": "2026-07-28T11:04:52.000Z",
+                      "uid": "35240-47173df4-723f-4793-9cd9-37f41820c2dd"
+                    },
+                    {
+                      "id": "41e87b36-089e-434b-8d94-15c7d163653c",
+                      "name": "An unexpected or internal server error",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"consentAccepted\": false,\n  \"credentials\": {\n    \"culpa_b\": \"<string>\"\n  },\n  \"useCredentialFlow\": false,\n  \"useWebappCredentialsFlow\": false\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/token-requests/:tokenRequestId/authorization",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "token-requests",
+                            ":tokenRequestId",
+                            "authorization"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenRequestId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:52.000Z",
+                      "updatedAt": "2026-07-28T11:04:52.000Z",
+                      "uid": "35240-41e87b36-089e-434b-8d94-15c7d163653c"
+                    },
+                    {
+                      "id": "3eb0f100-89dd-4e11-bb6d-a8917dbc6a5b",
+                      "name": "The operation was not implemented",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"consentAccepted\": false,\n  \"credentials\": {\n    \"culpa_b\": \"<string>\"\n  },\n  \"useCredentialFlow\": false,\n  \"useWebappCredentialsFlow\": false\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/token-requests/:tokenRequestId/authorization",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "token-requests",
+                            ":tokenRequestId",
+                            "authorization"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenRequestId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Implemented",
+                      "code": 501,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"dolor\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"officia pariatur voluptate tempor aliquip\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:52.000Z",
+                      "updatedAt": "2026-07-28T11:04:52.000Z",
+                      "uid": "35240-3eb0f100-89dd-4e11-bb6d-a8917dbc6a5b"
+                    },
+                    {
+                      "id": "45187fff-e10e-4bca-8594-cbf9e9bf5404",
+                      "name": "Service is unavailable",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"consentAccepted\": false,\n  \"credentials\": {\n    \"culpa_b\": \"<string>\"\n  },\n  \"useCredentialFlow\": false,\n  \"useWebappCredentialsFlow\": false\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/token-requests/:tokenRequestId/authorization",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "token-requests",
+                            ":tokenRequestId",
+                            "authorization"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenRequestId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Service Unavailable",
+                      "code": 503,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"culpa dolor\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"laboris non in\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:52.000Z",
+                      "updatedAt": "2026-07-28T11:04:52.000Z",
+                      "uid": "35240-45187fff-e10e-4bca-8594-cbf9e9bf5404"
+                    },
+                    {
+                      "id": "5702d753-2c07-4e66-b4af-b701b6ac756d",
+                      "name": "Gateway has timed out",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"consentAccepted\": false,\n  \"credentials\": {\n    \"culpa_b\": \"<string>\"\n  },\n  \"useCredentialFlow\": false,\n  \"useWebappCredentialsFlow\": false\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/token-requests/:tokenRequestId/authorization",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "token-requests",
+                            ":tokenRequestId",
+                            "authorization"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenRequestId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Gateway Timeout",
+                      "code": 504,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"aliquip consequat\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"ex magna consectetur id\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:52.000Z",
+                      "updatedAt": "2026-07-28T11:04:52.000Z",
+                      "uid": "35240-5702d753-2c07-4e66-b4af-b701b6ac756d"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T11:04:52.000Z",
+                  "updatedAt": "2026-07-28T11:04:52.000Z",
+                  "uid": "35240-feda7eb0-2d48-4c62-ad66-14506c2c6ebd"
+                }
+              ],
+              "id": "dc8c7e36-65cd-4267-a8a5-10bd049c177e",
+              "createdAt": "2026-07-28T11:04:52.000Z",
+              "updatedAt": "2026-07-28T11:04:52.000Z",
+              "uid": "35240-dc8c7e36-65cd-4267-a8a5-10bd049c177e"
+            }
+          ],
+          "id": "8019baf9-6edc-4cf2-8ad2-c6829cfaff35",
+          "createdAt": "2026-07-28T11:04:52.000Z",
+          "updatedAt": "2026-07-28T11:04:52.000Z",
+          "uid": "35240-8019baf9-6edc-4cf2-8ad2-c6829cfaff35"
+        },
+        {
+          "name": "Initiate a token request",
+          "id": "ac738a1b-b953-4dd7-b56d-2f4299598962",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requestPayload\": {\n    \"transferBody\": {\n      \"currency\": \"<string>\",\n      \"lifetimeAmount\": \"<string>\",\n      \"instructions\": {\n        \"transferDestinations\": [\n          {\n            \"sepa\": {\n              \"iban\": \"<string>\",\n              \"bic\": \"<string>\"\n            }\n          }\n        ],\n        \"metadata\": {\n          \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n          \"providerTransferMetadata\": {\n            \"cma9TransferMetadata\": {\n              \"endToEndIdentification\": \"<string>\",\n              \"instructionIdentification\": \"<string>\",\n              \"risk\": {\n                \"deliveryAddress\": {\n                  \"addressLine\": [\n                    \"<string>\",\n                    \"<string>\"\n                  ],\n                  \"addressType\": \"INVALID_ADDRESS_TYPE\",\n                  \"buildingNumber\": \"<string>\",\n                  \"country\": \"<string>\",\n                  \"countrySubDivision\": [\n                    \"<string>\",\n                    \"<string>\"\n                  ],\n                  \"department\": \"<string>\",\n                  \"postCode\": \"<string>\",\n                  \"streetName\": \"<string>\",\n                  \"subDepartment\": \"<string>\",\n                  \"townName\": \"<string>\"\n                },\n                \"merchantCustomerIdentification\": \"<string>\",\n                \"paymentContextCode\": \"PISP_PAYEE\",\n                \"paymentPurposeCode\": \"CASH\",\n                \"beneficiaryAccountType\": \"GOVERNMENT\",\n                \"contractPresentIndicator\": \"<string>\",\n                \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n              }\n            }\n          },\n          \"purposeCode\": \"CASH\",\n          \"ultimateCreditor\": \"<string>\",\n          \"ultimateDebtor\": \"<string>\"\n        },\n        \"source\": {\n          \"accountIdentifier\": {\n            \"bankgiro\": {\n              \"bankgiroNumber\": \"<string>\"\n            }\n          },\n          \"bankId\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"customerData\": {\n            \"legalNames\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"address\": {\n              \"city\": \"<string>\",\n              \"conscriptionNumber\": \"<string>\",\n              \"country\": \"<string>\",\n              \"district\": \"<string>\",\n              \"flats\": \"<string>\",\n              \"full\": \"<string>\",\n              \"hamlet\": \"<string>\",\n              \"houseName\": \"<string>\",\n              \"houseNumber\": \"<string>\",\n              \"place\": \"<string>\",\n              \"postCode\": \"<string>\",\n              \"province\": \"<string>\",\n              \"state\": \"<string>\",\n              \"street\": \"<string>\",\n              \"subdistrict\": \"<string>\",\n              \"suburb\": \"<string>\"\n            }\n          }\n        }\n      },\n      \"confirmFunds\": false,\n      \"executionDate\": \"<string>\",\n      \"remittanceReference\": \"<string>\",\n      \"returnRefundAccount\": false,\n      \"setTransferDestinationsUrl\": \"<string>\"\n    }\n  },\n  \"requestOptions\": {\n    \"bankId\": \"<string>\",\n    \"from\": {\n      \"id\": \"<string>\",\n      \"alias\": {\n        \"realmId\": \"<string>\",\n        \"type\": \"INVALID\",\n        \"value\": \"<string>\"\n      }\n    },\n    \"psuId\": \"<string>\",\n    \"receiptRequested\": false,\n    \"tokenInternal\": {\n      \"redirectUrl\": \"<string>\",\n      \"usingWebApp\": false\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/token-requests",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "token-requests"
+              ]
+            },
+            "description": "The `POST /token-requests` endpoint persists the required information used by AIS requests and PIS requests using the API and the Token.io Hosted Pages."
+          },
+          "response": [
+            {
+              "id": "a375051c-fb7c-4ba2-837c-44cdfbd07fc2",
+              "name": "Successful response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestPayload\": {\n    \"transferBody\": {\n      \"currency\": \"<string>\",\n      \"lifetimeAmount\": \"<string>\",\n      \"instructions\": {\n        \"transferDestinations\": [\n          {\n            \"sepa\": {\n              \"iban\": \"<string>\",\n              \"bic\": \"<string>\"\n            }\n          }\n        ],\n        \"metadata\": {\n          \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n          \"providerTransferMetadata\": {\n            \"cma9TransferMetadata\": {\n              \"endToEndIdentification\": \"<string>\",\n              \"instructionIdentification\": \"<string>\",\n              \"risk\": {\n                \"deliveryAddress\": {\n                  \"addressLine\": [\n                    \"<string>\",\n                    \"<string>\"\n                  ],\n                  \"addressType\": \"INVALID_ADDRESS_TYPE\",\n                  \"buildingNumber\": \"<string>\",\n                  \"country\": \"<string>\",\n                  \"countrySubDivision\": [\n                    \"<string>\",\n                    \"<string>\"\n                  ],\n                  \"department\": \"<string>\",\n                  \"postCode\": \"<string>\",\n                  \"streetName\": \"<string>\",\n                  \"subDepartment\": \"<string>\",\n                  \"townName\": \"<string>\"\n                },\n                \"merchantCustomerIdentification\": \"<string>\",\n                \"paymentContextCode\": \"PISP_PAYEE\",\n                \"paymentPurposeCode\": \"CASH\",\n                \"beneficiaryAccountType\": \"GOVERNMENT\",\n                \"contractPresentIndicator\": \"<string>\",\n                \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n              }\n            }\n          },\n          \"purposeCode\": \"CASH\",\n          \"ultimateCreditor\": \"<string>\",\n          \"ultimateDebtor\": \"<string>\"\n        },\n        \"source\": {\n          \"accountIdentifier\": {\n            \"bankgiro\": {\n              \"bankgiroNumber\": \"<string>\"\n            }\n          },\n          \"bankId\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"customerData\": {\n            \"legalNames\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"address\": {\n              \"city\": \"<string>\",\n              \"conscriptionNumber\": \"<string>\",\n              \"country\": \"<string>\",\n              \"district\": \"<string>\",\n              \"flats\": \"<string>\",\n              \"full\": \"<string>\",\n              \"hamlet\": \"<string>\",\n              \"houseName\": \"<string>\",\n              \"houseNumber\": \"<string>\",\n              \"place\": \"<string>\",\n              \"postCode\": \"<string>\",\n              \"province\": \"<string>\",\n              \"state\": \"<string>\",\n              \"street\": \"<string>\",\n              \"subdistrict\": \"<string>\",\n              \"suburb\": \"<string>\"\n            }\n          }\n        }\n      },\n      \"confirmFunds\": false,\n      \"executionDate\": \"<string>\",\n      \"remittanceReference\": \"<string>\",\n      \"returnRefundAccount\": false,\n      \"setTransferDestinationsUrl\": \"<string>\"\n    }\n  },\n  \"requestOptions\": {\n    \"bankId\": \"<string>\",\n    \"from\": {\n      \"id\": \"<string>\",\n      \"alias\": {\n        \"realmId\": \"<string>\",\n        \"type\": \"INVALID\",\n        \"value\": \"<string>\"\n      }\n    },\n    \"psuId\": \"<string>\",\n    \"receiptRequested\": false,\n    \"tokenInternal\": {\n      \"redirectUrl\": \"<string>\",\n      \"usingWebApp\": false\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/token-requests",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "token-requests"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"tokenRequest\": {\n    \"id\": \"<string>\",\n    \"requestOptions\": {\n      \"bankId\": \"<string>\",\n      \"from\": {\n        \"id\": \"<string>\",\n        \"alias\": {\n          \"realmId\": \"<string>\",\n          \"type\": \"INVALID\",\n          \"value\": \"<string>\"\n        }\n      },\n      \"psuId\": \"<string>\",\n      \"receiptRequested\": false,\n      \"tokenInternal\": {\n        \"redirectUrl\": \"<string>\",\n        \"usingWebApp\": false\n      }\n    },\n    \"requestPayload\": {\n      \"transferBody\": {\n        \"currency\": \"<string>\",\n        \"lifetimeAmount\": \"<string>\",\n        \"instructions\": {\n          \"transferDestinations\": [\n            {\n              \"sepa\": {\n                \"iban\": \"<string>\",\n                \"bic\": \"<string>\"\n              }\n            }\n          ],\n          \"metadata\": {\n            \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n            \"providerTransferMetadata\": {\n              \"cma9TransferMetadata\": {\n                \"endToEndIdentification\": \"<string>\",\n                \"instructionIdentification\": \"<string>\",\n                \"risk\": {\n                  \"deliveryAddress\": {\n                    \"addressLine\": [\n                      \"<string>\",\n                      \"<string>\"\n                    ],\n                    \"addressType\": \"INVALID_ADDRESS_TYPE\",\n                    \"buildingNumber\": \"<string>\",\n                    \"country\": \"<string>\",\n                    \"countrySubDivision\": [\n                      \"<string>\",\n                      \"<string>\"\n                    ],\n                    \"department\": \"<string>\",\n                    \"postCode\": \"<string>\",\n                    \"streetName\": \"<string>\",\n                    \"subDepartment\": \"<string>\",\n                    \"townName\": \"<string>\"\n                  },\n                  \"merchantCustomerIdentification\": \"<string>\",\n                  \"paymentContextCode\": \"FACE_TO_FACE_POINT_OF_SALE\",\n                  \"paymentPurposeCode\": \"CASH\",\n                  \"beneficiaryAccountType\": \"GOVERNMENT\",\n                  \"contractPresentIndicator\": \"<string>\",\n                  \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n                }\n              }\n            },\n            \"purposeCode\": \"CASH\",\n            \"ultimateCreditor\": \"<string>\",\n            \"ultimateDebtor\": \"<string>\"\n          },\n          \"source\": {\n            \"accountIdentifier\": {\n              \"bankgiro\": {\n                \"bankgiroNumber\": \"<string>\"\n              }\n            },\n            \"bankId\": \"<string>\",\n            \"bic\": \"<string>\",\n            \"customerData\": {\n              \"legalNames\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"address\": {\n                \"city\": \"<string>\",\n                \"conscriptionNumber\": \"<string>\",\n                \"country\": \"<string>\",\n                \"district\": \"<string>\",\n                \"flats\": \"<string>\",\n                \"full\": \"<string>\",\n                \"hamlet\": \"<string>\",\n                \"houseName\": \"<string>\",\n                \"houseNumber\": \"<string>\",\n                \"place\": \"<string>\",\n                \"postCode\": \"<string>\",\n                \"province\": \"<string>\",\n                \"state\": \"<string>\",\n                \"street\": \"<string>\",\n                \"subdistrict\": \"<string>\",\n                \"suburb\": \"<string>\"\n              }\n            }\n          }\n        },\n        \"confirmFunds\": false,\n        \"executionDate\": \"<string>\",\n        \"remittanceReference\": \"<string>\",\n        \"returnRefundAccount\": false,\n        \"setTransferDestinationsUrl\": \"<string>\"\n      }\n    }\n  }\n}",
+              "createdAt": "2026-07-28T11:04:52.000Z",
+              "updatedAt": "2026-07-28T11:04:52.000Z",
+              "uid": "35240-a375051c-fb7c-4ba2-837c-44cdfbd07fc2"
+            },
+            {
+              "id": "596ad19a-ef95-43d8-86fd-0fc86ba7444d",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestPayload\": {\n    \"transferBody\": {\n      \"currency\": \"<string>\",\n      \"lifetimeAmount\": \"<string>\",\n      \"instructions\": {\n        \"transferDestinations\": [\n          {\n            \"sepa\": {\n              \"iban\": \"<string>\",\n              \"bic\": \"<string>\"\n            }\n          }\n        ],\n        \"metadata\": {\n          \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n          \"providerTransferMetadata\": {\n            \"cma9TransferMetadata\": {\n              \"endToEndIdentification\": \"<string>\",\n              \"instructionIdentification\": \"<string>\",\n              \"risk\": {\n                \"deliveryAddress\": {\n                  \"addressLine\": [\n                    \"<string>\",\n                    \"<string>\"\n                  ],\n                  \"addressType\": \"INVALID_ADDRESS_TYPE\",\n                  \"buildingNumber\": \"<string>\",\n                  \"country\": \"<string>\",\n                  \"countrySubDivision\": [\n                    \"<string>\",\n                    \"<string>\"\n                  ],\n                  \"department\": \"<string>\",\n                  \"postCode\": \"<string>\",\n                  \"streetName\": \"<string>\",\n                  \"subDepartment\": \"<string>\",\n                  \"townName\": \"<string>\"\n                },\n                \"merchantCustomerIdentification\": \"<string>\",\n                \"paymentContextCode\": \"PISP_PAYEE\",\n                \"paymentPurposeCode\": \"CASH\",\n                \"beneficiaryAccountType\": \"GOVERNMENT\",\n                \"contractPresentIndicator\": \"<string>\",\n                \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n              }\n            }\n          },\n          \"purposeCode\": \"CASH\",\n          \"ultimateCreditor\": \"<string>\",\n          \"ultimateDebtor\": \"<string>\"\n        },\n        \"source\": {\n          \"accountIdentifier\": {\n            \"bankgiro\": {\n              \"bankgiroNumber\": \"<string>\"\n            }\n          },\n          \"bankId\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"customerData\": {\n            \"legalNames\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"address\": {\n              \"city\": \"<string>\",\n              \"conscriptionNumber\": \"<string>\",\n              \"country\": \"<string>\",\n              \"district\": \"<string>\",\n              \"flats\": \"<string>\",\n              \"full\": \"<string>\",\n              \"hamlet\": \"<string>\",\n              \"houseName\": \"<string>\",\n              \"houseNumber\": \"<string>\",\n              \"place\": \"<string>\",\n              \"postCode\": \"<string>\",\n              \"province\": \"<string>\",\n              \"state\": \"<string>\",\n              \"street\": \"<string>\",\n              \"subdistrict\": \"<string>\",\n              \"suburb\": \"<string>\"\n            }\n          }\n        }\n      },\n      \"confirmFunds\": false,\n      \"executionDate\": \"<string>\",\n      \"remittanceReference\": \"<string>\",\n      \"returnRefundAccount\": false,\n      \"setTransferDestinationsUrl\": \"<string>\"\n    }\n  },\n  \"requestOptions\": {\n    \"bankId\": \"<string>\",\n    \"from\": {\n      \"id\": \"<string>\",\n      \"alias\": {\n        \"realmId\": \"<string>\",\n        \"type\": \"INVALID\",\n        \"value\": \"<string>\"\n      }\n    },\n    \"psuId\": \"<string>\",\n    \"receiptRequested\": false,\n    \"tokenInternal\": {\n      \"redirectUrl\": \"<string>\",\n      \"usingWebApp\": false\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/token-requests",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "token-requests"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:52.000Z",
+              "updatedAt": "2026-07-28T11:04:52.000Z",
+              "uid": "35240-596ad19a-ef95-43d8-86fd-0fc86ba7444d"
+            },
+            {
+              "id": "1e09bb99-e35a-4838-af61-6e21c72eb8d2",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestPayload\": {\n    \"transferBody\": {\n      \"currency\": \"<string>\",\n      \"lifetimeAmount\": \"<string>\",\n      \"instructions\": {\n        \"transferDestinations\": [\n          {\n            \"sepa\": {\n              \"iban\": \"<string>\",\n              \"bic\": \"<string>\"\n            }\n          }\n        ],\n        \"metadata\": {\n          \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n          \"providerTransferMetadata\": {\n            \"cma9TransferMetadata\": {\n              \"endToEndIdentification\": \"<string>\",\n              \"instructionIdentification\": \"<string>\",\n              \"risk\": {\n                \"deliveryAddress\": {\n                  \"addressLine\": [\n                    \"<string>\",\n                    \"<string>\"\n                  ],\n                  \"addressType\": \"INVALID_ADDRESS_TYPE\",\n                  \"buildingNumber\": \"<string>\",\n                  \"country\": \"<string>\",\n                  \"countrySubDivision\": [\n                    \"<string>\",\n                    \"<string>\"\n                  ],\n                  \"department\": \"<string>\",\n                  \"postCode\": \"<string>\",\n                  \"streetName\": \"<string>\",\n                  \"subDepartment\": \"<string>\",\n                  \"townName\": \"<string>\"\n                },\n                \"merchantCustomerIdentification\": \"<string>\",\n                \"paymentContextCode\": \"PISP_PAYEE\",\n                \"paymentPurposeCode\": \"CASH\",\n                \"beneficiaryAccountType\": \"GOVERNMENT\",\n                \"contractPresentIndicator\": \"<string>\",\n                \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n              }\n            }\n          },\n          \"purposeCode\": \"CASH\",\n          \"ultimateCreditor\": \"<string>\",\n          \"ultimateDebtor\": \"<string>\"\n        },\n        \"source\": {\n          \"accountIdentifier\": {\n            \"bankgiro\": {\n              \"bankgiroNumber\": \"<string>\"\n            }\n          },\n          \"bankId\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"customerData\": {\n            \"legalNames\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"address\": {\n              \"city\": \"<string>\",\n              \"conscriptionNumber\": \"<string>\",\n              \"country\": \"<string>\",\n              \"district\": \"<string>\",\n              \"flats\": \"<string>\",\n              \"full\": \"<string>\",\n              \"hamlet\": \"<string>\",\n              \"houseName\": \"<string>\",\n              \"houseNumber\": \"<string>\",\n              \"place\": \"<string>\",\n              \"postCode\": \"<string>\",\n              \"province\": \"<string>\",\n              \"state\": \"<string>\",\n              \"street\": \"<string>\",\n              \"subdistrict\": \"<string>\",\n              \"suburb\": \"<string>\"\n            }\n          }\n        }\n      },\n      \"confirmFunds\": false,\n      \"executionDate\": \"<string>\",\n      \"remittanceReference\": \"<string>\",\n      \"returnRefundAccount\": false,\n      \"setTransferDestinationsUrl\": \"<string>\"\n    }\n  },\n  \"requestOptions\": {\n    \"bankId\": \"<string>\",\n    \"from\": {\n      \"id\": \"<string>\",\n      \"alias\": {\n        \"realmId\": \"<string>\",\n        \"type\": \"INVALID\",\n        \"value\": \"<string>\"\n      }\n    },\n    \"psuId\": \"<string>\",\n    \"receiptRequested\": false,\n    \"tokenInternal\": {\n      \"redirectUrl\": \"<string>\",\n      \"usingWebApp\": false\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/token-requests",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "token-requests"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:52.000Z",
+              "updatedAt": "2026-07-28T11:04:52.000Z",
+              "uid": "35240-1e09bb99-e35a-4838-af61-6e21c72eb8d2"
+            },
+            {
+              "id": "e3234505-cecd-4d23-92b4-fcac1b7688ef",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestPayload\": {\n    \"transferBody\": {\n      \"currency\": \"<string>\",\n      \"lifetimeAmount\": \"<string>\",\n      \"instructions\": {\n        \"transferDestinations\": [\n          {\n            \"sepa\": {\n              \"iban\": \"<string>\",\n              \"bic\": \"<string>\"\n            }\n          }\n        ],\n        \"metadata\": {\n          \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n          \"providerTransferMetadata\": {\n            \"cma9TransferMetadata\": {\n              \"endToEndIdentification\": \"<string>\",\n              \"instructionIdentification\": \"<string>\",\n              \"risk\": {\n                \"deliveryAddress\": {\n                  \"addressLine\": [\n                    \"<string>\",\n                    \"<string>\"\n                  ],\n                  \"addressType\": \"INVALID_ADDRESS_TYPE\",\n                  \"buildingNumber\": \"<string>\",\n                  \"country\": \"<string>\",\n                  \"countrySubDivision\": [\n                    \"<string>\",\n                    \"<string>\"\n                  ],\n                  \"department\": \"<string>\",\n                  \"postCode\": \"<string>\",\n                  \"streetName\": \"<string>\",\n                  \"subDepartment\": \"<string>\",\n                  \"townName\": \"<string>\"\n                },\n                \"merchantCustomerIdentification\": \"<string>\",\n                \"paymentContextCode\": \"PISP_PAYEE\",\n                \"paymentPurposeCode\": \"CASH\",\n                \"beneficiaryAccountType\": \"GOVERNMENT\",\n                \"contractPresentIndicator\": \"<string>\",\n                \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n              }\n            }\n          },\n          \"purposeCode\": \"CASH\",\n          \"ultimateCreditor\": \"<string>\",\n          \"ultimateDebtor\": \"<string>\"\n        },\n        \"source\": {\n          \"accountIdentifier\": {\n            \"bankgiro\": {\n              \"bankgiroNumber\": \"<string>\"\n            }\n          },\n          \"bankId\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"customerData\": {\n            \"legalNames\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"address\": {\n              \"city\": \"<string>\",\n              \"conscriptionNumber\": \"<string>\",\n              \"country\": \"<string>\",\n              \"district\": \"<string>\",\n              \"flats\": \"<string>\",\n              \"full\": \"<string>\",\n              \"hamlet\": \"<string>\",\n              \"houseName\": \"<string>\",\n              \"houseNumber\": \"<string>\",\n              \"place\": \"<string>\",\n              \"postCode\": \"<string>\",\n              \"province\": \"<string>\",\n              \"state\": \"<string>\",\n              \"street\": \"<string>\",\n              \"subdistrict\": \"<string>\",\n              \"suburb\": \"<string>\"\n            }\n          }\n        }\n      },\n      \"confirmFunds\": false,\n      \"executionDate\": \"<string>\",\n      \"remittanceReference\": \"<string>\",\n      \"returnRefundAccount\": false,\n      \"setTransferDestinationsUrl\": \"<string>\"\n    }\n  },\n  \"requestOptions\": {\n    \"bankId\": \"<string>\",\n    \"from\": {\n      \"id\": \"<string>\",\n      \"alias\": {\n        \"realmId\": \"<string>\",\n        \"type\": \"INVALID\",\n        \"value\": \"<string>\"\n      }\n    },\n    \"psuId\": \"<string>\",\n    \"receiptRequested\": false,\n    \"tokenInternal\": {\n      \"redirectUrl\": \"<string>\",\n      \"usingWebApp\": false\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/token-requests",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "token-requests"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"Duis id magna ipsum est\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:52.000Z",
+              "updatedAt": "2026-07-28T11:04:52.000Z",
+              "uid": "35240-e3234505-cecd-4d23-92b4-fcac1b7688ef"
+            },
+            {
+              "id": "9f19f164-2277-4679-8057-34febc0ad56e",
+              "name": "The requested entity, such as a payment, was not found",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestPayload\": {\n    \"transferBody\": {\n      \"currency\": \"<string>\",\n      \"lifetimeAmount\": \"<string>\",\n      \"instructions\": {\n        \"transferDestinations\": [\n          {\n            \"sepa\": {\n              \"iban\": \"<string>\",\n              \"bic\": \"<string>\"\n            }\n          }\n        ],\n        \"metadata\": {\n          \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n          \"providerTransferMetadata\": {\n            \"cma9TransferMetadata\": {\n              \"endToEndIdentification\": \"<string>\",\n              \"instructionIdentification\": \"<string>\",\n              \"risk\": {\n                \"deliveryAddress\": {\n                  \"addressLine\": [\n                    \"<string>\",\n                    \"<string>\"\n                  ],\n                  \"addressType\": \"INVALID_ADDRESS_TYPE\",\n                  \"buildingNumber\": \"<string>\",\n                  \"country\": \"<string>\",\n                  \"countrySubDivision\": [\n                    \"<string>\",\n                    \"<string>\"\n                  ],\n                  \"department\": \"<string>\",\n                  \"postCode\": \"<string>\",\n                  \"streetName\": \"<string>\",\n                  \"subDepartment\": \"<string>\",\n                  \"townName\": \"<string>\"\n                },\n                \"merchantCustomerIdentification\": \"<string>\",\n                \"paymentContextCode\": \"PISP_PAYEE\",\n                \"paymentPurposeCode\": \"CASH\",\n                \"beneficiaryAccountType\": \"GOVERNMENT\",\n                \"contractPresentIndicator\": \"<string>\",\n                \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n              }\n            }\n          },\n          \"purposeCode\": \"CASH\",\n          \"ultimateCreditor\": \"<string>\",\n          \"ultimateDebtor\": \"<string>\"\n        },\n        \"source\": {\n          \"accountIdentifier\": {\n            \"bankgiro\": {\n              \"bankgiroNumber\": \"<string>\"\n            }\n          },\n          \"bankId\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"customerData\": {\n            \"legalNames\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"address\": {\n              \"city\": \"<string>\",\n              \"conscriptionNumber\": \"<string>\",\n              \"country\": \"<string>\",\n              \"district\": \"<string>\",\n              \"flats\": \"<string>\",\n              \"full\": \"<string>\",\n              \"hamlet\": \"<string>\",\n              \"houseName\": \"<string>\",\n              \"houseNumber\": \"<string>\",\n              \"place\": \"<string>\",\n              \"postCode\": \"<string>\",\n              \"province\": \"<string>\",\n              \"state\": \"<string>\",\n              \"street\": \"<string>\",\n              \"subdistrict\": \"<string>\",\n              \"suburb\": \"<string>\"\n            }\n          }\n        }\n      },\n      \"confirmFunds\": false,\n      \"executionDate\": \"<string>\",\n      \"remittanceReference\": \"<string>\",\n      \"returnRefundAccount\": false,\n      \"setTransferDestinationsUrl\": \"<string>\"\n    }\n  },\n  \"requestOptions\": {\n    \"bankId\": \"<string>\",\n    \"from\": {\n      \"id\": \"<string>\",\n      \"alias\": {\n        \"realmId\": \"<string>\",\n        \"type\": \"INVALID\",\n        \"value\": \"<string>\"\n      }\n    },\n    \"psuId\": \"<string>\",\n    \"receiptRequested\": false,\n    \"tokenInternal\": {\n      \"redirectUrl\": \"<string>\",\n      \"usingWebApp\": false\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/token-requests",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "token-requests"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"nulla in incididunt\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"velit\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:52.000Z",
+              "updatedAt": "2026-07-28T11:04:52.000Z",
+              "uid": "35240-9f19f164-2277-4679-8057-34febc0ad56e"
+            },
+            {
+              "id": "a0056daf-0f74-496b-bd13-1e4206ea99ab",
+              "name": "Too many requests",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestPayload\": {\n    \"transferBody\": {\n      \"currency\": \"<string>\",\n      \"lifetimeAmount\": \"<string>\",\n      \"instructions\": {\n        \"transferDestinations\": [\n          {\n            \"sepa\": {\n              \"iban\": \"<string>\",\n              \"bic\": \"<string>\"\n            }\n          }\n        ],\n        \"metadata\": {\n          \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n          \"providerTransferMetadata\": {\n            \"cma9TransferMetadata\": {\n              \"endToEndIdentification\": \"<string>\",\n              \"instructionIdentification\": \"<string>\",\n              \"risk\": {\n                \"deliveryAddress\": {\n                  \"addressLine\": [\n                    \"<string>\",\n                    \"<string>\"\n                  ],\n                  \"addressType\": \"INVALID_ADDRESS_TYPE\",\n                  \"buildingNumber\": \"<string>\",\n                  \"country\": \"<string>\",\n                  \"countrySubDivision\": [\n                    \"<string>\",\n                    \"<string>\"\n                  ],\n                  \"department\": \"<string>\",\n                  \"postCode\": \"<string>\",\n                  \"streetName\": \"<string>\",\n                  \"subDepartment\": \"<string>\",\n                  \"townName\": \"<string>\"\n                },\n                \"merchantCustomerIdentification\": \"<string>\",\n                \"paymentContextCode\": \"PISP_PAYEE\",\n                \"paymentPurposeCode\": \"CASH\",\n                \"beneficiaryAccountType\": \"GOVERNMENT\",\n                \"contractPresentIndicator\": \"<string>\",\n                \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n              }\n            }\n          },\n          \"purposeCode\": \"CASH\",\n          \"ultimateCreditor\": \"<string>\",\n          \"ultimateDebtor\": \"<string>\"\n        },\n        \"source\": {\n          \"accountIdentifier\": {\n            \"bankgiro\": {\n              \"bankgiroNumber\": \"<string>\"\n            }\n          },\n          \"bankId\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"customerData\": {\n            \"legalNames\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"address\": {\n              \"city\": \"<string>\",\n              \"conscriptionNumber\": \"<string>\",\n              \"country\": \"<string>\",\n              \"district\": \"<string>\",\n              \"flats\": \"<string>\",\n              \"full\": \"<string>\",\n              \"hamlet\": \"<string>\",\n              \"houseName\": \"<string>\",\n              \"houseNumber\": \"<string>\",\n              \"place\": \"<string>\",\n              \"postCode\": \"<string>\",\n              \"province\": \"<string>\",\n              \"state\": \"<string>\",\n              \"street\": \"<string>\",\n              \"subdistrict\": \"<string>\",\n              \"suburb\": \"<string>\"\n            }\n          }\n        }\n      },\n      \"confirmFunds\": false,\n      \"executionDate\": \"<string>\",\n      \"remittanceReference\": \"<string>\",\n      \"returnRefundAccount\": false,\n      \"setTransferDestinationsUrl\": \"<string>\"\n    }\n  },\n  \"requestOptions\": {\n    \"bankId\": \"<string>\",\n    \"from\": {\n      \"id\": \"<string>\",\n      \"alias\": {\n        \"realmId\": \"<string>\",\n        \"type\": \"INVALID\",\n        \"value\": \"<string>\"\n      }\n    },\n    \"psuId\": \"<string>\",\n    \"receiptRequested\": false,\n    \"tokenInternal\": {\n      \"redirectUrl\": \"<string>\",\n      \"usingWebApp\": false\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/token-requests",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "token-requests"
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"sunt adipisicing\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"consequat consectetur officia\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:52.000Z",
+              "updatedAt": "2026-07-28T11:04:52.000Z",
+              "uid": "35240-a0056daf-0f74-496b-bd13-1e4206ea99ab"
+            },
+            {
+              "id": "26827283-cc3b-45e5-94f3-1004a488242f",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestPayload\": {\n    \"transferBody\": {\n      \"currency\": \"<string>\",\n      \"lifetimeAmount\": \"<string>\",\n      \"instructions\": {\n        \"transferDestinations\": [\n          {\n            \"sepa\": {\n              \"iban\": \"<string>\",\n              \"bic\": \"<string>\"\n            }\n          }\n        ],\n        \"metadata\": {\n          \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n          \"providerTransferMetadata\": {\n            \"cma9TransferMetadata\": {\n              \"endToEndIdentification\": \"<string>\",\n              \"instructionIdentification\": \"<string>\",\n              \"risk\": {\n                \"deliveryAddress\": {\n                  \"addressLine\": [\n                    \"<string>\",\n                    \"<string>\"\n                  ],\n                  \"addressType\": \"INVALID_ADDRESS_TYPE\",\n                  \"buildingNumber\": \"<string>\",\n                  \"country\": \"<string>\",\n                  \"countrySubDivision\": [\n                    \"<string>\",\n                    \"<string>\"\n                  ],\n                  \"department\": \"<string>\",\n                  \"postCode\": \"<string>\",\n                  \"streetName\": \"<string>\",\n                  \"subDepartment\": \"<string>\",\n                  \"townName\": \"<string>\"\n                },\n                \"merchantCustomerIdentification\": \"<string>\",\n                \"paymentContextCode\": \"PISP_PAYEE\",\n                \"paymentPurposeCode\": \"CASH\",\n                \"beneficiaryAccountType\": \"GOVERNMENT\",\n                \"contractPresentIndicator\": \"<string>\",\n                \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n              }\n            }\n          },\n          \"purposeCode\": \"CASH\",\n          \"ultimateCreditor\": \"<string>\",\n          \"ultimateDebtor\": \"<string>\"\n        },\n        \"source\": {\n          \"accountIdentifier\": {\n            \"bankgiro\": {\n              \"bankgiroNumber\": \"<string>\"\n            }\n          },\n          \"bankId\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"customerData\": {\n            \"legalNames\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"address\": {\n              \"city\": \"<string>\",\n              \"conscriptionNumber\": \"<string>\",\n              \"country\": \"<string>\",\n              \"district\": \"<string>\",\n              \"flats\": \"<string>\",\n              \"full\": \"<string>\",\n              \"hamlet\": \"<string>\",\n              \"houseName\": \"<string>\",\n              \"houseNumber\": \"<string>\",\n              \"place\": \"<string>\",\n              \"postCode\": \"<string>\",\n              \"province\": \"<string>\",\n              \"state\": \"<string>\",\n              \"street\": \"<string>\",\n              \"subdistrict\": \"<string>\",\n              \"suburb\": \"<string>\"\n            }\n          }\n        }\n      },\n      \"confirmFunds\": false,\n      \"executionDate\": \"<string>\",\n      \"remittanceReference\": \"<string>\",\n      \"returnRefundAccount\": false,\n      \"setTransferDestinationsUrl\": \"<string>\"\n    }\n  },\n  \"requestOptions\": {\n    \"bankId\": \"<string>\",\n    \"from\": {\n      \"id\": \"<string>\",\n      \"alias\": {\n        \"realmId\": \"<string>\",\n        \"type\": \"INVALID\",\n        \"value\": \"<string>\"\n      }\n    },\n    \"psuId\": \"<string>\",\n    \"receiptRequested\": false,\n    \"tokenInternal\": {\n      \"redirectUrl\": \"<string>\",\n      \"usingWebApp\": false\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/token-requests",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "token-requests"
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:52.000Z",
+              "updatedAt": "2026-07-28T11:04:52.000Z",
+              "uid": "35240-26827283-cc3b-45e5-94f3-1004a488242f"
+            },
+            {
+              "id": "96a0690c-6fd5-47e5-968e-c09b6535a9dc",
+              "name": "The operation was not implemented",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestPayload\": {\n    \"transferBody\": {\n      \"currency\": \"<string>\",\n      \"lifetimeAmount\": \"<string>\",\n      \"instructions\": {\n        \"transferDestinations\": [\n          {\n            \"sepa\": {\n              \"iban\": \"<string>\",\n              \"bic\": \"<string>\"\n            }\n          }\n        ],\n        \"metadata\": {\n          \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n          \"providerTransferMetadata\": {\n            \"cma9TransferMetadata\": {\n              \"endToEndIdentification\": \"<string>\",\n              \"instructionIdentification\": \"<string>\",\n              \"risk\": {\n                \"deliveryAddress\": {\n                  \"addressLine\": [\n                    \"<string>\",\n                    \"<string>\"\n                  ],\n                  \"addressType\": \"INVALID_ADDRESS_TYPE\",\n                  \"buildingNumber\": \"<string>\",\n                  \"country\": \"<string>\",\n                  \"countrySubDivision\": [\n                    \"<string>\",\n                    \"<string>\"\n                  ],\n                  \"department\": \"<string>\",\n                  \"postCode\": \"<string>\",\n                  \"streetName\": \"<string>\",\n                  \"subDepartment\": \"<string>\",\n                  \"townName\": \"<string>\"\n                },\n                \"merchantCustomerIdentification\": \"<string>\",\n                \"paymentContextCode\": \"PISP_PAYEE\",\n                \"paymentPurposeCode\": \"CASH\",\n                \"beneficiaryAccountType\": \"GOVERNMENT\",\n                \"contractPresentIndicator\": \"<string>\",\n                \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n              }\n            }\n          },\n          \"purposeCode\": \"CASH\",\n          \"ultimateCreditor\": \"<string>\",\n          \"ultimateDebtor\": \"<string>\"\n        },\n        \"source\": {\n          \"accountIdentifier\": {\n            \"bankgiro\": {\n              \"bankgiroNumber\": \"<string>\"\n            }\n          },\n          \"bankId\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"customerData\": {\n            \"legalNames\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"address\": {\n              \"city\": \"<string>\",\n              \"conscriptionNumber\": \"<string>\",\n              \"country\": \"<string>\",\n              \"district\": \"<string>\",\n              \"flats\": \"<string>\",\n              \"full\": \"<string>\",\n              \"hamlet\": \"<string>\",\n              \"houseName\": \"<string>\",\n              \"houseNumber\": \"<string>\",\n              \"place\": \"<string>\",\n              \"postCode\": \"<string>\",\n              \"province\": \"<string>\",\n              \"state\": \"<string>\",\n              \"street\": \"<string>\",\n              \"subdistrict\": \"<string>\",\n              \"suburb\": \"<string>\"\n            }\n          }\n        }\n      },\n      \"confirmFunds\": false,\n      \"executionDate\": \"<string>\",\n      \"remittanceReference\": \"<string>\",\n      \"returnRefundAccount\": false,\n      \"setTransferDestinationsUrl\": \"<string>\"\n    }\n  },\n  \"requestOptions\": {\n    \"bankId\": \"<string>\",\n    \"from\": {\n      \"id\": \"<string>\",\n      \"alias\": {\n        \"realmId\": \"<string>\",\n        \"type\": \"INVALID\",\n        \"value\": \"<string>\"\n      }\n    },\n    \"psuId\": \"<string>\",\n    \"receiptRequested\": false,\n    \"tokenInternal\": {\n      \"redirectUrl\": \"<string>\",\n      \"usingWebApp\": false\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/token-requests",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "token-requests"
+                  ]
+                }
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"dolor\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"officia pariatur voluptate tempor aliquip\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:52.000Z",
+              "updatedAt": "2026-07-28T11:04:52.000Z",
+              "uid": "35240-96a0690c-6fd5-47e5-968e-c09b6535a9dc"
+            },
+            {
+              "id": "8d04626e-3528-4942-9740-1a426dffa372",
+              "name": "Service is unavailable",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestPayload\": {\n    \"transferBody\": {\n      \"currency\": \"<string>\",\n      \"lifetimeAmount\": \"<string>\",\n      \"instructions\": {\n        \"transferDestinations\": [\n          {\n            \"sepa\": {\n              \"iban\": \"<string>\",\n              \"bic\": \"<string>\"\n            }\n          }\n        ],\n        \"metadata\": {\n          \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n          \"providerTransferMetadata\": {\n            \"cma9TransferMetadata\": {\n              \"endToEndIdentification\": \"<string>\",\n              \"instructionIdentification\": \"<string>\",\n              \"risk\": {\n                \"deliveryAddress\": {\n                  \"addressLine\": [\n                    \"<string>\",\n                    \"<string>\"\n                  ],\n                  \"addressType\": \"INVALID_ADDRESS_TYPE\",\n                  \"buildingNumber\": \"<string>\",\n                  \"country\": \"<string>\",\n                  \"countrySubDivision\": [\n                    \"<string>\",\n                    \"<string>\"\n                  ],\n                  \"department\": \"<string>\",\n                  \"postCode\": \"<string>\",\n                  \"streetName\": \"<string>\",\n                  \"subDepartment\": \"<string>\",\n                  \"townName\": \"<string>\"\n                },\n                \"merchantCustomerIdentification\": \"<string>\",\n                \"paymentContextCode\": \"PISP_PAYEE\",\n                \"paymentPurposeCode\": \"CASH\",\n                \"beneficiaryAccountType\": \"GOVERNMENT\",\n                \"contractPresentIndicator\": \"<string>\",\n                \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n              }\n            }\n          },\n          \"purposeCode\": \"CASH\",\n          \"ultimateCreditor\": \"<string>\",\n          \"ultimateDebtor\": \"<string>\"\n        },\n        \"source\": {\n          \"accountIdentifier\": {\n            \"bankgiro\": {\n              \"bankgiroNumber\": \"<string>\"\n            }\n          },\n          \"bankId\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"customerData\": {\n            \"legalNames\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"address\": {\n              \"city\": \"<string>\",\n              \"conscriptionNumber\": \"<string>\",\n              \"country\": \"<string>\",\n              \"district\": \"<string>\",\n              \"flats\": \"<string>\",\n              \"full\": \"<string>\",\n              \"hamlet\": \"<string>\",\n              \"houseName\": \"<string>\",\n              \"houseNumber\": \"<string>\",\n              \"place\": \"<string>\",\n              \"postCode\": \"<string>\",\n              \"province\": \"<string>\",\n              \"state\": \"<string>\",\n              \"street\": \"<string>\",\n              \"subdistrict\": \"<string>\",\n              \"suburb\": \"<string>\"\n            }\n          }\n        }\n      },\n      \"confirmFunds\": false,\n      \"executionDate\": \"<string>\",\n      \"remittanceReference\": \"<string>\",\n      \"returnRefundAccount\": false,\n      \"setTransferDestinationsUrl\": \"<string>\"\n    }\n  },\n  \"requestOptions\": {\n    \"bankId\": \"<string>\",\n    \"from\": {\n      \"id\": \"<string>\",\n      \"alias\": {\n        \"realmId\": \"<string>\",\n        \"type\": \"INVALID\",\n        \"value\": \"<string>\"\n      }\n    },\n    \"psuId\": \"<string>\",\n    \"receiptRequested\": false,\n    \"tokenInternal\": {\n      \"redirectUrl\": \"<string>\",\n      \"usingWebApp\": false\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/token-requests",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "token-requests"
+                  ]
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"culpa dolor\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"laboris non in\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:52.000Z",
+              "updatedAt": "2026-07-28T11:04:52.000Z",
+              "uid": "35240-8d04626e-3528-4942-9740-1a426dffa372"
+            },
+            {
+              "id": "e0952bed-1257-4b2b-89f6-a38e76413cb5",
+              "name": "Gateway has timed out",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestPayload\": {\n    \"transferBody\": {\n      \"currency\": \"<string>\",\n      \"lifetimeAmount\": \"<string>\",\n      \"instructions\": {\n        \"transferDestinations\": [\n          {\n            \"sepa\": {\n              \"iban\": \"<string>\",\n              \"bic\": \"<string>\"\n            }\n          }\n        ],\n        \"metadata\": {\n          \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n          \"providerTransferMetadata\": {\n            \"cma9TransferMetadata\": {\n              \"endToEndIdentification\": \"<string>\",\n              \"instructionIdentification\": \"<string>\",\n              \"risk\": {\n                \"deliveryAddress\": {\n                  \"addressLine\": [\n                    \"<string>\",\n                    \"<string>\"\n                  ],\n                  \"addressType\": \"INVALID_ADDRESS_TYPE\",\n                  \"buildingNumber\": \"<string>\",\n                  \"country\": \"<string>\",\n                  \"countrySubDivision\": [\n                    \"<string>\",\n                    \"<string>\"\n                  ],\n                  \"department\": \"<string>\",\n                  \"postCode\": \"<string>\",\n                  \"streetName\": \"<string>\",\n                  \"subDepartment\": \"<string>\",\n                  \"townName\": \"<string>\"\n                },\n                \"merchantCustomerIdentification\": \"<string>\",\n                \"paymentContextCode\": \"PISP_PAYEE\",\n                \"paymentPurposeCode\": \"CASH\",\n                \"beneficiaryAccountType\": \"GOVERNMENT\",\n                \"contractPresentIndicator\": \"<string>\",\n                \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n              }\n            }\n          },\n          \"purposeCode\": \"CASH\",\n          \"ultimateCreditor\": \"<string>\",\n          \"ultimateDebtor\": \"<string>\"\n        },\n        \"source\": {\n          \"accountIdentifier\": {\n            \"bankgiro\": {\n              \"bankgiroNumber\": \"<string>\"\n            }\n          },\n          \"bankId\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"customerData\": {\n            \"legalNames\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"address\": {\n              \"city\": \"<string>\",\n              \"conscriptionNumber\": \"<string>\",\n              \"country\": \"<string>\",\n              \"district\": \"<string>\",\n              \"flats\": \"<string>\",\n              \"full\": \"<string>\",\n              \"hamlet\": \"<string>\",\n              \"houseName\": \"<string>\",\n              \"houseNumber\": \"<string>\",\n              \"place\": \"<string>\",\n              \"postCode\": \"<string>\",\n              \"province\": \"<string>\",\n              \"state\": \"<string>\",\n              \"street\": \"<string>\",\n              \"subdistrict\": \"<string>\",\n              \"suburb\": \"<string>\"\n            }\n          }\n        }\n      },\n      \"confirmFunds\": false,\n      \"executionDate\": \"<string>\",\n      \"remittanceReference\": \"<string>\",\n      \"returnRefundAccount\": false,\n      \"setTransferDestinationsUrl\": \"<string>\"\n    }\n  },\n  \"requestOptions\": {\n    \"bankId\": \"<string>\",\n    \"from\": {\n      \"id\": \"<string>\",\n      \"alias\": {\n        \"realmId\": \"<string>\",\n        \"type\": \"INVALID\",\n        \"value\": \"<string>\"\n      }\n    },\n    \"psuId\": \"<string>\",\n    \"receiptRequested\": false,\n    \"tokenInternal\": {\n      \"redirectUrl\": \"<string>\",\n      \"usingWebApp\": false\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/token-requests",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "token-requests"
+                  ]
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"aliquip consequat\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"ex magna consectetur id\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:52.000Z",
+              "updatedAt": "2026-07-28T11:04:52.000Z",
+              "uid": "35240-e0952bed-1257-4b2b-89f6-a38e76413cb5"
+            }
+          ],
+          "createdAt": "2026-07-28T11:04:52.000Z",
+          "updatedAt": "2026-07-28T11:04:52.000Z",
+          "uid": "35240-ac738a1b-b953-4dd7-b56d-2f4299598962"
+        }
+      ],
+      "id": "6d2d27cf-d944-4128-96fc-2a476baa2bfe",
+      "createdAt": "2026-07-28T11:04:52.000Z",
+      "updatedAt": "2026-07-28T11:04:52.000Z",
+      "uid": "35240-6d2d27cf-d944-4128-96fc-2a476baa2bfe"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.token.io"
+    }
+  ]
+}

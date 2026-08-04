@@ -1,0 +1,2348 @@
+{
+  "info": {
+    "_postman_id": "41182095-8e73-407d-b3aa-5cbb9396e7ab",
+    "name": "Token.io's Open Banking API for TPPs Account on File Transfers - for Payments v1 API",
+    "description": "<b>Token.io's Open Banking API</b><br/><br/>Token.io Support: <a href=\"https://support.token.io\" target=\"_blank\">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user's account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href=\"https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm\" target=\"_blank\">developer documentation</a>.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T11:04:58.000Z",
+    "updatedAt": "2026-07-28T11:04:58.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-41182095-8e73-407d-b3aa-5cbb9396e7ab"
+  },
+  "item": [
+    {
+      "name": "transfers",
+      "item": [
+        {
+          "name": "{transferId}",
+          "item": [
+            {
+              "name": "Get a transfer",
+              "id": "fa56863c-9852-4e63-bf72-2553a0ce9e39",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/transfers/:transferId?skipTransferUpdate=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transfers",
+                    ":transferId"
+                  ],
+                  "query": [
+                    {
+                      "description": "If `skipTransferUpdate` is false, the request will call the bank for a status update. If set to true, the cached result will be returned instead.",
+                      "key": "skipTransferUpdate",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "d7fd8de7-3db5-4be3-b419-a07edbd74e23",
+                      "key": "transferId",
+                      "value": "<string>",
+                      "description": "(Required) The unique id of the transfer sent in the `POST /transfers` response and/or included in a respective `GET /transfers` response."
+                    }
+                  ]
+                },
+                "description": "The `GET /transfers/{transferId}` endpoint retrieves information about a specific transfer in a given account."
+              },
+              "response": [
+                {
+                  "id": "ffd30b14-3ebc-40e9-b6f4-8a62d1758f7d",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transfers/:transferId?skipTransferUpdate=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transfers",
+                        ":transferId"
+                      ],
+                      "query": [
+                        {
+                          "description": "If `skipTransferUpdate` is false, the request will call the bank for a status update. If set to true, the cached result will be returned instead.",
+                          "key": "skipTransferUpdate",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "transferId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"transfer\": {\n    \"actingAs\": {\n      \"displayName\": \"<string>\",\n      \"refId\": \"<string>\",\n      \"secondaryName\": \"<string>\"\n    },\n    \"convertedToFutureDatedPayment\": false,\n    \"createdAtMs\": \"<string>\",\n    \"executionDate\": \"<string>\",\n    \"id\": \"<string>\",\n    \"payload\": {\n      \"tokenId\": \"<string>\",\n      \"refId\": \"<string>\",\n      \"amount\": {\n        \"currency\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      \"confirmFunds\": false,\n      \"description\": \"<string>\",\n      \"metadata\": {\n        \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n        \"providerTransferMetadata\": {\n          \"cma9TransferMetadata\": {\n            \"endToEndIdentification\": \"<string>\",\n            \"instructionIdentification\": \"<string>\",\n            \"risk\": {\n              \"deliveryAddress\": {\n                \"addressLine\": [\n                  \"<string>\",\n                  \"<string>\"\n                ],\n                \"addressType\": \"INVALID_ADDRESS_TYPE\",\n                \"buildingNumber\": \"<string>\",\n                \"country\": \"<string>\",\n                \"countrySubDivision\": [\n                  \"<string>\",\n                  \"<string>\"\n                ],\n                \"department\": \"<string>\",\n                \"postCode\": \"<string>\",\n                \"streetName\": \"<string>\",\n                \"subDepartment\": \"<string>\",\n                \"townName\": \"<string>\"\n              },\n              \"merchantCustomerIdentification\": \"<string>\",\n              \"paymentContextCode\": \"FACE_TO_FACE_POINT_OF_SALE\",\n              \"paymentPurposeCode\": \"CASH\",\n              \"beneficiaryAccountType\": \"PENSION\",\n              \"contractPresentIndicator\": \"<string>\",\n              \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n            }\n          }\n        },\n        \"purposeCode\": \"CASH\",\n        \"ultimateCreditor\": \"<string>\",\n        \"ultimateDebtor\": \"<string>\"\n      },\n      \"transferDestinations\": [\n        {\n          \"sepa\": {\n            \"iban\": \"<string>\",\n            \"bic\": \"<string>\"\n          }\n        },\n        {\n          \"sepa\": {\n            \"iban\": \"<string>\",\n            \"bic\": \"<string>\"\n          }\n        }\n      ]\n    },\n    \"payloadSignatures\": [\n      {\n        \"keyId\": \"<string>\",\n        \"memberId\": \"<string>\",\n        \"signature\": \"<string>\"\n      },\n      {\n        \"keyId\": \"<string>\",\n        \"memberId\": \"<string>\",\n        \"signature\": \"<string>\"\n      }\n    ],\n    \"providerDetails\": {\n      \"id\": \"<string>\",\n      \"status\": \"<string>\"\n    },\n    \"refund\": {\n      \"account\": {\n        \"bankgiro\": {\n          \"bankgiroNumber\": \"<string>\"\n        }\n      },\n      \"name\": \"<string>\"\n    },\n    \"refundDetails\": {\n      \"remainingRefundAmount\": {\n        \"currency\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      \"settledRefundAmount\": {\n        \"currency\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      \"transferRefundStatus\": \"UNSET\"\n    },\n    \"source\": {\n      \"accountIdentifier\": {\n        \"bankgiro\": {\n          \"bankgiroNumber\": \"<string>\"\n        }\n      },\n      \"bankId\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"customerData\": {\n        \"address\": {\n          \"city\": \"<string>\",\n          \"conscriptionNumber\": \"<string>\",\n          \"country\": \"<string>\",\n          \"district\": \"<string>\",\n          \"flats\": \"<string>\",\n          \"full\": \"<string>\",\n          \"hamlet\": \"<string>\",\n          \"houseName\": \"<string>\",\n          \"houseNumber\": \"<string>\",\n          \"place\": \"<string>\",\n          \"postCode\": \"<string>\",\n          \"province\": \"<string>\",\n          \"state\": \"<string>\",\n          \"street\": \"<string>\",\n          \"subdistrict\": \"<string>\",\n          \"suburb\": \"<string>\"\n        },\n        \"legalNames\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    },\n    \"status\": \"SETTLEMENT_INCOMPLETE\",\n    \"statusReasonInformation\": \"<string>\",\n    \"transactionId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:59.000Z",
+                  "updatedAt": "2026-07-28T11:04:59.000Z",
+                  "uid": "35240-ffd30b14-3ebc-40e9-b6f4-8a62d1758f7d"
+                },
+                {
+                  "id": "ee85adfa-b125-44a7-9a7b-90d547341101",
+                  "name": "The client specified an invalid argument",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transfers/:transferId?skipTransferUpdate=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transfers",
+                        ":transferId"
+                      ],
+                      "query": [
+                        {
+                          "description": "If `skipTransferUpdate` is false, the request will call the bank for a status update. If set to true, the cached result will be returned instead.",
+                          "key": "skipTransferUpdate",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "transferId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:59.000Z",
+                  "updatedAt": "2026-07-28T11:04:59.000Z",
+                  "uid": "35240-ee85adfa-b125-44a7-9a7b-90d547341101"
+                },
+                {
+                  "id": "46949b0f-932b-49ec-bddf-c8f708216144",
+                  "name": "The authorization information is missing or invalid",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transfers/:transferId?skipTransferUpdate=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transfers",
+                        ":transferId"
+                      ],
+                      "query": [
+                        {
+                          "description": "If `skipTransferUpdate` is false, the request will call the bank for a status update. If set to true, the cached result will be returned instead.",
+                          "key": "skipTransferUpdate",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "transferId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:59.000Z",
+                  "updatedAt": "2026-07-28T11:04:59.000Z",
+                  "uid": "35240-46949b0f-932b-49ec-bddf-c8f708216144"
+                },
+                {
+                  "id": "b4ea2849-4482-4909-bb50-3bd1c0a9fe7f",
+                  "name": "Permission to access this endpoint is denied",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transfers/:transferId?skipTransferUpdate=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transfers",
+                        ":transferId"
+                      ],
+                      "query": [
+                        {
+                          "description": "If `skipTransferUpdate` is false, the request will call the bank for a status update. If set to true, the cached result will be returned instead.",
+                          "key": "skipTransferUpdate",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "transferId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"reprehenderit\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:59.000Z",
+                  "updatedAt": "2026-07-28T11:04:59.000Z",
+                  "uid": "35240-b4ea2849-4482-4909-bb50-3bd1c0a9fe7f"
+                },
+                {
+                  "id": "78b2e97e-c049-41b0-807b-dacb45bbc6a8",
+                  "name": "The requested entity, such as a payment, was not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transfers/:transferId?skipTransferUpdate=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transfers",
+                        ":transferId"
+                      ],
+                      "query": [
+                        {
+                          "description": "If `skipTransferUpdate` is false, the request will call the bank for a status update. If set to true, the cached result will be returned instead.",
+                          "key": "skipTransferUpdate",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "transferId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"dolor\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"anim esse est\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:59.000Z",
+                  "updatedAt": "2026-07-28T11:04:59.000Z",
+                  "uid": "35240-78b2e97e-c049-41b0-807b-dacb45bbc6a8"
+                },
+                {
+                  "id": "7f433bb2-d8ae-433c-84b1-8119fc094b7d",
+                  "name": "Too many requests",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transfers/:transferId?skipTransferUpdate=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transfers",
+                        ":transferId"
+                      ],
+                      "query": [
+                        {
+                          "description": "If `skipTransferUpdate` is false, the request will call the bank for a status update. If set to true, the cached result will be returned instead.",
+                          "key": "skipTransferUpdate",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "transferId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"sed aliquip id non\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"enim\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:59.000Z",
+                  "updatedAt": "2026-07-28T11:04:59.000Z",
+                  "uid": "35240-7f433bb2-d8ae-433c-84b1-8119fc094b7d"
+                },
+                {
+                  "id": "0201cac3-743b-447d-842c-09f06f16b74e",
+                  "name": "An unexpected or internal server error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transfers/:transferId?skipTransferUpdate=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transfers",
+                        ":transferId"
+                      ],
+                      "query": [
+                        {
+                          "description": "If `skipTransferUpdate` is false, the request will call the bank for a status update. If set to true, the cached result will be returned instead.",
+                          "key": "skipTransferUpdate",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "transferId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:59.000Z",
+                  "updatedAt": "2026-07-28T11:04:59.000Z",
+                  "uid": "35240-0201cac3-743b-447d-842c-09f06f16b74e"
+                },
+                {
+                  "id": "e8f2de1d-aaef-445d-99f0-18710dbf0b1f",
+                  "name": "The operation was not implemented",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transfers/:transferId?skipTransferUpdate=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transfers",
+                        ":transferId"
+                      ],
+                      "query": [
+                        {
+                          "description": "If `skipTransferUpdate` is false, the request will call the bank for a status update. If set to true, the cached result will be returned instead.",
+                          "key": "skipTransferUpdate",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "transferId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Implemented",
+                  "code": 501,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"nisi adipisicing cillum aliquip\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"ut deserunt dolore Lorem\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:59.000Z",
+                  "updatedAt": "2026-07-28T11:04:59.000Z",
+                  "uid": "35240-e8f2de1d-aaef-445d-99f0-18710dbf0b1f"
+                },
+                {
+                  "id": "a0be7a35-52d3-47c0-ac40-ed2474a5fc84",
+                  "name": "Service is unavailable",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transfers/:transferId?skipTransferUpdate=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transfers",
+                        ":transferId"
+                      ],
+                      "query": [
+                        {
+                          "description": "If `skipTransferUpdate` is false, the request will call the bank for a status update. If set to true, the cached result will be returned instead.",
+                          "key": "skipTransferUpdate",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "transferId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Service Unavailable",
+                  "code": 503,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"sint officia eiusmod reprehenderit\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"aliqua dolor pariatur do consequat\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:59.000Z",
+                  "updatedAt": "2026-07-28T11:04:59.000Z",
+                  "uid": "35240-a0be7a35-52d3-47c0-ac40-ed2474a5fc84"
+                },
+                {
+                  "id": "0ea9965d-5f8b-4d8d-a3aa-0390129b2ed0",
+                  "name": "Gateway has timed out",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transfers/:transferId?skipTransferUpdate=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transfers",
+                        ":transferId"
+                      ],
+                      "query": [
+                        {
+                          "description": "If `skipTransferUpdate` is false, the request will call the bank for a status update. If set to true, the cached result will be returned instead.",
+                          "key": "skipTransferUpdate",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "transferId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Gateway Timeout",
+                  "code": 504,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"sit deserunt ut officia\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"enim reprehenderit\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:59.000Z",
+                  "updatedAt": "2026-07-28T11:04:59.000Z",
+                  "uid": "35240-0ea9965d-5f8b-4d8d-a3aa-0390129b2ed0"
+                }
+              ],
+              "createdAt": "2026-07-28T11:04:59.000Z",
+              "updatedAt": "2026-07-28T11:04:59.000Z",
+              "uid": "35240-fa56863c-9852-4e63-bf72-2553a0ce9e39"
+            }
+          ],
+          "id": "05f3da28-54af-4606-b678-e4f72d7ea5d0",
+          "createdAt": "2026-07-28T11:04:59.000Z",
+          "updatedAt": "2026-07-28T11:04:59.000Z",
+          "uid": "35240-05f3da28-54af-4606-b678-e4f72d7ea5d0"
+        },
+        {
+          "name": "Redeem a transfer token",
+          "id": "b8a6654b-669e-45b2-ae01-11a01ab09a22",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payload\": {\n    \"tokenId\": \"<string>\",\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"confirmFunds\": false,\n    \"description\": \"<string>\",\n    \"metadata\": {\n      \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n      \"providerTransferMetadata\": {\n        \"cma9TransferMetadata\": {\n          \"endToEndIdentification\": \"<string>\",\n          \"instructionIdentification\": \"<string>\",\n          \"risk\": {\n            \"deliveryAddress\": {\n              \"addressLine\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"addressType\": \"INVALID_ADDRESS_TYPE\",\n              \"buildingNumber\": \"<string>\",\n              \"country\": \"<string>\",\n              \"countrySubDivision\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"department\": \"<string>\",\n              \"postCode\": \"<string>\",\n              \"streetName\": \"<string>\",\n              \"subDepartment\": \"<string>\",\n              \"townName\": \"<string>\"\n            },\n            \"merchantCustomerIdentification\": \"<string>\",\n            \"paymentContextCode\": \"TRANSFER_TO_SELF\",\n            \"paymentPurposeCode\": \"CASH\",\n            \"beneficiaryAccountType\": \"PENSION\",\n            \"contractPresentIndicator\": \"<string>\",\n            \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n          }\n        }\n      },\n      \"purposeCode\": \"CASH\",\n      \"ultimateCreditor\": \"<string>\",\n      \"ultimateDebtor\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"transferDestinations\": [\n      {\n        \"sepa\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\"\n        }\n      },\n      {\n        \"sepa\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\"\n        }\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/transfers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transfers"
+              ]
+            },
+            "description": "The `POST /transfers` endpoint is only required when you explicitly redeem the request token, <i>i.e.</i>, auto-redeem is not enabled."
+          },
+          "response": [
+            {
+              "id": "a2cf1ace-711a-4dea-9a5c-fd3aef994cbc",
+              "name": "Successful response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payload\": {\n    \"tokenId\": \"<string>\",\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"confirmFunds\": false,\n    \"description\": \"<string>\",\n    \"metadata\": {\n      \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n      \"providerTransferMetadata\": {\n        \"cma9TransferMetadata\": {\n          \"endToEndIdentification\": \"<string>\",\n          \"instructionIdentification\": \"<string>\",\n          \"risk\": {\n            \"deliveryAddress\": {\n              \"addressLine\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"addressType\": \"INVALID_ADDRESS_TYPE\",\n              \"buildingNumber\": \"<string>\",\n              \"country\": \"<string>\",\n              \"countrySubDivision\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"department\": \"<string>\",\n              \"postCode\": \"<string>\",\n              \"streetName\": \"<string>\",\n              \"subDepartment\": \"<string>\",\n              \"townName\": \"<string>\"\n            },\n            \"merchantCustomerIdentification\": \"<string>\",\n            \"paymentContextCode\": \"TRANSFER_TO_SELF\",\n            \"paymentPurposeCode\": \"CASH\",\n            \"beneficiaryAccountType\": \"PENSION\",\n            \"contractPresentIndicator\": \"<string>\",\n            \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n          }\n        }\n      },\n      \"purposeCode\": \"CASH\",\n      \"ultimateCreditor\": \"<string>\",\n      \"ultimateDebtor\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"transferDestinations\": [\n      {\n        \"sepa\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\"\n        }\n      },\n      {\n        \"sepa\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\"\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/transfers",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transfers"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"authorizationDetails\": {\n    \"authorizationUrl\": \"<string>\"\n  },\n  \"transfer\": {\n    \"actingAs\": {\n      \"displayName\": \"<string>\",\n      \"refId\": \"<string>\",\n      \"secondaryName\": \"<string>\"\n    },\n    \"convertedToFutureDatedPayment\": false,\n    \"createdAtMs\": \"<string>\",\n    \"executionDate\": \"<string>\",\n    \"id\": \"<string>\",\n    \"payload\": {\n      \"tokenId\": \"<string>\",\n      \"refId\": \"<string>\",\n      \"amount\": {\n        \"currency\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      \"confirmFunds\": false,\n      \"description\": \"<string>\",\n      \"metadata\": {\n        \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n        \"providerTransferMetadata\": {\n          \"cma9TransferMetadata\": {\n            \"endToEndIdentification\": \"<string>\",\n            \"instructionIdentification\": \"<string>\",\n            \"risk\": {\n              \"deliveryAddress\": {\n                \"addressLine\": [\n                  \"<string>\",\n                  \"<string>\"\n                ],\n                \"addressType\": \"INVALID_ADDRESS_TYPE\",\n                \"buildingNumber\": \"<string>\",\n                \"country\": \"<string>\",\n                \"countrySubDivision\": [\n                  \"<string>\",\n                  \"<string>\"\n                ],\n                \"department\": \"<string>\",\n                \"postCode\": \"<string>\",\n                \"streetName\": \"<string>\",\n                \"subDepartment\": \"<string>\",\n                \"townName\": \"<string>\"\n              },\n              \"merchantCustomerIdentification\": \"<string>\",\n              \"paymentContextCode\": \"FACE_TO_FACE_POINT_OF_SALE\",\n              \"paymentPurposeCode\": \"CASH\",\n              \"beneficiaryAccountType\": \"PREMIER\",\n              \"contractPresentIndicator\": \"<string>\",\n              \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n            }\n          }\n        },\n        \"purposeCode\": \"CASH\",\n        \"ultimateCreditor\": \"<string>\",\n        \"ultimateDebtor\": \"<string>\"\n      },\n      \"transferDestinations\": [\n        {\n          \"sepa\": {\n            \"iban\": \"<string>\",\n            \"bic\": \"<string>\"\n          }\n        },\n        {\n          \"sepa\": {\n            \"iban\": \"<string>\",\n            \"bic\": \"<string>\"\n          }\n        }\n      ]\n    },\n    \"payloadSignatures\": [\n      {\n        \"keyId\": \"<string>\",\n        \"memberId\": \"<string>\",\n        \"signature\": \"<string>\"\n      },\n      {\n        \"keyId\": \"<string>\",\n        \"memberId\": \"<string>\",\n        \"signature\": \"<string>\"\n      }\n    ],\n    \"providerDetails\": {\n      \"id\": \"<string>\",\n      \"status\": \"<string>\"\n    },\n    \"refund\": {\n      \"account\": {\n        \"bankgiro\": {\n          \"bankgiroNumber\": \"<string>\"\n        }\n      },\n      \"name\": \"<string>\"\n    },\n    \"refundDetails\": {\n      \"remainingRefundAmount\": {\n        \"currency\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      \"settledRefundAmount\": {\n        \"currency\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      \"transferRefundStatus\": \"UNSET\"\n    },\n    \"source\": {\n      \"accountIdentifier\": {\n        \"bankgiro\": {\n          \"bankgiroNumber\": \"<string>\"\n        }\n      },\n      \"bankId\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"customerData\": {\n        \"address\": {\n          \"city\": \"<string>\",\n          \"conscriptionNumber\": \"<string>\",\n          \"country\": \"<string>\",\n          \"district\": \"<string>\",\n          \"flats\": \"<string>\",\n          \"full\": \"<string>\",\n          \"hamlet\": \"<string>\",\n          \"houseName\": \"<string>\",\n          \"houseNumber\": \"<string>\",\n          \"place\": \"<string>\",\n          \"postCode\": \"<string>\",\n          \"province\": \"<string>\",\n          \"state\": \"<string>\",\n          \"street\": \"<string>\",\n          \"subdistrict\": \"<string>\",\n          \"suburb\": \"<string>\"\n        },\n        \"legalNames\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    },\n    \"status\": \"SETTLEMENT_INCOMPLETE\",\n    \"statusReasonInformation\": \"<string>\",\n    \"transactionId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:59.000Z",
+              "updatedAt": "2026-07-28T11:04:59.000Z",
+              "uid": "35240-a2cf1ace-711a-4dea-9a5c-fd3aef994cbc"
+            },
+            {
+              "id": "7dc3a4ec-3769-4146-af0f-8716f7224a7b",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payload\": {\n    \"tokenId\": \"<string>\",\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"confirmFunds\": false,\n    \"description\": \"<string>\",\n    \"metadata\": {\n      \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n      \"providerTransferMetadata\": {\n        \"cma9TransferMetadata\": {\n          \"endToEndIdentification\": \"<string>\",\n          \"instructionIdentification\": \"<string>\",\n          \"risk\": {\n            \"deliveryAddress\": {\n              \"addressLine\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"addressType\": \"INVALID_ADDRESS_TYPE\",\n              \"buildingNumber\": \"<string>\",\n              \"country\": \"<string>\",\n              \"countrySubDivision\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"department\": \"<string>\",\n              \"postCode\": \"<string>\",\n              \"streetName\": \"<string>\",\n              \"subDepartment\": \"<string>\",\n              \"townName\": \"<string>\"\n            },\n            \"merchantCustomerIdentification\": \"<string>\",\n            \"paymentContextCode\": \"TRANSFER_TO_SELF\",\n            \"paymentPurposeCode\": \"CASH\",\n            \"beneficiaryAccountType\": \"PENSION\",\n            \"contractPresentIndicator\": \"<string>\",\n            \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n          }\n        }\n      },\n      \"purposeCode\": \"CASH\",\n      \"ultimateCreditor\": \"<string>\",\n      \"ultimateDebtor\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"transferDestinations\": [\n      {\n        \"sepa\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\"\n        }\n      },\n      {\n        \"sepa\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\"\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/transfers",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transfers"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:59.000Z",
+              "updatedAt": "2026-07-28T11:04:59.000Z",
+              "uid": "35240-7dc3a4ec-3769-4146-af0f-8716f7224a7b"
+            },
+            {
+              "id": "bbccb8f3-f6c1-4ad5-8aca-4adaa884d075",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payload\": {\n    \"tokenId\": \"<string>\",\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"confirmFunds\": false,\n    \"description\": \"<string>\",\n    \"metadata\": {\n      \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n      \"providerTransferMetadata\": {\n        \"cma9TransferMetadata\": {\n          \"endToEndIdentification\": \"<string>\",\n          \"instructionIdentification\": \"<string>\",\n          \"risk\": {\n            \"deliveryAddress\": {\n              \"addressLine\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"addressType\": \"INVALID_ADDRESS_TYPE\",\n              \"buildingNumber\": \"<string>\",\n              \"country\": \"<string>\",\n              \"countrySubDivision\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"department\": \"<string>\",\n              \"postCode\": \"<string>\",\n              \"streetName\": \"<string>\",\n              \"subDepartment\": \"<string>\",\n              \"townName\": \"<string>\"\n            },\n            \"merchantCustomerIdentification\": \"<string>\",\n            \"paymentContextCode\": \"TRANSFER_TO_SELF\",\n            \"paymentPurposeCode\": \"CASH\",\n            \"beneficiaryAccountType\": \"PENSION\",\n            \"contractPresentIndicator\": \"<string>\",\n            \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n          }\n        }\n      },\n      \"purposeCode\": \"CASH\",\n      \"ultimateCreditor\": \"<string>\",\n      \"ultimateDebtor\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"transferDestinations\": [\n      {\n        \"sepa\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\"\n        }\n      },\n      {\n        \"sepa\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\"\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/transfers",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transfers"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:59.000Z",
+              "updatedAt": "2026-07-28T11:04:59.000Z",
+              "uid": "35240-bbccb8f3-f6c1-4ad5-8aca-4adaa884d075"
+            },
+            {
+              "id": "ae509a3f-c1d6-4712-a043-42f00e128424",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payload\": {\n    \"tokenId\": \"<string>\",\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"confirmFunds\": false,\n    \"description\": \"<string>\",\n    \"metadata\": {\n      \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n      \"providerTransferMetadata\": {\n        \"cma9TransferMetadata\": {\n          \"endToEndIdentification\": \"<string>\",\n          \"instructionIdentification\": \"<string>\",\n          \"risk\": {\n            \"deliveryAddress\": {\n              \"addressLine\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"addressType\": \"INVALID_ADDRESS_TYPE\",\n              \"buildingNumber\": \"<string>\",\n              \"country\": \"<string>\",\n              \"countrySubDivision\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"department\": \"<string>\",\n              \"postCode\": \"<string>\",\n              \"streetName\": \"<string>\",\n              \"subDepartment\": \"<string>\",\n              \"townName\": \"<string>\"\n            },\n            \"merchantCustomerIdentification\": \"<string>\",\n            \"paymentContextCode\": \"TRANSFER_TO_SELF\",\n            \"paymentPurposeCode\": \"CASH\",\n            \"beneficiaryAccountType\": \"PENSION\",\n            \"contractPresentIndicator\": \"<string>\",\n            \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n          }\n        }\n      },\n      \"purposeCode\": \"CASH\",\n      \"ultimateCreditor\": \"<string>\",\n      \"ultimateDebtor\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"transferDestinations\": [\n      {\n        \"sepa\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\"\n        }\n      },\n      {\n        \"sepa\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\"\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/transfers",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transfers"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"reprehenderit\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:59.000Z",
+              "updatedAt": "2026-07-28T11:04:59.000Z",
+              "uid": "35240-ae509a3f-c1d6-4712-a043-42f00e128424"
+            },
+            {
+              "id": "b5fc5c21-bf3e-47c9-9ad2-c91a81d4e1fb",
+              "name": "The requested entity, such as a payment, was not found",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payload\": {\n    \"tokenId\": \"<string>\",\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"confirmFunds\": false,\n    \"description\": \"<string>\",\n    \"metadata\": {\n      \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n      \"providerTransferMetadata\": {\n        \"cma9TransferMetadata\": {\n          \"endToEndIdentification\": \"<string>\",\n          \"instructionIdentification\": \"<string>\",\n          \"risk\": {\n            \"deliveryAddress\": {\n              \"addressLine\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"addressType\": \"INVALID_ADDRESS_TYPE\",\n              \"buildingNumber\": \"<string>\",\n              \"country\": \"<string>\",\n              \"countrySubDivision\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"department\": \"<string>\",\n              \"postCode\": \"<string>\",\n              \"streetName\": \"<string>\",\n              \"subDepartment\": \"<string>\",\n              \"townName\": \"<string>\"\n            },\n            \"merchantCustomerIdentification\": \"<string>\",\n            \"paymentContextCode\": \"TRANSFER_TO_SELF\",\n            \"paymentPurposeCode\": \"CASH\",\n            \"beneficiaryAccountType\": \"PENSION\",\n            \"contractPresentIndicator\": \"<string>\",\n            \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n          }\n        }\n      },\n      \"purposeCode\": \"CASH\",\n      \"ultimateCreditor\": \"<string>\",\n      \"ultimateDebtor\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"transferDestinations\": [\n      {\n        \"sepa\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\"\n        }\n      },\n      {\n        \"sepa\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\"\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/transfers",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transfers"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"dolor\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"anim esse est\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:59.000Z",
+              "updatedAt": "2026-07-28T11:04:59.000Z",
+              "uid": "35240-b5fc5c21-bf3e-47c9-9ad2-c91a81d4e1fb"
+            },
+            {
+              "id": "341daa4a-5f61-454b-9a40-34835c02f708",
+              "name": "Too many requests",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payload\": {\n    \"tokenId\": \"<string>\",\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"confirmFunds\": false,\n    \"description\": \"<string>\",\n    \"metadata\": {\n      \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n      \"providerTransferMetadata\": {\n        \"cma9TransferMetadata\": {\n          \"endToEndIdentification\": \"<string>\",\n          \"instructionIdentification\": \"<string>\",\n          \"risk\": {\n            \"deliveryAddress\": {\n              \"addressLine\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"addressType\": \"INVALID_ADDRESS_TYPE\",\n              \"buildingNumber\": \"<string>\",\n              \"country\": \"<string>\",\n              \"countrySubDivision\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"department\": \"<string>\",\n              \"postCode\": \"<string>\",\n              \"streetName\": \"<string>\",\n              \"subDepartment\": \"<string>\",\n              \"townName\": \"<string>\"\n            },\n            \"merchantCustomerIdentification\": \"<string>\",\n            \"paymentContextCode\": \"TRANSFER_TO_SELF\",\n            \"paymentPurposeCode\": \"CASH\",\n            \"beneficiaryAccountType\": \"PENSION\",\n            \"contractPresentIndicator\": \"<string>\",\n            \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n          }\n        }\n      },\n      \"purposeCode\": \"CASH\",\n      \"ultimateCreditor\": \"<string>\",\n      \"ultimateDebtor\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"transferDestinations\": [\n      {\n        \"sepa\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\"\n        }\n      },\n      {\n        \"sepa\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\"\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/transfers",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transfers"
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"sed aliquip id non\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"enim\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:59.000Z",
+              "updatedAt": "2026-07-28T11:04:59.000Z",
+              "uid": "35240-341daa4a-5f61-454b-9a40-34835c02f708"
+            },
+            {
+              "id": "7bab2d52-5194-482f-bd32-9b42a439114d",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payload\": {\n    \"tokenId\": \"<string>\",\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"confirmFunds\": false,\n    \"description\": \"<string>\",\n    \"metadata\": {\n      \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n      \"providerTransferMetadata\": {\n        \"cma9TransferMetadata\": {\n          \"endToEndIdentification\": \"<string>\",\n          \"instructionIdentification\": \"<string>\",\n          \"risk\": {\n            \"deliveryAddress\": {\n              \"addressLine\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"addressType\": \"INVALID_ADDRESS_TYPE\",\n              \"buildingNumber\": \"<string>\",\n              \"country\": \"<string>\",\n              \"countrySubDivision\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"department\": \"<string>\",\n              \"postCode\": \"<string>\",\n              \"streetName\": \"<string>\",\n              \"subDepartment\": \"<string>\",\n              \"townName\": \"<string>\"\n            },\n            \"merchantCustomerIdentification\": \"<string>\",\n            \"paymentContextCode\": \"TRANSFER_TO_SELF\",\n            \"paymentPurposeCode\": \"CASH\",\n            \"beneficiaryAccountType\": \"PENSION\",\n            \"contractPresentIndicator\": \"<string>\",\n            \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n          }\n        }\n      },\n      \"purposeCode\": \"CASH\",\n      \"ultimateCreditor\": \"<string>\",\n      \"ultimateDebtor\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"transferDestinations\": [\n      {\n        \"sepa\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\"\n        }\n      },\n      {\n        \"sepa\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\"\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/transfers",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transfers"
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:59.000Z",
+              "updatedAt": "2026-07-28T11:04:59.000Z",
+              "uid": "35240-7bab2d52-5194-482f-bd32-9b42a439114d"
+            },
+            {
+              "id": "4a7dc2ca-f192-4ee2-b70e-a791d0e4d7fd",
+              "name": "The operation was not implemented",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payload\": {\n    \"tokenId\": \"<string>\",\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"confirmFunds\": false,\n    \"description\": \"<string>\",\n    \"metadata\": {\n      \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n      \"providerTransferMetadata\": {\n        \"cma9TransferMetadata\": {\n          \"endToEndIdentification\": \"<string>\",\n          \"instructionIdentification\": \"<string>\",\n          \"risk\": {\n            \"deliveryAddress\": {\n              \"addressLine\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"addressType\": \"INVALID_ADDRESS_TYPE\",\n              \"buildingNumber\": \"<string>\",\n              \"country\": \"<string>\",\n              \"countrySubDivision\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"department\": \"<string>\",\n              \"postCode\": \"<string>\",\n              \"streetName\": \"<string>\",\n              \"subDepartment\": \"<string>\",\n              \"townName\": \"<string>\"\n            },\n            \"merchantCustomerIdentification\": \"<string>\",\n            \"paymentContextCode\": \"TRANSFER_TO_SELF\",\n            \"paymentPurposeCode\": \"CASH\",\n            \"beneficiaryAccountType\": \"PENSION\",\n            \"contractPresentIndicator\": \"<string>\",\n            \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n          }\n        }\n      },\n      \"purposeCode\": \"CASH\",\n      \"ultimateCreditor\": \"<string>\",\n      \"ultimateDebtor\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"transferDestinations\": [\n      {\n        \"sepa\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\"\n        }\n      },\n      {\n        \"sepa\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\"\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/transfers",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transfers"
+                  ]
+                }
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"nisi adipisicing cillum aliquip\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"ut deserunt dolore Lorem\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:59.000Z",
+              "updatedAt": "2026-07-28T11:04:59.000Z",
+              "uid": "35240-4a7dc2ca-f192-4ee2-b70e-a791d0e4d7fd"
+            },
+            {
+              "id": "b4eeada5-4655-4796-9466-e38198ec74c9",
+              "name": "Service is unavailable",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payload\": {\n    \"tokenId\": \"<string>\",\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"confirmFunds\": false,\n    \"description\": \"<string>\",\n    \"metadata\": {\n      \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n      \"providerTransferMetadata\": {\n        \"cma9TransferMetadata\": {\n          \"endToEndIdentification\": \"<string>\",\n          \"instructionIdentification\": \"<string>\",\n          \"risk\": {\n            \"deliveryAddress\": {\n              \"addressLine\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"addressType\": \"INVALID_ADDRESS_TYPE\",\n              \"buildingNumber\": \"<string>\",\n              \"country\": \"<string>\",\n              \"countrySubDivision\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"department\": \"<string>\",\n              \"postCode\": \"<string>\",\n              \"streetName\": \"<string>\",\n              \"subDepartment\": \"<string>\",\n              \"townName\": \"<string>\"\n            },\n            \"merchantCustomerIdentification\": \"<string>\",\n            \"paymentContextCode\": \"TRANSFER_TO_SELF\",\n            \"paymentPurposeCode\": \"CASH\",\n            \"beneficiaryAccountType\": \"PENSION\",\n            \"contractPresentIndicator\": \"<string>\",\n            \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n          }\n        }\n      },\n      \"purposeCode\": \"CASH\",\n      \"ultimateCreditor\": \"<string>\",\n      \"ultimateDebtor\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"transferDestinations\": [\n      {\n        \"sepa\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\"\n        }\n      },\n      {\n        \"sepa\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\"\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/transfers",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transfers"
+                  ]
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"sint officia eiusmod reprehenderit\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"aliqua dolor pariatur do consequat\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:59.000Z",
+              "updatedAt": "2026-07-28T11:04:59.000Z",
+              "uid": "35240-b4eeada5-4655-4796-9466-e38198ec74c9"
+            },
+            {
+              "id": "4d767316-e271-4c4d-a333-2d45a9d6399b",
+              "name": "Gateway has timed out",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payload\": {\n    \"tokenId\": \"<string>\",\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"confirmFunds\": false,\n    \"description\": \"<string>\",\n    \"metadata\": {\n      \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n      \"providerTransferMetadata\": {\n        \"cma9TransferMetadata\": {\n          \"endToEndIdentification\": \"<string>\",\n          \"instructionIdentification\": \"<string>\",\n          \"risk\": {\n            \"deliveryAddress\": {\n              \"addressLine\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"addressType\": \"INVALID_ADDRESS_TYPE\",\n              \"buildingNumber\": \"<string>\",\n              \"country\": \"<string>\",\n              \"countrySubDivision\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"department\": \"<string>\",\n              \"postCode\": \"<string>\",\n              \"streetName\": \"<string>\",\n              \"subDepartment\": \"<string>\",\n              \"townName\": \"<string>\"\n            },\n            \"merchantCustomerIdentification\": \"<string>\",\n            \"paymentContextCode\": \"TRANSFER_TO_SELF\",\n            \"paymentPurposeCode\": \"CASH\",\n            \"beneficiaryAccountType\": \"PENSION\",\n            \"contractPresentIndicator\": \"<string>\",\n            \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n          }\n        }\n      },\n      \"purposeCode\": \"CASH\",\n      \"ultimateCreditor\": \"<string>\",\n      \"ultimateDebtor\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"transferDestinations\": [\n      {\n        \"sepa\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\"\n        }\n      },\n      {\n        \"sepa\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\"\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/transfers",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transfers"
+                  ]
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"sit deserunt ut officia\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"enim reprehenderit\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:59.000Z",
+              "updatedAt": "2026-07-28T11:04:59.000Z",
+              "uid": "35240-4d767316-e271-4c4d-a333-2d45a9d6399b"
+            }
+          ],
+          "createdAt": "2026-07-28T11:04:59.000Z",
+          "updatedAt": "2026-07-28T11:04:59.000Z",
+          "uid": "35240-b8a6654b-669e-45b2-ae01-11a01ab09a22"
+        },
+        {
+          "name": "Get transfers",
+          "id": "c22df075-9bd9-451b-a1ab-c2cdcd6d2b35",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/transfers?tokenId=<string>&page.offset=<string>&page.limit=1&filter.tokenId=<string>&filter.startTimeMs=<string>&filter.endTimeMs=<string>&filter.transactionStatus=PENDING&filter.role=ANY&filter.actingAsRefId=<string>&filter.refId=<string>&filter.transferRefundStatus=FULL",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transfers"
+              ],
+              "query": [
+                {
+                  "description": "Identifies the authorization token for the request.",
+                  "key": "tokenId",
+                  "value": "<string>"
+                },
+                {
+                  "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way.",
+                  "key": "page.offset",
+                  "value": "<string>"
+                },
+                {
+                  "description": "(Required) The maximum number of records to return. This must be less than 200.",
+                  "key": "page.limit",
+                  "value": "1"
+                },
+                {
+                  "description": "Filters by the authorization token id.",
+                  "key": "filter.tokenId",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Filtered list start time boundary in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                  "key": "filter.startTimeMs",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Filtered list end time boundary in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                  "key": "filter.endTimeMs",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Filters by transaction status. <ul> <li><b>PROCESSING</b> \u2013 This status indicates that the transaction is in process and that the final status has not been received from the bank.</li><li><b>SUCCESS</b> \u2013 This status indicates that successful payment initiation has been received from the bank. Settlement might not be complete.</li> <li><b>INITIATED</b> \u2013 This status is set when the previous status has remained as `PROCESSING` for 30 days and cannot be updated. The transaction has been initiated but the result is unknown. This is the final status and will not get updated later because Token.io has stopped polling the bank.<br/> This status is also returned in a two-step payment flow in the event that a user\u2019s request has been authorized at the bank but the payment confirmation has subsequently failed.</li><li><b>PENDING_EXTERNAL_AUTHORIZATION</b> \u2013 This status indicates that the user has been sent to the bank to complete the authorization process. If not completed within the allowed timeframe (usually around 15 mins, but there are variations between banks) the transaction will expire and transition to `FAILURE_EXPIRED`. This status is only relevant for 1-step payment flows.</li> <li><b>FAILURE_GENERIC</b> \u2013 This status usually indicates a technical failure. Possibly, a failure callback was received from the bank, with no transaction status and no further information.</li> <li><b>FAILURE_PERMISSION_DENIED</b> \u2013 This status indicates that the user has been denied authorization at the bank This status is only relevant for two-step payment flows.</li> <li><b>FAILURE_CANCELED</b> \u2013 This status indicates that the payment initiation has been canceled before execution.</li> <li><b>FAILURE_EXPIRED</b> \u2013 This status indicates that the user did not complete the authorization process within the allowed timeframe (usually around 15 mins, but there are variations between banks) and the payment has expired.</li> <li><b>FAILURE_INSUFFICIENT_FUNDS</b> \u2013 This status indicates that the payment initiation request has been rejected due to insufficient funds.</li> <li><b>FAILURE_DECLINED</b> \u2013 This status indicates that the payment initiation has been rejected by the bank.</li> <li><b>SETTLEMENT_IN_PROGRESS</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Token.io is waiting for the payment to reach the payee bank. No action is required; await the next step, <i>e.g.</i>, Token.io sends a webhook with the status update, or a polling call. The status will change to `SETTLEMENT_IN_PROGRESS` soon after Token.io receives the final status from the debtor bank.</li> <li><b>SETTLEMENT_COMPLETED</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. The payment has reached the payee bank and Token.io has matched the transaction in the TPP\u2019s settlement account to the initiated payment. For instant payments, `SETTLEMENT_COMPLETED` will be achieved within 30-45 minutes from payment initiation, at the latest. For non-instant payments, the time to reach `SETTLEMENT_COMPLETED` will depend on the clearing period for the payment.</li><li><b>SETTLEMENT_INCOMPLETE</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Reconciliation has failed. This happens when Token.io doesn't find the corresponding transaction in the TPP\u2019s settlement account automatically.</li></ul><br/>During settlement of a settlement accounts payment, the status update job will run first for up to 30 days. Payment will then enter into a 'final' status, normally `SUCCESS`.<br/>Once the status update job has run, the reconciliation job looks for matching inbound payments.For SEPA payments:<ul><li>if a matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>For SEPA Instant payments:<ul><li>if a matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>",
+                  "key": "filter.transactionStatus",
+                  "value": "PENDING"
+                },
+                {
+                  "description": "Filters list by the account holder role.",
+                  "key": "filter.role",
+                  "value": "ANY"
+                },
+                {
+                  "description": "Filters the list by the sub-TPP identifier generated by Token.io once a TPP has been onboarded.",
+                  "key": "filter.actingAsRefId",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Filters list by `refID`.",
+                  "key": "filter.refId",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Filters list by refund status.",
+                  "key": "filter.transferRefundStatus",
+                  "value": "FULL"
+                }
+              ]
+            },
+            "description": "The `GET /transfers` endpoint retrieves information for all transfers."
+          },
+          "response": [
+            {
+              "id": "05defc4e-f9a4-4cf8-a0cf-ba99d6e04dd8",
+              "name": "Successful response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/transfers?tokenId=<string>&page.offset=<string>&page.limit=1&filter.tokenId=<string>&filter.startTimeMs=<string>&filter.endTimeMs=<string>&filter.transactionStatus=PENDING&filter.role=ANY&filter.actingAsRefId=<string>&filter.refId=<string>&filter.transferRefundStatus=FULL",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transfers"
+                  ],
+                  "query": [
+                    {
+                      "description": "Identifies the authorization token for the request.",
+                      "key": "tokenId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way.",
+                      "key": "page.offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) The maximum number of records to return. This must be less than 200.",
+                      "key": "page.limit",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Filters by the authorization token id.",
+                      "key": "filter.tokenId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filtered list start time boundary in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.startTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filtered list end time boundary in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.endTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters by transaction status. <ul> <li><b>PROCESSING</b> \u2013 This status indicates that the transaction is in process and that the final status has not been received from the bank.</li><li><b>SUCCESS</b> \u2013 This status indicates that successful payment initiation has been received from the bank. Settlement might not be complete.</li> <li><b>INITIATED</b> \u2013 This status is set when the previous status has remained as `PROCESSING` for 30 days and cannot be updated. The transaction has been initiated but the result is unknown. This is the final status and will not get updated later because Token.io has stopped polling the bank.<br/> This status is also returned in a two-step payment flow in the event that a user\u2019s request has been authorized at the bank but the payment confirmation has subsequently failed.</li><li><b>PENDING_EXTERNAL_AUTHORIZATION</b> \u2013 This status indicates that the user has been sent to the bank to complete the authorization process. If not completed within the allowed timeframe (usually around 15 mins, but there are variations between banks) the transaction will expire and transition to `FAILURE_EXPIRED`. This status is only relevant for 1-step payment flows.</li> <li><b>FAILURE_GENERIC</b> \u2013 This status usually indicates a technical failure. Possibly, a failure callback was received from the bank, with no transaction status and no further information.</li> <li><b>FAILURE_PERMISSION_DENIED</b> \u2013 This status indicates that the user has been denied authorization at the bank This status is only relevant for two-step payment flows.</li> <li><b>FAILURE_CANCELED</b> \u2013 This status indicates that the payment initiation has been canceled before execution.</li> <li><b>FAILURE_EXPIRED</b> \u2013 This status indicates that the user did not complete the authorization process within the allowed timeframe (usually around 15 mins, but there are variations between banks) and the payment has expired.</li> <li><b>FAILURE_INSUFFICIENT_FUNDS</b> \u2013 This status indicates that the payment initiation request has been rejected due to insufficient funds.</li> <li><b>FAILURE_DECLINED</b> \u2013 This status indicates that the payment initiation has been rejected by the bank.</li> <li><b>SETTLEMENT_IN_PROGRESS</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Token.io is waiting for the payment to reach the payee bank. No action is required; await the next step, <i>e.g.</i>, Token.io sends a webhook with the status update, or a polling call. The status will change to `SETTLEMENT_IN_PROGRESS` soon after Token.io receives the final status from the debtor bank.</li> <li><b>SETTLEMENT_COMPLETED</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. The payment has reached the payee bank and Token.io has matched the transaction in the TPP\u2019s settlement account to the initiated payment. For instant payments, `SETTLEMENT_COMPLETED` will be achieved within 30-45 minutes from payment initiation, at the latest. For non-instant payments, the time to reach `SETTLEMENT_COMPLETED` will depend on the clearing period for the payment.</li><li><b>SETTLEMENT_INCOMPLETE</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Reconciliation has failed. This happens when Token.io doesn't find the corresponding transaction in the TPP\u2019s settlement account automatically.</li></ul><br/>During settlement of a settlement accounts payment, the status update job will run first for up to 30 days. Payment will then enter into a 'final' status, normally `SUCCESS`.<br/>Once the status update job has run, the reconciliation job looks for matching inbound payments.For SEPA payments:<ul><li>if a matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>For SEPA Instant payments:<ul><li>if a matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>",
+                      "key": "filter.transactionStatus",
+                      "value": "PENDING"
+                    },
+                    {
+                      "description": "Filters list by the account holder role.",
+                      "key": "filter.role",
+                      "value": "ANY"
+                    },
+                    {
+                      "description": "Filters the list by the sub-TPP identifier generated by Token.io once a TPP has been onboarded.",
+                      "key": "filter.actingAsRefId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters list by `refID`.",
+                      "key": "filter.refId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters list by refund status.",
+                      "key": "filter.transferRefundStatus",
+                      "value": "FULL"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"offset\": \"<string>\",\n  \"transfers\": [\n    {\n      \"actingAs\": {\n        \"displayName\": \"<string>\",\n        \"refId\": \"<string>\",\n        \"secondaryName\": \"<string>\"\n      },\n      \"convertedToFutureDatedPayment\": false,\n      \"createdAtMs\": \"<string>\",\n      \"executionDate\": \"<string>\",\n      \"id\": \"<string>\",\n      \"payload\": {\n        \"tokenId\": \"<string>\",\n        \"refId\": \"<string>\",\n        \"amount\": {\n          \"currency\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        \"confirmFunds\": false,\n        \"description\": \"<string>\",\n        \"metadata\": {\n          \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n          \"providerTransferMetadata\": {\n            \"cma9TransferMetadata\": {\n              \"endToEndIdentification\": \"<string>\",\n              \"instructionIdentification\": \"<string>\",\n              \"risk\": {\n                \"deliveryAddress\": {\n                  \"addressLine\": [\n                    \"<string>\",\n                    \"<string>\"\n                  ],\n                  \"addressType\": \"INVALID_ADDRESS_TYPE\",\n                  \"buildingNumber\": \"<string>\",\n                  \"country\": \"<string>\",\n                  \"countrySubDivision\": [\n                    \"<string>\",\n                    \"<string>\"\n                  ],\n                  \"department\": \"<string>\",\n                  \"postCode\": \"<string>\",\n                  \"streetName\": \"<string>\",\n                  \"subDepartment\": \"<string>\",\n                  \"townName\": \"<string>\"\n                },\n                \"merchantCustomerIdentification\": \"<string>\",\n                \"paymentContextCode\": \"BILLING_GOODS_AND_SERVICES_IN_ARREARS\",\n                \"paymentPurposeCode\": \"CASH\",\n                \"beneficiaryAccountType\": \"PREMIER\",\n                \"contractPresentIndicator\": \"<string>\",\n                \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n              }\n            }\n          },\n          \"purposeCode\": \"CASH\",\n          \"ultimateCreditor\": \"<string>\",\n          \"ultimateDebtor\": \"<string>\"\n        },\n        \"transferDestinations\": [\n          {\n            \"sepa\": {\n              \"iban\": \"<string>\",\n              \"bic\": \"<string>\"\n            }\n          },\n          {\n            \"sepa\": {\n              \"iban\": \"<string>\",\n              \"bic\": \"<string>\"\n            }\n          }\n        ]\n      },\n      \"payloadSignatures\": [\n        {\n          \"keyId\": \"<string>\",\n          \"memberId\": \"<string>\",\n          \"signature\": \"<string>\"\n        },\n        {\n          \"keyId\": \"<string>\",\n          \"memberId\": \"<string>\",\n          \"signature\": \"<string>\"\n        }\n      ],\n      \"providerDetails\": {\n        \"id\": \"<string>\",\n        \"status\": \"<string>\"\n      },\n      \"refund\": {\n        \"account\": {\n          \"bankgiro\": {\n            \"bankgiroNumber\": \"<string>\"\n          }\n        },\n        \"name\": \"<string>\"\n      },\n      \"refundDetails\": {\n        \"remainingRefundAmount\": {\n          \"currency\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        \"settledRefundAmount\": {\n          \"currency\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        \"transferRefundStatus\": \"UNSET\"\n      },\n      \"source\": {\n        \"accountIdentifier\": {\n          \"bankgiro\": {\n            \"bankgiroNumber\": \"<string>\"\n          }\n        },\n        \"bankId\": \"<string>\",\n        \"bic\": \"<string>\",\n        \"customerData\": {\n          \"address\": {\n            \"city\": \"<string>\",\n            \"conscriptionNumber\": \"<string>\",\n            \"country\": \"<string>\",\n            \"district\": \"<string>\",\n            \"flats\": \"<string>\",\n            \"full\": \"<string>\",\n            \"hamlet\": \"<string>\",\n            \"houseName\": \"<string>\",\n            \"houseNumber\": \"<string>\",\n            \"place\": \"<string>\",\n            \"postCode\": \"<string>\",\n            \"province\": \"<string>\",\n            \"state\": \"<string>\",\n            \"street\": \"<string>\",\n            \"subdistrict\": \"<string>\",\n            \"suburb\": \"<string>\"\n          },\n          \"legalNames\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      },\n      \"status\": \"SETTLEMENT_COMPLETED\",\n      \"statusReasonInformation\": \"<string>\",\n      \"transactionId\": \"<string>\"\n    },\n    {\n      \"actingAs\": {\n        \"displayName\": \"<string>\",\n        \"refId\": \"<string>\",\n        \"secondaryName\": \"<string>\"\n      },\n      \"convertedToFutureDatedPayment\": false,\n      \"createdAtMs\": \"<string>\",\n      \"executionDate\": \"<string>\",\n      \"id\": \"<string>\",\n      \"payload\": {\n        \"tokenId\": \"<string>\",\n        \"refId\": \"<string>\",\n        \"amount\": {\n          \"currency\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        \"confirmFunds\": false,\n        \"description\": \"<string>\",\n        \"metadata\": {\n          \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n          \"providerTransferMetadata\": {\n            \"cma9TransferMetadata\": {\n              \"endToEndIdentification\": \"<string>\",\n              \"instructionIdentification\": \"<string>\",\n              \"risk\": {\n                \"deliveryAddress\": {\n                  \"addressLine\": [\n                    \"<string>\",\n                    \"<string>\"\n                  ],\n                  \"addressType\": \"INVALID_ADDRESS_TYPE\",\n                  \"buildingNumber\": \"<string>\",\n                  \"country\": \"<string>\",\n                  \"countrySubDivision\": [\n                    \"<string>\",\n                    \"<string>\"\n                  ],\n                  \"department\": \"<string>\",\n                  \"postCode\": \"<string>\",\n                  \"streetName\": \"<string>\",\n                  \"subDepartment\": \"<string>\",\n                  \"townName\": \"<string>\"\n                },\n                \"merchantCustomerIdentification\": \"<string>\",\n                \"paymentContextCode\": \"TRANSFER_TO_SELF\",\n                \"paymentPurposeCode\": \"CASH\",\n                \"beneficiaryAccountType\": \"JOINT_PERSONAL\",\n                \"contractPresentIndicator\": \"<string>\",\n                \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n              }\n            }\n          },\n          \"purposeCode\": \"CASH\",\n          \"ultimateCreditor\": \"<string>\",\n          \"ultimateDebtor\": \"<string>\"\n        },\n        \"transferDestinations\": [\n          {\n            \"sepa\": {\n              \"iban\": \"<string>\",\n              \"bic\": \"<string>\"\n            }\n          },\n          {\n            \"sepa\": {\n              \"iban\": \"<string>\",\n              \"bic\": \"<string>\"\n            }\n          }\n        ]\n      },\n      \"payloadSignatures\": [\n        {\n          \"keyId\": \"<string>\",\n          \"memberId\": \"<string>\",\n          \"signature\": \"<string>\"\n        },\n        {\n          \"keyId\": \"<string>\",\n          \"memberId\": \"<string>\",\n          \"signature\": \"<string>\"\n        }\n      ],\n      \"providerDetails\": {\n        \"id\": \"<string>\",\n        \"status\": \"<string>\"\n      },\n      \"refund\": {\n        \"account\": {\n          \"bankgiro\": {\n            \"bankgiroNumber\": \"<string>\"\n          }\n        },\n        \"name\": \"<string>\"\n      },\n      \"refundDetails\": {\n        \"remainingRefundAmount\": {\n          \"currency\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        \"settledRefundAmount\": {\n          \"currency\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        \"transferRefundStatus\": \"UNSET\"\n      },\n      \"source\": {\n        \"accountIdentifier\": {\n          \"bankgiro\": {\n            \"bankgiroNumber\": \"<string>\"\n          }\n        },\n        \"bankId\": \"<string>\",\n        \"bic\": \"<string>\",\n        \"customerData\": {\n          \"address\": {\n            \"city\": \"<string>\",\n            \"conscriptionNumber\": \"<string>\",\n            \"country\": \"<string>\",\n            \"district\": \"<string>\",\n            \"flats\": \"<string>\",\n            \"full\": \"<string>\",\n            \"hamlet\": \"<string>\",\n            \"houseName\": \"<string>\",\n            \"houseNumber\": \"<string>\",\n            \"place\": \"<string>\",\n            \"postCode\": \"<string>\",\n            \"province\": \"<string>\",\n            \"state\": \"<string>\",\n            \"street\": \"<string>\",\n            \"subdistrict\": \"<string>\",\n            \"suburb\": \"<string>\"\n          },\n          \"legalNames\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      },\n      \"status\": \"FAILURE_PERMISSION_DENIED\",\n      \"statusReasonInformation\": \"<string>\",\n      \"transactionId\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T11:04:59.000Z",
+              "updatedAt": "2026-07-28T11:04:59.000Z",
+              "uid": "35240-05defc4e-f9a4-4cf8-a0cf-ba99d6e04dd8"
+            },
+            {
+              "id": "074ea1fe-942f-4da9-9a16-dbfe8cdfa903",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/transfers?tokenId=<string>&page.offset=<string>&page.limit=1&filter.tokenId=<string>&filter.startTimeMs=<string>&filter.endTimeMs=<string>&filter.transactionStatus=PENDING&filter.role=ANY&filter.actingAsRefId=<string>&filter.refId=<string>&filter.transferRefundStatus=FULL",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transfers"
+                  ],
+                  "query": [
+                    {
+                      "description": "Identifies the authorization token for the request.",
+                      "key": "tokenId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way.",
+                      "key": "page.offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) The maximum number of records to return. This must be less than 200.",
+                      "key": "page.limit",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Filters by the authorization token id.",
+                      "key": "filter.tokenId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filtered list start time boundary in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.startTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filtered list end time boundary in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.endTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters by transaction status. <ul> <li><b>PROCESSING</b> \u2013 This status indicates that the transaction is in process and that the final status has not been received from the bank.</li><li><b>SUCCESS</b> \u2013 This status indicates that successful payment initiation has been received from the bank. Settlement might not be complete.</li> <li><b>INITIATED</b> \u2013 This status is set when the previous status has remained as `PROCESSING` for 30 days and cannot be updated. The transaction has been initiated but the result is unknown. This is the final status and will not get updated later because Token.io has stopped polling the bank.<br/> This status is also returned in a two-step payment flow in the event that a user\u2019s request has been authorized at the bank but the payment confirmation has subsequently failed.</li><li><b>PENDING_EXTERNAL_AUTHORIZATION</b> \u2013 This status indicates that the user has been sent to the bank to complete the authorization process. If not completed within the allowed timeframe (usually around 15 mins, but there are variations between banks) the transaction will expire and transition to `FAILURE_EXPIRED`. This status is only relevant for 1-step payment flows.</li> <li><b>FAILURE_GENERIC</b> \u2013 This status usually indicates a technical failure. Possibly, a failure callback was received from the bank, with no transaction status and no further information.</li> <li><b>FAILURE_PERMISSION_DENIED</b> \u2013 This status indicates that the user has been denied authorization at the bank This status is only relevant for two-step payment flows.</li> <li><b>FAILURE_CANCELED</b> \u2013 This status indicates that the payment initiation has been canceled before execution.</li> <li><b>FAILURE_EXPIRED</b> \u2013 This status indicates that the user did not complete the authorization process within the allowed timeframe (usually around 15 mins, but there are variations between banks) and the payment has expired.</li> <li><b>FAILURE_INSUFFICIENT_FUNDS</b> \u2013 This status indicates that the payment initiation request has been rejected due to insufficient funds.</li> <li><b>FAILURE_DECLINED</b> \u2013 This status indicates that the payment initiation has been rejected by the bank.</li> <li><b>SETTLEMENT_IN_PROGRESS</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Token.io is waiting for the payment to reach the payee bank. No action is required; await the next step, <i>e.g.</i>, Token.io sends a webhook with the status update, or a polling call. The status will change to `SETTLEMENT_IN_PROGRESS` soon after Token.io receives the final status from the debtor bank.</li> <li><b>SETTLEMENT_COMPLETED</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. The payment has reached the payee bank and Token.io has matched the transaction in the TPP\u2019s settlement account to the initiated payment. For instant payments, `SETTLEMENT_COMPLETED` will be achieved within 30-45 minutes from payment initiation, at the latest. For non-instant payments, the time to reach `SETTLEMENT_COMPLETED` will depend on the clearing period for the payment.</li><li><b>SETTLEMENT_INCOMPLETE</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Reconciliation has failed. This happens when Token.io doesn't find the corresponding transaction in the TPP\u2019s settlement account automatically.</li></ul><br/>During settlement of a settlement accounts payment, the status update job will run first for up to 30 days. Payment will then enter into a 'final' status, normally `SUCCESS`.<br/>Once the status update job has run, the reconciliation job looks for matching inbound payments.For SEPA payments:<ul><li>if a matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>For SEPA Instant payments:<ul><li>if a matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>",
+                      "key": "filter.transactionStatus",
+                      "value": "PENDING"
+                    },
+                    {
+                      "description": "Filters list by the account holder role.",
+                      "key": "filter.role",
+                      "value": "ANY"
+                    },
+                    {
+                      "description": "Filters the list by the sub-TPP identifier generated by Token.io once a TPP has been onboarded.",
+                      "key": "filter.actingAsRefId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters list by `refID`.",
+                      "key": "filter.refId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters list by refund status.",
+                      "key": "filter.transferRefundStatus",
+                      "value": "FULL"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:59.000Z",
+              "updatedAt": "2026-07-28T11:04:59.000Z",
+              "uid": "35240-074ea1fe-942f-4da9-9a16-dbfe8cdfa903"
+            },
+            {
+              "id": "f240c1da-f287-4b20-adcd-0dead2f84c74",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/transfers?tokenId=<string>&page.offset=<string>&page.limit=1&filter.tokenId=<string>&filter.startTimeMs=<string>&filter.endTimeMs=<string>&filter.transactionStatus=PENDING&filter.role=ANY&filter.actingAsRefId=<string>&filter.refId=<string>&filter.transferRefundStatus=FULL",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transfers"
+                  ],
+                  "query": [
+                    {
+                      "description": "Identifies the authorization token for the request.",
+                      "key": "tokenId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way.",
+                      "key": "page.offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) The maximum number of records to return. This must be less than 200.",
+                      "key": "page.limit",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Filters by the authorization token id.",
+                      "key": "filter.tokenId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filtered list start time boundary in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.startTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filtered list end time boundary in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.endTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters by transaction status. <ul> <li><b>PROCESSING</b> \u2013 This status indicates that the transaction is in process and that the final status has not been received from the bank.</li><li><b>SUCCESS</b> \u2013 This status indicates that successful payment initiation has been received from the bank. Settlement might not be complete.</li> <li><b>INITIATED</b> \u2013 This status is set when the previous status has remained as `PROCESSING` for 30 days and cannot be updated. The transaction has been initiated but the result is unknown. This is the final status and will not get updated later because Token.io has stopped polling the bank.<br/> This status is also returned in a two-step payment flow in the event that a user\u2019s request has been authorized at the bank but the payment confirmation has subsequently failed.</li><li><b>PENDING_EXTERNAL_AUTHORIZATION</b> \u2013 This status indicates that the user has been sent to the bank to complete the authorization process. If not completed within the allowed timeframe (usually around 15 mins, but there are variations between banks) the transaction will expire and transition to `FAILURE_EXPIRED`. This status is only relevant for 1-step payment flows.</li> <li><b>FAILURE_GENERIC</b> \u2013 This status usually indicates a technical failure. Possibly, a failure callback was received from the bank, with no transaction status and no further information.</li> <li><b>FAILURE_PERMISSION_DENIED</b> \u2013 This status indicates that the user has been denied authorization at the bank This status is only relevant for two-step payment flows.</li> <li><b>FAILURE_CANCELED</b> \u2013 This status indicates that the payment initiation has been canceled before execution.</li> <li><b>FAILURE_EXPIRED</b> \u2013 This status indicates that the user did not complete the authorization process within the allowed timeframe (usually around 15 mins, but there are variations between banks) and the payment has expired.</li> <li><b>FAILURE_INSUFFICIENT_FUNDS</b> \u2013 This status indicates that the payment initiation request has been rejected due to insufficient funds.</li> <li><b>FAILURE_DECLINED</b> \u2013 This status indicates that the payment initiation has been rejected by the bank.</li> <li><b>SETTLEMENT_IN_PROGRESS</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Token.io is waiting for the payment to reach the payee bank. No action is required; await the next step, <i>e.g.</i>, Token.io sends a webhook with the status update, or a polling call. The status will change to `SETTLEMENT_IN_PROGRESS` soon after Token.io receives the final status from the debtor bank.</li> <li><b>SETTLEMENT_COMPLETED</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. The payment has reached the payee bank and Token.io has matched the transaction in the TPP\u2019s settlement account to the initiated payment. For instant payments, `SETTLEMENT_COMPLETED` will be achieved within 30-45 minutes from payment initiation, at the latest. For non-instant payments, the time to reach `SETTLEMENT_COMPLETED` will depend on the clearing period for the payment.</li><li><b>SETTLEMENT_INCOMPLETE</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Reconciliation has failed. This happens when Token.io doesn't find the corresponding transaction in the TPP\u2019s settlement account automatically.</li></ul><br/>During settlement of a settlement accounts payment, the status update job will run first for up to 30 days. Payment will then enter into a 'final' status, normally `SUCCESS`.<br/>Once the status update job has run, the reconciliation job looks for matching inbound payments.For SEPA payments:<ul><li>if a matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>For SEPA Instant payments:<ul><li>if a matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>",
+                      "key": "filter.transactionStatus",
+                      "value": "PENDING"
+                    },
+                    {
+                      "description": "Filters list by the account holder role.",
+                      "key": "filter.role",
+                      "value": "ANY"
+                    },
+                    {
+                      "description": "Filters the list by the sub-TPP identifier generated by Token.io once a TPP has been onboarded.",
+                      "key": "filter.actingAsRefId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters list by `refID`.",
+                      "key": "filter.refId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters list by refund status.",
+                      "key": "filter.transferRefundStatus",
+                      "value": "FULL"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:59.000Z",
+              "updatedAt": "2026-07-28T11:04:59.000Z",
+              "uid": "35240-f240c1da-f287-4b20-adcd-0dead2f84c74"
+            },
+            {
+              "id": "525b5ca7-5a90-40e0-866b-942c215df283",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/transfers?tokenId=<string>&page.offset=<string>&page.limit=1&filter.tokenId=<string>&filter.startTimeMs=<string>&filter.endTimeMs=<string>&filter.transactionStatus=PENDING&filter.role=ANY&filter.actingAsRefId=<string>&filter.refId=<string>&filter.transferRefundStatus=FULL",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transfers"
+                  ],
+                  "query": [
+                    {
+                      "description": "Identifies the authorization token for the request.",
+                      "key": "tokenId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way.",
+                      "key": "page.offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) The maximum number of records to return. This must be less than 200.",
+                      "key": "page.limit",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Filters by the authorization token id.",
+                      "key": "filter.tokenId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filtered list start time boundary in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.startTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filtered list end time boundary in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.endTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters by transaction status. <ul> <li><b>PROCESSING</b> \u2013 This status indicates that the transaction is in process and that the final status has not been received from the bank.</li><li><b>SUCCESS</b> \u2013 This status indicates that successful payment initiation has been received from the bank. Settlement might not be complete.</li> <li><b>INITIATED</b> \u2013 This status is set when the previous status has remained as `PROCESSING` for 30 days and cannot be updated. The transaction has been initiated but the result is unknown. This is the final status and will not get updated later because Token.io has stopped polling the bank.<br/> This status is also returned in a two-step payment flow in the event that a user\u2019s request has been authorized at the bank but the payment confirmation has subsequently failed.</li><li><b>PENDING_EXTERNAL_AUTHORIZATION</b> \u2013 This status indicates that the user has been sent to the bank to complete the authorization process. If not completed within the allowed timeframe (usually around 15 mins, but there are variations between banks) the transaction will expire and transition to `FAILURE_EXPIRED`. This status is only relevant for 1-step payment flows.</li> <li><b>FAILURE_GENERIC</b> \u2013 This status usually indicates a technical failure. Possibly, a failure callback was received from the bank, with no transaction status and no further information.</li> <li><b>FAILURE_PERMISSION_DENIED</b> \u2013 This status indicates that the user has been denied authorization at the bank This status is only relevant for two-step payment flows.</li> <li><b>FAILURE_CANCELED</b> \u2013 This status indicates that the payment initiation has been canceled before execution.</li> <li><b>FAILURE_EXPIRED</b> \u2013 This status indicates that the user did not complete the authorization process within the allowed timeframe (usually around 15 mins, but there are variations between banks) and the payment has expired.</li> <li><b>FAILURE_INSUFFICIENT_FUNDS</b> \u2013 This status indicates that the payment initiation request has been rejected due to insufficient funds.</li> <li><b>FAILURE_DECLINED</b> \u2013 This status indicates that the payment initiation has been rejected by the bank.</li> <li><b>SETTLEMENT_IN_PROGRESS</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Token.io is waiting for the payment to reach the payee bank. No action is required; await the next step, <i>e.g.</i>, Token.io sends a webhook with the status update, or a polling call. The status will change to `SETTLEMENT_IN_PROGRESS` soon after Token.io receives the final status from the debtor bank.</li> <li><b>SETTLEMENT_COMPLETED</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. The payment has reached the payee bank and Token.io has matched the transaction in the TPP\u2019s settlement account to the initiated payment. For instant payments, `SETTLEMENT_COMPLETED` will be achieved within 30-45 minutes from payment initiation, at the latest. For non-instant payments, the time to reach `SETTLEMENT_COMPLETED` will depend on the clearing period for the payment.</li><li><b>SETTLEMENT_INCOMPLETE</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Reconciliation has failed. This happens when Token.io doesn't find the corresponding transaction in the TPP\u2019s settlement account automatically.</li></ul><br/>During settlement of a settlement accounts payment, the status update job will run first for up to 30 days. Payment will then enter into a 'final' status, normally `SUCCESS`.<br/>Once the status update job has run, the reconciliation job looks for matching inbound payments.For SEPA payments:<ul><li>if a matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>For SEPA Instant payments:<ul><li>if a matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>",
+                      "key": "filter.transactionStatus",
+                      "value": "PENDING"
+                    },
+                    {
+                      "description": "Filters list by the account holder role.",
+                      "key": "filter.role",
+                      "value": "ANY"
+                    },
+                    {
+                      "description": "Filters the list by the sub-TPP identifier generated by Token.io once a TPP has been onboarded.",
+                      "key": "filter.actingAsRefId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters list by `refID`.",
+                      "key": "filter.refId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters list by refund status.",
+                      "key": "filter.transferRefundStatus",
+                      "value": "FULL"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"reprehenderit\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:59.000Z",
+              "updatedAt": "2026-07-28T11:04:59.000Z",
+              "uid": "35240-525b5ca7-5a90-40e0-866b-942c215df283"
+            },
+            {
+              "id": "cd04e215-6bd7-47bd-9465-a8266d040909",
+              "name": "The requested entity, such as a payment, was not found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/transfers?tokenId=<string>&page.offset=<string>&page.limit=1&filter.tokenId=<string>&filter.startTimeMs=<string>&filter.endTimeMs=<string>&filter.transactionStatus=PENDING&filter.role=ANY&filter.actingAsRefId=<string>&filter.refId=<string>&filter.transferRefundStatus=FULL",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transfers"
+                  ],
+                  "query": [
+                    {
+                      "description": "Identifies the authorization token for the request.",
+                      "key": "tokenId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way.",
+                      "key": "page.offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) The maximum number of records to return. This must be less than 200.",
+                      "key": "page.limit",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Filters by the authorization token id.",
+                      "key": "filter.tokenId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filtered list start time boundary in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.startTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filtered list end time boundary in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.endTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters by transaction status. <ul> <li><b>PROCESSING</b> \u2013 This status indicates that the transaction is in process and that the final status has not been received from the bank.</li><li><b>SUCCESS</b> \u2013 This status indicates that successful payment initiation has been received from the bank. Settlement might not be complete.</li> <li><b>INITIATED</b> \u2013 This status is set when the previous status has remained as `PROCESSING` for 30 days and cannot be updated. The transaction has been initiated but the result is unknown. This is the final status and will not get updated later because Token.io has stopped polling the bank.<br/> This status is also returned in a two-step payment flow in the event that a user\u2019s request has been authorized at the bank but the payment confirmation has subsequently failed.</li><li><b>PENDING_EXTERNAL_AUTHORIZATION</b> \u2013 This status indicates that the user has been sent to the bank to complete the authorization process. If not completed within the allowed timeframe (usually around 15 mins, but there are variations between banks) the transaction will expire and transition to `FAILURE_EXPIRED`. This status is only relevant for 1-step payment flows.</li> <li><b>FAILURE_GENERIC</b> \u2013 This status usually indicates a technical failure. Possibly, a failure callback was received from the bank, with no transaction status and no further information.</li> <li><b>FAILURE_PERMISSION_DENIED</b> \u2013 This status indicates that the user has been denied authorization at the bank This status is only relevant for two-step payment flows.</li> <li><b>FAILURE_CANCELED</b> \u2013 This status indicates that the payment initiation has been canceled before execution.</li> <li><b>FAILURE_EXPIRED</b> \u2013 This status indicates that the user did not complete the authorization process within the allowed timeframe (usually around 15 mins, but there are variations between banks) and the payment has expired.</li> <li><b>FAILURE_INSUFFICIENT_FUNDS</b> \u2013 This status indicates that the payment initiation request has been rejected due to insufficient funds.</li> <li><b>FAILURE_DECLINED</b> \u2013 This status indicates that the payment initiation has been rejected by the bank.</li> <li><b>SETTLEMENT_IN_PROGRESS</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Token.io is waiting for the payment to reach the payee bank. No action is required; await the next step, <i>e.g.</i>, Token.io sends a webhook with the status update, or a polling call. The status will change to `SETTLEMENT_IN_PROGRESS` soon after Token.io receives the final status from the debtor bank.</li> <li><b>SETTLEMENT_COMPLETED</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. The payment has reached the payee bank and Token.io has matched the transaction in the TPP\u2019s settlement account to the initiated payment. For instant payments, `SETTLEMENT_COMPLETED` will be achieved within 30-45 minutes from payment initiation, at the latest. For non-instant payments, the time to reach `SETTLEMENT_COMPLETED` will depend on the clearing period for the payment.</li><li><b>SETTLEMENT_INCOMPLETE</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Reconciliation has failed. This happens when Token.io doesn't find the corresponding transaction in the TPP\u2019s settlement account automatically.</li></ul><br/>During settlement of a settlement accounts payment, the status update job will run first for up to 30 days. Payment will then enter into a 'final' status, normally `SUCCESS`.<br/>Once the status update job has run, the reconciliation job looks for matching inbound payments.For SEPA payments:<ul><li>if a matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>For SEPA Instant payments:<ul><li>if a matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>",
+                      "key": "filter.transactionStatus",
+                      "value": "PENDING"
+                    },
+                    {
+                      "description": "Filters list by the account holder role.",
+                      "key": "filter.role",
+                      "value": "ANY"
+                    },
+                    {
+                      "description": "Filters the list by the sub-TPP identifier generated by Token.io once a TPP has been onboarded.",
+                      "key": "filter.actingAsRefId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters list by `refID`.",
+                      "key": "filter.refId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters list by refund status.",
+                      "key": "filter.transferRefundStatus",
+                      "value": "FULL"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"dolor\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"anim esse est\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:59.000Z",
+              "updatedAt": "2026-07-28T11:04:59.000Z",
+              "uid": "35240-cd04e215-6bd7-47bd-9465-a8266d040909"
+            },
+            {
+              "id": "d1066715-a96b-4ddc-b469-68bc1d1e913d",
+              "name": "Too many requests",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/transfers?tokenId=<string>&page.offset=<string>&page.limit=1&filter.tokenId=<string>&filter.startTimeMs=<string>&filter.endTimeMs=<string>&filter.transactionStatus=PENDING&filter.role=ANY&filter.actingAsRefId=<string>&filter.refId=<string>&filter.transferRefundStatus=FULL",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transfers"
+                  ],
+                  "query": [
+                    {
+                      "description": "Identifies the authorization token for the request.",
+                      "key": "tokenId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way.",
+                      "key": "page.offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) The maximum number of records to return. This must be less than 200.",
+                      "key": "page.limit",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Filters by the authorization token id.",
+                      "key": "filter.tokenId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filtered list start time boundary in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.startTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filtered list end time boundary in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.endTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters by transaction status. <ul> <li><b>PROCESSING</b> \u2013 This status indicates that the transaction is in process and that the final status has not been received from the bank.</li><li><b>SUCCESS</b> \u2013 This status indicates that successful payment initiation has been received from the bank. Settlement might not be complete.</li> <li><b>INITIATED</b> \u2013 This status is set when the previous status has remained as `PROCESSING` for 30 days and cannot be updated. The transaction has been initiated but the result is unknown. This is the final status and will not get updated later because Token.io has stopped polling the bank.<br/> This status is also returned in a two-step payment flow in the event that a user\u2019s request has been authorized at the bank but the payment confirmation has subsequently failed.</li><li><b>PENDING_EXTERNAL_AUTHORIZATION</b> \u2013 This status indicates that the user has been sent to the bank to complete the authorization process. If not completed within the allowed timeframe (usually around 15 mins, but there are variations between banks) the transaction will expire and transition to `FAILURE_EXPIRED`. This status is only relevant for 1-step payment flows.</li> <li><b>FAILURE_GENERIC</b> \u2013 This status usually indicates a technical failure. Possibly, a failure callback was received from the bank, with no transaction status and no further information.</li> <li><b>FAILURE_PERMISSION_DENIED</b> \u2013 This status indicates that the user has been denied authorization at the bank This status is only relevant for two-step payment flows.</li> <li><b>FAILURE_CANCELED</b> \u2013 This status indicates that the payment initiation has been canceled before execution.</li> <li><b>FAILURE_EXPIRED</b> \u2013 This status indicates that the user did not complete the authorization process within the allowed timeframe (usually around 15 mins, but there are variations between banks) and the payment has expired.</li> <li><b>FAILURE_INSUFFICIENT_FUNDS</b> \u2013 This status indicates that the payment initiation request has been rejected due to insufficient funds.</li> <li><b>FAILURE_DECLINED</b> \u2013 This status indicates that the payment initiation has been rejected by the bank.</li> <li><b>SETTLEMENT_IN_PROGRESS</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Token.io is waiting for the payment to reach the payee bank. No action is required; await the next step, <i>e.g.</i>, Token.io sends a webhook with the status update, or a polling call. The status will change to `SETTLEMENT_IN_PROGRESS` soon after Token.io receives the final status from the debtor bank.</li> <li><b>SETTLEMENT_COMPLETED</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. The payment has reached the payee bank and Token.io has matched the transaction in the TPP\u2019s settlement account to the initiated payment. For instant payments, `SETTLEMENT_COMPLETED` will be achieved within 30-45 minutes from payment initiation, at the latest. For non-instant payments, the time to reach `SETTLEMENT_COMPLETED` will depend on the clearing period for the payment.</li><li><b>SETTLEMENT_INCOMPLETE</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Reconciliation has failed. This happens when Token.io doesn't find the corresponding transaction in the TPP\u2019s settlement account automatically.</li></ul><br/>During settlement of a settlement accounts payment, the status update job will run first for up to 30 days. Payment will then enter into a 'final' status, normally `SUCCESS`.<br/>Once the status update job has run, the reconciliation job looks for matching inbound payments.For SEPA payments:<ul><li>if a matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>For SEPA Instant payments:<ul><li>if a matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>",
+                      "key": "filter.transactionStatus",
+                      "value": "PENDING"
+                    },
+                    {
+                      "description": "Filters list by the account holder role.",
+                      "key": "filter.role",
+                      "value": "ANY"
+                    },
+                    {
+                      "description": "Filters the list by the sub-TPP identifier generated by Token.io once a TPP has been onboarded.",
+                      "key": "filter.actingAsRefId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters list by `refID`.",
+                      "key": "filter.refId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters list by refund status.",
+                      "key": "filter.transferRefundStatus",
+                      "value": "FULL"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"sed aliquip id non\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"enim\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:59.000Z",
+              "updatedAt": "2026-07-28T11:04:59.000Z",
+              "uid": "35240-d1066715-a96b-4ddc-b469-68bc1d1e913d"
+            },
+            {
+              "id": "671caa9e-75b6-47fa-ac07-f3799fa65278",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/transfers?tokenId=<string>&page.offset=<string>&page.limit=1&filter.tokenId=<string>&filter.startTimeMs=<string>&filter.endTimeMs=<string>&filter.transactionStatus=PENDING&filter.role=ANY&filter.actingAsRefId=<string>&filter.refId=<string>&filter.transferRefundStatus=FULL",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transfers"
+                  ],
+                  "query": [
+                    {
+                      "description": "Identifies the authorization token for the request.",
+                      "key": "tokenId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way.",
+                      "key": "page.offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) The maximum number of records to return. This must be less than 200.",
+                      "key": "page.limit",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Filters by the authorization token id.",
+                      "key": "filter.tokenId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filtered list start time boundary in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.startTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filtered list end time boundary in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.endTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters by transaction status. <ul> <li><b>PROCESSING</b> \u2013 This status indicates that the transaction is in process and that the final status has not been received from the bank.</li><li><b>SUCCESS</b> \u2013 This status indicates that successful payment initiation has been received from the bank. Settlement might not be complete.</li> <li><b>INITIATED</b> \u2013 This status is set when the previous status has remained as `PROCESSING` for 30 days and cannot be updated. The transaction has been initiated but the result is unknown. This is the final status and will not get updated later because Token.io has stopped polling the bank.<br/> This status is also returned in a two-step payment flow in the event that a user\u2019s request has been authorized at the bank but the payment confirmation has subsequently failed.</li><li><b>PENDING_EXTERNAL_AUTHORIZATION</b> \u2013 This status indicates that the user has been sent to the bank to complete the authorization process. If not completed within the allowed timeframe (usually around 15 mins, but there are variations between banks) the transaction will expire and transition to `FAILURE_EXPIRED`. This status is only relevant for 1-step payment flows.</li> <li><b>FAILURE_GENERIC</b> \u2013 This status usually indicates a technical failure. Possibly, a failure callback was received from the bank, with no transaction status and no further information.</li> <li><b>FAILURE_PERMISSION_DENIED</b> \u2013 This status indicates that the user has been denied authorization at the bank This status is only relevant for two-step payment flows.</li> <li><b>FAILURE_CANCELED</b> \u2013 This status indicates that the payment initiation has been canceled before execution.</li> <li><b>FAILURE_EXPIRED</b> \u2013 This status indicates that the user did not complete the authorization process within the allowed timeframe (usually around 15 mins, but there are variations between banks) and the payment has expired.</li> <li><b>FAILURE_INSUFFICIENT_FUNDS</b> \u2013 This status indicates that the payment initiation request has been rejected due to insufficient funds.</li> <li><b>FAILURE_DECLINED</b> \u2013 This status indicates that the payment initiation has been rejected by the bank.</li> <li><b>SETTLEMENT_IN_PROGRESS</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Token.io is waiting for the payment to reach the payee bank. No action is required; await the next step, <i>e.g.</i>, Token.io sends a webhook with the status update, or a polling call. The status will change to `SETTLEMENT_IN_PROGRESS` soon after Token.io receives the final status from the debtor bank.</li> <li><b>SETTLEMENT_COMPLETED</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. The payment has reached the payee bank and Token.io has matched the transaction in the TPP\u2019s settlement account to the initiated payment. For instant payments, `SETTLEMENT_COMPLETED` will be achieved within 30-45 minutes from payment initiation, at the latest. For non-instant payments, the time to reach `SETTLEMENT_COMPLETED` will depend on the clearing period for the payment.</li><li><b>SETTLEMENT_INCOMPLETE</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Reconciliation has failed. This happens when Token.io doesn't find the corresponding transaction in the TPP\u2019s settlement account automatically.</li></ul><br/>During settlement of a settlement accounts payment, the status update job will run first for up to 30 days. Payment will then enter into a 'final' status, normally `SUCCESS`.<br/>Once the status update job has run, the reconciliation job looks for matching inbound payments.For SEPA payments:<ul><li>if a matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>For SEPA Instant payments:<ul><li>if a matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>",
+                      "key": "filter.transactionStatus",
+                      "value": "PENDING"
+                    },
+                    {
+                      "description": "Filters list by the account holder role.",
+                      "key": "filter.role",
+                      "value": "ANY"
+                    },
+                    {
+                      "description": "Filters the list by the sub-TPP identifier generated by Token.io once a TPP has been onboarded.",
+                      "key": "filter.actingAsRefId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters list by `refID`.",
+                      "key": "filter.refId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters list by refund status.",
+                      "key": "filter.transferRefundStatus",
+                      "value": "FULL"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:59.000Z",
+              "updatedAt": "2026-07-28T11:04:59.000Z",
+              "uid": "35240-671caa9e-75b6-47fa-ac07-f3799fa65278"
+            },
+            {
+              "id": "c6086217-f4b1-4078-a43f-f46300eccee6",
+              "name": "The operation was not implemented",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/transfers?tokenId=<string>&page.offset=<string>&page.limit=1&filter.tokenId=<string>&filter.startTimeMs=<string>&filter.endTimeMs=<string>&filter.transactionStatus=PENDING&filter.role=ANY&filter.actingAsRefId=<string>&filter.refId=<string>&filter.transferRefundStatus=FULL",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transfers"
+                  ],
+                  "query": [
+                    {
+                      "description": "Identifies the authorization token for the request.",
+                      "key": "tokenId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way.",
+                      "key": "page.offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) The maximum number of records to return. This must be less than 200.",
+                      "key": "page.limit",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Filters by the authorization token id.",
+                      "key": "filter.tokenId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filtered list start time boundary in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.startTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filtered list end time boundary in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.endTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters by transaction status. <ul> <li><b>PROCESSING</b> \u2013 This status indicates that the transaction is in process and that the final status has not been received from the bank.</li><li><b>SUCCESS</b> \u2013 This status indicates that successful payment initiation has been received from the bank. Settlement might not be complete.</li> <li><b>INITIATED</b> \u2013 This status is set when the previous status has remained as `PROCESSING` for 30 days and cannot be updated. The transaction has been initiated but the result is unknown. This is the final status and will not get updated later because Token.io has stopped polling the bank.<br/> This status is also returned in a two-step payment flow in the event that a user\u2019s request has been authorized at the bank but the payment confirmation has subsequently failed.</li><li><b>PENDING_EXTERNAL_AUTHORIZATION</b> \u2013 This status indicates that the user has been sent to the bank to complete the authorization process. If not completed within the allowed timeframe (usually around 15 mins, but there are variations between banks) the transaction will expire and transition to `FAILURE_EXPIRED`. This status is only relevant for 1-step payment flows.</li> <li><b>FAILURE_GENERIC</b> \u2013 This status usually indicates a technical failure. Possibly, a failure callback was received from the bank, with no transaction status and no further information.</li> <li><b>FAILURE_PERMISSION_DENIED</b> \u2013 This status indicates that the user has been denied authorization at the bank This status is only relevant for two-step payment flows.</li> <li><b>FAILURE_CANCELED</b> \u2013 This status indicates that the payment initiation has been canceled before execution.</li> <li><b>FAILURE_EXPIRED</b> \u2013 This status indicates that the user did not complete the authorization process within the allowed timeframe (usually around 15 mins, but there are variations between banks) and the payment has expired.</li> <li><b>FAILURE_INSUFFICIENT_FUNDS</b> \u2013 This status indicates that the payment initiation request has been rejected due to insufficient funds.</li> <li><b>FAILURE_DECLINED</b> \u2013 This status indicates that the payment initiation has been rejected by the bank.</li> <li><b>SETTLEMENT_IN_PROGRESS</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Token.io is waiting for the payment to reach the payee bank. No action is required; await the next step, <i>e.g.</i>, Token.io sends a webhook with the status update, or a polling call. The status will change to `SETTLEMENT_IN_PROGRESS` soon after Token.io receives the final status from the debtor bank.</li> <li><b>SETTLEMENT_COMPLETED</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. The payment has reached the payee bank and Token.io has matched the transaction in the TPP\u2019s settlement account to the initiated payment. For instant payments, `SETTLEMENT_COMPLETED` will be achieved within 30-45 minutes from payment initiation, at the latest. For non-instant payments, the time to reach `SETTLEMENT_COMPLETED` will depend on the clearing period for the payment.</li><li><b>SETTLEMENT_INCOMPLETE</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Reconciliation has failed. This happens when Token.io doesn't find the corresponding transaction in the TPP\u2019s settlement account automatically.</li></ul><br/>During settlement of a settlement accounts payment, the status update job will run first for up to 30 days. Payment will then enter into a 'final' status, normally `SUCCESS`.<br/>Once the status update job has run, the reconciliation job looks for matching inbound payments.For SEPA payments:<ul><li>if a matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>For SEPA Instant payments:<ul><li>if a matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>",
+                      "key": "filter.transactionStatus",
+                      "value": "PENDING"
+                    },
+                    {
+                      "description": "Filters list by the account holder role.",
+                      "key": "filter.role",
+                      "value": "ANY"
+                    },
+                    {
+                      "description": "Filters the list by the sub-TPP identifier generated by Token.io once a TPP has been onboarded.",
+                      "key": "filter.actingAsRefId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters list by `refID`.",
+                      "key": "filter.refId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters list by refund status.",
+                      "key": "filter.transferRefundStatus",
+                      "value": "FULL"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"nisi adipisicing cillum aliquip\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"ut deserunt dolore Lorem\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:59.000Z",
+              "updatedAt": "2026-07-28T11:04:59.000Z",
+              "uid": "35240-c6086217-f4b1-4078-a43f-f46300eccee6"
+            },
+            {
+              "id": "372ddce5-5d4a-4978-a9b2-b958efaa7a32",
+              "name": "Service is unavailable",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/transfers?tokenId=<string>&page.offset=<string>&page.limit=1&filter.tokenId=<string>&filter.startTimeMs=<string>&filter.endTimeMs=<string>&filter.transactionStatus=PENDING&filter.role=ANY&filter.actingAsRefId=<string>&filter.refId=<string>&filter.transferRefundStatus=FULL",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transfers"
+                  ],
+                  "query": [
+                    {
+                      "description": "Identifies the authorization token for the request.",
+                      "key": "tokenId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way.",
+                      "key": "page.offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) The maximum number of records to return. This must be less than 200.",
+                      "key": "page.limit",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Filters by the authorization token id.",
+                      "key": "filter.tokenId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filtered list start time boundary in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.startTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filtered list end time boundary in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.endTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters by transaction status. <ul> <li><b>PROCESSING</b> \u2013 This status indicates that the transaction is in process and that the final status has not been received from the bank.</li><li><b>SUCCESS</b> \u2013 This status indicates that successful payment initiation has been received from the bank. Settlement might not be complete.</li> <li><b>INITIATED</b> \u2013 This status is set when the previous status has remained as `PROCESSING` for 30 days and cannot be updated. The transaction has been initiated but the result is unknown. This is the final status and will not get updated later because Token.io has stopped polling the bank.<br/> This status is also returned in a two-step payment flow in the event that a user\u2019s request has been authorized at the bank but the payment confirmation has subsequently failed.</li><li><b>PENDING_EXTERNAL_AUTHORIZATION</b> \u2013 This status indicates that the user has been sent to the bank to complete the authorization process. If not completed within the allowed timeframe (usually around 15 mins, but there are variations between banks) the transaction will expire and transition to `FAILURE_EXPIRED`. This status is only relevant for 1-step payment flows.</li> <li><b>FAILURE_GENERIC</b> \u2013 This status usually indicates a technical failure. Possibly, a failure callback was received from the bank, with no transaction status and no further information.</li> <li><b>FAILURE_PERMISSION_DENIED</b> \u2013 This status indicates that the user has been denied authorization at the bank This status is only relevant for two-step payment flows.</li> <li><b>FAILURE_CANCELED</b> \u2013 This status indicates that the payment initiation has been canceled before execution.</li> <li><b>FAILURE_EXPIRED</b> \u2013 This status indicates that the user did not complete the authorization process within the allowed timeframe (usually around 15 mins, but there are variations between banks) and the payment has expired.</li> <li><b>FAILURE_INSUFFICIENT_FUNDS</b> \u2013 This status indicates that the payment initiation request has been rejected due to insufficient funds.</li> <li><b>FAILURE_DECLINED</b> \u2013 This status indicates that the payment initiation has been rejected by the bank.</li> <li><b>SETTLEMENT_IN_PROGRESS</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Token.io is waiting for the payment to reach the payee bank. No action is required; await the next step, <i>e.g.</i>, Token.io sends a webhook with the status update, or a polling call. The status will change to `SETTLEMENT_IN_PROGRESS` soon after Token.io receives the final status from the debtor bank.</li> <li><b>SETTLEMENT_COMPLETED</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. The payment has reached the payee bank and Token.io has matched the transaction in the TPP\u2019s settlement account to the initiated payment. For instant payments, `SETTLEMENT_COMPLETED` will be achieved within 30-45 minutes from payment initiation, at the latest. For non-instant payments, the time to reach `SETTLEMENT_COMPLETED` will depend on the clearing period for the payment.</li><li><b>SETTLEMENT_INCOMPLETE</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Reconciliation has failed. This happens when Token.io doesn't find the corresponding transaction in the TPP\u2019s settlement account automatically.</li></ul><br/>During settlement of a settlement accounts payment, the status update job will run first for up to 30 days. Payment will then enter into a 'final' status, normally `SUCCESS`.<br/>Once the status update job has run, the reconciliation job looks for matching inbound payments.For SEPA payments:<ul><li>if a matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>For SEPA Instant payments:<ul><li>if a matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>",
+                      "key": "filter.transactionStatus",
+                      "value": "PENDING"
+                    },
+                    {
+                      "description": "Filters list by the account holder role.",
+                      "key": "filter.role",
+                      "value": "ANY"
+                    },
+                    {
+                      "description": "Filters the list by the sub-TPP identifier generated by Token.io once a TPP has been onboarded.",
+                      "key": "filter.actingAsRefId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters list by `refID`.",
+                      "key": "filter.refId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters list by refund status.",
+                      "key": "filter.transferRefundStatus",
+                      "value": "FULL"
+                    }
+                  ]
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"sint officia eiusmod reprehenderit\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"aliqua dolor pariatur do consequat\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:59.000Z",
+              "updatedAt": "2026-07-28T11:04:59.000Z",
+              "uid": "35240-372ddce5-5d4a-4978-a9b2-b958efaa7a32"
+            },
+            {
+              "id": "432f580a-a274-4fe3-87a2-d1072fb78e0e",
+              "name": "Gateway has timed out",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/transfers?tokenId=<string>&page.offset=<string>&page.limit=1&filter.tokenId=<string>&filter.startTimeMs=<string>&filter.endTimeMs=<string>&filter.transactionStatus=PENDING&filter.role=ANY&filter.actingAsRefId=<string>&filter.refId=<string>&filter.transferRefundStatus=FULL",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transfers"
+                  ],
+                  "query": [
+                    {
+                      "description": "Identifies the authorization token for the request.",
+                      "key": "tokenId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way.",
+                      "key": "page.offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) The maximum number of records to return. This must be less than 200.",
+                      "key": "page.limit",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Filters by the authorization token id.",
+                      "key": "filter.tokenId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filtered list start time boundary in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.startTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filtered list end time boundary in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.endTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters by transaction status. <ul> <li><b>PROCESSING</b> \u2013 This status indicates that the transaction is in process and that the final status has not been received from the bank.</li><li><b>SUCCESS</b> \u2013 This status indicates that successful payment initiation has been received from the bank. Settlement might not be complete.</li> <li><b>INITIATED</b> \u2013 This status is set when the previous status has remained as `PROCESSING` for 30 days and cannot be updated. The transaction has been initiated but the result is unknown. This is the final status and will not get updated later because Token.io has stopped polling the bank.<br/> This status is also returned in a two-step payment flow in the event that a user\u2019s request has been authorized at the bank but the payment confirmation has subsequently failed.</li><li><b>PENDING_EXTERNAL_AUTHORIZATION</b> \u2013 This status indicates that the user has been sent to the bank to complete the authorization process. If not completed within the allowed timeframe (usually around 15 mins, but there are variations between banks) the transaction will expire and transition to `FAILURE_EXPIRED`. This status is only relevant for 1-step payment flows.</li> <li><b>FAILURE_GENERIC</b> \u2013 This status usually indicates a technical failure. Possibly, a failure callback was received from the bank, with no transaction status and no further information.</li> <li><b>FAILURE_PERMISSION_DENIED</b> \u2013 This status indicates that the user has been denied authorization at the bank This status is only relevant for two-step payment flows.</li> <li><b>FAILURE_CANCELED</b> \u2013 This status indicates that the payment initiation has been canceled before execution.</li> <li><b>FAILURE_EXPIRED</b> \u2013 This status indicates that the user did not complete the authorization process within the allowed timeframe (usually around 15 mins, but there are variations between banks) and the payment has expired.</li> <li><b>FAILURE_INSUFFICIENT_FUNDS</b> \u2013 This status indicates that the payment initiation request has been rejected due to insufficient funds.</li> <li><b>FAILURE_DECLINED</b> \u2013 This status indicates that the payment initiation has been rejected by the bank.</li> <li><b>SETTLEMENT_IN_PROGRESS</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Token.io is waiting for the payment to reach the payee bank. No action is required; await the next step, <i>e.g.</i>, Token.io sends a webhook with the status update, or a polling call. The status will change to `SETTLEMENT_IN_PROGRESS` soon after Token.io receives the final status from the debtor bank.</li> <li><b>SETTLEMENT_COMPLETED</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. The payment has reached the payee bank and Token.io has matched the transaction in the TPP\u2019s settlement account to the initiated payment. For instant payments, `SETTLEMENT_COMPLETED` will be achieved within 30-45 minutes from payment initiation, at the latest. For non-instant payments, the time to reach `SETTLEMENT_COMPLETED` will depend on the clearing period for the payment.</li><li><b>SETTLEMENT_INCOMPLETE</b> \u2013 This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Reconciliation has failed. This happens when Token.io doesn't find the corresponding transaction in the TPP\u2019s settlement account automatically.</li></ul><br/>During settlement of a settlement accounts payment, the status update job will run first for up to 30 days. Payment will then enter into a 'final' status, normally `SUCCESS`.<br/>Once the status update job has run, the reconciliation job looks for matching inbound payments.For SEPA payments:<ul><li>if a matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>For SEPA Instant payments:<ul><li>if a matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>",
+                      "key": "filter.transactionStatus",
+                      "value": "PENDING"
+                    },
+                    {
+                      "description": "Filters list by the account holder role.",
+                      "key": "filter.role",
+                      "value": "ANY"
+                    },
+                    {
+                      "description": "Filters the list by the sub-TPP identifier generated by Token.io once a TPP has been onboarded.",
+                      "key": "filter.actingAsRefId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters list by `refID`.",
+                      "key": "filter.refId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters list by refund status.",
+                      "key": "filter.transferRefundStatus",
+                      "value": "FULL"
+                    }
+                  ]
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"sit deserunt ut officia\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"enim reprehenderit\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:59.000Z",
+              "updatedAt": "2026-07-28T11:04:59.000Z",
+              "uid": "35240-432f580a-a274-4fe3-87a2-d1072fb78e0e"
+            }
+          ],
+          "createdAt": "2026-07-28T11:04:59.000Z",
+          "updatedAt": "2026-07-28T11:04:59.000Z",
+          "uid": "35240-c22df075-9bd9-451b-a1ab-c2cdcd6d2b35"
+        }
+      ],
+      "id": "e67c41f3-b1b9-4ca7-b60f-4bc08abb536f",
+      "createdAt": "2026-07-28T11:04:59.000Z",
+      "updatedAt": "2026-07-28T11:04:59.000Z",
+      "uid": "35240-e67c41f3-b1b9-4ca7-b60f-4bc08abb536f"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.token.io"
+    }
+  ]
+}

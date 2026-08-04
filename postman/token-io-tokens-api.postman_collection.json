@@ -1,0 +1,2261 @@
+{
+  "info": {
+    "_postman_id": "ff6e7473-877f-4b08-96ae-4c3ae1d1c5e7",
+    "name": "Token.io's Open Banking API for TPPs Account on File Tokens API",
+    "description": "<b>Token.io's Open Banking API</b><br/><br/>Token.io Support: <a href=\"https://support.token.io\" target=\"_blank\">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user's account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href=\"https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm\" target=\"_blank\">developer documentation</a>.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T11:04:57.000Z",
+    "updatedAt": "2026-07-28T11:04:57.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-ff6e7473-877f-4b08-96ae-4c3ae1d1c5e7"
+  },
+  "item": [
+    {
+      "name": "tokens",
+      "item": [
+        {
+          "name": "{tokenId}",
+          "item": [
+            {
+              "name": "cancel",
+              "item": [
+                {
+                  "name": "Cancel a token",
+                  "id": "6398c399-359a-4547-b290-3cfe17aedb1d",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "description": "The user's IP address if the user is currently logged in with the TPP. If the customer  IP address is supplied (recommended), it is inferred that the user is present during the session (<i>i.e.</i>, the request is user-initiated; adding a `customer-initiated` = `true` header makes this explicit). For AIS calls, if the customer's IP address is not provided in the request, the bank assumes it is a TPP-initiated request and may limit the TPP to 4 TPP-initiated access attempts within a given 24-hour period.",
+                        "key": "token-customer-ip-address",
+                        "value": "<ipv4>"
+                      },
+                      {
+                        "description": "Informs the bank that the API call was explicitly initiated by the user. This is useful in circumnavigating bank restrictions that impose a 4-times-a-day (<i>i.e.</i>, within the same 24-hour period) access limit on the same AISP, in accordance with RTS regulations.",
+                        "key": "customer-initiated",
+                        "value": "<boolean>"
+                      },
+                      {
+                        "description": "Obtained by the TPP from details in the user agent information of the user.",
+                        "key": "token-customer-device-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tokens/:tokenId/cancel",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tokens",
+                        ":tokenId",
+                        "cancel"
+                      ],
+                      "variable": [
+                        {
+                          "id": "9ab4cb8f-75ec-4887-82f5-3463cd8f1787",
+                          "key": "tokenId",
+                          "value": "<string>",
+                          "description": "(Required) Identifies a unique authorization token for a transfer, standing order, or account information access."
+                        }
+                      ]
+                    },
+                    "description": "The `PUT /tokens/{tokenId}/cancel` endpoint cancels a given token."
+                  },
+                  "response": [
+                    {
+                      "id": "afd83c71-bf7c-4a85-99d1-50a2f42ee2f8",
+                      "name": "Successful response",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "description": "The user's IP address if the user is currently logged in with the TPP. If the customer  IP address is supplied (recommended), it is inferred that the user is present during the session (<i>i.e.</i>, the request is user-initiated; adding a `customer-initiated` = `true` header makes this explicit). For AIS calls, if the customer's IP address is not provided in the request, the bank assumes it is a TPP-initiated request and may limit the TPP to 4 TPP-initiated access attempts within a given 24-hour period.",
+                            "key": "token-customer-ip-address",
+                            "value": "<ipv4>"
+                          },
+                          {
+                            "description": "Informs the bank that the API call was explicitly initiated by the user. This is useful in circumnavigating bank restrictions that impose a 4-times-a-day (<i>i.e.</i>, within the same 24-hour period) access limit on the same AISP, in accordance with RTS regulations.",
+                            "key": "customer-initiated",
+                            "value": "<boolean>"
+                          },
+                          {
+                            "description": "Obtained by the TPP from details in the user agent information of the user.",
+                            "key": "token-customer-device-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/tokens/:tokenId/cancel",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tokens",
+                            ":tokenId",
+                            "cancel"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"result\": {\n    \"status\": \"INVALID\",\n    \"token\": {\n      \"id\": \"<string>\",\n      \"payload\": {\n        \"transfer\": {\n          \"currency\": \"<string>\",\n          \"lifetimeAmount\": \"<string>\",\n          \"instructions\": {\n            \"transferDestinations\": [\n              {\n                \"sepa\": {\n                  \"iban\": \"<string>\",\n                  \"bic\": \"<string>\"\n                }\n              }\n            ],\n            \"metadata\": {\n              \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n              \"providerTransferMetadata\": {\n                \"cma9TransferMetadata\": {\n                  \"endToEndIdentification\": \"<string>\",\n                  \"instructionIdentification\": \"<string>\",\n                  \"risk\": {\n                    \"deliveryAddress\": {\n                      \"addressLine\": [\n                        \"<string>\",\n                        \"<string>\"\n                      ],\n                      \"addressType\": \"INVALID_ADDRESS_TYPE\",\n                      \"buildingNumber\": \"<string>\",\n                      \"country\": \"<string>\",\n                      \"countrySubDivision\": [\n                        \"<string>\",\n                        \"<string>\"\n                      ],\n                      \"department\": \"<string>\",\n                      \"postCode\": \"<string>\",\n                      \"streetName\": \"<string>\",\n                      \"subDepartment\": \"<string>\",\n                      \"townName\": \"<string>\"\n                    },\n                    \"merchantCustomerIdentification\": \"<string>\",\n                    \"paymentContextCode\": \"ECOMMERCE_MERCHANT_INITIATED_PAYMENT\",\n                    \"paymentPurposeCode\": \"CASH\",\n                    \"beneficiaryAccountType\": \"PENSION\",\n                    \"contractPresentIndicator\": \"<string>\",\n                    \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n                  }\n                }\n              },\n              \"purposeCode\": \"CASH\",\n              \"ultimateCreditor\": \"<string>\",\n              \"ultimateDebtor\": \"<string>\"\n            },\n            \"source\": {\n              \"accountIdentifier\": {\n                \"bankgiro\": {\n                  \"bankgiroNumber\": \"<string>\"\n                }\n              },\n              \"bankId\": \"<string>\",\n              \"bic\": \"<string>\",\n              \"customerData\": {\n                \"legalNames\": [\n                  \"<string>\",\n                  \"<string>\"\n                ],\n                \"address\": {\n                  \"city\": \"<string>\",\n                  \"conscriptionNumber\": \"<string>\",\n                  \"country\": \"<string>\",\n                  \"district\": \"<string>\",\n                  \"flats\": \"<string>\",\n                  \"full\": \"<string>\",\n                  \"hamlet\": \"<string>\",\n                  \"houseName\": \"<string>\",\n                  \"houseNumber\": \"<string>\",\n                  \"place\": \"<string>\",\n                  \"postCode\": \"<string>\",\n                  \"province\": \"<string>\",\n                  \"state\": \"<string>\",\n                  \"street\": \"<string>\",\n                  \"subdistrict\": \"<string>\",\n                  \"suburb\": \"<string>\"\n                }\n              }\n            }\n          },\n          \"amount\": \"<string>\",\n          \"attachments\": [\n            {\n              \"blobId\": \"<string>\",\n              \"name\": \"<string>\",\n              \"type\": \"<string>\"\n            },\n            {\n              \"blobId\": \"<string>\",\n              \"name\": \"<string>\",\n              \"type\": \"<string>\"\n            }\n          ],\n          \"confirmFunds\": false,\n          \"executionDate\": \"<string>\",\n          \"remittanceReference\": \"<string>\",\n          \"returnRefundAccount\": false\n        }\n      },\n      \"payloadSignatures\": [\n        {\n          \"action\": \"INVALID\",\n          \"signature\": {\n            \"keyId\": \"<string>\",\n            \"memberId\": \"<string>\",\n            \"signature\": \"<string>\"\n          }\n        },\n        {\n          \"action\": \"INVALID\",\n          \"signature\": {\n            \"keyId\": \"<string>\",\n            \"memberId\": \"<string>\",\n            \"signature\": \"<string>\"\n          }\n        }\n      ],\n      \"replacedByTokenId\": \"<string>\",\n      \"tokenRequestId\": \"<string>\"\n    }\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:57.000Z",
+                      "updatedAt": "2026-07-28T11:04:57.000Z",
+                      "uid": "35240-afd83c71-bf7c-4a85-99d1-50a2f42ee2f8"
+                    },
+                    {
+                      "id": "d781683f-a66f-4461-b4e2-065672c9be57",
+                      "name": "The client specified an invalid argument",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "description": "The user's IP address if the user is currently logged in with the TPP. If the customer  IP address is supplied (recommended), it is inferred that the user is present during the session (<i>i.e.</i>, the request is user-initiated; adding a `customer-initiated` = `true` header makes this explicit). For AIS calls, if the customer's IP address is not provided in the request, the bank assumes it is a TPP-initiated request and may limit the TPP to 4 TPP-initiated access attempts within a given 24-hour period.",
+                            "key": "token-customer-ip-address",
+                            "value": "<ipv4>"
+                          },
+                          {
+                            "description": "Informs the bank that the API call was explicitly initiated by the user. This is useful in circumnavigating bank restrictions that impose a 4-times-a-day (<i>i.e.</i>, within the same 24-hour period) access limit on the same AISP, in accordance with RTS regulations.",
+                            "key": "customer-initiated",
+                            "value": "<boolean>"
+                          },
+                          {
+                            "description": "Obtained by the TPP from details in the user agent information of the user.",
+                            "key": "token-customer-device-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/tokens/:tokenId/cancel",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tokens",
+                            ":tokenId",
+                            "cancel"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:57.000Z",
+                      "updatedAt": "2026-07-28T11:04:57.000Z",
+                      "uid": "35240-d781683f-a66f-4461-b4e2-065672c9be57"
+                    },
+                    {
+                      "id": "e99091af-0a08-4bed-9767-be9ba4843e3d",
+                      "name": "The authorization information is missing or invalid",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "description": "The user's IP address if the user is currently logged in with the TPP. If the customer  IP address is supplied (recommended), it is inferred that the user is present during the session (<i>i.e.</i>, the request is user-initiated; adding a `customer-initiated` = `true` header makes this explicit). For AIS calls, if the customer's IP address is not provided in the request, the bank assumes it is a TPP-initiated request and may limit the TPP to 4 TPP-initiated access attempts within a given 24-hour period.",
+                            "key": "token-customer-ip-address",
+                            "value": "<ipv4>"
+                          },
+                          {
+                            "description": "Informs the bank that the API call was explicitly initiated by the user. This is useful in circumnavigating bank restrictions that impose a 4-times-a-day (<i>i.e.</i>, within the same 24-hour period) access limit on the same AISP, in accordance with RTS regulations.",
+                            "key": "customer-initiated",
+                            "value": "<boolean>"
+                          },
+                          {
+                            "description": "Obtained by the TPP from details in the user agent information of the user.",
+                            "key": "token-customer-device-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/tokens/:tokenId/cancel",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tokens",
+                            ":tokenId",
+                            "cancel"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:57.000Z",
+                      "updatedAt": "2026-07-28T11:04:57.000Z",
+                      "uid": "35240-e99091af-0a08-4bed-9767-be9ba4843e3d"
+                    },
+                    {
+                      "id": "43f51661-5885-4a6e-af5e-7b0ad9eb4338",
+                      "name": "Permission to access this endpoint is denied",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "description": "The user's IP address if the user is currently logged in with the TPP. If the customer  IP address is supplied (recommended), it is inferred that the user is present during the session (<i>i.e.</i>, the request is user-initiated; adding a `customer-initiated` = `true` header makes this explicit). For AIS calls, if the customer's IP address is not provided in the request, the bank assumes it is a TPP-initiated request and may limit the TPP to 4 TPP-initiated access attempts within a given 24-hour period.",
+                            "key": "token-customer-ip-address",
+                            "value": "<ipv4>"
+                          },
+                          {
+                            "description": "Informs the bank that the API call was explicitly initiated by the user. This is useful in circumnavigating bank restrictions that impose a 4-times-a-day (<i>i.e.</i>, within the same 24-hour period) access limit on the same AISP, in accordance with RTS regulations.",
+                            "key": "customer-initiated",
+                            "value": "<boolean>"
+                          },
+                          {
+                            "description": "Obtained by the TPP from details in the user agent information of the user.",
+                            "key": "token-customer-device-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/tokens/:tokenId/cancel",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tokens",
+                            ":tokenId",
+                            "cancel"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"nisi non irure ut veniam\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:57.000Z",
+                      "updatedAt": "2026-07-28T11:04:57.000Z",
+                      "uid": "35240-43f51661-5885-4a6e-af5e-7b0ad9eb4338"
+                    },
+                    {
+                      "id": "6da8f3f2-addb-48f4-bd25-ec15af0b8757",
+                      "name": "The requested entity, such as a payment, was not found",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "description": "The user's IP address if the user is currently logged in with the TPP. If the customer  IP address is supplied (recommended), it is inferred that the user is present during the session (<i>i.e.</i>, the request is user-initiated; adding a `customer-initiated` = `true` header makes this explicit). For AIS calls, if the customer's IP address is not provided in the request, the bank assumes it is a TPP-initiated request and may limit the TPP to 4 TPP-initiated access attempts within a given 24-hour period.",
+                            "key": "token-customer-ip-address",
+                            "value": "<ipv4>"
+                          },
+                          {
+                            "description": "Informs the bank that the API call was explicitly initiated by the user. This is useful in circumnavigating bank restrictions that impose a 4-times-a-day (<i>i.e.</i>, within the same 24-hour period) access limit on the same AISP, in accordance with RTS regulations.",
+                            "key": "customer-initiated",
+                            "value": "<boolean>"
+                          },
+                          {
+                            "description": "Obtained by the TPP from details in the user agent information of the user.",
+                            "key": "token-customer-device-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/tokens/:tokenId/cancel",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tokens",
+                            ":tokenId",
+                            "cancel"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"nulla \",\n    \"message\": \"<string>\",\n    \"paymentId\": \"id aliquip\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:57.000Z",
+                      "updatedAt": "2026-07-28T11:04:57.000Z",
+                      "uid": "35240-6da8f3f2-addb-48f4-bd25-ec15af0b8757"
+                    },
+                    {
+                      "id": "a1201f73-6a1c-41d1-a48d-4c25bae6e81e",
+                      "name": "Too many requests",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "description": "The user's IP address if the user is currently logged in with the TPP. If the customer  IP address is supplied (recommended), it is inferred that the user is present during the session (<i>i.e.</i>, the request is user-initiated; adding a `customer-initiated` = `true` header makes this explicit). For AIS calls, if the customer's IP address is not provided in the request, the bank assumes it is a TPP-initiated request and may limit the TPP to 4 TPP-initiated access attempts within a given 24-hour period.",
+                            "key": "token-customer-ip-address",
+                            "value": "<ipv4>"
+                          },
+                          {
+                            "description": "Informs the bank that the API call was explicitly initiated by the user. This is useful in circumnavigating bank restrictions that impose a 4-times-a-day (<i>i.e.</i>, within the same 24-hour period) access limit on the same AISP, in accordance with RTS regulations.",
+                            "key": "customer-initiated",
+                            "value": "<boolean>"
+                          },
+                          {
+                            "description": "Obtained by the TPP from details in the user agent information of the user.",
+                            "key": "token-customer-device-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/tokens/:tokenId/cancel",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tokens",
+                            ":tokenId",
+                            "cancel"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"id veniam\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"ea aliquip laborum\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:57.000Z",
+                      "updatedAt": "2026-07-28T11:04:57.000Z",
+                      "uid": "35240-a1201f73-6a1c-41d1-a48d-4c25bae6e81e"
+                    },
+                    {
+                      "id": "dbbe731c-5119-4354-9aba-64fdf8b225c8",
+                      "name": "An unexpected or internal server error",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "description": "The user's IP address if the user is currently logged in with the TPP. If the customer  IP address is supplied (recommended), it is inferred that the user is present during the session (<i>i.e.</i>, the request is user-initiated; adding a `customer-initiated` = `true` header makes this explicit). For AIS calls, if the customer's IP address is not provided in the request, the bank assumes it is a TPP-initiated request and may limit the TPP to 4 TPP-initiated access attempts within a given 24-hour period.",
+                            "key": "token-customer-ip-address",
+                            "value": "<ipv4>"
+                          },
+                          {
+                            "description": "Informs the bank that the API call was explicitly initiated by the user. This is useful in circumnavigating bank restrictions that impose a 4-times-a-day (<i>i.e.</i>, within the same 24-hour period) access limit on the same AISP, in accordance with RTS regulations.",
+                            "key": "customer-initiated",
+                            "value": "<boolean>"
+                          },
+                          {
+                            "description": "Obtained by the TPP from details in the user agent information of the user.",
+                            "key": "token-customer-device-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/tokens/:tokenId/cancel",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tokens",
+                            ":tokenId",
+                            "cancel"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:57.000Z",
+                      "updatedAt": "2026-07-28T11:04:57.000Z",
+                      "uid": "35240-dbbe731c-5119-4354-9aba-64fdf8b225c8"
+                    },
+                    {
+                      "id": "9ac651c8-138c-4093-96c3-e8e429fba234",
+                      "name": "The operation was not implemented",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "description": "The user's IP address if the user is currently logged in with the TPP. If the customer  IP address is supplied (recommended), it is inferred that the user is present during the session (<i>i.e.</i>, the request is user-initiated; adding a `customer-initiated` = `true` header makes this explicit). For AIS calls, if the customer's IP address is not provided in the request, the bank assumes it is a TPP-initiated request and may limit the TPP to 4 TPP-initiated access attempts within a given 24-hour period.",
+                            "key": "token-customer-ip-address",
+                            "value": "<ipv4>"
+                          },
+                          {
+                            "description": "Informs the bank that the API call was explicitly initiated by the user. This is useful in circumnavigating bank restrictions that impose a 4-times-a-day (<i>i.e.</i>, within the same 24-hour period) access limit on the same AISP, in accordance with RTS regulations.",
+                            "key": "customer-initiated",
+                            "value": "<boolean>"
+                          },
+                          {
+                            "description": "Obtained by the TPP from details in the user agent information of the user.",
+                            "key": "token-customer-device-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/tokens/:tokenId/cancel",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tokens",
+                            ":tokenId",
+                            "cancel"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Implemented",
+                      "code": 501,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"minim ex\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"eiusmod nostrud tempor\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:57.000Z",
+                      "updatedAt": "2026-07-28T11:04:57.000Z",
+                      "uid": "35240-9ac651c8-138c-4093-96c3-e8e429fba234"
+                    },
+                    {
+                      "id": "d1538ea3-ed78-42bb-a700-816b5d3aa472",
+                      "name": "Service is unavailable",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "description": "The user's IP address if the user is currently logged in with the TPP. If the customer  IP address is supplied (recommended), it is inferred that the user is present during the session (<i>i.e.</i>, the request is user-initiated; adding a `customer-initiated` = `true` header makes this explicit). For AIS calls, if the customer's IP address is not provided in the request, the bank assumes it is a TPP-initiated request and may limit the TPP to 4 TPP-initiated access attempts within a given 24-hour period.",
+                            "key": "token-customer-ip-address",
+                            "value": "<ipv4>"
+                          },
+                          {
+                            "description": "Informs the bank that the API call was explicitly initiated by the user. This is useful in circumnavigating bank restrictions that impose a 4-times-a-day (<i>i.e.</i>, within the same 24-hour period) access limit on the same AISP, in accordance with RTS regulations.",
+                            "key": "customer-initiated",
+                            "value": "<boolean>"
+                          },
+                          {
+                            "description": "Obtained by the TPP from details in the user agent information of the user.",
+                            "key": "token-customer-device-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/tokens/:tokenId/cancel",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tokens",
+                            ":tokenId",
+                            "cancel"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Service Unavailable",
+                      "code": 503,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"proident veniam\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"est dolor reprehenderit esse\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:57.000Z",
+                      "updatedAt": "2026-07-28T11:04:57.000Z",
+                      "uid": "35240-d1538ea3-ed78-42bb-a700-816b5d3aa472"
+                    },
+                    {
+                      "id": "e5bc8d35-b433-4d18-ac8b-500d842e7b87",
+                      "name": "Gateway has timed out",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "description": "The user's IP address if the user is currently logged in with the TPP. If the customer  IP address is supplied (recommended), it is inferred that the user is present during the session (<i>i.e.</i>, the request is user-initiated; adding a `customer-initiated` = `true` header makes this explicit). For AIS calls, if the customer's IP address is not provided in the request, the bank assumes it is a TPP-initiated request and may limit the TPP to 4 TPP-initiated access attempts within a given 24-hour period.",
+                            "key": "token-customer-ip-address",
+                            "value": "<ipv4>"
+                          },
+                          {
+                            "description": "Informs the bank that the API call was explicitly initiated by the user. This is useful in circumnavigating bank restrictions that impose a 4-times-a-day (<i>i.e.</i>, within the same 24-hour period) access limit on the same AISP, in accordance with RTS regulations.",
+                            "key": "customer-initiated",
+                            "value": "<boolean>"
+                          },
+                          {
+                            "description": "Obtained by the TPP from details in the user agent information of the user.",
+                            "key": "token-customer-device-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/tokens/:tokenId/cancel",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "tokens",
+                            ":tokenId",
+                            "cancel"
+                          ],
+                          "variable": [
+                            {
+                              "key": "tokenId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Gateway Timeout",
+                      "code": 504,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"ipsum esse culpa labore\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"pariatur et Ut sint\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:57.000Z",
+                      "updatedAt": "2026-07-28T11:04:57.000Z",
+                      "uid": "35240-e5bc8d35-b433-4d18-ac8b-500d842e7b87"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T11:04:57.000Z",
+                  "updatedAt": "2026-07-28T11:04:57.000Z",
+                  "uid": "35240-6398c399-359a-4547-b290-3cfe17aedb1d"
+                }
+              ],
+              "id": "fff5745d-0b6d-4242-adaa-921a3d1b4e84",
+              "createdAt": "2026-07-28T11:04:57.000Z",
+              "updatedAt": "2026-07-28T11:04:57.000Z",
+              "uid": "35240-fff5745d-0b6d-4242-adaa-921a3d1b4e84"
+            },
+            {
+              "name": "Get a token",
+              "id": "c6f3ad10-d4f8-47bb-8e3c-dfffd6c23365",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tokens/:tokenId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tokens",
+                    ":tokenId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "9b370d45-abcb-417a-8053-9237334008e2",
+                      "key": "tokenId",
+                      "value": "<string>",
+                      "description": "(Required) Identifies a unique authorization token for a transfer, standing order, or account information access."
+                    }
+                  ]
+                },
+                "description": "The `GET /tokens/{tokenId}` endpoint retrieves information about a specific token for the authenticated member."
+              },
+              "response": [
+                {
+                  "id": "b1363e79-a5da-4654-93f9-745dbef471d6",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tokens/:tokenId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tokens",
+                        ":tokenId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tokenId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"token\": {\n    \"id\": \"<string>\",\n    \"payload\": {\n      \"transfer\": {\n        \"currency\": \"<string>\",\n        \"lifetimeAmount\": \"<string>\",\n        \"instructions\": {\n          \"transferDestinations\": [\n            {\n              \"sepa\": {\n                \"iban\": \"<string>\",\n                \"bic\": \"<string>\"\n              }\n            }\n          ],\n          \"metadata\": {\n            \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n            \"providerTransferMetadata\": {\n              \"cma9TransferMetadata\": {\n                \"endToEndIdentification\": \"<string>\",\n                \"instructionIdentification\": \"<string>\",\n                \"risk\": {\n                  \"deliveryAddress\": {\n                    \"addressLine\": [\n                      \"<string>\",\n                      \"<string>\"\n                    ],\n                    \"addressType\": \"INVALID_ADDRESS_TYPE\",\n                    \"buildingNumber\": \"<string>\",\n                    \"country\": \"<string>\",\n                    \"countrySubDivision\": [\n                      \"<string>\",\n                      \"<string>\"\n                    ],\n                    \"department\": \"<string>\",\n                    \"postCode\": \"<string>\",\n                    \"streetName\": \"<string>\",\n                    \"subDepartment\": \"<string>\",\n                    \"townName\": \"<string>\"\n                  },\n                  \"merchantCustomerIdentification\": \"<string>\",\n                  \"paymentContextCode\": \"TRANSFER_TO_THIRD_PARTY\",\n                  \"paymentPurposeCode\": \"CASH\",\n                  \"beneficiaryAccountType\": \"CHARITY\",\n                  \"contractPresentIndicator\": \"<string>\",\n                  \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n                }\n              }\n            },\n            \"purposeCode\": \"CASH\",\n            \"ultimateCreditor\": \"<string>\",\n            \"ultimateDebtor\": \"<string>\"\n          },\n          \"source\": {\n            \"accountIdentifier\": {\n              \"bankgiro\": {\n                \"bankgiroNumber\": \"<string>\"\n              }\n            },\n            \"bankId\": \"<string>\",\n            \"bic\": \"<string>\",\n            \"customerData\": {\n              \"legalNames\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"address\": {\n                \"city\": \"<string>\",\n                \"conscriptionNumber\": \"<string>\",\n                \"country\": \"<string>\",\n                \"district\": \"<string>\",\n                \"flats\": \"<string>\",\n                \"full\": \"<string>\",\n                \"hamlet\": \"<string>\",\n                \"houseName\": \"<string>\",\n                \"houseNumber\": \"<string>\",\n                \"place\": \"<string>\",\n                \"postCode\": \"<string>\",\n                \"province\": \"<string>\",\n                \"state\": \"<string>\",\n                \"street\": \"<string>\",\n                \"subdistrict\": \"<string>\",\n                \"suburb\": \"<string>\"\n              }\n            }\n          }\n        },\n        \"amount\": \"<string>\",\n        \"attachments\": [\n          {\n            \"blobId\": \"<string>\",\n            \"name\": \"<string>\",\n            \"type\": \"<string>\"\n          },\n          {\n            \"blobId\": \"<string>\",\n            \"name\": \"<string>\",\n            \"type\": \"<string>\"\n          }\n        ],\n        \"confirmFunds\": false,\n        \"executionDate\": \"<string>\",\n        \"remittanceReference\": \"<string>\",\n        \"returnRefundAccount\": false\n      }\n    },\n    \"payloadSignatures\": [\n      {\n        \"action\": \"INVALID\",\n        \"signature\": {\n          \"keyId\": \"<string>\",\n          \"memberId\": \"<string>\",\n          \"signature\": \"<string>\"\n        }\n      },\n      {\n        \"action\": \"INVALID\",\n        \"signature\": {\n          \"keyId\": \"<string>\",\n          \"memberId\": \"<string>\",\n          \"signature\": \"<string>\"\n        }\n      }\n    ],\n    \"replacedByTokenId\": \"<string>\",\n    \"tokenRequestId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:57.000Z",
+                  "updatedAt": "2026-07-28T11:04:57.000Z",
+                  "uid": "35240-b1363e79-a5da-4654-93f9-745dbef471d6"
+                },
+                {
+                  "id": "bd266f52-fea2-4141-9e15-3b559e8933c5",
+                  "name": "The client specified an invalid argument",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tokens/:tokenId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tokens",
+                        ":tokenId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tokenId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:57.000Z",
+                  "updatedAt": "2026-07-28T11:04:57.000Z",
+                  "uid": "35240-bd266f52-fea2-4141-9e15-3b559e8933c5"
+                },
+                {
+                  "id": "2d640372-bd83-4906-bdf8-8370b05a0fe0",
+                  "name": "The authorization information is missing or invalid",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tokens/:tokenId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tokens",
+                        ":tokenId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tokenId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:57.000Z",
+                  "updatedAt": "2026-07-28T11:04:57.000Z",
+                  "uid": "35240-2d640372-bd83-4906-bdf8-8370b05a0fe0"
+                },
+                {
+                  "id": "5eff9908-fd15-4ef9-94f6-fd1101645011",
+                  "name": "Permission to access this endpoint is denied",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tokens/:tokenId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tokens",
+                        ":tokenId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tokenId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"nisi non irure ut veniam\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:57.000Z",
+                  "updatedAt": "2026-07-28T11:04:57.000Z",
+                  "uid": "35240-5eff9908-fd15-4ef9-94f6-fd1101645011"
+                },
+                {
+                  "id": "8a34be65-0412-4230-b9bc-272b33d0426a",
+                  "name": "The requested entity, such as a payment, was not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tokens/:tokenId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tokens",
+                        ":tokenId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tokenId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"nulla \",\n    \"message\": \"<string>\",\n    \"paymentId\": \"id aliquip\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:57.000Z",
+                  "updatedAt": "2026-07-28T11:04:57.000Z",
+                  "uid": "35240-8a34be65-0412-4230-b9bc-272b33d0426a"
+                },
+                {
+                  "id": "be1d19db-c6ca-4b3b-9872-ca0b1f6518b3",
+                  "name": "Too many requests",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tokens/:tokenId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tokens",
+                        ":tokenId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tokenId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"id veniam\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"ea aliquip laborum\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:57.000Z",
+                  "updatedAt": "2026-07-28T11:04:57.000Z",
+                  "uid": "35240-be1d19db-c6ca-4b3b-9872-ca0b1f6518b3"
+                },
+                {
+                  "id": "b14ef7be-cacc-47db-aa98-27814cfd2d97",
+                  "name": "An unexpected or internal server error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tokens/:tokenId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tokens",
+                        ":tokenId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tokenId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:57.000Z",
+                  "updatedAt": "2026-07-28T11:04:57.000Z",
+                  "uid": "35240-b14ef7be-cacc-47db-aa98-27814cfd2d97"
+                },
+                {
+                  "id": "976447c2-fe03-4717-90f1-eae57bf65eb6",
+                  "name": "The operation was not implemented",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tokens/:tokenId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tokens",
+                        ":tokenId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tokenId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Implemented",
+                  "code": 501,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"minim ex\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"eiusmod nostrud tempor\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:57.000Z",
+                  "updatedAt": "2026-07-28T11:04:57.000Z",
+                  "uid": "35240-976447c2-fe03-4717-90f1-eae57bf65eb6"
+                },
+                {
+                  "id": "31f7c623-e1f8-4704-af47-bf5fd8c4fe73",
+                  "name": "Service is unavailable",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tokens/:tokenId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tokens",
+                        ":tokenId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tokenId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Service Unavailable",
+                  "code": 503,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"proident veniam\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"est dolor reprehenderit esse\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:57.000Z",
+                  "updatedAt": "2026-07-28T11:04:57.000Z",
+                  "uid": "35240-31f7c623-e1f8-4704-af47-bf5fd8c4fe73"
+                },
+                {
+                  "id": "5d3eede3-6f8b-4317-ab88-8fc302ada828",
+                  "name": "Gateway has timed out",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tokens/:tokenId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tokens",
+                        ":tokenId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tokenId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Gateway Timeout",
+                  "code": 504,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"ipsum esse culpa labore\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"pariatur et Ut sint\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:57.000Z",
+                  "updatedAt": "2026-07-28T11:04:57.000Z",
+                  "uid": "35240-5d3eede3-6f8b-4317-ab88-8fc302ada828"
+                }
+              ],
+              "createdAt": "2026-07-28T11:04:57.000Z",
+              "updatedAt": "2026-07-28T11:04:57.000Z",
+              "uid": "35240-c6f3ad10-d4f8-47bb-8e3c-dfffd6c23365"
+            }
+          ],
+          "id": "0749a869-7f0d-4969-b46c-dfcc43814836",
+          "createdAt": "2026-07-28T11:04:57.000Z",
+          "updatedAt": "2026-07-28T11:04:57.000Z",
+          "uid": "35240-0749a869-7f0d-4969-b46c-dfcc43814836"
+        },
+        {
+          "name": "Get tokens",
+          "id": "7344f9f4-f462-4871-9bd4-b779f63edcb5",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/tokens?type=INVALID&page.offset=<string>&page.limit=1&filter.sourceAccountId=<string>&filter.destinationAccountId=<string>&filter.startTimeMs=<string>&filter.endTimeMs=<string>&filter.role=ANY&filter.actingAsRefId=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tokens"
+              ],
+              "query": [
+                {
+                  "description": "Specifies the type of token returned.",
+                  "key": "type",
+                  "value": "INVALID"
+                },
+                {
+                  "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way.",
+                  "key": "page.offset",
+                  "value": "<string>"
+                },
+                {
+                  "description": "(Required) The maximum number of records to return. This must be less than 200.",
+                  "key": "page.limit",
+                  "value": "1"
+                },
+                {
+                  "description": "Identifies the payer's account.",
+                  "key": "filter.sourceAccountId",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Identifies the payee/beneficiary's account.",
+                  "key": "filter.destinationAccountId",
+                  "value": "<string>"
+                },
+                {
+                  "description": "The filtered list start timestamp in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                  "key": "filter.startTimeMs",
+                  "value": "<string>"
+                },
+                {
+                  "description": "The filtered list end timestamp in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                  "key": "filter.endTimeMs",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Filters by `accountHolder` role.",
+                  "key": "filter.role",
+                  "value": "ANY"
+                },
+                {
+                  "description": "Filters the list by the sub-TPP identifier generated by Token.io once a TPP has been onboarded.",
+                  "key": "filter.actingAsRefId",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "The `GET /tokens` endpoint retrieves a list of all tokens for the authenticated member."
+          },
+          "response": [
+            {
+              "id": "0f1062e1-261c-48b8-8e67-6ababd2b9f6a",
+              "name": "Successful response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tokens?type=INVALID&page.offset=<string>&page.limit=1&filter.sourceAccountId=<string>&filter.destinationAccountId=<string>&filter.startTimeMs=<string>&filter.endTimeMs=<string>&filter.role=ANY&filter.actingAsRefId=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tokens"
+                  ],
+                  "query": [
+                    {
+                      "description": "Specifies the type of token returned.",
+                      "key": "type",
+                      "value": "INVALID"
+                    },
+                    {
+                      "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way.",
+                      "key": "page.offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) The maximum number of records to return. This must be less than 200.",
+                      "key": "page.limit",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Identifies the payer's account.",
+                      "key": "filter.sourceAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Identifies the payee/beneficiary's account.",
+                      "key": "filter.destinationAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The filtered list start timestamp in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.startTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The filtered list end timestamp in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.endTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters by `accountHolder` role.",
+                      "key": "filter.role",
+                      "value": "ANY"
+                    },
+                    {
+                      "description": "Filters the list by the sub-TPP identifier generated by Token.io once a TPP has been onboarded.",
+                      "key": "filter.actingAsRefId",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"offset\": \"<string>\",\n  \"tokens\": [\n    {\n      \"id\": \"<string>\",\n      \"payload\": {\n        \"transfer\": {\n          \"currency\": \"<string>\",\n          \"lifetimeAmount\": \"<string>\",\n          \"instructions\": {\n            \"transferDestinations\": [\n              {\n                \"sepa\": {\n                  \"iban\": \"<string>\",\n                  \"bic\": \"<string>\"\n                }\n              }\n            ],\n            \"metadata\": {\n              \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n              \"providerTransferMetadata\": {\n                \"cma9TransferMetadata\": {\n                  \"endToEndIdentification\": \"<string>\",\n                  \"instructionIdentification\": \"<string>\",\n                  \"risk\": {\n                    \"deliveryAddress\": {\n                      \"addressLine\": [\n                        \"<string>\",\n                        \"<string>\"\n                      ],\n                      \"addressType\": \"INVALID_ADDRESS_TYPE\",\n                      \"buildingNumber\": \"<string>\",\n                      \"country\": \"<string>\",\n                      \"countrySubDivision\": [\n                        \"<string>\",\n                        \"<string>\"\n                      ],\n                      \"department\": \"<string>\",\n                      \"postCode\": \"<string>\",\n                      \"streetName\": \"<string>\",\n                      \"subDepartment\": \"<string>\",\n                      \"townName\": \"<string>\"\n                    },\n                    \"merchantCustomerIdentification\": \"<string>\",\n                    \"paymentContextCode\": \"TRANSFER_TO_THIRD_PARTY\",\n                    \"paymentPurposeCode\": \"CASH\",\n                    \"beneficiaryAccountType\": \"CHARITY\",\n                    \"contractPresentIndicator\": \"<string>\",\n                    \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n                  }\n                }\n              },\n              \"purposeCode\": \"CASH\",\n              \"ultimateCreditor\": \"<string>\",\n              \"ultimateDebtor\": \"<string>\"\n            },\n            \"source\": {\n              \"accountIdentifier\": {\n                \"bankgiro\": {\n                  \"bankgiroNumber\": \"<string>\"\n                }\n              },\n              \"bankId\": \"<string>\",\n              \"bic\": \"<string>\",\n              \"customerData\": {\n                \"legalNames\": [\n                  \"<string>\",\n                  \"<string>\"\n                ],\n                \"address\": {\n                  \"city\": \"<string>\",\n                  \"conscriptionNumber\": \"<string>\",\n                  \"country\": \"<string>\",\n                  \"district\": \"<string>\",\n                  \"flats\": \"<string>\",\n                  \"full\": \"<string>\",\n                  \"hamlet\": \"<string>\",\n                  \"houseName\": \"<string>\",\n                  \"houseNumber\": \"<string>\",\n                  \"place\": \"<string>\",\n                  \"postCode\": \"<string>\",\n                  \"province\": \"<string>\",\n                  \"state\": \"<string>\",\n                  \"street\": \"<string>\",\n                  \"subdistrict\": \"<string>\",\n                  \"suburb\": \"<string>\"\n                }\n              }\n            }\n          },\n          \"amount\": \"<string>\",\n          \"attachments\": [\n            {\n              \"blobId\": \"<string>\",\n              \"name\": \"<string>\",\n              \"type\": \"<string>\"\n            },\n            {\n              \"blobId\": \"<string>\",\n              \"name\": \"<string>\",\n              \"type\": \"<string>\"\n            }\n          ],\n          \"confirmFunds\": false,\n          \"executionDate\": \"<string>\",\n          \"remittanceReference\": \"<string>\",\n          \"returnRefundAccount\": false\n        }\n      },\n      \"payloadSignatures\": [\n        {\n          \"action\": \"INVALID\",\n          \"signature\": {\n            \"keyId\": \"<string>\",\n            \"memberId\": \"<string>\",\n            \"signature\": \"<string>\"\n          }\n        },\n        {\n          \"action\": \"INVALID\",\n          \"signature\": {\n            \"keyId\": \"<string>\",\n            \"memberId\": \"<string>\",\n            \"signature\": \"<string>\"\n          }\n        }\n      ],\n      \"replacedByTokenId\": \"<string>\",\n      \"tokenRequestId\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"payload\": {\n        \"transfer\": {\n          \"currency\": \"<string>\",\n          \"lifetimeAmount\": \"<string>\",\n          \"instructions\": {\n            \"transferDestinations\": [\n              {\n                \"sepa\": {\n                  \"iban\": \"<string>\",\n                  \"bic\": \"<string>\"\n                }\n              }\n            ],\n            \"metadata\": {\n              \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n              \"providerTransferMetadata\": {\n                \"cma9TransferMetadata\": {\n                  \"endToEndIdentification\": \"<string>\",\n                  \"instructionIdentification\": \"<string>\",\n                  \"risk\": {\n                    \"deliveryAddress\": {\n                      \"addressLine\": [\n                        \"<string>\",\n                        \"<string>\"\n                      ],\n                      \"addressType\": \"INVALID_ADDRESS_TYPE\",\n                      \"buildingNumber\": \"<string>\",\n                      \"country\": \"<string>\",\n                      \"countrySubDivision\": [\n                        \"<string>\",\n                        \"<string>\"\n                      ],\n                      \"department\": \"<string>\",\n                      \"postCode\": \"<string>\",\n                      \"streetName\": \"<string>\",\n                      \"subDepartment\": \"<string>\",\n                      \"townName\": \"<string>\"\n                    },\n                    \"merchantCustomerIdentification\": \"<string>\",\n                    \"paymentContextCode\": \"PISP_PAYEE\",\n                    \"paymentPurposeCode\": \"CASH\",\n                    \"beneficiaryAccountType\": \"EWALLET\",\n                    \"contractPresentIndicator\": \"<string>\",\n                    \"beneficiaryPrepopulatedIndicator\": \"<string>\"\n                  }\n                }\n              },\n              \"purposeCode\": \"CASH\",\n              \"ultimateCreditor\": \"<string>\",\n              \"ultimateDebtor\": \"<string>\"\n            },\n            \"source\": {\n              \"accountIdentifier\": {\n                \"bankgiro\": {\n                  \"bankgiroNumber\": \"<string>\"\n                }\n              },\n              \"bankId\": \"<string>\",\n              \"bic\": \"<string>\",\n              \"customerData\": {\n                \"legalNames\": [\n                  \"<string>\",\n                  \"<string>\"\n                ],\n                \"address\": {\n                  \"city\": \"<string>\",\n                  \"conscriptionNumber\": \"<string>\",\n                  \"country\": \"<string>\",\n                  \"district\": \"<string>\",\n                  \"flats\": \"<string>\",\n                  \"full\": \"<string>\",\n                  \"hamlet\": \"<string>\",\n                  \"houseName\": \"<string>\",\n                  \"houseNumber\": \"<string>\",\n                  \"place\": \"<string>\",\n                  \"postCode\": \"<string>\",\n                  \"province\": \"<string>\",\n                  \"state\": \"<string>\",\n                  \"street\": \"<string>\",\n                  \"subdistrict\": \"<string>\",\n                  \"suburb\": \"<string>\"\n                }\n              }\n            }\n          },\n          \"amount\": \"<string>\",\n          \"attachments\": [\n            {\n              \"blobId\": \"<string>\",\n              \"name\": \"<string>\",\n              \"type\": \"<string>\"\n            },\n            {\n              \"blobId\": \"<string>\",\n              \"name\": \"<string>\",\n              \"type\": \"<string>\"\n            }\n          ],\n          \"confirmFunds\": false,\n          \"executionDate\": \"<string>\",\n          \"remittanceReference\": \"<string>\",\n          \"returnRefundAccount\": false\n        }\n      },\n      \"payloadSignatures\": [\n        {\n          \"action\": \"INVALID\",\n          \"signature\": {\n            \"keyId\": \"<string>\",\n            \"memberId\": \"<string>\",\n            \"signature\": \"<string>\"\n          }\n        },\n        {\n          \"action\": \"INVALID\",\n          \"signature\": {\n            \"keyId\": \"<string>\",\n            \"memberId\": \"<string>\",\n            \"signature\": \"<string>\"\n          }\n        }\n      ],\n      \"replacedByTokenId\": \"<string>\",\n      \"tokenRequestId\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T11:04:57.000Z",
+              "updatedAt": "2026-07-28T11:04:57.000Z",
+              "uid": "35240-0f1062e1-261c-48b8-8e67-6ababd2b9f6a"
+            },
+            {
+              "id": "c4348a98-4108-4eba-9014-e56f00cff8ab",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tokens?type=INVALID&page.offset=<string>&page.limit=1&filter.sourceAccountId=<string>&filter.destinationAccountId=<string>&filter.startTimeMs=<string>&filter.endTimeMs=<string>&filter.role=ANY&filter.actingAsRefId=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tokens"
+                  ],
+                  "query": [
+                    {
+                      "description": "Specifies the type of token returned.",
+                      "key": "type",
+                      "value": "INVALID"
+                    },
+                    {
+                      "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way.",
+                      "key": "page.offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) The maximum number of records to return. This must be less than 200.",
+                      "key": "page.limit",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Identifies the payer's account.",
+                      "key": "filter.sourceAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Identifies the payee/beneficiary's account.",
+                      "key": "filter.destinationAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The filtered list start timestamp in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.startTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The filtered list end timestamp in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.endTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters by `accountHolder` role.",
+                      "key": "filter.role",
+                      "value": "ANY"
+                    },
+                    {
+                      "description": "Filters the list by the sub-TPP identifier generated by Token.io once a TPP has been onboarded.",
+                      "key": "filter.actingAsRefId",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:57.000Z",
+              "updatedAt": "2026-07-28T11:04:57.000Z",
+              "uid": "35240-c4348a98-4108-4eba-9014-e56f00cff8ab"
+            },
+            {
+              "id": "a623c038-e3aa-4176-9ae1-efca560083d4",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tokens?type=INVALID&page.offset=<string>&page.limit=1&filter.sourceAccountId=<string>&filter.destinationAccountId=<string>&filter.startTimeMs=<string>&filter.endTimeMs=<string>&filter.role=ANY&filter.actingAsRefId=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tokens"
+                  ],
+                  "query": [
+                    {
+                      "description": "Specifies the type of token returned.",
+                      "key": "type",
+                      "value": "INVALID"
+                    },
+                    {
+                      "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way.",
+                      "key": "page.offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) The maximum number of records to return. This must be less than 200.",
+                      "key": "page.limit",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Identifies the payer's account.",
+                      "key": "filter.sourceAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Identifies the payee/beneficiary's account.",
+                      "key": "filter.destinationAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The filtered list start timestamp in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.startTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The filtered list end timestamp in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.endTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters by `accountHolder` role.",
+                      "key": "filter.role",
+                      "value": "ANY"
+                    },
+                    {
+                      "description": "Filters the list by the sub-TPP identifier generated by Token.io once a TPP has been onboarded.",
+                      "key": "filter.actingAsRefId",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:57.000Z",
+              "updatedAt": "2026-07-28T11:04:57.000Z",
+              "uid": "35240-a623c038-e3aa-4176-9ae1-efca560083d4"
+            },
+            {
+              "id": "a4e08d2c-1ed8-4dea-b901-f9b3bcb4253a",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tokens?type=INVALID&page.offset=<string>&page.limit=1&filter.sourceAccountId=<string>&filter.destinationAccountId=<string>&filter.startTimeMs=<string>&filter.endTimeMs=<string>&filter.role=ANY&filter.actingAsRefId=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tokens"
+                  ],
+                  "query": [
+                    {
+                      "description": "Specifies the type of token returned.",
+                      "key": "type",
+                      "value": "INVALID"
+                    },
+                    {
+                      "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way.",
+                      "key": "page.offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) The maximum number of records to return. This must be less than 200.",
+                      "key": "page.limit",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Identifies the payer's account.",
+                      "key": "filter.sourceAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Identifies the payee/beneficiary's account.",
+                      "key": "filter.destinationAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The filtered list start timestamp in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.startTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The filtered list end timestamp in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.endTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters by `accountHolder` role.",
+                      "key": "filter.role",
+                      "value": "ANY"
+                    },
+                    {
+                      "description": "Filters the list by the sub-TPP identifier generated by Token.io once a TPP has been onboarded.",
+                      "key": "filter.actingAsRefId",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"nisi non irure ut veniam\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:57.000Z",
+              "updatedAt": "2026-07-28T11:04:57.000Z",
+              "uid": "35240-a4e08d2c-1ed8-4dea-b901-f9b3bcb4253a"
+            },
+            {
+              "id": "5cdea850-b08f-4264-a42a-567a1268a878",
+              "name": "The requested entity, such as a payment, was not found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tokens?type=INVALID&page.offset=<string>&page.limit=1&filter.sourceAccountId=<string>&filter.destinationAccountId=<string>&filter.startTimeMs=<string>&filter.endTimeMs=<string>&filter.role=ANY&filter.actingAsRefId=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tokens"
+                  ],
+                  "query": [
+                    {
+                      "description": "Specifies the type of token returned.",
+                      "key": "type",
+                      "value": "INVALID"
+                    },
+                    {
+                      "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way.",
+                      "key": "page.offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) The maximum number of records to return. This must be less than 200.",
+                      "key": "page.limit",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Identifies the payer's account.",
+                      "key": "filter.sourceAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Identifies the payee/beneficiary's account.",
+                      "key": "filter.destinationAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The filtered list start timestamp in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.startTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The filtered list end timestamp in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.endTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters by `accountHolder` role.",
+                      "key": "filter.role",
+                      "value": "ANY"
+                    },
+                    {
+                      "description": "Filters the list by the sub-TPP identifier generated by Token.io once a TPP has been onboarded.",
+                      "key": "filter.actingAsRefId",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"nulla \",\n    \"message\": \"<string>\",\n    \"paymentId\": \"id aliquip\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:57.000Z",
+              "updatedAt": "2026-07-28T11:04:57.000Z",
+              "uid": "35240-5cdea850-b08f-4264-a42a-567a1268a878"
+            },
+            {
+              "id": "2bdc2a61-9314-442f-a942-01022325657a",
+              "name": "Too many requests",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tokens?type=INVALID&page.offset=<string>&page.limit=1&filter.sourceAccountId=<string>&filter.destinationAccountId=<string>&filter.startTimeMs=<string>&filter.endTimeMs=<string>&filter.role=ANY&filter.actingAsRefId=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tokens"
+                  ],
+                  "query": [
+                    {
+                      "description": "Specifies the type of token returned.",
+                      "key": "type",
+                      "value": "INVALID"
+                    },
+                    {
+                      "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way.",
+                      "key": "page.offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) The maximum number of records to return. This must be less than 200.",
+                      "key": "page.limit",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Identifies the payer's account.",
+                      "key": "filter.sourceAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Identifies the payee/beneficiary's account.",
+                      "key": "filter.destinationAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The filtered list start timestamp in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.startTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The filtered list end timestamp in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.endTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters by `accountHolder` role.",
+                      "key": "filter.role",
+                      "value": "ANY"
+                    },
+                    {
+                      "description": "Filters the list by the sub-TPP identifier generated by Token.io once a TPP has been onboarded.",
+                      "key": "filter.actingAsRefId",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"id veniam\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"ea aliquip laborum\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:57.000Z",
+              "updatedAt": "2026-07-28T11:04:57.000Z",
+              "uid": "35240-2bdc2a61-9314-442f-a942-01022325657a"
+            },
+            {
+              "id": "791fe2c5-b3cb-47cb-a088-18e8a1e3fdff",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tokens?type=INVALID&page.offset=<string>&page.limit=1&filter.sourceAccountId=<string>&filter.destinationAccountId=<string>&filter.startTimeMs=<string>&filter.endTimeMs=<string>&filter.role=ANY&filter.actingAsRefId=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tokens"
+                  ],
+                  "query": [
+                    {
+                      "description": "Specifies the type of token returned.",
+                      "key": "type",
+                      "value": "INVALID"
+                    },
+                    {
+                      "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way.",
+                      "key": "page.offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) The maximum number of records to return. This must be less than 200.",
+                      "key": "page.limit",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Identifies the payer's account.",
+                      "key": "filter.sourceAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Identifies the payee/beneficiary's account.",
+                      "key": "filter.destinationAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The filtered list start timestamp in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.startTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The filtered list end timestamp in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.endTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters by `accountHolder` role.",
+                      "key": "filter.role",
+                      "value": "ANY"
+                    },
+                    {
+                      "description": "Filters the list by the sub-TPP identifier generated by Token.io once a TPP has been onboarded.",
+                      "key": "filter.actingAsRefId",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:57.000Z",
+              "updatedAt": "2026-07-28T11:04:57.000Z",
+              "uid": "35240-791fe2c5-b3cb-47cb-a088-18e8a1e3fdff"
+            },
+            {
+              "id": "0867f17b-5a6f-4a1e-9400-43be46f8f2ed",
+              "name": "The operation was not implemented",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tokens?type=INVALID&page.offset=<string>&page.limit=1&filter.sourceAccountId=<string>&filter.destinationAccountId=<string>&filter.startTimeMs=<string>&filter.endTimeMs=<string>&filter.role=ANY&filter.actingAsRefId=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tokens"
+                  ],
+                  "query": [
+                    {
+                      "description": "Specifies the type of token returned.",
+                      "key": "type",
+                      "value": "INVALID"
+                    },
+                    {
+                      "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way.",
+                      "key": "page.offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) The maximum number of records to return. This must be less than 200.",
+                      "key": "page.limit",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Identifies the payer's account.",
+                      "key": "filter.sourceAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Identifies the payee/beneficiary's account.",
+                      "key": "filter.destinationAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The filtered list start timestamp in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.startTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The filtered list end timestamp in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.endTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters by `accountHolder` role.",
+                      "key": "filter.role",
+                      "value": "ANY"
+                    },
+                    {
+                      "description": "Filters the list by the sub-TPP identifier generated by Token.io once a TPP has been onboarded.",
+                      "key": "filter.actingAsRefId",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"minim ex\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"eiusmod nostrud tempor\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:57.000Z",
+              "updatedAt": "2026-07-28T11:04:57.000Z",
+              "uid": "35240-0867f17b-5a6f-4a1e-9400-43be46f8f2ed"
+            },
+            {
+              "id": "9717c9c5-e785-41a2-ad73-c85ba2257076",
+              "name": "Service is unavailable",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tokens?type=INVALID&page.offset=<string>&page.limit=1&filter.sourceAccountId=<string>&filter.destinationAccountId=<string>&filter.startTimeMs=<string>&filter.endTimeMs=<string>&filter.role=ANY&filter.actingAsRefId=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tokens"
+                  ],
+                  "query": [
+                    {
+                      "description": "Specifies the type of token returned.",
+                      "key": "type",
+                      "value": "INVALID"
+                    },
+                    {
+                      "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way.",
+                      "key": "page.offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) The maximum number of records to return. This must be less than 200.",
+                      "key": "page.limit",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Identifies the payer's account.",
+                      "key": "filter.sourceAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Identifies the payee/beneficiary's account.",
+                      "key": "filter.destinationAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The filtered list start timestamp in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.startTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The filtered list end timestamp in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.endTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters by `accountHolder` role.",
+                      "key": "filter.role",
+                      "value": "ANY"
+                    },
+                    {
+                      "description": "Filters the list by the sub-TPP identifier generated by Token.io once a TPP has been onboarded.",
+                      "key": "filter.actingAsRefId",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"proident veniam\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"est dolor reprehenderit esse\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:57.000Z",
+              "updatedAt": "2026-07-28T11:04:57.000Z",
+              "uid": "35240-9717c9c5-e785-41a2-ad73-c85ba2257076"
+            },
+            {
+              "id": "6b11661d-a02d-4f0c-b970-93cb5cb46da9",
+              "name": "Gateway has timed out",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tokens?type=INVALID&page.offset=<string>&page.limit=1&filter.sourceAccountId=<string>&filter.destinationAccountId=<string>&filter.startTimeMs=<string>&filter.endTimeMs=<string>&filter.role=ANY&filter.actingAsRefId=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tokens"
+                  ],
+                  "query": [
+                    {
+                      "description": "Specifies the type of token returned.",
+                      "key": "type",
+                      "value": "INVALID"
+                    },
+                    {
+                      "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way.",
+                      "key": "page.offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) The maximum number of records to return. This must be less than 200.",
+                      "key": "page.limit",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Identifies the payer's account.",
+                      "key": "filter.sourceAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Identifies the payee/beneficiary's account.",
+                      "key": "filter.destinationAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The filtered list start timestamp in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.startTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The filtered list end timestamp in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.",
+                      "key": "filter.endTimeMs",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters by `accountHolder` role.",
+                      "key": "filter.role",
+                      "value": "ANY"
+                    },
+                    {
+                      "description": "Filters the list by the sub-TPP identifier generated by Token.io once a TPP has been onboarded.",
+                      "key": "filter.actingAsRefId",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"ipsum esse culpa labore\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"pariatur et Ut sint\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:57.000Z",
+              "updatedAt": "2026-07-28T11:04:57.000Z",
+              "uid": "35240-6b11661d-a02d-4f0c-b970-93cb5cb46da9"
+            }
+          ],
+          "createdAt": "2026-07-28T11:04:57.000Z",
+          "updatedAt": "2026-07-28T11:04:57.000Z",
+          "uid": "35240-7344f9f4-f462-4871-9bd4-b779f63edcb5"
+        }
+      ],
+      "id": "cceee2de-5a71-4f1b-bf89-48ed0ecf2af8",
+      "createdAt": "2026-07-28T11:04:57.000Z",
+      "updatedAt": "2026-07-28T11:04:57.000Z",
+      "uid": "35240-cceee2de-5a71-4f1b-bf89-48ed0ecf2af8"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.token.io"
+    }
+  ]
+}

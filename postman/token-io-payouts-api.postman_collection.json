@@ -1,0 +1,2231 @@
+{
+  "info": {
+    "_postman_id": "c9c6d083-90ba-4314-ae3b-070f9384e1ca",
+    "name": "Token.io's Open Banking API for TPPs Account on File Payouts API",
+    "description": "<b>Token.io's Open Banking API</b><br/><br/>Token.io Support: <a href=\"https://support.token.io\" target=\"_blank\">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user's account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href=\"https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm\" target=\"_blank\">developer documentation</a>.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T11:04:45.000Z",
+    "updatedAt": "2026-07-28T11:04:45.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-c9c6d083-90ba-4314-ae3b-070f9384e1ca"
+  },
+  "item": [
+    {
+      "name": "payouts",
+      "item": [
+        {
+          "name": "{id}",
+          "item": [
+            {
+              "name": "Get a payout",
+              "id": "9d8d1cd1-4ff7-435f-96b3-a58ef128d27d",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/payouts/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payouts",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "5ef6a2db-d409-4289-a356-83bd2cdbd604",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "The `GET /payouts/{id}` endpoint retrieves a given payout."
+              },
+              "response": [
+                {
+                  "id": "275ebbd4-cab7-4538-ad44-39857d805af4",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/payouts/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payouts",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"payout\": {\n    \"createdDateTime\": \"<string>\",\n    \"id\": \"<string>\",\n    \"memberId\": \"<string>\",\n    \"status\": \"INITIATION_PENDING\",\n    \"updatedDateTime\": \"<string>\",\n    \"bankTransactionId\": \"<string>\",\n    \"bankPaymentStatus\": \"<string>\",\n    \"statusReasonInformation\": \"<string>\",\n    \"initiation\": {\n      \"amount\": {\n        \"currency\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      \"creditor\": {\n        \"name\": \"<string>\",\n        \"ultimateCreditorName\": \"<string>\",\n        \"bankName\": \"<string>\",\n        \"iban\": \"<string>\",\n        \"bic\": \"<string>\",\n        \"accountNumber\": \"<string>\",\n        \"sortCode\": \"<string>\",\n        \"accountVerificationId\": \"<string>\"\n      },\n      \"debtor\": {\n        \"accountId\": \"<string>\"\n      },\n      \"refId\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:45.000Z",
+                  "updatedAt": "2026-07-28T11:04:45.000Z",
+                  "uid": "35240-275ebbd4-cab7-4538-ad44-39857d805af4"
+                },
+                {
+                  "id": "15e54a9a-9b08-4547-9456-6ddaef44c839",
+                  "name": "The client specified an invalid argument",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/payouts/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payouts",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:45.000Z",
+                  "updatedAt": "2026-07-28T11:04:45.000Z",
+                  "uid": "35240-15e54a9a-9b08-4547-9456-6ddaef44c839"
+                },
+                {
+                  "id": "1ef4c335-e20d-4656-ae91-e01a1bf4068b",
+                  "name": "The authorization information is missing or invalid",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/payouts/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payouts",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:45.000Z",
+                  "updatedAt": "2026-07-28T11:04:45.000Z",
+                  "uid": "35240-1ef4c335-e20d-4656-ae91-e01a1bf4068b"
+                },
+                {
+                  "id": "dbb3628a-fd66-4c4c-acbb-5577200c8423",
+                  "name": "Permission to access this endpoint is denied",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/payouts/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payouts",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"dolore elit\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:45.000Z",
+                  "updatedAt": "2026-07-28T11:04:45.000Z",
+                  "uid": "35240-dbb3628a-fd66-4c4c-acbb-5577200c8423"
+                },
+                {
+                  "id": "3a2f7baf-5215-4ea4-bba2-e4f7a5cc20c9",
+                  "name": "The requested entity, such as a payment, was not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/payouts/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payouts",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"laborum in et consectetur est\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"amet ipsum\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:45.000Z",
+                  "updatedAt": "2026-07-28T11:04:45.000Z",
+                  "uid": "35240-3a2f7baf-5215-4ea4-bba2-e4f7a5cc20c9"
+                },
+                {
+                  "id": "fb6de7f1-18d3-4135-a637-212a356f6206",
+                  "name": "Too many requests",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/payouts/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payouts",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"ullamco\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"consectetur labore\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:45.000Z",
+                  "updatedAt": "2026-07-28T11:04:45.000Z",
+                  "uid": "35240-fb6de7f1-18d3-4135-a637-212a356f6206"
+                },
+                {
+                  "id": "79c209b9-9b20-4464-8c19-b32fadb0a85c",
+                  "name": "An unexpected or internal server error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/payouts/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payouts",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:45.000Z",
+                  "updatedAt": "2026-07-28T11:04:45.000Z",
+                  "uid": "35240-79c209b9-9b20-4464-8c19-b32fadb0a85c"
+                },
+                {
+                  "id": "e93ec963-6aec-4790-a9ec-cdd665a85af1",
+                  "name": "The operation was not implemented",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/payouts/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payouts",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Implemented",
+                  "code": 501,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"sed commodo ipsum\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"Duis mollit\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:45.000Z",
+                  "updatedAt": "2026-07-28T11:04:45.000Z",
+                  "uid": "35240-e93ec963-6aec-4790-a9ec-cdd665a85af1"
+                },
+                {
+                  "id": "7c5a80c7-bfaf-41b1-b05a-7a86034169c7",
+                  "name": "Service is unavailable",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/payouts/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payouts",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Service Unavailable",
+                  "code": 503,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"ad laborum esse dolor\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"enim do proident Lorem\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:45.000Z",
+                  "updatedAt": "2026-07-28T11:04:45.000Z",
+                  "uid": "35240-7c5a80c7-bfaf-41b1-b05a-7a86034169c7"
+                },
+                {
+                  "id": "8d9e4376-efe6-4f83-90a0-2d474cf8262b",
+                  "name": "Gateway has timed out",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/payouts/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payouts",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Gateway Timeout",
+                  "code": 504,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"dolore minim ut officia\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"laboris mi\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:45.000Z",
+                  "updatedAt": "2026-07-28T11:04:45.000Z",
+                  "uid": "35240-8d9e4376-efe6-4f83-90a0-2d474cf8262b"
+                }
+              ],
+              "createdAt": "2026-07-28T11:04:45.000Z",
+              "updatedAt": "2026-07-28T11:04:45.000Z",
+              "uid": "35240-9d8d1cd1-4ff7-435f-96b3-a58ef128d27d"
+            }
+          ],
+          "id": "ca158aa3-3737-4d61-b63d-3956acb93bfd",
+          "createdAt": "2026-07-28T11:04:45.000Z",
+          "updatedAt": "2026-07-28T11:04:45.000Z",
+          "uid": "35240-ca158aa3-3737-4d61-b63d-3956acb93bfd"
+        },
+        {
+          "name": "Initiate a payout",
+          "id": "19525dce-573e-4acd-8dde-995b0a22fcc3",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"debtor\": {\n      \"accountId\": \"<string>\"\n    },\n    \"creditor\": {\n      \"name\": \"<string>\",\n      \"ultimateCreditorName\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"iban\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"accountNumber\": \"<string>\",\n      \"sortCode\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"description\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/payouts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "payouts"
+              ]
+            },
+            "description": "The `POST /payouts` endpoint initiates a payout."
+          },
+          "response": [
+            {
+              "id": "66695d43-3698-4f5b-a2f1-bba54b0d2ea9",
+              "name": "Successful response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"debtor\": {\n      \"accountId\": \"<string>\"\n    },\n    \"creditor\": {\n      \"name\": \"<string>\",\n      \"ultimateCreditorName\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"iban\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"accountNumber\": \"<string>\",\n      \"sortCode\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"description\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/payouts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payouts"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"payout\": {\n    \"createdDateTime\": \"<string>\",\n    \"id\": \"<string>\",\n    \"memberId\": \"<string>\",\n    \"status\": \"INITIATION_PENDING\",\n    \"updatedDateTime\": \"<string>\",\n    \"bankTransactionId\": \"<string>\",\n    \"bankPaymentStatus\": \"<string>\",\n    \"statusReasonInformation\": \"<string>\",\n    \"initiation\": {\n      \"amount\": {\n        \"currency\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      \"creditor\": {\n        \"name\": \"<string>\",\n        \"ultimateCreditorName\": \"<string>\",\n        \"bankName\": \"<string>\",\n        \"iban\": \"<string>\",\n        \"bic\": \"<string>\",\n        \"accountNumber\": \"<string>\",\n        \"sortCode\": \"<string>\",\n        \"accountVerificationId\": \"<string>\"\n      },\n      \"debtor\": {\n        \"accountId\": \"<string>\"\n      },\n      \"refId\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  }\n}",
+              "createdAt": "2026-07-28T11:04:45.000Z",
+              "updatedAt": "2026-07-28T11:04:45.000Z",
+              "uid": "35240-66695d43-3698-4f5b-a2f1-bba54b0d2ea9"
+            },
+            {
+              "id": "da3e02b0-49eb-4ab1-bfb6-652a13e8bd30",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"debtor\": {\n      \"accountId\": \"<string>\"\n    },\n    \"creditor\": {\n      \"name\": \"<string>\",\n      \"ultimateCreditorName\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"iban\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"accountNumber\": \"<string>\",\n      \"sortCode\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"description\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/payouts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payouts"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:45.000Z",
+              "updatedAt": "2026-07-28T11:04:45.000Z",
+              "uid": "35240-da3e02b0-49eb-4ab1-bfb6-652a13e8bd30"
+            },
+            {
+              "id": "15c7f0fd-372f-46e7-9948-290a762da1e0",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"debtor\": {\n      \"accountId\": \"<string>\"\n    },\n    \"creditor\": {\n      \"name\": \"<string>\",\n      \"ultimateCreditorName\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"iban\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"accountNumber\": \"<string>\",\n      \"sortCode\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"description\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/payouts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payouts"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:45.000Z",
+              "updatedAt": "2026-07-28T11:04:45.000Z",
+              "uid": "35240-15c7f0fd-372f-46e7-9948-290a762da1e0"
+            },
+            {
+              "id": "0290c57c-14e2-44e3-ba6d-4e2e9d31b2a2",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"debtor\": {\n      \"accountId\": \"<string>\"\n    },\n    \"creditor\": {\n      \"name\": \"<string>\",\n      \"ultimateCreditorName\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"iban\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"accountNumber\": \"<string>\",\n      \"sortCode\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"description\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/payouts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payouts"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"dolore elit\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:45.000Z",
+              "updatedAt": "2026-07-28T11:04:45.000Z",
+              "uid": "35240-0290c57c-14e2-44e3-ba6d-4e2e9d31b2a2"
+            },
+            {
+              "id": "3a93a16a-1153-4896-9987-1fa92fb66e86",
+              "name": "The requested entity, such as a payment, was not found",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"debtor\": {\n      \"accountId\": \"<string>\"\n    },\n    \"creditor\": {\n      \"name\": \"<string>\",\n      \"ultimateCreditorName\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"iban\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"accountNumber\": \"<string>\",\n      \"sortCode\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"description\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/payouts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payouts"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"laborum in et consectetur est\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"amet ipsum\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:45.000Z",
+              "updatedAt": "2026-07-28T11:04:45.000Z",
+              "uid": "35240-3a93a16a-1153-4896-9987-1fa92fb66e86"
+            },
+            {
+              "id": "e460cb19-abbd-4b19-b7df-f992ed1684a1",
+              "name": "Too many requests",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"debtor\": {\n      \"accountId\": \"<string>\"\n    },\n    \"creditor\": {\n      \"name\": \"<string>\",\n      \"ultimateCreditorName\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"iban\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"accountNumber\": \"<string>\",\n      \"sortCode\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"description\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/payouts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payouts"
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"ullamco\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"consectetur labore\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:45.000Z",
+              "updatedAt": "2026-07-28T11:04:45.000Z",
+              "uid": "35240-e460cb19-abbd-4b19-b7df-f992ed1684a1"
+            },
+            {
+              "id": "c7f11b30-c0c3-44b4-81a6-51b4b1ee21ca",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"debtor\": {\n      \"accountId\": \"<string>\"\n    },\n    \"creditor\": {\n      \"name\": \"<string>\",\n      \"ultimateCreditorName\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"iban\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"accountNumber\": \"<string>\",\n      \"sortCode\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"description\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/payouts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payouts"
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:45.000Z",
+              "updatedAt": "2026-07-28T11:04:45.000Z",
+              "uid": "35240-c7f11b30-c0c3-44b4-81a6-51b4b1ee21ca"
+            },
+            {
+              "id": "2e2ab808-f120-4162-bd2c-bfbd195fbe59",
+              "name": "The operation was not implemented",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"debtor\": {\n      \"accountId\": \"<string>\"\n    },\n    \"creditor\": {\n      \"name\": \"<string>\",\n      \"ultimateCreditorName\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"iban\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"accountNumber\": \"<string>\",\n      \"sortCode\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"description\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/payouts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payouts"
+                  ]
+                }
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"sed commodo ipsum\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"Duis mollit\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:45.000Z",
+              "updatedAt": "2026-07-28T11:04:45.000Z",
+              "uid": "35240-2e2ab808-f120-4162-bd2c-bfbd195fbe59"
+            },
+            {
+              "id": "cfe832a8-8503-410b-a560-0cb69a576377",
+              "name": "Service is unavailable",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"debtor\": {\n      \"accountId\": \"<string>\"\n    },\n    \"creditor\": {\n      \"name\": \"<string>\",\n      \"ultimateCreditorName\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"iban\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"accountNumber\": \"<string>\",\n      \"sortCode\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"description\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/payouts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payouts"
+                  ]
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"ad laborum esse dolor\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"enim do proident Lorem\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:45.000Z",
+              "updatedAt": "2026-07-28T11:04:45.000Z",
+              "uid": "35240-cfe832a8-8503-410b-a560-0cb69a576377"
+            },
+            {
+              "id": "38575f94-9a47-417a-8789-cb10b96df434",
+              "name": "Gateway has timed out",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"debtor\": {\n      \"accountId\": \"<string>\"\n    },\n    \"creditor\": {\n      \"name\": \"<string>\",\n      \"ultimateCreditorName\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"iban\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"accountNumber\": \"<string>\",\n      \"sortCode\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"description\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/payouts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payouts"
+                  ]
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"dolore minim ut officia\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"laboris mi\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:45.000Z",
+              "updatedAt": "2026-07-28T11:04:45.000Z",
+              "uid": "35240-38575f94-9a47-417a-8789-cb10b96df434"
+            }
+          ],
+          "createdAt": "2026-07-28T11:04:45.000Z",
+          "updatedAt": "2026-07-28T11:04:45.000Z",
+          "uid": "35240-19525dce-573e-4acd-8dde-995b0a22fcc3"
+        },
+        {
+          "name": "Get payouts",
+          "id": "c2865e76-0de4-4d07-b7f6-907364f2885f",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/payouts?limit=<integer>&offset=<string>&startDate=<string>&endDate=<string>&ids=<string>&ids=<string>&invertIds=<boolean>&statuses=INITIATION_PENDING&statuses=INITIATION_PENDING&invertStatuses=<boolean>&refIds=<string>&refIds=<string>&onBehalfOfId=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "payouts"
+              ],
+              "query": [
+                {
+                  "description": "(Required) The maximum number of records to return.",
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "description": "The offset from the previous page.",
+                  "key": "offset",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Lower bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or after the given date will be returned.",
+                  "key": "startDate",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Upper bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or before the given date will be returned.",
+                  "key": "endDate",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Filters payouts by their ids - returns only payouts with ids listed in this parameter.",
+                  "key": "ids",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Filters payouts by their ids - returns only payouts with ids listed in this parameter.",
+                  "key": "ids",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Invert ids query - returns only payouts with ids not listed in the ids parameter.",
+                  "key": "invertIds",
+                  "value": "<boolean>"
+                },
+                {
+                  "description": "Filters payouts by their statuses - returns only payouts with statuses listed in this parameter.",
+                  "key": "statuses",
+                  "value": "INITIATION_PENDING"
+                },
+                {
+                  "description": "Filters payouts by their statuses - returns only payouts with statuses listed in this parameter.",
+                  "key": "statuses",
+                  "value": "INITIATION_PENDING"
+                },
+                {
+                  "description": "Invert statuses query - returns only payouts with statuses not listed in the statuses parameter.",
+                  "key": "invertStatuses",
+                  "value": "<boolean>"
+                },
+                {
+                  "description": "Filters payouts by their `refId` values - returns only payouts with `refIds` listed in this parameter.",
+                  "key": "refIds",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Filters payouts by their `refId` values - returns only payouts with `refIds` listed in this parameter.",
+                  "key": "refIds",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Filters payouts by their `onBehalfOfId` value - returns only payouts with the `onBehalfOfId` value specified in this parameter. This field is mandatory for unregulated TPPs.",
+                  "key": "onBehalfOfId",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "The `GET /payouts` endpoint retrieves a complete or filtered list of payouts."
+          },
+          "response": [
+            {
+              "id": "5dca587c-ec10-40db-83b4-f26f4113912e",
+              "name": "Successful response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/payouts?limit=<integer>&offset=<string>&startDate=<string>&endDate=<string>&ids=<string>&invertIds=<boolean>&statuses=INITIATION_PENDING&invertStatuses=<boolean>&refIds=<string>&onBehalfOfId=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payouts"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The maximum number of records to return.",
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The offset from the previous page.",
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Lower bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or after the given date will be returned.",
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Upper bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or before the given date will be returned.",
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters payouts by their ids - returns only payouts with ids listed in this parameter.",
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Invert ids query - returns only payouts with ids not listed in the ids parameter.",
+                      "key": "invertIds",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their statuses - returns only payouts with statuses listed in this parameter.",
+                      "key": "statuses",
+                      "value": "INITIATION_PENDING"
+                    },
+                    {
+                      "description": "Invert statuses query - returns only payouts with statuses not listed in the statuses parameter.",
+                      "key": "invertStatuses",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their `refId` values - returns only payouts with `refIds` listed in this parameter.",
+                      "key": "refIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters payouts by their `onBehalfOfId` value - returns only payouts with the `onBehalfOfId` value specified in this parameter. This field is mandatory for unregulated TPPs.",
+                      "key": "onBehalfOfId",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"payouts\": [\n    {\n      \"createdDateTime\": \"<string>\",\n      \"id\": \"<string>\",\n      \"memberId\": \"<string>\",\n      \"status\": \"INITIATION_PENDING\",\n      \"updatedDateTime\": \"<string>\",\n      \"bankTransactionId\": \"<string>\",\n      \"bankPaymentStatus\": \"<string>\",\n      \"statusReasonInformation\": \"<string>\",\n      \"initiation\": {\n        \"amount\": {\n          \"currency\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        \"creditor\": {\n          \"name\": \"<string>\",\n          \"ultimateCreditorName\": \"<string>\",\n          \"bankName\": \"<string>\",\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"accountNumber\": \"<string>\",\n          \"sortCode\": \"<string>\",\n          \"accountVerificationId\": \"<string>\"\n        },\n        \"debtor\": {\n          \"accountId\": \"<string>\"\n        },\n        \"refId\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    },\n    {\n      \"createdDateTime\": \"<string>\",\n      \"id\": \"<string>\",\n      \"memberId\": \"<string>\",\n      \"status\": \"INITIATION_PENDING\",\n      \"updatedDateTime\": \"<string>\",\n      \"bankTransactionId\": \"<string>\",\n      \"bankPaymentStatus\": \"<string>\",\n      \"statusReasonInformation\": \"<string>\",\n      \"initiation\": {\n        \"amount\": {\n          \"currency\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        \"creditor\": {\n          \"name\": \"<string>\",\n          \"ultimateCreditorName\": \"<string>\",\n          \"bankName\": \"<string>\",\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"accountNumber\": \"<string>\",\n          \"sortCode\": \"<string>\",\n          \"accountVerificationId\": \"<string>\"\n        },\n        \"debtor\": {\n          \"accountId\": \"<string>\"\n        },\n        \"refId\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    }\n  ],\n  \"paging\": {\n    \"limit\": \"<integer>\",\n    \"offset\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:45.000Z",
+              "updatedAt": "2026-07-28T11:04:45.000Z",
+              "uid": "35240-5dca587c-ec10-40db-83b4-f26f4113912e"
+            },
+            {
+              "id": "709e7a48-e243-482d-891f-78a40f06be56",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/payouts?limit=<integer>&offset=<string>&startDate=<string>&endDate=<string>&ids=<string>&invertIds=<boolean>&statuses=INITIATION_PENDING&invertStatuses=<boolean>&refIds=<string>&onBehalfOfId=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payouts"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The maximum number of records to return.",
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The offset from the previous page.",
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Lower bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or after the given date will be returned.",
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Upper bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or before the given date will be returned.",
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters payouts by their ids - returns only payouts with ids listed in this parameter.",
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Invert ids query - returns only payouts with ids not listed in the ids parameter.",
+                      "key": "invertIds",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their statuses - returns only payouts with statuses listed in this parameter.",
+                      "key": "statuses",
+                      "value": "INITIATION_PENDING"
+                    },
+                    {
+                      "description": "Invert statuses query - returns only payouts with statuses not listed in the statuses parameter.",
+                      "key": "invertStatuses",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their `refId` values - returns only payouts with `refIds` listed in this parameter.",
+                      "key": "refIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters payouts by their `onBehalfOfId` value - returns only payouts with the `onBehalfOfId` value specified in this parameter. This field is mandatory for unregulated TPPs.",
+                      "key": "onBehalfOfId",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:45.000Z",
+              "updatedAt": "2026-07-28T11:04:45.000Z",
+              "uid": "35240-709e7a48-e243-482d-891f-78a40f06be56"
+            },
+            {
+              "id": "4649fec9-7a07-42a6-af0f-53ad8e11eaa4",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/payouts?limit=<integer>&offset=<string>&startDate=<string>&endDate=<string>&ids=<string>&invertIds=<boolean>&statuses=INITIATION_PENDING&invertStatuses=<boolean>&refIds=<string>&onBehalfOfId=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payouts"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The maximum number of records to return.",
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The offset from the previous page.",
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Lower bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or after the given date will be returned.",
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Upper bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or before the given date will be returned.",
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters payouts by their ids - returns only payouts with ids listed in this parameter.",
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Invert ids query - returns only payouts with ids not listed in the ids parameter.",
+                      "key": "invertIds",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their statuses - returns only payouts with statuses listed in this parameter.",
+                      "key": "statuses",
+                      "value": "INITIATION_PENDING"
+                    },
+                    {
+                      "description": "Invert statuses query - returns only payouts with statuses not listed in the statuses parameter.",
+                      "key": "invertStatuses",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their `refId` values - returns only payouts with `refIds` listed in this parameter.",
+                      "key": "refIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters payouts by their `onBehalfOfId` value - returns only payouts with the `onBehalfOfId` value specified in this parameter. This field is mandatory for unregulated TPPs.",
+                      "key": "onBehalfOfId",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:45.000Z",
+              "updatedAt": "2026-07-28T11:04:45.000Z",
+              "uid": "35240-4649fec9-7a07-42a6-af0f-53ad8e11eaa4"
+            },
+            {
+              "id": "dfbdde52-4e8a-4ccb-9e3d-d7fe6b0da7e8",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/payouts?limit=<integer>&offset=<string>&startDate=<string>&endDate=<string>&ids=<string>&invertIds=<boolean>&statuses=INITIATION_PENDING&invertStatuses=<boolean>&refIds=<string>&onBehalfOfId=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payouts"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The maximum number of records to return.",
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The offset from the previous page.",
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Lower bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or after the given date will be returned.",
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Upper bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or before the given date will be returned.",
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters payouts by their ids - returns only payouts with ids listed in this parameter.",
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Invert ids query - returns only payouts with ids not listed in the ids parameter.",
+                      "key": "invertIds",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their statuses - returns only payouts with statuses listed in this parameter.",
+                      "key": "statuses",
+                      "value": "INITIATION_PENDING"
+                    },
+                    {
+                      "description": "Invert statuses query - returns only payouts with statuses not listed in the statuses parameter.",
+                      "key": "invertStatuses",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their `refId` values - returns only payouts with `refIds` listed in this parameter.",
+                      "key": "refIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters payouts by their `onBehalfOfId` value - returns only payouts with the `onBehalfOfId` value specified in this parameter. This field is mandatory for unregulated TPPs.",
+                      "key": "onBehalfOfId",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"dolore elit\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:45.000Z",
+              "updatedAt": "2026-07-28T11:04:45.000Z",
+              "uid": "35240-dfbdde52-4e8a-4ccb-9e3d-d7fe6b0da7e8"
+            },
+            {
+              "id": "6cbed9c8-08bb-44f5-b82d-a64062fc1dd2",
+              "name": "The requested entity, such as a payment, was not found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/payouts?limit=<integer>&offset=<string>&startDate=<string>&endDate=<string>&ids=<string>&invertIds=<boolean>&statuses=INITIATION_PENDING&invertStatuses=<boolean>&refIds=<string>&onBehalfOfId=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payouts"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The maximum number of records to return.",
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The offset from the previous page.",
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Lower bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or after the given date will be returned.",
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Upper bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or before the given date will be returned.",
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters payouts by their ids - returns only payouts with ids listed in this parameter.",
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Invert ids query - returns only payouts with ids not listed in the ids parameter.",
+                      "key": "invertIds",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their statuses - returns only payouts with statuses listed in this parameter.",
+                      "key": "statuses",
+                      "value": "INITIATION_PENDING"
+                    },
+                    {
+                      "description": "Invert statuses query - returns only payouts with statuses not listed in the statuses parameter.",
+                      "key": "invertStatuses",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their `refId` values - returns only payouts with `refIds` listed in this parameter.",
+                      "key": "refIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters payouts by their `onBehalfOfId` value - returns only payouts with the `onBehalfOfId` value specified in this parameter. This field is mandatory for unregulated TPPs.",
+                      "key": "onBehalfOfId",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"laborum in et consectetur est\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"amet ipsum\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:45.000Z",
+              "updatedAt": "2026-07-28T11:04:45.000Z",
+              "uid": "35240-6cbed9c8-08bb-44f5-b82d-a64062fc1dd2"
+            },
+            {
+              "id": "084d6fd9-47b2-4d20-8910-3ad50c76adca",
+              "name": "Too many requests",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/payouts?limit=<integer>&offset=<string>&startDate=<string>&endDate=<string>&ids=<string>&invertIds=<boolean>&statuses=INITIATION_PENDING&invertStatuses=<boolean>&refIds=<string>&onBehalfOfId=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payouts"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The maximum number of records to return.",
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The offset from the previous page.",
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Lower bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or after the given date will be returned.",
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Upper bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or before the given date will be returned.",
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters payouts by their ids - returns only payouts with ids listed in this parameter.",
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Invert ids query - returns only payouts with ids not listed in the ids parameter.",
+                      "key": "invertIds",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their statuses - returns only payouts with statuses listed in this parameter.",
+                      "key": "statuses",
+                      "value": "INITIATION_PENDING"
+                    },
+                    {
+                      "description": "Invert statuses query - returns only payouts with statuses not listed in the statuses parameter.",
+                      "key": "invertStatuses",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their `refId` values - returns only payouts with `refIds` listed in this parameter.",
+                      "key": "refIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters payouts by their `onBehalfOfId` value - returns only payouts with the `onBehalfOfId` value specified in this parameter. This field is mandatory for unregulated TPPs.",
+                      "key": "onBehalfOfId",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"ullamco\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"consectetur labore\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:45.000Z",
+              "updatedAt": "2026-07-28T11:04:45.000Z",
+              "uid": "35240-084d6fd9-47b2-4d20-8910-3ad50c76adca"
+            },
+            {
+              "id": "e5e6e39c-4c3a-4e4d-8e32-5a2b86b4f26f",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/payouts?limit=<integer>&offset=<string>&startDate=<string>&endDate=<string>&ids=<string>&invertIds=<boolean>&statuses=INITIATION_PENDING&invertStatuses=<boolean>&refIds=<string>&onBehalfOfId=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payouts"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The maximum number of records to return.",
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The offset from the previous page.",
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Lower bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or after the given date will be returned.",
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Upper bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or before the given date will be returned.",
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters payouts by their ids - returns only payouts with ids listed in this parameter.",
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Invert ids query - returns only payouts with ids not listed in the ids parameter.",
+                      "key": "invertIds",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their statuses - returns only payouts with statuses listed in this parameter.",
+                      "key": "statuses",
+                      "value": "INITIATION_PENDING"
+                    },
+                    {
+                      "description": "Invert statuses query - returns only payouts with statuses not listed in the statuses parameter.",
+                      "key": "invertStatuses",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their `refId` values - returns only payouts with `refIds` listed in this parameter.",
+                      "key": "refIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters payouts by their `onBehalfOfId` value - returns only payouts with the `onBehalfOfId` value specified in this parameter. This field is mandatory for unregulated TPPs.",
+                      "key": "onBehalfOfId",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:45.000Z",
+              "updatedAt": "2026-07-28T11:04:45.000Z",
+              "uid": "35240-e5e6e39c-4c3a-4e4d-8e32-5a2b86b4f26f"
+            },
+            {
+              "id": "37012e72-74d9-4887-afab-3137b8630137",
+              "name": "The operation was not implemented",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/payouts?limit=<integer>&offset=<string>&startDate=<string>&endDate=<string>&ids=<string>&invertIds=<boolean>&statuses=INITIATION_PENDING&invertStatuses=<boolean>&refIds=<string>&onBehalfOfId=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payouts"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The maximum number of records to return.",
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The offset from the previous page.",
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Lower bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or after the given date will be returned.",
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Upper bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or before the given date will be returned.",
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters payouts by their ids - returns only payouts with ids listed in this parameter.",
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Invert ids query - returns only payouts with ids not listed in the ids parameter.",
+                      "key": "invertIds",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their statuses - returns only payouts with statuses listed in this parameter.",
+                      "key": "statuses",
+                      "value": "INITIATION_PENDING"
+                    },
+                    {
+                      "description": "Invert statuses query - returns only payouts with statuses not listed in the statuses parameter.",
+                      "key": "invertStatuses",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their `refId` values - returns only payouts with `refIds` listed in this parameter.",
+                      "key": "refIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters payouts by their `onBehalfOfId` value - returns only payouts with the `onBehalfOfId` value specified in this parameter. This field is mandatory for unregulated TPPs.",
+                      "key": "onBehalfOfId",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"sed commodo ipsum\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"Duis mollit\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:45.000Z",
+              "updatedAt": "2026-07-28T11:04:45.000Z",
+              "uid": "35240-37012e72-74d9-4887-afab-3137b8630137"
+            },
+            {
+              "id": "5d3524c2-b6b8-4039-9d7f-85fb8a8c265d",
+              "name": "Service is unavailable",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/payouts?limit=<integer>&offset=<string>&startDate=<string>&endDate=<string>&ids=<string>&invertIds=<boolean>&statuses=INITIATION_PENDING&invertStatuses=<boolean>&refIds=<string>&onBehalfOfId=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payouts"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The maximum number of records to return.",
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The offset from the previous page.",
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Lower bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or after the given date will be returned.",
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Upper bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or before the given date will be returned.",
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters payouts by their ids - returns only payouts with ids listed in this parameter.",
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Invert ids query - returns only payouts with ids not listed in the ids parameter.",
+                      "key": "invertIds",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their statuses - returns only payouts with statuses listed in this parameter.",
+                      "key": "statuses",
+                      "value": "INITIATION_PENDING"
+                    },
+                    {
+                      "description": "Invert statuses query - returns only payouts with statuses not listed in the statuses parameter.",
+                      "key": "invertStatuses",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their `refId` values - returns only payouts with `refIds` listed in this parameter.",
+                      "key": "refIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters payouts by their `onBehalfOfId` value - returns only payouts with the `onBehalfOfId` value specified in this parameter. This field is mandatory for unregulated TPPs.",
+                      "key": "onBehalfOfId",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"ad laborum esse dolor\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"enim do proident Lorem\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:45.000Z",
+              "updatedAt": "2026-07-28T11:04:45.000Z",
+              "uid": "35240-5d3524c2-b6b8-4039-9d7f-85fb8a8c265d"
+            },
+            {
+              "id": "a9f6065b-1fc2-4018-9491-56b493a4f9a0",
+              "name": "Gateway has timed out",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/payouts?limit=<integer>&offset=<string>&startDate=<string>&endDate=<string>&ids=<string>&invertIds=<boolean>&statuses=INITIATION_PENDING&invertStatuses=<boolean>&refIds=<string>&onBehalfOfId=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payouts"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The maximum number of records to return.",
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The offset from the previous page.",
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Lower bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or after the given date will be returned.",
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Upper bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or before the given date will be returned.",
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters payouts by their ids - returns only payouts with ids listed in this parameter.",
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Invert ids query - returns only payouts with ids not listed in the ids parameter.",
+                      "key": "invertIds",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their statuses - returns only payouts with statuses listed in this parameter.",
+                      "key": "statuses",
+                      "value": "INITIATION_PENDING"
+                    },
+                    {
+                      "description": "Invert statuses query - returns only payouts with statuses not listed in the statuses parameter.",
+                      "key": "invertStatuses",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their `refId` values - returns only payouts with `refIds` listed in this parameter.",
+                      "key": "refIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters payouts by their `onBehalfOfId` value - returns only payouts with the `onBehalfOfId` value specified in this parameter. This field is mandatory for unregulated TPPs.",
+                      "key": "onBehalfOfId",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"dolore minim ut officia\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"laboris mi\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:45.000Z",
+              "updatedAt": "2026-07-28T11:04:45.000Z",
+              "uid": "35240-a9f6065b-1fc2-4018-9491-56b493a4f9a0"
+            }
+          ],
+          "createdAt": "2026-07-28T11:04:45.000Z",
+          "updatedAt": "2026-07-28T11:04:45.000Z",
+          "uid": "35240-c2865e76-0de4-4d07-b7f6-907364f2885f"
+        }
+      ],
+      "id": "ffe3f624-3c94-4f78-94d9-2bbcc9e674e7",
+      "createdAt": "2026-07-28T11:04:45.000Z",
+      "updatedAt": "2026-07-28T11:04:45.000Z",
+      "uid": "35240-ffe3f624-3c94-4f78-94d9-2bbcc9e674e7"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.token.io"
+    }
+  ]
+}

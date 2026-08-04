@@ -1,0 +1,2468 @@
+{
+  "info": {
+    "_postman_id": "a26a5b34-2637-41e2-ad49-04f2e76fdf83",
+    "name": "Token.io's Open Banking API for TPPs Account on File Authentication keys API",
+    "description": "<b>Token.io's Open Banking API</b><br/><br/>Token.io Support: <a href=\"https://support.token.io\" target=\"_blank\">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user's account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href=\"https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm\" target=\"_blank\">developer documentation</a>.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T11:04:11.000Z",
+    "updatedAt": "2026-07-28T11:04:12.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-a26a5b34-2637-41e2-ad49-04f2e76fdf83"
+  },
+  "item": [
+    {
+      "name": "member",
+      "item": [
+        {
+          "name": "{memberId}",
+          "item": [
+            {
+              "name": "keys",
+              "item": [
+                {
+                  "name": "{keyId}",
+                  "item": [
+                    {
+                      "name": "Get a public key",
+                      "id": "acd34ed3-959a-4b65-bc5b-88482a17a63e",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{bearerToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/member/:memberId/keys/:keyId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "member",
+                            ":memberId",
+                            "keys",
+                            ":keyId"
+                          ],
+                          "variable": [
+                            {
+                              "id": "cfb85ff8-dd70-416d-ba73-e73c2b25b1b3",
+                              "key": "memberId",
+                              "value": "<string>",
+                              "description": "(Required) This id specifies the member for whom the public key is to be retrieved."
+                            },
+                            {
+                              "id": "6d8f7d7e-0a07-4a02-a04e-15ac77e5b88e",
+                              "key": "keyId",
+                              "value": "<string>",
+                              "description": "(Required) This id specifies the public key to be retrieved."
+                            }
+                          ]
+                        },
+                        "description": "The `GET /member/{memberId}/keys/{keyId}` endpoint retrieves the details of a specific public key, for the specified member."
+                      },
+                      "response": [
+                        {
+                          "id": "ad4f77d2-bbab-4445-8de3-9fcb6ba8340f",
+                          "name": "Successful response",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/member/:memberId/keys/:keyId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "member",
+                                ":memberId",
+                                "keys",
+                                ":keyId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "memberId"
+                                },
+                                {
+                                  "key": "keyId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"key\": [\n    {\n      \"id\": \"<string>\",\n      \"keyAlgorithm\": \"<string>\",\n      \"publicKey\": \"<string>\",\n      \"expiresAtMs\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"keyAlgorithm\": \"<string>\",\n      \"publicKey\": \"<string>\",\n      \"expiresAtMs\": \"<string>\"\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T11:04:12.000Z",
+                          "updatedAt": "2026-07-28T11:04:12.000Z",
+                          "uid": "35240-ad4f77d2-bbab-4445-8de3-9fcb6ba8340f"
+                        },
+                        {
+                          "id": "ed1742a7-a111-453f-ab79-79c49580c103",
+                          "name": "The client specified an invalid argument",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/member/:memberId/keys/:keyId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "member",
+                                ":memberId",
+                                "keys",
+                                ":keyId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "memberId"
+                                },
+                                {
+                                  "key": "keyId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:12.000Z",
+                          "updatedAt": "2026-07-28T11:04:12.000Z",
+                          "uid": "35240-ed1742a7-a111-453f-ab79-79c49580c103"
+                        },
+                        {
+                          "id": "fd6f33b5-be15-4fa2-be6c-a6b0b5cfd953",
+                          "name": "The authorization information is missing or invalid",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/member/:memberId/keys/:keyId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "member",
+                                ":memberId",
+                                "keys",
+                                ":keyId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "memberId"
+                                },
+                                {
+                                  "key": "keyId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:12.000Z",
+                          "updatedAt": "2026-07-28T11:04:12.000Z",
+                          "uid": "35240-fd6f33b5-be15-4fa2-be6c-a6b0b5cfd953"
+                        },
+                        {
+                          "id": "dc2b2314-4081-42f9-8233-7dee634cd1ec",
+                          "name": "Permission to access this endpoint is denied",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/member/:memberId/keys/:keyId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "member",
+                                ":memberId",
+                                "keys",
+                                ":keyId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "memberId"
+                                },
+                                {
+                                  "key": "keyId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Forbidden",
+                          "code": 403,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"errorCode\": \"commodo Excepteur sit\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:12.000Z",
+                          "updatedAt": "2026-07-28T11:04:12.000Z",
+                          "uid": "35240-dc2b2314-4081-42f9-8233-7dee634cd1ec"
+                        },
+                        {
+                          "id": "48886313-6064-4d69-90b1-424400025da6",
+                          "name": "The requested entity, such as a sub-tpp, was not found",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/member/:memberId/keys/:keyId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "member",
+                                ":memberId",
+                                "keys",
+                                ":keyId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "memberId"
+                                },
+                                {
+                                  "key": "keyId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"errorCode\": \"nisi dolor reprehenderit\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"tempor dolore dolore\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:12.000Z",
+                          "updatedAt": "2026-07-28T11:04:12.000Z",
+                          "uid": "35240-48886313-6064-4d69-90b1-424400025da6"
+                        },
+                        {
+                          "id": "709a90ca-f2d3-4b1b-84c9-3f54850e6b5e",
+                          "name": "Too many requests",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/member/:memberId/keys/:keyId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "member",
+                                ":memberId",
+                                "keys",
+                                ":keyId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "memberId"
+                                },
+                                {
+                                  "key": "keyId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Too Many Requests",
+                          "code": 429,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"errorCode\": \"ci\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"veniam mollit\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:12.000Z",
+                          "updatedAt": "2026-07-28T11:04:12.000Z",
+                          "uid": "35240-709a90ca-f2d3-4b1b-84c9-3f54850e6b5e"
+                        },
+                        {
+                          "id": "97109730-f75e-407d-894b-261d953453d7",
+                          "name": "An unexpected or internal server error",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/member/:memberId/keys/:keyId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "member",
+                                ":memberId",
+                                "keys",
+                                ":keyId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "memberId"
+                                },
+                                {
+                                  "key": "keyId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:12.000Z",
+                          "updatedAt": "2026-07-28T11:04:12.000Z",
+                          "uid": "35240-97109730-f75e-407d-894b-261d953453d7"
+                        },
+                        {
+                          "id": "00e16e37-9dfa-4f12-87cf-ba44b3ac42c7",
+                          "name": "The operation was not implemented",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/member/:memberId/keys/:keyId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "member",
+                                ":memberId",
+                                "keys",
+                                ":keyId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "memberId"
+                                },
+                                {
+                                  "key": "keyId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Implemented",
+                          "code": 501,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"errorCode\": \"ad\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"Ut consectetur enim cupidatat\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:12.000Z",
+                          "updatedAt": "2026-07-28T11:04:12.000Z",
+                          "uid": "35240-00e16e37-9dfa-4f12-87cf-ba44b3ac42c7"
+                        },
+                        {
+                          "id": "5f16c3f5-04d5-4a0a-a046-15e9cc698247",
+                          "name": "Service is unavailable",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/member/:memberId/keys/:keyId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "member",
+                                ":memberId",
+                                "keys",
+                                ":keyId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "memberId"
+                                },
+                                {
+                                  "key": "keyId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Service Unavailable",
+                          "code": 503,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"errorCode\": \"et ullamco\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"labore sint minim culpa\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:12.000Z",
+                          "updatedAt": "2026-07-28T11:04:12.000Z",
+                          "uid": "35240-5f16c3f5-04d5-4a0a-a046-15e9cc698247"
+                        },
+                        {
+                          "id": "bef8aee1-3b12-4b03-9424-f7ea73d32bb6",
+                          "name": "Gateway has timed out",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/member/:memberId/keys/:keyId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "member",
+                                ":memberId",
+                                "keys",
+                                ":keyId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "memberId"
+                                },
+                                {
+                                  "key": "keyId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Gateway Timeout",
+                          "code": 504,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"errorCode\": \"eu dolore cillum adipisicing\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"commodo a\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:12.000Z",
+                          "updatedAt": "2026-07-28T11:04:12.000Z",
+                          "uid": "35240-bef8aee1-3b12-4b03-9424-f7ea73d32bb6"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T11:04:12.000Z",
+                      "updatedAt": "2026-07-28T11:04:12.000Z",
+                      "uid": "35240-acd34ed3-959a-4b65-bc5b-88482a17a63e"
+                    },
+                    {
+                      "name": "Delete a public key",
+                      "id": "ec7c9dec-1ebc-4aad-a72f-a200db8f84c2",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{bearerToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/member/:memberId/keys/:keyId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "member",
+                            ":memberId",
+                            "keys",
+                            ":keyId"
+                          ],
+                          "variable": [
+                            {
+                              "id": "f5478473-7e90-4a69-8c5f-7108697a70e8",
+                              "key": "memberId",
+                              "value": "<string>",
+                              "description": "(Required) This id specifies the member for whom the public key is to be deleted."
+                            },
+                            {
+                              "id": "93d3c0e0-f421-4dc4-9591-753e382ffbb9",
+                              "key": "keyId",
+                              "value": "<string>",
+                              "description": "(Required) This id specifies the public key to be deleted."
+                            }
+                          ]
+                        },
+                        "description": "The `DELETE /member/{memberId}/keys/{keyId}` endpoint deletes an existing public key, for the specified member."
+                      },
+                      "response": [
+                        {
+                          "id": "9fa65b2b-d817-4c52-a98c-98cea14553e4",
+                          "name": "Successful response",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/member/:memberId/keys/:keyId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "member",
+                                ":memberId",
+                                "keys",
+                                ":keyId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "memberId"
+                                },
+                                {
+                                  "key": "keyId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{}",
+                          "createdAt": "2026-07-28T11:04:12.000Z",
+                          "updatedAt": "2026-07-28T11:04:12.000Z",
+                          "uid": "35240-9fa65b2b-d817-4c52-a98c-98cea14553e4"
+                        },
+                        {
+                          "id": "112246c7-a5c0-4a7f-94be-913103fa8fa7",
+                          "name": "The client specified an invalid argument",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/member/:memberId/keys/:keyId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "member",
+                                ":memberId",
+                                "keys",
+                                ":keyId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "memberId"
+                                },
+                                {
+                                  "key": "keyId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:12.000Z",
+                          "updatedAt": "2026-07-28T11:04:12.000Z",
+                          "uid": "35240-112246c7-a5c0-4a7f-94be-913103fa8fa7"
+                        },
+                        {
+                          "id": "160fc014-ffa1-41b6-bdb5-840df7659293",
+                          "name": "The authorization information is missing or invalid",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/member/:memberId/keys/:keyId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "member",
+                                ":memberId",
+                                "keys",
+                                ":keyId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "memberId"
+                                },
+                                {
+                                  "key": "keyId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:12.000Z",
+                          "updatedAt": "2026-07-28T11:04:12.000Z",
+                          "uid": "35240-160fc014-ffa1-41b6-bdb5-840df7659293"
+                        },
+                        {
+                          "id": "a6a1d9de-ff19-421a-af92-55d587df9397",
+                          "name": "Permission to access this endpoint is denied",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/member/:memberId/keys/:keyId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "member",
+                                ":memberId",
+                                "keys",
+                                ":keyId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "memberId"
+                                },
+                                {
+                                  "key": "keyId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Forbidden",
+                          "code": 403,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"errorCode\": \"commodo Excepteur sit\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:12.000Z",
+                          "updatedAt": "2026-07-28T11:04:12.000Z",
+                          "uid": "35240-a6a1d9de-ff19-421a-af92-55d587df9397"
+                        },
+                        {
+                          "id": "169a3fe9-4813-4239-8a2c-878a325f580d",
+                          "name": "The requested entity, such as a sub-tpp, was not found",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/member/:memberId/keys/:keyId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "member",
+                                ":memberId",
+                                "keys",
+                                ":keyId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "memberId"
+                                },
+                                {
+                                  "key": "keyId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"errorCode\": \"nisi dolor reprehenderit\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"tempor dolore dolore\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:12.000Z",
+                          "updatedAt": "2026-07-28T11:04:12.000Z",
+                          "uid": "35240-169a3fe9-4813-4239-8a2c-878a325f580d"
+                        },
+                        {
+                          "id": "975949fe-4cb8-42b7-a81e-305425afb17b",
+                          "name": "Too many requests",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/member/:memberId/keys/:keyId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "member",
+                                ":memberId",
+                                "keys",
+                                ":keyId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "memberId"
+                                },
+                                {
+                                  "key": "keyId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Too Many Requests",
+                          "code": 429,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"errorCode\": \"ci\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"veniam mollit\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:12.000Z",
+                          "updatedAt": "2026-07-28T11:04:12.000Z",
+                          "uid": "35240-975949fe-4cb8-42b7-a81e-305425afb17b"
+                        },
+                        {
+                          "id": "f48ea137-426c-4014-bf1e-f0b5c622dfa1",
+                          "name": "An unexpected or internal server error",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/member/:memberId/keys/:keyId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "member",
+                                ":memberId",
+                                "keys",
+                                ":keyId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "memberId"
+                                },
+                                {
+                                  "key": "keyId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:12.000Z",
+                          "updatedAt": "2026-07-28T11:04:12.000Z",
+                          "uid": "35240-f48ea137-426c-4014-bf1e-f0b5c622dfa1"
+                        },
+                        {
+                          "id": "be7a219a-0990-4548-ab3b-217bf1451439",
+                          "name": "The operation was not implemented",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/member/:memberId/keys/:keyId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "member",
+                                ":memberId",
+                                "keys",
+                                ":keyId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "memberId"
+                                },
+                                {
+                                  "key": "keyId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Implemented",
+                          "code": 501,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"errorCode\": \"ad\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"Ut consectetur enim cupidatat\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:12.000Z",
+                          "updatedAt": "2026-07-28T11:04:12.000Z",
+                          "uid": "35240-be7a219a-0990-4548-ab3b-217bf1451439"
+                        },
+                        {
+                          "id": "c0189e89-db40-4608-ba8b-fe7c46f97018",
+                          "name": "Service is unavailable",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/member/:memberId/keys/:keyId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "member",
+                                ":memberId",
+                                "keys",
+                                ":keyId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "memberId"
+                                },
+                                {
+                                  "key": "keyId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Service Unavailable",
+                          "code": 503,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"errorCode\": \"et ullamco\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"labore sint minim culpa\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:12.000Z",
+                          "updatedAt": "2026-07-28T11:04:12.000Z",
+                          "uid": "35240-c0189e89-db40-4608-ba8b-fe7c46f97018"
+                        },
+                        {
+                          "id": "17eee326-215e-47dd-9a69-dc159959f170",
+                          "name": "Gateway has timed out",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/member/:memberId/keys/:keyId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "member",
+                                ":memberId",
+                                "keys",
+                                ":keyId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "memberId"
+                                },
+                                {
+                                  "key": "keyId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Gateway Timeout",
+                          "code": 504,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"errorCode\": \"eu dolore cillum adipisicing\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"commodo a\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:12.000Z",
+                          "updatedAt": "2026-07-28T11:04:12.000Z",
+                          "uid": "35240-17eee326-215e-47dd-9a69-dc159959f170"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T11:04:12.000Z",
+                      "updatedAt": "2026-07-28T11:04:12.000Z",
+                      "uid": "35240-ec7c9dec-1ebc-4aad-a72f-a200db8f84c2"
+                    }
+                  ],
+                  "id": "0e6b95dc-7f8f-4674-80da-cf678cb518b8",
+                  "createdAt": "2026-07-28T11:04:12.000Z",
+                  "updatedAt": "2026-07-28T11:04:12.000Z",
+                  "uid": "35240-0e6b95dc-7f8f-4674-80da-cf678cb518b8"
+                },
+                {
+                  "name": "Submit a public key",
+                  "id": "37ed8f11-6143-4cd9-848a-5e3d8d1e9b5f",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"keyAlgorithm\": \"<string>\",\n  \"publicKey\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/member/:memberId/keys",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "member",
+                        ":memberId",
+                        "keys"
+                      ],
+                      "variable": [
+                        {
+                          "id": "72045c5f-a371-405f-be06-1aa55890b6ef",
+                          "key": "memberId",
+                          "value": "<string>",
+                          "description": "(Required) This id specifies the member for whom the public key is to be submitted."
+                        }
+                      ]
+                    },
+                    "description": "The `POST /member/{memberId}/keys` endpoint submits a public key for authentication, for the specified member."
+                  },
+                  "response": [
+                    {
+                      "id": "731fd4be-867f-4258-9678-da90b6f9af3f",
+                      "name": "Successful response",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"keyAlgorithm\": \"<string>\",\n  \"publicKey\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/member/:memberId/keys",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "member",
+                            ":memberId",
+                            "keys"
+                          ],
+                          "variable": [
+                            {
+                              "key": "memberId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"keyId\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T11:04:12.000Z",
+                      "updatedAt": "2026-07-28T11:04:12.000Z",
+                      "uid": "35240-731fd4be-867f-4258-9678-da90b6f9af3f"
+                    },
+                    {
+                      "id": "b57db5d8-470c-4b99-8ecc-52e7eae03634",
+                      "name": "The client specified an invalid argument",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"keyAlgorithm\": \"<string>\",\n  \"publicKey\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/member/:memberId/keys",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "member",
+                            ":memberId",
+                            "keys"
+                          ],
+                          "variable": [
+                            {
+                              "key": "memberId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:12.000Z",
+                      "updatedAt": "2026-07-28T11:04:12.000Z",
+                      "uid": "35240-b57db5d8-470c-4b99-8ecc-52e7eae03634"
+                    },
+                    {
+                      "id": "4b88c524-934a-4eee-a57c-a2333bd06383",
+                      "name": "The authorization information is missing or invalid",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"keyAlgorithm\": \"<string>\",\n  \"publicKey\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/member/:memberId/keys",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "member",
+                            ":memberId",
+                            "keys"
+                          ],
+                          "variable": [
+                            {
+                              "key": "memberId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:12.000Z",
+                      "updatedAt": "2026-07-28T11:04:12.000Z",
+                      "uid": "35240-4b88c524-934a-4eee-a57c-a2333bd06383"
+                    },
+                    {
+                      "id": "1c273949-8e1e-4df3-991b-94cec0494376",
+                      "name": "Permission to access this endpoint is denied",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"keyAlgorithm\": \"<string>\",\n  \"publicKey\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/member/:memberId/keys",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "member",
+                            ":memberId",
+                            "keys"
+                          ],
+                          "variable": [
+                            {
+                              "key": "memberId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"commodo Excepteur sit\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:12.000Z",
+                      "updatedAt": "2026-07-28T11:04:12.000Z",
+                      "uid": "35240-1c273949-8e1e-4df3-991b-94cec0494376"
+                    },
+                    {
+                      "id": "7629f259-aa8a-4383-a7c5-0089b6e40343",
+                      "name": "The requested entity, such as a sub-tpp, was not found",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"keyAlgorithm\": \"<string>\",\n  \"publicKey\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/member/:memberId/keys",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "member",
+                            ":memberId",
+                            "keys"
+                          ],
+                          "variable": [
+                            {
+                              "key": "memberId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"nisi dolor reprehenderit\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"tempor dolore dolore\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:12.000Z",
+                      "updatedAt": "2026-07-28T11:04:12.000Z",
+                      "uid": "35240-7629f259-aa8a-4383-a7c5-0089b6e40343"
+                    },
+                    {
+                      "id": "c88c4c51-54b1-451f-b0c8-77207feaedf4",
+                      "name": "Too many requests",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"keyAlgorithm\": \"<string>\",\n  \"publicKey\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/member/:memberId/keys",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "member",
+                            ":memberId",
+                            "keys"
+                          ],
+                          "variable": [
+                            {
+                              "key": "memberId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"ci\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"veniam mollit\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:12.000Z",
+                      "updatedAt": "2026-07-28T11:04:12.000Z",
+                      "uid": "35240-c88c4c51-54b1-451f-b0c8-77207feaedf4"
+                    },
+                    {
+                      "id": "172174d0-16f9-4578-982c-119ec27f9718",
+                      "name": "An unexpected or internal server error",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"keyAlgorithm\": \"<string>\",\n  \"publicKey\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/member/:memberId/keys",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "member",
+                            ":memberId",
+                            "keys"
+                          ],
+                          "variable": [
+                            {
+                              "key": "memberId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:12.000Z",
+                      "updatedAt": "2026-07-28T11:04:12.000Z",
+                      "uid": "35240-172174d0-16f9-4578-982c-119ec27f9718"
+                    },
+                    {
+                      "id": "681fd324-d289-4604-81a6-c68449888fbe",
+                      "name": "The operation was not implemented",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"keyAlgorithm\": \"<string>\",\n  \"publicKey\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/member/:memberId/keys",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "member",
+                            ":memberId",
+                            "keys"
+                          ],
+                          "variable": [
+                            {
+                              "key": "memberId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Implemented",
+                      "code": 501,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"ad\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"Ut consectetur enim cupidatat\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:12.000Z",
+                      "updatedAt": "2026-07-28T11:04:12.000Z",
+                      "uid": "35240-681fd324-d289-4604-81a6-c68449888fbe"
+                    },
+                    {
+                      "id": "eeae19d1-f72a-43c3-b1bc-4d10939977da",
+                      "name": "Service is unavailable",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"keyAlgorithm\": \"<string>\",\n  \"publicKey\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/member/:memberId/keys",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "member",
+                            ":memberId",
+                            "keys"
+                          ],
+                          "variable": [
+                            {
+                              "key": "memberId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Service Unavailable",
+                      "code": 503,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"et ullamco\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"labore sint minim culpa\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:12.000Z",
+                      "updatedAt": "2026-07-28T11:04:12.000Z",
+                      "uid": "35240-eeae19d1-f72a-43c3-b1bc-4d10939977da"
+                    },
+                    {
+                      "id": "7aefc61a-2a3c-403f-a483-78da651005b4",
+                      "name": "Gateway has timed out",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"keyAlgorithm\": \"<string>\",\n  \"publicKey\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/member/:memberId/keys",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "member",
+                            ":memberId",
+                            "keys"
+                          ],
+                          "variable": [
+                            {
+                              "key": "memberId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Gateway Timeout",
+                      "code": 504,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"eu dolore cillum adipisicing\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"commodo a\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:12.000Z",
+                      "updatedAt": "2026-07-28T11:04:12.000Z",
+                      "uid": "35240-7aefc61a-2a3c-403f-a483-78da651005b4"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T11:04:12.000Z",
+                  "updatedAt": "2026-07-28T11:04:12.000Z",
+                  "uid": "35240-37ed8f11-6143-4cd9-848a-5e3d8d1e9b5f"
+                },
+                {
+                  "name": "Get public keys",
+                  "id": "79d559aa-3d70-4326-9c35-6caee82063db",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/member/:memberId/keys",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "member",
+                        ":memberId",
+                        "keys"
+                      ],
+                      "variable": [
+                        {
+                          "id": "8d8f59fa-ad9e-477e-ab65-66bfcfb24ba6",
+                          "key": "memberId",
+                          "value": "<string>",
+                          "description": "(Required) This id specifies the member for whom the public keys are to be retrieved."
+                        }
+                      ]
+                    },
+                    "description": "The `GET /member/{memberId}/keys` endpoint retrieves a list of all public keys, for the specified member."
+                  },
+                  "response": [
+                    {
+                      "id": "e3269aa8-2bae-47ed-b9bd-7e57e59647a6",
+                      "name": "Successful response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/member/:memberId/keys",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "member",
+                            ":memberId",
+                            "keys"
+                          ],
+                          "variable": [
+                            {
+                              "key": "memberId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"key\": [\n      {\n        \"id\": \"<string>\",\n        \"keyAlgorithm\": \"<string>\",\n        \"publicKey\": \"<string>\",\n        \"expiresAtMs\": \"<string>\"\n      },\n      {\n        \"id\": \"<string>\",\n        \"keyAlgorithm\": \"<string>\",\n        \"publicKey\": \"<string>\",\n        \"expiresAtMs\": \"<string>\"\n      }\n    ]\n  },\n  {\n    \"key\": [\n      {\n        \"id\": \"<string>\",\n        \"keyAlgorithm\": \"<string>\",\n        \"publicKey\": \"<string>\",\n        \"expiresAtMs\": \"<string>\"\n      },\n      {\n        \"id\": \"<string>\",\n        \"keyAlgorithm\": \"<string>\",\n        \"publicKey\": \"<string>\",\n        \"expiresAtMs\": \"<string>\"\n      }\n    ]\n  }\n]",
+                      "createdAt": "2026-07-28T11:04:12.000Z",
+                      "updatedAt": "2026-07-28T11:04:12.000Z",
+                      "uid": "35240-e3269aa8-2bae-47ed-b9bd-7e57e59647a6"
+                    },
+                    {
+                      "id": "544be92e-3dc3-4929-8cbb-918d5e52bbff",
+                      "name": "The client specified an invalid argument",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/member/:memberId/keys",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "member",
+                            ":memberId",
+                            "keys"
+                          ],
+                          "variable": [
+                            {
+                              "key": "memberId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:12.000Z",
+                      "updatedAt": "2026-07-28T11:04:12.000Z",
+                      "uid": "35240-544be92e-3dc3-4929-8cbb-918d5e52bbff"
+                    },
+                    {
+                      "id": "dd0025ad-7ebb-4885-8b58-7cc24128cae3",
+                      "name": "The authorization information is missing or invalid",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/member/:memberId/keys",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "member",
+                            ":memberId",
+                            "keys"
+                          ],
+                          "variable": [
+                            {
+                              "key": "memberId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:12.000Z",
+                      "updatedAt": "2026-07-28T11:04:12.000Z",
+                      "uid": "35240-dd0025ad-7ebb-4885-8b58-7cc24128cae3"
+                    },
+                    {
+                      "id": "2d443deb-2c68-4816-b5f9-784ecf62ba00",
+                      "name": "Permission to access this endpoint is denied",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/member/:memberId/keys",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "member",
+                            ":memberId",
+                            "keys"
+                          ],
+                          "variable": [
+                            {
+                              "key": "memberId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"commodo Excepteur sit\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:12.000Z",
+                      "updatedAt": "2026-07-28T11:04:12.000Z",
+                      "uid": "35240-2d443deb-2c68-4816-b5f9-784ecf62ba00"
+                    },
+                    {
+                      "id": "e575f943-ac2a-44bc-826d-add64d8256fa",
+                      "name": "The requested entity, such as a sub-tpp, was not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/member/:memberId/keys",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "member",
+                            ":memberId",
+                            "keys"
+                          ],
+                          "variable": [
+                            {
+                              "key": "memberId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"nisi dolor reprehenderit\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"tempor dolore dolore\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:12.000Z",
+                      "updatedAt": "2026-07-28T11:04:12.000Z",
+                      "uid": "35240-e575f943-ac2a-44bc-826d-add64d8256fa"
+                    },
+                    {
+                      "id": "dece40ed-3ad1-4cfe-a96a-26d7b05634f6",
+                      "name": "Too many requests",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/member/:memberId/keys",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "member",
+                            ":memberId",
+                            "keys"
+                          ],
+                          "variable": [
+                            {
+                              "key": "memberId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"ci\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"veniam mollit\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:12.000Z",
+                      "updatedAt": "2026-07-28T11:04:12.000Z",
+                      "uid": "35240-dece40ed-3ad1-4cfe-a96a-26d7b05634f6"
+                    },
+                    {
+                      "id": "1d90bccf-bf92-490b-ae41-8075ac40669e",
+                      "name": "An unexpected or internal server error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/member/:memberId/keys",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "member",
+                            ":memberId",
+                            "keys"
+                          ],
+                          "variable": [
+                            {
+                              "key": "memberId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:12.000Z",
+                      "updatedAt": "2026-07-28T11:04:12.000Z",
+                      "uid": "35240-1d90bccf-bf92-490b-ae41-8075ac40669e"
+                    },
+                    {
+                      "id": "4ed001bf-746b-4477-bbe0-9073aa8bbc3a",
+                      "name": "The operation was not implemented",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/member/:memberId/keys",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "member",
+                            ":memberId",
+                            "keys"
+                          ],
+                          "variable": [
+                            {
+                              "key": "memberId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Implemented",
+                      "code": 501,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"ad\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"Ut consectetur enim cupidatat\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:12.000Z",
+                      "updatedAt": "2026-07-28T11:04:12.000Z",
+                      "uid": "35240-4ed001bf-746b-4477-bbe0-9073aa8bbc3a"
+                    },
+                    {
+                      "id": "f644e9b6-7c4d-4f1d-ac59-6644a6422ecf",
+                      "name": "Service is unavailable",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/member/:memberId/keys",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "member",
+                            ":memberId",
+                            "keys"
+                          ],
+                          "variable": [
+                            {
+                              "key": "memberId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Service Unavailable",
+                      "code": 503,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"et ullamco\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"labore sint minim culpa\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:12.000Z",
+                      "updatedAt": "2026-07-28T11:04:12.000Z",
+                      "uid": "35240-f644e9b6-7c4d-4f1d-ac59-6644a6422ecf"
+                    },
+                    {
+                      "id": "b453833f-a104-4a7c-8f4a-f79743d3a074",
+                      "name": "Gateway has timed out",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/member/:memberId/keys",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "member",
+                            ":memberId",
+                            "keys"
+                          ],
+                          "variable": [
+                            {
+                              "key": "memberId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Gateway Timeout",
+                      "code": 504,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"eu dolore cillum adipisicing\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"commodo a\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:12.000Z",
+                      "updatedAt": "2026-07-28T11:04:12.000Z",
+                      "uid": "35240-b453833f-a104-4a7c-8f4a-f79743d3a074"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T11:04:12.000Z",
+                  "updatedAt": "2026-07-28T11:04:12.000Z",
+                  "uid": "35240-79d559aa-3d70-4326-9c35-6caee82063db"
+                }
+              ],
+              "id": "e7c5dcd2-32c3-4a6f-9edc-f97727502d48",
+              "createdAt": "2026-07-28T11:04:12.000Z",
+              "updatedAt": "2026-07-28T11:04:12.000Z",
+              "uid": "35240-e7c5dcd2-32c3-4a6f-9edc-f97727502d48"
+            }
+          ],
+          "id": "952db52c-f76e-43f2-8936-18503fe4e2e2",
+          "createdAt": "2026-07-28T11:04:12.000Z",
+          "updatedAt": "2026-07-28T11:04:12.000Z",
+          "uid": "35240-952db52c-f76e-43f2-8936-18503fe4e2e2"
+        }
+      ],
+      "id": "fda3edef-6c56-4582-b241-c4911670195a",
+      "createdAt": "2026-07-28T11:04:12.000Z",
+      "updatedAt": "2026-07-28T11:04:12.000Z",
+      "uid": "35240-fda3edef-6c56-4582-b241-c4911670195a"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.token.io"
+    }
+  ]
+}

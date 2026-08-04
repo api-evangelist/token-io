@@ -1,0 +1,1608 @@
+{
+  "info": {
+    "_postman_id": "ad656dd8-eede-4bce-922b-84bdd1851ade",
+    "name": "Token.io's Open Banking API for TPPs Account on File Webhooks API",
+    "description": "<b>Token.io's Open Banking API</b><br/><br/>Token.io Support: <a href=\"https://support.token.io\" target=\"_blank\">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user's account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href=\"https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm\" target=\"_blank\">developer documentation</a>.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T11:05:05.000Z",
+    "updatedAt": "2026-07-28T11:05:05.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-ad656dd8-eede-4bce-922b-84bdd1851ade"
+  },
+  "item": [
+    {
+      "name": "webhook",
+      "item": [
+        {
+          "name": "config",
+          "item": [
+            {
+              "name": "Set webhook config",
+              "id": "99dba4d6-d1f3-45a1-bb6f-30c64e7f0027",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"config\": {\n    \"type\": [\n      \"TRANSFER_STATUS_CHANGED\",\n      \"INVALID\"\n    ],\n    \"url\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/webhook/config",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "webhook",
+                    "config"
+                  ]
+                },
+                "description": "The `PUT /webhook/config` endpoint sets the webhook configuration."
+              },
+              "response": [
+                {
+                  "id": "e1db92fd-8611-47db-8eff-ce2bf1644ab9",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"config\": {\n    \"type\": [\n      \"TRANSFER_STATUS_CHANGED\",\n      \"INVALID\"\n    ],\n    \"url\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-e1db92fd-8611-47db-8eff-ce2bf1644ab9"
+                },
+                {
+                  "id": "781215bc-6cb1-4f91-9fc1-508b7431f362",
+                  "name": "The client specified an invalid argument",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"config\": {\n    \"type\": [\n      \"TRANSFER_STATUS_CHANGED\",\n      \"INVALID\"\n    ],\n    \"url\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-781215bc-6cb1-4f91-9fc1-508b7431f362"
+                },
+                {
+                  "id": "06ebab70-95d2-402e-8e3e-dd62a536aa51",
+                  "name": "The authorization information is missing or invalid",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"config\": {\n    \"type\": [\n      \"TRANSFER_STATUS_CHANGED\",\n      \"INVALID\"\n    ],\n    \"url\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-06ebab70-95d2-402e-8e3e-dd62a536aa51"
+                },
+                {
+                  "id": "a4fab983-258e-4476-9b8a-6435a160347f",
+                  "name": "Permission to access this endpoint is denied",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"config\": {\n    \"type\": [\n      \"TRANSFER_STATUS_CHANGED\",\n      \"INVALID\"\n    ],\n    \"url\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"ut consequat ullamco id\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-a4fab983-258e-4476-9b8a-6435a160347f"
+                },
+                {
+                  "id": "09070b56-0691-4d9a-8bb7-f0c5c7e80611",
+                  "name": "The requested entity, such as a payment, was not found",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"config\": {\n    \"type\": [\n      \"TRANSFER_STATUS_CHANGED\",\n      \"INVALID\"\n    ],\n    \"url\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"sit ea\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"ipsum dolor veniam\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-09070b56-0691-4d9a-8bb7-f0c5c7e80611"
+                },
+                {
+                  "id": "d5de2ab6-53fe-45d7-894a-e462b162a8f7",
+                  "name": "Too many requests",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"config\": {\n    \"type\": [\n      \"TRANSFER_STATUS_CHANGED\",\n      \"INVALID\"\n    ],\n    \"url\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"cupidatat ea\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"proident deserunt id enim\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-d5de2ab6-53fe-45d7-894a-e462b162a8f7"
+                },
+                {
+                  "id": "c23db8bc-a802-41fd-8640-b06c9f5be18b",
+                  "name": "An unexpected or internal server error",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"config\": {\n    \"type\": [\n      \"TRANSFER_STATUS_CHANGED\",\n      \"INVALID\"\n    ],\n    \"url\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-c23db8bc-a802-41fd-8640-b06c9f5be18b"
+                },
+                {
+                  "id": "b8b2c042-5af7-481f-9bf7-65d9187b3f98",
+                  "name": "The operation was not implemented",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"config\": {\n    \"type\": [\n      \"TRANSFER_STATUS_CHANGED\",\n      \"INVALID\"\n    ],\n    \"url\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "Not Implemented",
+                  "code": 501,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"quis pariatur\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"velit dolore aute non amet\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-b8b2c042-5af7-481f-9bf7-65d9187b3f98"
+                },
+                {
+                  "id": "61d973e9-8cd1-451b-9c09-506103f04a28",
+                  "name": "Service is unavailable",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"config\": {\n    \"type\": [\n      \"TRANSFER_STATUS_CHANGED\",\n      \"INVALID\"\n    ],\n    \"url\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "Service Unavailable",
+                  "code": 503,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"dolor ut tempor ea occaecat\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"ut dolor minim\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-61d973e9-8cd1-451b-9c09-506103f04a28"
+                },
+                {
+                  "id": "0117164e-8e60-4ddd-8e26-4431d8bea13a",
+                  "name": "Gateway has timed out",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"config\": {\n    \"type\": [\n      \"TRANSFER_STATUS_CHANGED\",\n      \"INVALID\"\n    ],\n    \"url\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "Gateway Timeout",
+                  "code": 504,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"labore id consectetur mollit elit\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"ullamco nulla reprehenderit Excepteur proident\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-0117164e-8e60-4ddd-8e26-4431d8bea13a"
+                }
+              ],
+              "createdAt": "2026-07-28T11:05:05.000Z",
+              "updatedAt": "2026-07-28T11:05:05.000Z",
+              "uid": "35240-99dba4d6-d1f3-45a1-bb6f-30c64e7f0027"
+            },
+            {
+              "name": "Get webhook config",
+              "id": "469fe2f4-c9f4-4ad3-9fbf-417643e9d858",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/webhook/config",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "webhook",
+                    "config"
+                  ]
+                },
+                "description": "The `GET /webhook/config` endpoint retrieves the webhook configuration."
+              },
+              "response": [
+                {
+                  "id": "19c7b9ab-6fe1-4992-96c9-0d8c3b387f21",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"config\": {\n    \"type\": [\n      \"VRP_STATUS_CHANGED\",\n      \"REFUND_STATUS_CHANGED\"\n    ],\n    \"url\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-19c7b9ab-6fe1-4992-96c9-0d8c3b387f21"
+                },
+                {
+                  "id": "b48284e9-6a22-4372-9fee-3749392a5564",
+                  "name": "The client specified an invalid argument",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-b48284e9-6a22-4372-9fee-3749392a5564"
+                },
+                {
+                  "id": "f3d15711-3b41-49b5-b91b-afd2a1de6ba1",
+                  "name": "The authorization information is missing or invalid",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-f3d15711-3b41-49b5-b91b-afd2a1de6ba1"
+                },
+                {
+                  "id": "bba81b7a-dca8-43be-8fef-6cc20e8ddf2c",
+                  "name": "Permission to access this endpoint is denied",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"ut consequat ullamco id\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-bba81b7a-dca8-43be-8fef-6cc20e8ddf2c"
+                },
+                {
+                  "id": "3681eac9-b1bf-4650-9e1c-f5d4e9a42e63",
+                  "name": "The requested entity, such as a payment, was not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"sit ea\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"ipsum dolor veniam\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-3681eac9-b1bf-4650-9e1c-f5d4e9a42e63"
+                },
+                {
+                  "id": "da4ab655-dd19-493f-baaa-001309e6a981",
+                  "name": "Too many requests",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"cupidatat ea\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"proident deserunt id enim\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-da4ab655-dd19-493f-baaa-001309e6a981"
+                },
+                {
+                  "id": "2bc665a4-f2e9-4a03-9f65-cf11dfc2bd2b",
+                  "name": "An unexpected or internal server error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-2bc665a4-f2e9-4a03-9f65-cf11dfc2bd2b"
+                },
+                {
+                  "id": "7ec66185-4705-47cc-b793-105ab44be225",
+                  "name": "The operation was not implemented",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "Not Implemented",
+                  "code": 501,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"quis pariatur\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"velit dolore aute non amet\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-7ec66185-4705-47cc-b793-105ab44be225"
+                },
+                {
+                  "id": "f6568de0-f4a9-4b28-9ff2-91bfcb10b525",
+                  "name": "Service is unavailable",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "Service Unavailable",
+                  "code": 503,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"dolor ut tempor ea occaecat\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"ut dolor minim\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-f6568de0-f4a9-4b28-9ff2-91bfcb10b525"
+                },
+                {
+                  "id": "2d0c86af-7e9b-4f73-abda-d1216252cd6d",
+                  "name": "Gateway has timed out",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "Gateway Timeout",
+                  "code": 504,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"labore id consectetur mollit elit\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"ullamco nulla reprehenderit Excepteur proident\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-2d0c86af-7e9b-4f73-abda-d1216252cd6d"
+                }
+              ],
+              "createdAt": "2026-07-28T11:05:05.000Z",
+              "updatedAt": "2026-07-28T11:05:05.000Z",
+              "uid": "35240-469fe2f4-c9f4-4ad3-9fbf-417643e9d858"
+            },
+            {
+              "name": "Delete webhook config",
+              "id": "08a48e0e-f5c5-4a2e-8bfb-9de1795987ee",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/webhook/config",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "webhook",
+                    "config"
+                  ]
+                },
+                "description": "The `DELETE /webhook/config` endpoint deletes the webhook configuration."
+              },
+              "response": [
+                {
+                  "id": "7f6e3ed9-1e54-4e9b-921c-8da460a29058",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-7f6e3ed9-1e54-4e9b-921c-8da460a29058"
+                },
+                {
+                  "id": "e65748c5-2847-4856-a7c8-43297ee2a532",
+                  "name": "The client specified an invalid argument",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-e65748c5-2847-4856-a7c8-43297ee2a532"
+                },
+                {
+                  "id": "861acd40-b301-4026-99bd-6c474132df47",
+                  "name": "The authorization information is missing or invalid",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-861acd40-b301-4026-99bd-6c474132df47"
+                },
+                {
+                  "id": "6af030df-26c9-4d3d-a2a5-fc110fbc6ae2",
+                  "name": "Permission to access this endpoint is denied",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"ut consequat ullamco id\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-6af030df-26c9-4d3d-a2a5-fc110fbc6ae2"
+                },
+                {
+                  "id": "57431490-14ef-4bdc-976f-ecf6e21d5623",
+                  "name": "The requested entity, such as a payment, was not found",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"sit ea\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"ipsum dolor veniam\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-57431490-14ef-4bdc-976f-ecf6e21d5623"
+                },
+                {
+                  "id": "53bc31bf-8af5-48f8-99ef-0ce43534fd9c",
+                  "name": "Too many requests",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"cupidatat ea\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"proident deserunt id enim\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-53bc31bf-8af5-48f8-99ef-0ce43534fd9c"
+                },
+                {
+                  "id": "d51a4cc1-6c29-44a6-83f8-56b6d6b61418",
+                  "name": "An unexpected or internal server error",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-d51a4cc1-6c29-44a6-83f8-56b6d6b61418"
+                },
+                {
+                  "id": "89943498-4997-452e-a57b-8b1f4969c8f9",
+                  "name": "The operation was not implemented",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "Not Implemented",
+                  "code": 501,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"quis pariatur\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"velit dolore aute non amet\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-89943498-4997-452e-a57b-8b1f4969c8f9"
+                },
+                {
+                  "id": "3d6daf83-ae5b-42e2-b883-787be78b101b",
+                  "name": "Service is unavailable",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "Service Unavailable",
+                  "code": 503,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"dolor ut tempor ea occaecat\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"ut dolor minim\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-3d6daf83-ae5b-42e2-b883-787be78b101b"
+                },
+                {
+                  "id": "2deb8fc6-a60c-4282-991e-4204750e4327",
+                  "name": "Gateway has timed out",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/webhook/config",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "webhook",
+                        "config"
+                      ]
+                    }
+                  },
+                  "status": "Gateway Timeout",
+                  "code": 504,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"labore id consectetur mollit elit\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"ullamco nulla reprehenderit Excepteur proident\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:05:05.000Z",
+                  "updatedAt": "2026-07-28T11:05:05.000Z",
+                  "uid": "35240-2deb8fc6-a60c-4282-991e-4204750e4327"
+                }
+              ],
+              "createdAt": "2026-07-28T11:05:05.000Z",
+              "updatedAt": "2026-07-28T11:05:05.000Z",
+              "uid": "35240-08a48e0e-f5c5-4a2e-8bfb-9de1795987ee"
+            }
+          ],
+          "id": "2817e508-6a20-4109-9f1d-97db51c1daff",
+          "createdAt": "2026-07-28T11:05:05.000Z",
+          "updatedAt": "2026-07-28T11:05:05.000Z",
+          "uid": "35240-2817e508-6a20-4109-9f1d-97db51c1daff"
+        }
+      ],
+      "id": "4ded9c9a-65da-4270-a4aa-d095fefa1fb9",
+      "createdAt": "2026-07-28T11:05:05.000Z",
+      "updatedAt": "2026-07-28T11:05:05.000Z",
+      "uid": "35240-4ded9c9a-65da-4270-a4aa-d095fefa1fb9"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.token.io"
+    }
+  ]
+}

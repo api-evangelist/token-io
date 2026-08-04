@@ -1,0 +1,1100 @@
+{
+  "info": {
+    "_postman_id": "516f3f28-0c85-489e-9924-f07b9764f13a",
+    "name": "Token.io's Open Banking API for TPPs Account on File Reports API",
+    "description": "<b>Token.io's Open Banking API</b><br/><br/>Token.io Support: <a href=\"https://support.token.io\" target=\"_blank\">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user's account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href=\"https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm\" target=\"_blank\">developer documentation</a>.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T11:04:50.000Z",
+    "updatedAt": "2026-07-28T11:04:51.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-516f3f28-0c85-489e-9924-f07b9764f13a"
+  },
+  "item": [
+    {
+      "name": "reports",
+      "item": [
+        {
+          "name": "banks",
+          "item": [
+            {
+              "name": "status",
+              "item": [
+                {
+                  "name": "Get bank statuses",
+                  "id": "4f75a24b-4b60-49e5-9bd3-b3ca4995573c",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/reports/banks/status",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "reports",
+                        "banks",
+                        "status"
+                      ]
+                    },
+                    "description": "The `GET /reports/banks/status` endpoint returns the current AIS and PIS service status along with server status for all banks."
+                  },
+                  "response": [
+                    {
+                      "id": "4df4c047-3c6f-4205-9b45-cc33edb82d98",
+                      "name": "Successful response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/reports/banks/status",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "reports",
+                            "banks",
+                            "status"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"banksStatus\": [\n    {\n      \"aisStatus\": \"<string>\",\n      \"bankId\": \"<string>\",\n      \"lastUpdatedAt\": \"<string>\",\n      \"pisStatus\": \"<string>\"\n    },\n    {\n      \"aisStatus\": \"<string>\",\n      \"bankId\": \"<string>\",\n      \"lastUpdatedAt\": \"<string>\",\n      \"pisStatus\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T11:04:51.000Z",
+                      "updatedAt": "2026-07-28T11:04:51.000Z",
+                      "uid": "35240-4df4c047-3c6f-4205-9b45-cc33edb82d98"
+                    },
+                    {
+                      "id": "873f973c-b858-4284-9acb-111162f35a20",
+                      "name": "The client specified an invalid argument",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/reports/banks/status",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "reports",
+                            "banks",
+                            "status"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:51.000Z",
+                      "updatedAt": "2026-07-28T11:04:51.000Z",
+                      "uid": "35240-873f973c-b858-4284-9acb-111162f35a20"
+                    },
+                    {
+                      "id": "574dcce7-5f06-4ded-ad5a-5b0115c08a26",
+                      "name": "The authorization information is missing or invalid",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/reports/banks/status",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "reports",
+                            "banks",
+                            "status"
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:51.000Z",
+                      "updatedAt": "2026-07-28T11:04:51.000Z",
+                      "uid": "35240-574dcce7-5f06-4ded-ad5a-5b0115c08a26"
+                    },
+                    {
+                      "id": "eb29e75c-65f8-40be-90d4-84f5e893b4a5",
+                      "name": "Permission to access this endpoint is denied",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/reports/banks/status",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "reports",
+                            "banks",
+                            "status"
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"eiusmod qui ipsum consequat proident\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:51.000Z",
+                      "updatedAt": "2026-07-28T11:04:51.000Z",
+                      "uid": "35240-eb29e75c-65f8-40be-90d4-84f5e893b4a5"
+                    },
+                    {
+                      "id": "f95f7843-1c97-4cc4-bdba-03e4a0447596",
+                      "name": "The requested entity, such as a payment, was not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/reports/banks/status",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "reports",
+                            "banks",
+                            "status"
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"ullamco\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"culpa sed exercitation\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:51.000Z",
+                      "updatedAt": "2026-07-28T11:04:51.000Z",
+                      "uid": "35240-f95f7843-1c97-4cc4-bdba-03e4a0447596"
+                    },
+                    {
+                      "id": "d0eab035-64de-40d6-85e9-80b2de6b9421",
+                      "name": "Too many requests",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/reports/banks/status",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "reports",
+                            "banks",
+                            "status"
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"nostrud ipsum incididunt\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"reprehenderit labore\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:51.000Z",
+                      "updatedAt": "2026-07-28T11:04:51.000Z",
+                      "uid": "35240-d0eab035-64de-40d6-85e9-80b2de6b9421"
+                    },
+                    {
+                      "id": "3d60a940-bd77-4a43-89cf-fa7966a95737",
+                      "name": "An unexpected or internal server error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/reports/banks/status",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "reports",
+                            "banks",
+                            "status"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:51.000Z",
+                      "updatedAt": "2026-07-28T11:04:51.000Z",
+                      "uid": "35240-3d60a940-bd77-4a43-89cf-fa7966a95737"
+                    },
+                    {
+                      "id": "837a96a9-04db-4fcf-a48a-a5721eec5fbb",
+                      "name": "The operation was not implemented",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/reports/banks/status",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "reports",
+                            "banks",
+                            "status"
+                          ]
+                        }
+                      },
+                      "status": "Not Implemented",
+                      "code": 501,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"esse eu\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"commodo exercitation nulla\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:51.000Z",
+                      "updatedAt": "2026-07-28T11:04:51.000Z",
+                      "uid": "35240-837a96a9-04db-4fcf-a48a-a5721eec5fbb"
+                    },
+                    {
+                      "id": "6be0ecd4-f758-4b4c-b6a0-5337604ee41b",
+                      "name": "Service is unavailable",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/reports/banks/status",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "reports",
+                            "banks",
+                            "status"
+                          ]
+                        }
+                      },
+                      "status": "Service Unavailable",
+                      "code": 503,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"voluptate est et\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"pa\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:51.000Z",
+                      "updatedAt": "2026-07-28T11:04:51.000Z",
+                      "uid": "35240-6be0ecd4-f758-4b4c-b6a0-5337604ee41b"
+                    },
+                    {
+                      "id": "fc6b202a-215d-4bf9-b46a-dc6e583db885",
+                      "name": "Gateway has timed out",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/reports/banks/status",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "reports",
+                            "banks",
+                            "status"
+                          ]
+                        }
+                      },
+                      "status": "Gateway Timeout",
+                      "code": 504,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"nisi qui ipsum laborum \",\n    \"message\": \"<string>\",\n    \"paymentId\": \"culpa est et exercitation Lorem\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:51.000Z",
+                      "updatedAt": "2026-07-28T11:04:51.000Z",
+                      "uid": "35240-fc6b202a-215d-4bf9-b46a-dc6e583db885"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T11:04:51.000Z",
+                  "updatedAt": "2026-07-28T11:04:51.000Z",
+                  "uid": "35240-4f75a24b-4b60-49e5-9bd3-b3ca4995573c"
+                }
+              ],
+              "id": "1c9ba34a-3e29-45ac-b29d-96162043f378",
+              "createdAt": "2026-07-28T11:04:51.000Z",
+              "updatedAt": "2026-07-28T11:04:51.000Z",
+              "uid": "35240-1c9ba34a-3e29-45ac-b29d-96162043f378"
+            },
+            {
+              "name": "{bankId}",
+              "item": [
+                {
+                  "name": "status",
+                  "item": [
+                    {
+                      "name": "Get a bank status",
+                      "id": "4611faaf-0b27-47f7-a036-0022101b99aa",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{bearerToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/reports/banks/:bankId/status",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "reports",
+                            "banks",
+                            ":bankId",
+                            "status"
+                          ],
+                          "variable": [
+                            {
+                              "id": "59056eaf-51bb-4542-983f-b68029580df2",
+                              "key": "bankId",
+                              "value": "<string>",
+                              "description": "(Required) The bank identifier, identical to the `id` in the repsonse to `GET /banks`."
+                            }
+                          ]
+                        },
+                        "description": "The `GET /reports/banks/{bankId}/status` endpoint returns the current AIS and PIS service status for a specific bank."
+                      },
+                      "response": [
+                        {
+                          "id": "4a73a977-cea4-4763-95f5-aeb363872b68",
+                          "name": "Successful response",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/reports/banks/:bankId/status",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "reports",
+                                "banks",
+                                ":bankId",
+                                "status"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "bankId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"bankStatus\": {\n    \"aisStatus\": \"<string>\",\n    \"bankName\": \"<string>\",\n    \"lastUpdatedAt\": \"<string>\",\n    \"pisStatus\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:51.000Z",
+                          "updatedAt": "2026-07-28T11:04:51.000Z",
+                          "uid": "35240-4a73a977-cea4-4763-95f5-aeb363872b68"
+                        },
+                        {
+                          "id": "2bdc4d11-5531-4b93-a9b4-ba096d861ff7",
+                          "name": "The client specified an invalid argument",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/reports/banks/:bankId/status",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "reports",
+                                "banks",
+                                ":bankId",
+                                "status"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "bankId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:51.000Z",
+                          "updatedAt": "2026-07-28T11:04:51.000Z",
+                          "uid": "35240-2bdc4d11-5531-4b93-a9b4-ba096d861ff7"
+                        },
+                        {
+                          "id": "8ad95065-d473-44bd-bc7a-9e7def6ffc81",
+                          "name": "The authorization information is missing or invalid",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/reports/banks/:bankId/status",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "reports",
+                                "banks",
+                                ":bankId",
+                                "status"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "bankId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:51.000Z",
+                          "updatedAt": "2026-07-28T11:04:51.000Z",
+                          "uid": "35240-8ad95065-d473-44bd-bc7a-9e7def6ffc81"
+                        },
+                        {
+                          "id": "3ec4b35c-26f4-4678-8e8c-feeb4341abcb",
+                          "name": "Permission to access this endpoint is denied",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/reports/banks/:bankId/status",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "reports",
+                                "banks",
+                                ":bankId",
+                                "status"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "bankId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Forbidden",
+                          "code": 403,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"errorCode\": \"eiusmod qui ipsum consequat proident\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:51.000Z",
+                          "updatedAt": "2026-07-28T11:04:51.000Z",
+                          "uid": "35240-3ec4b35c-26f4-4678-8e8c-feeb4341abcb"
+                        },
+                        {
+                          "id": "33314cbe-05fd-49d8-8a31-4d69eef9b2df",
+                          "name": "The requested entity, such as a payment, was not found",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/reports/banks/:bankId/status",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "reports",
+                                "banks",
+                                ":bankId",
+                                "status"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "bankId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"errorCode\": \"ullamco\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"culpa sed exercitation\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:51.000Z",
+                          "updatedAt": "2026-07-28T11:04:51.000Z",
+                          "uid": "35240-33314cbe-05fd-49d8-8a31-4d69eef9b2df"
+                        },
+                        {
+                          "id": "e0a04704-9e40-4376-a624-43f5c4ffe2be",
+                          "name": "Too many requests",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/reports/banks/:bankId/status",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "reports",
+                                "banks",
+                                ":bankId",
+                                "status"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "bankId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Too Many Requests",
+                          "code": 429,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"errorCode\": \"nostrud ipsum incididunt\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"reprehenderit labore\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:51.000Z",
+                          "updatedAt": "2026-07-28T11:04:51.000Z",
+                          "uid": "35240-e0a04704-9e40-4376-a624-43f5c4ffe2be"
+                        },
+                        {
+                          "id": "8220c9eb-8d5f-4799-99d7-8d59901a20c9",
+                          "name": "An unexpected or internal server error",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/reports/banks/:bankId/status",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "reports",
+                                "banks",
+                                ":bankId",
+                                "status"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "bankId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:51.000Z",
+                          "updatedAt": "2026-07-28T11:04:51.000Z",
+                          "uid": "35240-8220c9eb-8d5f-4799-99d7-8d59901a20c9"
+                        },
+                        {
+                          "id": "aa3f40b1-1aee-4a41-a32b-a2dada9f35d7",
+                          "name": "The operation was not implemented",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/reports/banks/:bankId/status",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "reports",
+                                "banks",
+                                ":bankId",
+                                "status"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "bankId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Implemented",
+                          "code": 501,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"errorCode\": \"esse eu\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"commodo exercitation nulla\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:51.000Z",
+                          "updatedAt": "2026-07-28T11:04:51.000Z",
+                          "uid": "35240-aa3f40b1-1aee-4a41-a32b-a2dada9f35d7"
+                        },
+                        {
+                          "id": "798213d9-8486-41d0-a6bd-e039ce25258d",
+                          "name": "Service is unavailable",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/reports/banks/:bankId/status",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "reports",
+                                "banks",
+                                ":bankId",
+                                "status"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "bankId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Service Unavailable",
+                          "code": 503,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"errorCode\": \"voluptate est et\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"pa\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:51.000Z",
+                          "updatedAt": "2026-07-28T11:04:51.000Z",
+                          "uid": "35240-798213d9-8486-41d0-a6bd-e039ce25258d"
+                        },
+                        {
+                          "id": "b8863d87-22b6-4461-89a1-3cb9dc9ad9dc",
+                          "name": "Gateway has timed out",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/reports/banks/:bankId/status",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "reports",
+                                "banks",
+                                ":bankId",
+                                "status"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "bankId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Gateway Timeout",
+                          "code": 504,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": {\n    \"errorCode\": \"nisi qui ipsum laborum \",\n    \"message\": \"<string>\",\n    \"paymentId\": \"culpa est et exercitation Lorem\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T11:04:51.000Z",
+                          "updatedAt": "2026-07-28T11:04:51.000Z",
+                          "uid": "35240-b8863d87-22b6-4461-89a1-3cb9dc9ad9dc"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T11:04:51.000Z",
+                      "updatedAt": "2026-07-28T11:04:51.000Z",
+                      "uid": "35240-4611faaf-0b27-47f7-a036-0022101b99aa"
+                    }
+                  ],
+                  "id": "39c7fda6-4e6f-46b1-a450-27ae5d852b5a",
+                  "createdAt": "2026-07-28T11:04:51.000Z",
+                  "updatedAt": "2026-07-28T11:04:51.000Z",
+                  "uid": "35240-39c7fda6-4e6f-46b1-a450-27ae5d852b5a"
+                }
+              ],
+              "id": "85b297b7-65a0-42c1-9d1e-5a9b23bd45cd",
+              "createdAt": "2026-07-28T11:04:51.000Z",
+              "updatedAt": "2026-07-28T11:04:51.000Z",
+              "uid": "35240-85b297b7-65a0-42c1-9d1e-5a9b23bd45cd"
+            }
+          ],
+          "id": "559aebb8-4ed0-4c4b-9fa7-ea411482167e",
+          "createdAt": "2026-07-28T11:04:51.000Z",
+          "updatedAt": "2026-07-28T11:04:51.000Z",
+          "uid": "35240-559aebb8-4ed0-4c4b-9fa7-ea411482167e"
+        }
+      ],
+      "id": "19ada012-a4d5-4821-a495-dc6f375f98ad",
+      "createdAt": "2026-07-28T11:04:51.000Z",
+      "updatedAt": "2026-07-28T11:04:51.000Z",
+      "uid": "35240-19ada012-a4d5-4821-a495-dc6f375f98ad"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.token.io"
+    }
+  ]
+}

@@ -1,0 +1,1706 @@
+{
+  "info": {
+    "_postman_id": "89cd2743-a6b2-411f-8730-621d56b16005",
+    "name": "Token.io's Open Banking API for TPPs Account on File Pay by Link API",
+    "description": "<b>Token.io's Open Banking API</b><br/><br/>Token.io Support: <a href=\"https://support.token.io\" target=\"_blank\">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user's account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href=\"https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm\" target=\"_blank\">developer documentation</a>.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T11:04:39.000Z",
+    "updatedAt": "2026-07-28T11:04:39.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-89cd2743-a6b2-411f-8730-621d56b16005"
+  },
+  "item": [
+    {
+      "name": "v2",
+      "item": [
+        {
+          "name": "payment-links",
+          "item": [
+            {
+              "name": "{paymentLinkId}",
+              "item": [
+                {
+                  "name": "Get payment link details",
+                  "id": "b2ece9f2-d961-466a-992f-4d0bc8bbfb8c",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/payment-links/:paymentLinkId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "payment-links",
+                        ":paymentLinkId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "c9729b26-e3f9-4b2f-b849-b750b402fe1c",
+                          "key": "paymentLinkId",
+                          "value": "<string>",
+                          "description": "(Required) Payment link ID"
+                        }
+                      ]
+                    },
+                    "description": "The `GET /v2/payment-links/{paymentLinkId}` endpoint retrieves detailed information about a specific payment link including current usage statistics."
+                  },
+                  "response": [
+                    {
+                      "id": "1bd78d56-2819-4afb-b015-ad3d6ffb628b",
+                      "name": "Payment link details",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/payment-links/:paymentLinkId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "payment-links",
+                            ":paymentLinkId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentLinkId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"paymentLink\": {\n    \"id\": \"<string>\",\n    \"memberId\": \"<string>\",\n    \"status\": \"LINK_CANCELED\",\n    \"createdAt\": \"<dateTime>\",\n    \"paymentTemplate\": {\n      \"localInstrument\": \"BANKGIRO\",\n      \"creditor\": {\n        \"iban\": \"<string>\",\n        \"name\": \"<string>\",\n        \"bic\": \"<string>\",\n        \"ultimateCreditorName\": \"<string>\",\n        \"address\": {\n          \"addressLine\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"streetName\": \"<string>\",\n          \"buildingNumber\": \"<string>\",\n          \"postCode\": \"<string>\",\n          \"townName\": \"<string>\",\n          \"state\": \"<string>\",\n          \"district\": \"<string>\",\n          \"country\": \"<string>\"\n        },\n        \"bankName\": \"<string>\",\n        \"accountVerificationId\": \"<string>\"\n      },\n      \"refId\": \"<string>\",\n      \"id\": \"<string>\",\n      \"amount\": {\n        \"currency\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      \"remittanceInformationPrimary\": \"<string>\",\n      \"remittanceInformationSecondary\": \"<string>\",\n      \"externalPsuReference\": \"<string>\",\n      \"callbackUrl\": \"<string>\",\n      \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n      \"confirmFunds\": \"<boolean>\",\n      \"returnRefundAccount\": \"<boolean>\",\n      \"onBehalfOfId\": \"<string>\",\n      \"risk\": {\n        \"psuId\": \"<string>\",\n        \"paymentContextCode\": \"FACE_TO_FACE_POINT_OF_SALE\",\n        \"paymentPurposeCode\": \"CASH\",\n        \"merchantCategoryCode\": \"<string>\",\n        \"beneficiaryAccountType\": \"WEALTH\",\n        \"contractPresentIndicator\": \"<boolean>\",\n        \"beneficiaryPrepopulatedIndicator\": \"<boolean>\",\n        \"deliveryAddress\": {\n          \"addressLine\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"addressType\": \"INVALID_ADDRESS_TYPE\",\n          \"buildingNumber\": \"<string>\",\n          \"country\": \"<string>\",\n          \"countrySubDivision\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"department\": \"<string>\",\n          \"postCode\": \"<string>\",\n          \"streetName\": \"<string>\",\n          \"subDepartment\": \"<string>\",\n          \"townName\": \"<string>\"\n        }\n      }\n    },\n    \"linkConfig\": {\n      \"maxUsageCount\": 10000000,\n      \"perPaymentAmountLimit\": \"46190567.8\",\n      \"totalAmountLimit\": \"7.99\",\n      \"expiresAt\": \"<dateTime>\"\n    },\n    \"url\": \"<uri>\",\n    \"currentUsage\": {\n      \"remainingCount\": \"<integer>\",\n      \"remainingAmount\": \"683424021.92\"\n    }\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:39.000Z",
+                      "updatedAt": "2026-07-28T11:04:39.000Z",
+                      "uid": "35240-1bd78d56-2819-4afb-b015-ad3d6ffb628b"
+                    },
+                    {
+                      "id": "e1fccff8-78c2-4468-b145-3a14cb88aab2",
+                      "name": "The client specified an invalid argument",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/payment-links/:paymentLinkId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "payment-links",
+                            ":paymentLinkId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentLinkId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"culpa ipsum ex commodo\",\n    \"message\": \"<string>\",\n    \"paths\": [\n      \"laboris occaecat id et\",\n      \"esse commodo sit irure\"\n    ],\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:39.000Z",
+                      "updatedAt": "2026-07-28T11:04:39.000Z",
+                      "uid": "35240-e1fccff8-78c2-4468-b145-3a14cb88aab2"
+                    },
+                    {
+                      "id": "c43402f4-6fe7-437a-b76e-2030405ab12d",
+                      "name": "The authorization information is missing or invalid",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/payment-links/:paymentLinkId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "payment-links",
+                            ":paymentLinkId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentLinkId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:39.000Z",
+                      "updatedAt": "2026-07-28T11:04:39.000Z",
+                      "uid": "35240-c43402f4-6fe7-437a-b76e-2030405ab12d"
+                    },
+                    {
+                      "id": "dae233f1-6aa5-4ebc-8cec-dfc0b2d03829",
+                      "name": "Permission to access this endpoint is denied",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/payment-links/:paymentLinkId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "payment-links",
+                            ":paymentLinkId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentLinkId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"eiusmod exercit\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:39.000Z",
+                      "updatedAt": "2026-07-28T11:04:39.000Z",
+                      "uid": "35240-dae233f1-6aa5-4ebc-8cec-dfc0b2d03829"
+                    },
+                    {
+                      "id": "b093f520-b51f-4874-bb3f-8d0c6f88af8c",
+                      "name": "The requested payment link was not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/payment-links/:paymentLinkId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "payment-links",
+                            ":paymentLinkId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentLinkId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"anim irure ipsum elit\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"aute tempor\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:39.000Z",
+                      "updatedAt": "2026-07-28T11:04:39.000Z",
+                      "uid": "35240-b093f520-b51f-4874-bb3f-8d0c6f88af8c"
+                    },
+                    {
+                      "id": "94f05b70-e7ed-40b9-afaa-ffb372c97b39",
+                      "name": "An unexpected or internal server error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/payment-links/:paymentLinkId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "payment-links",
+                            ":paymentLinkId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentLinkId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:39.000Z",
+                      "updatedAt": "2026-07-28T11:04:39.000Z",
+                      "uid": "35240-94f05b70-e7ed-40b9-afaa-ffb372c97b39"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T11:04:39.000Z",
+                  "updatedAt": "2026-07-28T11:04:39.000Z",
+                  "uid": "35240-b2ece9f2-d961-466a-992f-4d0bc8bbfb8c"
+                },
+                {
+                  "name": "Deactivate payment link",
+                  "id": "d59059a3-d5e1-45c4-ac96-218c32077068",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/payment-links/:paymentLinkId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "payment-links",
+                        ":paymentLinkId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "f55aa0df-822d-4d92-9d98-4cbf4e28ba56",
+                          "key": "paymentLinkId",
+                          "value": "<string>",
+                          "description": "(Required) Payment link ID"
+                        }
+                      ]
+                    },
+                    "description": "The `DELETE /v2/payment-links/{paymentLinkId}` endpoint deactivates a payment link, preventing further usage. Only active payment links can be deactivated."
+                  },
+                  "response": [
+                    {
+                      "id": "28ccb0ce-3aa6-4b7f-8325-e31ba02de706",
+                      "name": "Payment link deactivated successfully",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/payment-links/:paymentLinkId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "payment-links",
+                            ":paymentLinkId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentLinkId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"paymentLink\": {\n    \"id\": \"<string>\",\n    \"memberId\": \"<string>\",\n    \"status\": \"LINK_CANCELED\",\n    \"createdAt\": \"<dateTime>\",\n    \"paymentTemplate\": {\n      \"localInstrument\": \"BANKGIRO\",\n      \"creditor\": {\n        \"iban\": \"<string>\",\n        \"name\": \"<string>\",\n        \"bic\": \"<string>\",\n        \"ultimateCreditorName\": \"<string>\",\n        \"address\": {\n          \"addressLine\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"streetName\": \"<string>\",\n          \"buildingNumber\": \"<string>\",\n          \"postCode\": \"<string>\",\n          \"townName\": \"<string>\",\n          \"state\": \"<string>\",\n          \"district\": \"<string>\",\n          \"country\": \"<string>\"\n        },\n        \"bankName\": \"<string>\",\n        \"accountVerificationId\": \"<string>\"\n      },\n      \"refId\": \"<string>\",\n      \"id\": \"<string>\",\n      \"amount\": {\n        \"currency\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      \"remittanceInformationPrimary\": \"<string>\",\n      \"remittanceInformationSecondary\": \"<string>\",\n      \"externalPsuReference\": \"<string>\",\n      \"callbackUrl\": \"<string>\",\n      \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n      \"confirmFunds\": \"<boolean>\",\n      \"returnRefundAccount\": \"<boolean>\",\n      \"onBehalfOfId\": \"<string>\",\n      \"risk\": {\n        \"psuId\": \"<string>\",\n        \"paymentContextCode\": \"FACE_TO_FACE_POINT_OF_SALE\",\n        \"paymentPurposeCode\": \"CASH\",\n        \"merchantCategoryCode\": \"<string>\",\n        \"beneficiaryAccountType\": \"WEALTH\",\n        \"contractPresentIndicator\": \"<boolean>\",\n        \"beneficiaryPrepopulatedIndicator\": \"<boolean>\",\n        \"deliveryAddress\": {\n          \"addressLine\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"addressType\": \"INVALID_ADDRESS_TYPE\",\n          \"buildingNumber\": \"<string>\",\n          \"country\": \"<string>\",\n          \"countrySubDivision\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"department\": \"<string>\",\n          \"postCode\": \"<string>\",\n          \"streetName\": \"<string>\",\n          \"subDepartment\": \"<string>\",\n          \"townName\": \"<string>\"\n        }\n      }\n    },\n    \"linkConfig\": {\n      \"maxUsageCount\": 10000000,\n      \"perPaymentAmountLimit\": \"46190567.8\",\n      \"totalAmountLimit\": \"7.99\",\n      \"expiresAt\": \"<dateTime>\"\n    },\n    \"url\": \"<uri>\",\n    \"currentUsage\": {\n      \"remainingCount\": \"<integer>\",\n      \"remainingAmount\": \"683424021.92\"\n    }\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:39.000Z",
+                      "updatedAt": "2026-07-28T11:04:39.000Z",
+                      "uid": "35240-28ccb0ce-3aa6-4b7f-8325-e31ba02de706"
+                    },
+                    {
+                      "id": "d9fae851-f35d-4054-a30f-89778844e176",
+                      "name": "The client specified an invalid argument",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/payment-links/:paymentLinkId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "payment-links",
+                            ":paymentLinkId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentLinkId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"culpa ipsum ex commodo\",\n    \"message\": \"<string>\",\n    \"paths\": [\n      \"laboris occaecat id et\",\n      \"esse commodo sit irure\"\n    ],\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:39.000Z",
+                      "updatedAt": "2026-07-28T11:04:39.000Z",
+                      "uid": "35240-d9fae851-f35d-4054-a30f-89778844e176"
+                    },
+                    {
+                      "id": "9ac09213-29e2-478f-8060-f31155737476",
+                      "name": "The authorization information is missing or invalid",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/payment-links/:paymentLinkId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "payment-links",
+                            ":paymentLinkId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentLinkId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:39.000Z",
+                      "updatedAt": "2026-07-28T11:04:39.000Z",
+                      "uid": "35240-9ac09213-29e2-478f-8060-f31155737476"
+                    },
+                    {
+                      "id": "c5608edd-2a39-4dee-adc8-8a4cb7734c58",
+                      "name": "Permission to access this endpoint is denied",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/payment-links/:paymentLinkId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "payment-links",
+                            ":paymentLinkId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentLinkId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"eiusmod exercit\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:39.000Z",
+                      "updatedAt": "2026-07-28T11:04:39.000Z",
+                      "uid": "35240-c5608edd-2a39-4dee-adc8-8a4cb7734c58"
+                    },
+                    {
+                      "id": "75908078-e613-44d7-91ea-8eb4cc0d7ba4",
+                      "name": "The requested payment link was not found",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/payment-links/:paymentLinkId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "payment-links",
+                            ":paymentLinkId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentLinkId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"anim irure ipsum elit\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"aute tempor\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:39.000Z",
+                      "updatedAt": "2026-07-28T11:04:39.000Z",
+                      "uid": "35240-75908078-e613-44d7-91ea-8eb4cc0d7ba4"
+                    },
+                    {
+                      "id": "9080d543-c3f3-461f-8378-0f96dc69a5e1",
+                      "name": "Payment link cannot be deactivated",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/payment-links/:paymentLinkId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "payment-links",
+                            ":paymentLinkId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentLinkId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Conflict",
+                      "code": 409,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"culpa ipsum ex commodo\",\n    \"message\": \"<string>\",\n    \"paths\": [\n      \"laboris occaecat id et\",\n      \"esse commodo sit irure\"\n    ],\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:39.000Z",
+                      "updatedAt": "2026-07-28T11:04:39.000Z",
+                      "uid": "35240-9080d543-c3f3-461f-8378-0f96dc69a5e1"
+                    },
+                    {
+                      "id": "aeb87472-5e33-42fc-a60e-68943d01a716",
+                      "name": "An unexpected or internal server error",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v2/payment-links/:paymentLinkId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v2",
+                            "payment-links",
+                            ":paymentLinkId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentLinkId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:39.000Z",
+                      "updatedAt": "2026-07-28T11:04:39.000Z",
+                      "uid": "35240-aeb87472-5e33-42fc-a60e-68943d01a716"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T11:04:39.000Z",
+                  "updatedAt": "2026-07-28T11:04:39.000Z",
+                  "uid": "35240-d59059a3-d5e1-45c4-ac96-218c32077068"
+                }
+              ],
+              "id": "95afe697-7044-479f-842b-7715fd98149e",
+              "createdAt": "2026-07-28T11:04:39.000Z",
+              "updatedAt": "2026-07-28T11:04:39.000Z",
+              "uid": "35240-95afe697-7044-479f-842b-7715fd98149e"
+            },
+            {
+              "name": "Create a payment link",
+              "id": "67005325-63cc-4e7d-892b-b6a9b7f91d94",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paymentTemplate\": {\n    \"localInstrument\": \"AUTO_SELECT\",\n    \"creditor\": {\n      \"iban\": \"<string>\",\n      \"name\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"ultimateCreditorName\": \"<string>\",\n      \"address\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"streetName\": \"<string>\",\n        \"buildingNumber\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"townName\": \"<string>\",\n        \"state\": \"<string>\",\n        \"district\": \"<string>\",\n        \"country\": \"<string>\"\n      },\n      \"bankName\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"id\": \"<string>\",\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"remittanceInformationPrimary\": \"<string>\",\n    \"remittanceInformationSecondary\": \"<string>\",\n    \"externalPsuReference\": \"<string>\",\n    \"callbackUrl\": \"<string>\",\n    \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n    \"confirmFunds\": \"<boolean>\",\n    \"returnRefundAccount\": \"<boolean>\",\n    \"onBehalfOfId\": \"<string>\",\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"BILLING_GOODS_AND_SERVICES_IN_ARREARS\",\n      \"paymentPurposeCode\": \"CASH\",\n      \"merchantCategoryCode\": \"<string>\",\n      \"beneficiaryAccountType\": \"INVESTMENT\",\n      \"contractPresentIndicator\": \"<boolean>\",\n      \"beneficiaryPrepopulatedIndicator\": \"<boolean>\",\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"addressType\": \"INVALID_ADDRESS_TYPE\",\n        \"buildingNumber\": \"<string>\",\n        \"country\": \"<string>\",\n        \"countrySubDivision\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"department\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"streetName\": \"<string>\",\n        \"subDepartment\": \"<string>\",\n        \"townName\": \"<string>\"\n      }\n    }\n  },\n  \"linkConfig\": {\n    \"maxUsageCount\": 10000000,\n    \"perPaymentAmountLimit\": \"946.0\",\n    \"totalAmountLimit\": \"396390\",\n    \"expiresAt\": \"<dateTime>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v2/payment-links",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "payment-links"
+                  ]
+                },
+                "description": "The `POST /v2/payment-links` endpoint creates a new payment link with payment template and link configuration. Payment links allow you to create reusable or single-use payment URLs that can be shared with customers. The link can have fixed or variable amounts, usage limits, and expiration dates."
+              },
+              "response": [
+                {
+                  "id": "52e6d1d6-561d-49a6-8859-f84a7912d4ab",
+                  "name": "Payment link created successfully",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"paymentTemplate\": {\n    \"localInstrument\": \"AUTO_SELECT\",\n    \"creditor\": {\n      \"iban\": \"<string>\",\n      \"name\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"ultimateCreditorName\": \"<string>\",\n      \"address\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"streetName\": \"<string>\",\n        \"buildingNumber\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"townName\": \"<string>\",\n        \"state\": \"<string>\",\n        \"district\": \"<string>\",\n        \"country\": \"<string>\"\n      },\n      \"bankName\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"id\": \"<string>\",\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"remittanceInformationPrimary\": \"<string>\",\n    \"remittanceInformationSecondary\": \"<string>\",\n    \"externalPsuReference\": \"<string>\",\n    \"callbackUrl\": \"<string>\",\n    \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n    \"confirmFunds\": \"<boolean>\",\n    \"returnRefundAccount\": \"<boolean>\",\n    \"onBehalfOfId\": \"<string>\",\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"BILLING_GOODS_AND_SERVICES_IN_ARREARS\",\n      \"paymentPurposeCode\": \"CASH\",\n      \"merchantCategoryCode\": \"<string>\",\n      \"beneficiaryAccountType\": \"INVESTMENT\",\n      \"contractPresentIndicator\": \"<boolean>\",\n      \"beneficiaryPrepopulatedIndicator\": \"<boolean>\",\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"addressType\": \"INVALID_ADDRESS_TYPE\",\n        \"buildingNumber\": \"<string>\",\n        \"country\": \"<string>\",\n        \"countrySubDivision\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"department\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"streetName\": \"<string>\",\n        \"subDepartment\": \"<string>\",\n        \"townName\": \"<string>\"\n      }\n    }\n  },\n  \"linkConfig\": {\n    \"maxUsageCount\": 10000000,\n    \"perPaymentAmountLimit\": \"946.0\",\n    \"totalAmountLimit\": \"396390\",\n    \"expiresAt\": \"<dateTime>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/payment-links",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "payment-links"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"paymentLink\": {\n    \"id\": \"<string>\",\n    \"memberId\": \"<string>\",\n    \"status\": \"LINK_CANCELED\",\n    \"createdAt\": \"<dateTime>\",\n    \"paymentTemplate\": {\n      \"localInstrument\": \"BANKGIRO\",\n      \"creditor\": {\n        \"iban\": \"<string>\",\n        \"name\": \"<string>\",\n        \"bic\": \"<string>\",\n        \"ultimateCreditorName\": \"<string>\",\n        \"address\": {\n          \"addressLine\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"streetName\": \"<string>\",\n          \"buildingNumber\": \"<string>\",\n          \"postCode\": \"<string>\",\n          \"townName\": \"<string>\",\n          \"state\": \"<string>\",\n          \"district\": \"<string>\",\n          \"country\": \"<string>\"\n        },\n        \"bankName\": \"<string>\",\n        \"accountVerificationId\": \"<string>\"\n      },\n      \"refId\": \"<string>\",\n      \"id\": \"<string>\",\n      \"amount\": {\n        \"currency\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      \"remittanceInformationPrimary\": \"<string>\",\n      \"remittanceInformationSecondary\": \"<string>\",\n      \"externalPsuReference\": \"<string>\",\n      \"callbackUrl\": \"<string>\",\n      \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n      \"confirmFunds\": \"<boolean>\",\n      \"returnRefundAccount\": \"<boolean>\",\n      \"onBehalfOfId\": \"<string>\",\n      \"risk\": {\n        \"psuId\": \"<string>\",\n        \"paymentContextCode\": \"FACE_TO_FACE_POINT_OF_SALE\",\n        \"paymentPurposeCode\": \"CASH\",\n        \"merchantCategoryCode\": \"<string>\",\n        \"beneficiaryAccountType\": \"WEALTH\",\n        \"contractPresentIndicator\": \"<boolean>\",\n        \"beneficiaryPrepopulatedIndicator\": \"<boolean>\",\n        \"deliveryAddress\": {\n          \"addressLine\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"addressType\": \"INVALID_ADDRESS_TYPE\",\n          \"buildingNumber\": \"<string>\",\n          \"country\": \"<string>\",\n          \"countrySubDivision\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"department\": \"<string>\",\n          \"postCode\": \"<string>\",\n          \"streetName\": \"<string>\",\n          \"subDepartment\": \"<string>\",\n          \"townName\": \"<string>\"\n        }\n      }\n    },\n    \"linkConfig\": {\n      \"maxUsageCount\": 10000000,\n      \"perPaymentAmountLimit\": \"46190567.8\",\n      \"totalAmountLimit\": \"7.99\",\n      \"expiresAt\": \"<dateTime>\"\n    },\n    \"url\": \"<uri>\",\n    \"currentUsage\": {\n      \"remainingCount\": \"<integer>\",\n      \"remainingAmount\": \"683424021.92\"\n    }\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:39.000Z",
+                  "updatedAt": "2026-07-28T11:04:39.000Z",
+                  "uid": "35240-52e6d1d6-561d-49a6-8859-f84a7912d4ab"
+                },
+                {
+                  "id": "2a26fd8b-6d6e-485d-8a20-f47438187f70",
+                  "name": "The client specified an invalid argument",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"paymentTemplate\": {\n    \"localInstrument\": \"AUTO_SELECT\",\n    \"creditor\": {\n      \"iban\": \"<string>\",\n      \"name\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"ultimateCreditorName\": \"<string>\",\n      \"address\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"streetName\": \"<string>\",\n        \"buildingNumber\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"townName\": \"<string>\",\n        \"state\": \"<string>\",\n        \"district\": \"<string>\",\n        \"country\": \"<string>\"\n      },\n      \"bankName\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"id\": \"<string>\",\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"remittanceInformationPrimary\": \"<string>\",\n    \"remittanceInformationSecondary\": \"<string>\",\n    \"externalPsuReference\": \"<string>\",\n    \"callbackUrl\": \"<string>\",\n    \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n    \"confirmFunds\": \"<boolean>\",\n    \"returnRefundAccount\": \"<boolean>\",\n    \"onBehalfOfId\": \"<string>\",\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"BILLING_GOODS_AND_SERVICES_IN_ARREARS\",\n      \"paymentPurposeCode\": \"CASH\",\n      \"merchantCategoryCode\": \"<string>\",\n      \"beneficiaryAccountType\": \"INVESTMENT\",\n      \"contractPresentIndicator\": \"<boolean>\",\n      \"beneficiaryPrepopulatedIndicator\": \"<boolean>\",\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"addressType\": \"INVALID_ADDRESS_TYPE\",\n        \"buildingNumber\": \"<string>\",\n        \"country\": \"<string>\",\n        \"countrySubDivision\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"department\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"streetName\": \"<string>\",\n        \"subDepartment\": \"<string>\",\n        \"townName\": \"<string>\"\n      }\n    }\n  },\n  \"linkConfig\": {\n    \"maxUsageCount\": 10000000,\n    \"perPaymentAmountLimit\": \"946.0\",\n    \"totalAmountLimit\": \"396390\",\n    \"expiresAt\": \"<dateTime>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/payment-links",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "payment-links"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"culpa ipsum ex commodo\",\n    \"message\": \"<string>\",\n    \"paths\": [\n      \"laboris occaecat id et\",\n      \"esse commodo sit irure\"\n    ],\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:39.000Z",
+                  "updatedAt": "2026-07-28T11:04:39.000Z",
+                  "uid": "35240-2a26fd8b-6d6e-485d-8a20-f47438187f70"
+                },
+                {
+                  "id": "86f657db-102d-4cc2-ad07-008888d6b681",
+                  "name": "The authorization information is missing or invalid",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"paymentTemplate\": {\n    \"localInstrument\": \"AUTO_SELECT\",\n    \"creditor\": {\n      \"iban\": \"<string>\",\n      \"name\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"ultimateCreditorName\": \"<string>\",\n      \"address\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"streetName\": \"<string>\",\n        \"buildingNumber\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"townName\": \"<string>\",\n        \"state\": \"<string>\",\n        \"district\": \"<string>\",\n        \"country\": \"<string>\"\n      },\n      \"bankName\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"id\": \"<string>\",\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"remittanceInformationPrimary\": \"<string>\",\n    \"remittanceInformationSecondary\": \"<string>\",\n    \"externalPsuReference\": \"<string>\",\n    \"callbackUrl\": \"<string>\",\n    \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n    \"confirmFunds\": \"<boolean>\",\n    \"returnRefundAccount\": \"<boolean>\",\n    \"onBehalfOfId\": \"<string>\",\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"BILLING_GOODS_AND_SERVICES_IN_ARREARS\",\n      \"paymentPurposeCode\": \"CASH\",\n      \"merchantCategoryCode\": \"<string>\",\n      \"beneficiaryAccountType\": \"INVESTMENT\",\n      \"contractPresentIndicator\": \"<boolean>\",\n      \"beneficiaryPrepopulatedIndicator\": \"<boolean>\",\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"addressType\": \"INVALID_ADDRESS_TYPE\",\n        \"buildingNumber\": \"<string>\",\n        \"country\": \"<string>\",\n        \"countrySubDivision\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"department\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"streetName\": \"<string>\",\n        \"subDepartment\": \"<string>\",\n        \"townName\": \"<string>\"\n      }\n    }\n  },\n  \"linkConfig\": {\n    \"maxUsageCount\": 10000000,\n    \"perPaymentAmountLimit\": \"946.0\",\n    \"totalAmountLimit\": \"396390\",\n    \"expiresAt\": \"<dateTime>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/payment-links",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "payment-links"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:39.000Z",
+                  "updatedAt": "2026-07-28T11:04:39.000Z",
+                  "uid": "35240-86f657db-102d-4cc2-ad07-008888d6b681"
+                },
+                {
+                  "id": "c1861b3b-5115-49ab-b584-ba2fedd17326",
+                  "name": "Permission to access this endpoint is denied",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"paymentTemplate\": {\n    \"localInstrument\": \"AUTO_SELECT\",\n    \"creditor\": {\n      \"iban\": \"<string>\",\n      \"name\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"ultimateCreditorName\": \"<string>\",\n      \"address\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"streetName\": \"<string>\",\n        \"buildingNumber\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"townName\": \"<string>\",\n        \"state\": \"<string>\",\n        \"district\": \"<string>\",\n        \"country\": \"<string>\"\n      },\n      \"bankName\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"id\": \"<string>\",\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"remittanceInformationPrimary\": \"<string>\",\n    \"remittanceInformationSecondary\": \"<string>\",\n    \"externalPsuReference\": \"<string>\",\n    \"callbackUrl\": \"<string>\",\n    \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n    \"confirmFunds\": \"<boolean>\",\n    \"returnRefundAccount\": \"<boolean>\",\n    \"onBehalfOfId\": \"<string>\",\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"BILLING_GOODS_AND_SERVICES_IN_ARREARS\",\n      \"paymentPurposeCode\": \"CASH\",\n      \"merchantCategoryCode\": \"<string>\",\n      \"beneficiaryAccountType\": \"INVESTMENT\",\n      \"contractPresentIndicator\": \"<boolean>\",\n      \"beneficiaryPrepopulatedIndicator\": \"<boolean>\",\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"addressType\": \"INVALID_ADDRESS_TYPE\",\n        \"buildingNumber\": \"<string>\",\n        \"country\": \"<string>\",\n        \"countrySubDivision\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"department\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"streetName\": \"<string>\",\n        \"subDepartment\": \"<string>\",\n        \"townName\": \"<string>\"\n      }\n    }\n  },\n  \"linkConfig\": {\n    \"maxUsageCount\": 10000000,\n    \"perPaymentAmountLimit\": \"946.0\",\n    \"totalAmountLimit\": \"396390\",\n    \"expiresAt\": \"<dateTime>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/payment-links",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "payment-links"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"eiusmod exercit\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:39.000Z",
+                  "updatedAt": "2026-07-28T11:04:39.000Z",
+                  "uid": "35240-c1861b3b-5115-49ab-b584-ba2fedd17326"
+                },
+                {
+                  "id": "8632d2ac-91ea-4868-9908-271541dd967f",
+                  "name": "An unexpected or internal server error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"paymentTemplate\": {\n    \"localInstrument\": \"AUTO_SELECT\",\n    \"creditor\": {\n      \"iban\": \"<string>\",\n      \"name\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"ultimateCreditorName\": \"<string>\",\n      \"address\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"streetName\": \"<string>\",\n        \"buildingNumber\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"townName\": \"<string>\",\n        \"state\": \"<string>\",\n        \"district\": \"<string>\",\n        \"country\": \"<string>\"\n      },\n      \"bankName\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"id\": \"<string>\",\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"remittanceInformationPrimary\": \"<string>\",\n    \"remittanceInformationSecondary\": \"<string>\",\n    \"externalPsuReference\": \"<string>\",\n    \"callbackUrl\": \"<string>\",\n    \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n    \"confirmFunds\": \"<boolean>\",\n    \"returnRefundAccount\": \"<boolean>\",\n    \"onBehalfOfId\": \"<string>\",\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"BILLING_GOODS_AND_SERVICES_IN_ARREARS\",\n      \"paymentPurposeCode\": \"CASH\",\n      \"merchantCategoryCode\": \"<string>\",\n      \"beneficiaryAccountType\": \"INVESTMENT\",\n      \"contractPresentIndicator\": \"<boolean>\",\n      \"beneficiaryPrepopulatedIndicator\": \"<boolean>\",\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"addressType\": \"INVALID_ADDRESS_TYPE\",\n        \"buildingNumber\": \"<string>\",\n        \"country\": \"<string>\",\n        \"countrySubDivision\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"department\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"streetName\": \"<string>\",\n        \"subDepartment\": \"<string>\",\n        \"townName\": \"<string>\"\n      }\n    }\n  },\n  \"linkConfig\": {\n    \"maxUsageCount\": 10000000,\n    \"perPaymentAmountLimit\": \"946.0\",\n    \"totalAmountLimit\": \"396390\",\n    \"expiresAt\": \"<dateTime>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/payment-links",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "payment-links"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:39.000Z",
+                  "updatedAt": "2026-07-28T11:04:39.000Z",
+                  "uid": "35240-8632d2ac-91ea-4868-9908-271541dd967f"
+                }
+              ],
+              "createdAt": "2026-07-28T11:04:39.000Z",
+              "updatedAt": "2026-07-28T11:04:39.000Z",
+              "uid": "35240-67005325-63cc-4e7d-892b-b6a9b7f91d94"
+            },
+            {
+              "name": "List payment links",
+              "id": "5adc801e-88a0-428a-ab1a-f829a7058483",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/v2/payment-links?ids=<string>&ids=<string>&statuses=USAGE_LIMIT_REACHED&statuses=LINK_EXPIRED&onBehalfOfId=<string>&externalPsuReference=<string>&createdAfter=<dateTime>&createdBefore=<dateTime>&expiresAfter=<dateTime>&expiresBefore=<dateTime>&limit=<integer>&offset=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "payment-links"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter by payment link ID list",
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by payment link ID list",
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by link statuses",
+                      "key": "statuses",
+                      "value": "USAGE_LIMIT_REACHED"
+                    },
+                    {
+                      "description": "Filter by link statuses",
+                      "key": "statuses",
+                      "value": "LINK_EXPIRED"
+                    },
+                    {
+                      "description": "Filter by on behalf of ID",
+                      "key": "onBehalfOfId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by external PSU Reference",
+                      "key": "externalPsuReference",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter links created after this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)",
+                      "key": "createdAfter",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "description": "Filter links created before this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)",
+                      "key": "createdBefore",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "description": "Filter links expiring after this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)",
+                      "key": "expiresAfter",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "description": "Filter links expiring before this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)",
+                      "key": "expiresBefore",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "description": "Maximum number of results to return",
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The offset for the current page. The offset is not required to fetch the first page. To fetch subsequent pages, use the 'nextOffset' value from the previous page response.",
+                      "key": "offset",
+                      "value": "<string>"
+                    }
+                  ]
+                },
+                "description": "The `GET /v2/payment-links` endpoint returns a list of payment links. At least one filter parameter must be provided. Results can be filtered by IDs, statuses, creation date range (createdAfter, createdBefore), expiration date range (expiresAfter, expiresBefore), external PSU reference, and on-behalf-of ID."
+              },
+              "response": [
+                {
+                  "id": "d8cef969-f1f4-4529-9210-f0d1f4192a1c",
+                  "name": "List of payment links",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/payment-links?ids=<string>&statuses=LINK_EXPIRED&onBehalfOfId=<string>&externalPsuReference=<string>&createdAfter=<dateTime>&createdBefore=<dateTime>&expiresAfter=<dateTime>&expiresBefore=<dateTime>&limit=<integer>&offset=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "payment-links"
+                      ],
+                      "query": [
+                        {
+                          "description": "Filter by payment link ID list",
+                          "key": "ids",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by link statuses",
+                          "key": "statuses",
+                          "value": "LINK_EXPIRED"
+                        },
+                        {
+                          "description": "Filter by on behalf of ID",
+                          "key": "onBehalfOfId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by external PSU Reference",
+                          "key": "externalPsuReference",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter links created after this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)",
+                          "key": "createdAfter",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Filter links created before this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)",
+                          "key": "createdBefore",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Filter links expiring after this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)",
+                          "key": "expiresAfter",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Filter links expiring before this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)",
+                          "key": "expiresBefore",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Maximum number of results to return",
+                          "key": "limit",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "The offset for the current page. The offset is not required to fetch the first page. To fetch subsequent pages, use the 'nextOffset' value from the previous page response.",
+                          "key": "offset",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"paymentLinks\": [\n    {\n      \"id\": \"<string>\",\n      \"memberId\": \"<string>\",\n      \"status\": \"USAGE_LIMIT_REACHED\",\n      \"createdAt\": \"<dateTime>\",\n      \"paymentTemplate\": {\n        \"localInstrument\": \"EU_DOMESTIC_NON_EURO\",\n        \"creditor\": {\n          \"iban\": \"<string>\",\n          \"name\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"ultimateCreditorName\": \"<string>\",\n          \"address\": {\n            \"addressLine\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"streetName\": \"<string>\",\n            \"buildingNumber\": \"<string>\",\n            \"postCode\": \"<string>\",\n            \"townName\": \"<string>\",\n            \"state\": \"<string>\",\n            \"district\": \"<string>\",\n            \"country\": \"<string>\"\n          },\n          \"bankName\": \"<string>\",\n          \"accountVerificationId\": \"<string>\"\n        },\n        \"refId\": \"<string>\",\n        \"id\": \"<string>\",\n        \"amount\": {\n          \"currency\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        \"remittanceInformationPrimary\": \"<string>\",\n        \"remittanceInformationSecondary\": \"<string>\",\n        \"externalPsuReference\": \"<string>\",\n        \"callbackUrl\": \"<string>\",\n        \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n        \"confirmFunds\": \"<boolean>\",\n        \"returnRefundAccount\": \"<boolean>\",\n        \"onBehalfOfId\": \"<string>\",\n        \"risk\": {\n          \"psuId\": \"<string>\",\n          \"paymentContextCode\": \"TRANSFER_TO_SELF\",\n          \"paymentPurposeCode\": \"CASH\",\n          \"merchantCategoryCode\": \"<string>\",\n          \"beneficiaryAccountType\": \"PENSION\",\n          \"contractPresentIndicator\": \"<boolean>\",\n          \"beneficiaryPrepopulatedIndicator\": \"<boolean>\",\n          \"deliveryAddress\": {\n            \"addressLine\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"addressType\": \"INVALID_ADDRESS_TYPE\",\n            \"buildingNumber\": \"<string>\",\n            \"country\": \"<string>\",\n            \"countrySubDivision\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"department\": \"<string>\",\n            \"postCode\": \"<string>\",\n            \"streetName\": \"<string>\",\n            \"subDepartment\": \"<string>\",\n            \"townName\": \"<string>\"\n          }\n        }\n      },\n      \"linkConfig\": {\n        \"maxUsageCount\": 10000000,\n        \"perPaymentAmountLimit\": \"954070101.46\",\n        \"totalAmountLimit\": \"73328109\",\n        \"expiresAt\": \"<dateTime>\"\n      },\n      \"url\": \"<uri>\",\n      \"currentUsage\": {\n        \"remainingCount\": \"<integer>\",\n        \"remainingAmount\": \"045537221.63\"\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"memberId\": \"<string>\",\n      \"status\": \"USAGE_LIMIT_REACHED\",\n      \"createdAt\": \"<dateTime>\",\n      \"paymentTemplate\": {\n        \"localInstrument\": \"BANKGIRO\",\n        \"creditor\": {\n          \"iban\": \"<string>\",\n          \"name\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"ultimateCreditorName\": \"<string>\",\n          \"address\": {\n            \"addressLine\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"streetName\": \"<string>\",\n            \"buildingNumber\": \"<string>\",\n            \"postCode\": \"<string>\",\n            \"townName\": \"<string>\",\n            \"state\": \"<string>\",\n            \"district\": \"<string>\",\n            \"country\": \"<string>\"\n          },\n          \"bankName\": \"<string>\",\n          \"accountVerificationId\": \"<string>\"\n        },\n        \"refId\": \"<string>\",\n        \"id\": \"<string>\",\n        \"amount\": {\n          \"currency\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        \"remittanceInformationPrimary\": \"<string>\",\n        \"remittanceInformationSecondary\": \"<string>\",\n        \"externalPsuReference\": \"<string>\",\n        \"callbackUrl\": \"<string>\",\n        \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n        \"confirmFunds\": \"<boolean>\",\n        \"returnRefundAccount\": \"<boolean>\",\n        \"onBehalfOfId\": \"<string>\",\n        \"risk\": {\n          \"psuId\": \"<string>\",\n          \"paymentContextCode\": \"BILLING_GOODS_AND_SERVICES_IN_ARREARS\",\n          \"paymentPurposeCode\": \"CASH\",\n          \"merchantCategoryCode\": \"<string>\",\n          \"beneficiaryAccountType\": \"PERSONAL\",\n          \"contractPresentIndicator\": \"<boolean>\",\n          \"beneficiaryPrepopulatedIndicator\": \"<boolean>\",\n          \"deliveryAddress\": {\n            \"addressLine\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"addressType\": \"INVALID_ADDRESS_TYPE\",\n            \"buildingNumber\": \"<string>\",\n            \"country\": \"<string>\",\n            \"countrySubDivision\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"department\": \"<string>\",\n            \"postCode\": \"<string>\",\n            \"streetName\": \"<string>\",\n            \"subDepartment\": \"<string>\",\n            \"townName\": \"<string>\"\n          }\n        }\n      },\n      \"linkConfig\": {\n        \"maxUsageCount\": 10000000,\n        \"perPaymentAmountLimit\": \"8\",\n        \"totalAmountLimit\": \"599481953\",\n        \"expiresAt\": \"<dateTime>\"\n      },\n      \"url\": \"<uri>\",\n      \"currentUsage\": {\n        \"remainingCount\": \"<integer>\",\n        \"remainingAmount\": \"5166\"\n      }\n    }\n  ],\n  \"pageInfo\": {\n    \"limit\": 200,\n    \"offset\": \"<string>\",\n    \"nextOffset\": \"<string>\",\n    \"haveMore\": false\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:39.000Z",
+                  "updatedAt": "2026-07-28T11:04:39.000Z",
+                  "uid": "35240-d8cef969-f1f4-4529-9210-f0d1f4192a1c"
+                },
+                {
+                  "id": "b714cfab-6af4-4e61-a604-d7846d41a583",
+                  "name": "The client specified an invalid argument",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/payment-links?ids=<string>&statuses=LINK_EXPIRED&onBehalfOfId=<string>&externalPsuReference=<string>&createdAfter=<dateTime>&createdBefore=<dateTime>&expiresAfter=<dateTime>&expiresBefore=<dateTime>&limit=<integer>&offset=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "payment-links"
+                      ],
+                      "query": [
+                        {
+                          "description": "Filter by payment link ID list",
+                          "key": "ids",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by link statuses",
+                          "key": "statuses",
+                          "value": "LINK_EXPIRED"
+                        },
+                        {
+                          "description": "Filter by on behalf of ID",
+                          "key": "onBehalfOfId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by external PSU Reference",
+                          "key": "externalPsuReference",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter links created after this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)",
+                          "key": "createdAfter",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Filter links created before this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)",
+                          "key": "createdBefore",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Filter links expiring after this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)",
+                          "key": "expiresAfter",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Filter links expiring before this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)",
+                          "key": "expiresBefore",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Maximum number of results to return",
+                          "key": "limit",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "The offset for the current page. The offset is not required to fetch the first page. To fetch subsequent pages, use the 'nextOffset' value from the previous page response.",
+                          "key": "offset",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"culpa ipsum ex commodo\",\n    \"message\": \"<string>\",\n    \"paths\": [\n      \"laboris occaecat id et\",\n      \"esse commodo sit irure\"\n    ],\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:39.000Z",
+                  "updatedAt": "2026-07-28T11:04:39.000Z",
+                  "uid": "35240-b714cfab-6af4-4e61-a604-d7846d41a583"
+                },
+                {
+                  "id": "3a22c71c-6ab8-4844-955f-3c1330c5f76f",
+                  "name": "The authorization information is missing or invalid",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/payment-links?ids=<string>&statuses=LINK_EXPIRED&onBehalfOfId=<string>&externalPsuReference=<string>&createdAfter=<dateTime>&createdBefore=<dateTime>&expiresAfter=<dateTime>&expiresBefore=<dateTime>&limit=<integer>&offset=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "payment-links"
+                      ],
+                      "query": [
+                        {
+                          "description": "Filter by payment link ID list",
+                          "key": "ids",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by link statuses",
+                          "key": "statuses",
+                          "value": "LINK_EXPIRED"
+                        },
+                        {
+                          "description": "Filter by on behalf of ID",
+                          "key": "onBehalfOfId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by external PSU Reference",
+                          "key": "externalPsuReference",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter links created after this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)",
+                          "key": "createdAfter",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Filter links created before this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)",
+                          "key": "createdBefore",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Filter links expiring after this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)",
+                          "key": "expiresAfter",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Filter links expiring before this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)",
+                          "key": "expiresBefore",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Maximum number of results to return",
+                          "key": "limit",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "The offset for the current page. The offset is not required to fetch the first page. To fetch subsequent pages, use the 'nextOffset' value from the previous page response.",
+                          "key": "offset",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:39.000Z",
+                  "updatedAt": "2026-07-28T11:04:39.000Z",
+                  "uid": "35240-3a22c71c-6ab8-4844-955f-3c1330c5f76f"
+                },
+                {
+                  "id": "93df1832-db6b-4c7f-ac70-692d491cf466",
+                  "name": "Permission to access this endpoint is denied",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/payment-links?ids=<string>&statuses=LINK_EXPIRED&onBehalfOfId=<string>&externalPsuReference=<string>&createdAfter=<dateTime>&createdBefore=<dateTime>&expiresAfter=<dateTime>&expiresBefore=<dateTime>&limit=<integer>&offset=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "payment-links"
+                      ],
+                      "query": [
+                        {
+                          "description": "Filter by payment link ID list",
+                          "key": "ids",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by link statuses",
+                          "key": "statuses",
+                          "value": "LINK_EXPIRED"
+                        },
+                        {
+                          "description": "Filter by on behalf of ID",
+                          "key": "onBehalfOfId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by external PSU Reference",
+                          "key": "externalPsuReference",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter links created after this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)",
+                          "key": "createdAfter",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Filter links created before this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)",
+                          "key": "createdBefore",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Filter links expiring after this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)",
+                          "key": "expiresAfter",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Filter links expiring before this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)",
+                          "key": "expiresBefore",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Maximum number of results to return",
+                          "key": "limit",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "The offset for the current page. The offset is not required to fetch the first page. To fetch subsequent pages, use the 'nextOffset' value from the previous page response.",
+                          "key": "offset",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"eiusmod exercit\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:39.000Z",
+                  "updatedAt": "2026-07-28T11:04:39.000Z",
+                  "uid": "35240-93df1832-db6b-4c7f-ac70-692d491cf466"
+                },
+                {
+                  "id": "fb55059f-7e49-412a-abfb-0bd6176bb5e3",
+                  "name": "An unexpected or internal server error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/payment-links?ids=<string>&statuses=LINK_EXPIRED&onBehalfOfId=<string>&externalPsuReference=<string>&createdAfter=<dateTime>&createdBefore=<dateTime>&expiresAfter=<dateTime>&expiresBefore=<dateTime>&limit=<integer>&offset=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "payment-links"
+                      ],
+                      "query": [
+                        {
+                          "description": "Filter by payment link ID list",
+                          "key": "ids",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by link statuses",
+                          "key": "statuses",
+                          "value": "LINK_EXPIRED"
+                        },
+                        {
+                          "description": "Filter by on behalf of ID",
+                          "key": "onBehalfOfId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by external PSU Reference",
+                          "key": "externalPsuReference",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter links created after this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)",
+                          "key": "createdAfter",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Filter links created before this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)",
+                          "key": "createdBefore",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Filter links expiring after this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)",
+                          "key": "expiresAfter",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Filter links expiring before this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)",
+                          "key": "expiresBefore",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Maximum number of results to return",
+                          "key": "limit",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "The offset for the current page. The offset is not required to fetch the first page. To fetch subsequent pages, use the 'nextOffset' value from the previous page response.",
+                          "key": "offset",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:39.000Z",
+                  "updatedAt": "2026-07-28T11:04:39.000Z",
+                  "uid": "35240-fb55059f-7e49-412a-abfb-0bd6176bb5e3"
+                }
+              ],
+              "createdAt": "2026-07-28T11:04:39.000Z",
+              "updatedAt": "2026-07-28T11:04:39.000Z",
+              "uid": "35240-5adc801e-88a0-428a-ab1a-f829a7058483"
+            }
+          ],
+          "id": "0c19e4cd-9ed7-4072-b19f-011a7aa83f6f",
+          "createdAt": "2026-07-28T11:04:39.000Z",
+          "updatedAt": "2026-07-28T11:04:39.000Z",
+          "uid": "35240-0c19e4cd-9ed7-4072-b19f-011a7aa83f6f"
+        }
+      ],
+      "id": "0268b72b-3eb5-42c9-b2a4-c649c5abcfb5",
+      "createdAt": "2026-07-28T11:04:39.000Z",
+      "updatedAt": "2026-07-28T11:04:39.000Z",
+      "uid": "35240-0268b72b-3eb5-42c9-b2a4-c649c5abcfb5"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.token.io"
+    }
+  ]
+}

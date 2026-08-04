@@ -1,0 +1,2986 @@
+{
+  "info": {
+    "_postman_id": "3f68e1fe-f76b-4395-8d8d-80d539c81198",
+    "name": "Token.io's Open Banking API for TPPs Account on File Refunds API",
+    "description": "<b>Token.io's Open Banking API</b><br/><br/>Token.io Support: <a href=\"https://support.token.io\" target=\"_blank\">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user's account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href=\"https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm\" target=\"_blank\">developer documentation</a>.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T11:04:49.000Z",
+    "updatedAt": "2026-07-28T11:04:50.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-3f68e1fe-f76b-4395-8d8d-80d539c81198"
+  },
+  "item": [
+    {
+      "name": "refunds",
+      "item": [
+        {
+          "name": "{id}",
+          "item": [
+            {
+              "name": "Get a refund",
+              "id": "8a4586e1-caf5-4320-bc78-0f23b67438b1",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/refunds/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "refunds",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "f879f132-18ab-40c7-a077-2e1c1299c972",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "The `GET /refunds/{id}` endpoint retrieves a given refund."
+              },
+              "response": [
+                {
+                  "id": "ec1f12cf-b0b0-4111-b3f2-1659930c4348",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/refunds/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "refunds",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"refund\": {\n    \"createdDateTime\": \"<string>\",\n    \"id\": \"<string>\",\n    \"memberId\": \"<string>\",\n    \"status\": \"INITIATION_PENDING\",\n    \"updatedDateTime\": \"<string>\",\n    \"bankTransactionId\": \"<string>\",\n    \"bankPaymentStatus\": \"<string>\",\n    \"statusReasonInformation\": \"<string>\",\n    \"initiation\": {\n      \"amount\": {\n        \"currency\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      \"creditor\": {\n        \"iban\": \"<string>\",\n        \"name\": \"<string>\",\n        \"bic\": \"<string>\",\n        \"ultimateCreditorName\": \"<string>\",\n        \"address\": {\n          \"addressLine\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"streetName\": \"<string>\",\n          \"buildingNumber\": \"<string>\",\n          \"postCode\": \"<string>\",\n          \"townName\": \"<string>\",\n          \"state\": \"<string>\",\n          \"district\": \"<string>\",\n          \"country\": \"<string>\"\n        },\n        \"bankName\": \"<string>\",\n        \"accountVerificationId\": \"<string>\"\n      },\n      \"debtor\": {\n        \"iban\": \"<string>\",\n        \"bic\": \"<string>\",\n        \"name\": \"<string>\",\n        \"ultimateDebtorName\": \"<string>\",\n        \"address\": {\n          \"addressLine\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"streetName\": \"<string>\",\n          \"buildingNumber\": \"<string>\",\n          \"postCode\": \"<string>\",\n          \"townName\": \"<string>\",\n          \"state\": \"<string>\",\n          \"district\": \"<string>\",\n          \"country\": \"<string>\"\n        }\n      },\n      \"localInstrument\": \"SEPA_INSTANT\",\n      \"originalPaymentId\": \"<string>\",\n      \"refId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"registrationId\": \"<string>\"\n    }\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:50.000Z",
+                  "updatedAt": "2026-07-28T11:04:50.000Z",
+                  "uid": "35240-ec1f12cf-b0b0-4111-b3f2-1659930c4348"
+                },
+                {
+                  "id": "98eb03dc-715a-4bc0-a76d-aed05de69f6f",
+                  "name": "The client specified an invalid argument",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/refunds/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "refunds",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:50.000Z",
+                  "updatedAt": "2026-07-28T11:04:50.000Z",
+                  "uid": "35240-98eb03dc-715a-4bc0-a76d-aed05de69f6f"
+                },
+                {
+                  "id": "f7e67a86-5b1d-4996-97bf-3d71c4b28de7",
+                  "name": "The authorization information is missing or invalid",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/refunds/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "refunds",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:50.000Z",
+                  "updatedAt": "2026-07-28T11:04:50.000Z",
+                  "uid": "35240-f7e67a86-5b1d-4996-97bf-3d71c4b28de7"
+                },
+                {
+                  "id": "d8b754b7-0979-4cf3-9720-058db4c04c0b",
+                  "name": "Permission to access this endpoint is denied",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/refunds/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "refunds",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"est id eu velit\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:50.000Z",
+                  "updatedAt": "2026-07-28T11:04:50.000Z",
+                  "uid": "35240-d8b754b7-0979-4cf3-9720-058db4c04c0b"
+                },
+                {
+                  "id": "74cf4aef-ccbc-41c6-a761-55a3218b5758",
+                  "name": "The requested entity, such as a payment, was not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/refunds/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "refunds",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"proident non veniam\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"enim aliquip in\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:50.000Z",
+                  "updatedAt": "2026-07-28T11:04:50.000Z",
+                  "uid": "35240-74cf4aef-ccbc-41c6-a761-55a3218b5758"
+                },
+                {
+                  "id": "4e3cdafb-8d8d-42b9-b65b-9012c1541612",
+                  "name": "Too many requests",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/refunds/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "refunds",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"magna tempor sint reprehenderit\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"dolor officia\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:50.000Z",
+                  "updatedAt": "2026-07-28T11:04:50.000Z",
+                  "uid": "35240-4e3cdafb-8d8d-42b9-b65b-9012c1541612"
+                },
+                {
+                  "id": "a76a00b8-6323-4ebf-b8ee-d34a927bf67e",
+                  "name": "An unexpected or internal server error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/refunds/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "refunds",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:50.000Z",
+                  "updatedAt": "2026-07-28T11:04:50.000Z",
+                  "uid": "35240-a76a00b8-6323-4ebf-b8ee-d34a927bf67e"
+                },
+                {
+                  "id": "aac82192-db39-4604-a7db-5aaccbb92fc9",
+                  "name": "The operation was not implemented",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/refunds/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "refunds",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Implemented",
+                  "code": 501,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"dolor id ut sint commodo\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"exercitation pariatur sit nostrud irure\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:50.000Z",
+                  "updatedAt": "2026-07-28T11:04:50.000Z",
+                  "uid": "35240-aac82192-db39-4604-a7db-5aaccbb92fc9"
+                },
+                {
+                  "id": "eec9aa85-b770-4145-9213-ee11d976ba59",
+                  "name": "Service is unavailable",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/refunds/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "refunds",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Service Unavailable",
+                  "code": 503,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"culpa Duis aute ut\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"sit Excepteur commodo\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:50.000Z",
+                  "updatedAt": "2026-07-28T11:04:50.000Z",
+                  "uid": "35240-eec9aa85-b770-4145-9213-ee11d976ba59"
+                },
+                {
+                  "id": "19d69f35-0281-4ae8-92f1-da6d362b7615",
+                  "name": "Gateway has timed out",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/refunds/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "refunds",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Gateway Timeout",
+                  "code": 504,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"est dolore\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"tempor quis ut\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:50.000Z",
+                  "updatedAt": "2026-07-28T11:04:50.000Z",
+                  "uid": "35240-19d69f35-0281-4ae8-92f1-da6d362b7615"
+                }
+              ],
+              "createdAt": "2026-07-28T11:04:50.000Z",
+              "updatedAt": "2026-07-28T11:04:50.000Z",
+              "uid": "35240-8a4586e1-caf5-4320-bc78-0f23b67438b1"
+            }
+          ],
+          "id": "8cafb4c1-76b5-4d13-8e06-84a66d285ccb",
+          "createdAt": "2026-07-28T11:04:50.000Z",
+          "updatedAt": "2026-07-28T11:04:50.000Z",
+          "uid": "35240-8cafb4c1-76b5-4d13-8e06-84a66d285ccb"
+        },
+        {
+          "name": "Initiate a refund",
+          "id": "c9a02fe9-1a4c-4b59-932a-e640ccf9f9ff",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"localInstrument\": \"SEPA_INSTANT\",\n    \"originalPaymentId\": \"<string>\",\n    \"refId\": \"<string>\",\n    \"description\": \"<string>\",\n    \"registrationId\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\",\n    \"accountVerificationId\": \"<string>\",\n    \"corporateApiDebtor\": {\n      \"accountId\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/refunds",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "refunds"
+              ]
+            },
+            "description": "The `POST /refunds` endpoint initiates a refund. After the refund is settled, the refund status of the original transfer will be updated. <br/> The debtor field can be optional if you're using the debtor in registration. The creditor field can be optional if the information is available in the original payment."
+          },
+          "response": [
+            {
+              "id": "b774f81e-a7ba-4e3d-9bb2-7017c1cc8c0d",
+              "name": "Successful response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"localInstrument\": \"SEPA_INSTANT\",\n    \"originalPaymentId\": \"<string>\",\n    \"refId\": \"<string>\",\n    \"description\": \"<string>\",\n    \"registrationId\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\",\n    \"accountVerificationId\": \"<string>\",\n    \"corporateApiDebtor\": {\n      \"accountId\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/refunds",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "refunds"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"refund\": {\n    \"createdDateTime\": \"<string>\",\n    \"id\": \"<string>\",\n    \"memberId\": \"<string>\",\n    \"status\": \"INITIATION_PENDING\",\n    \"updatedDateTime\": \"<string>\",\n    \"bankTransactionId\": \"<string>\",\n    \"bankPaymentStatus\": \"<string>\",\n    \"statusReasonInformation\": \"<string>\",\n    \"initiation\": {\n      \"amount\": {\n        \"currency\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      \"creditor\": {\n        \"iban\": \"<string>\",\n        \"name\": \"<string>\",\n        \"bic\": \"<string>\",\n        \"ultimateCreditorName\": \"<string>\",\n        \"address\": {\n          \"addressLine\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"streetName\": \"<string>\",\n          \"buildingNumber\": \"<string>\",\n          \"postCode\": \"<string>\",\n          \"townName\": \"<string>\",\n          \"state\": \"<string>\",\n          \"district\": \"<string>\",\n          \"country\": \"<string>\"\n        },\n        \"bankName\": \"<string>\",\n        \"accountVerificationId\": \"<string>\"\n      },\n      \"debtor\": {\n        \"iban\": \"<string>\",\n        \"bic\": \"<string>\",\n        \"name\": \"<string>\",\n        \"ultimateDebtorName\": \"<string>\",\n        \"address\": {\n          \"addressLine\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"streetName\": \"<string>\",\n          \"buildingNumber\": \"<string>\",\n          \"postCode\": \"<string>\",\n          \"townName\": \"<string>\",\n          \"state\": \"<string>\",\n          \"district\": \"<string>\",\n          \"country\": \"<string>\"\n        }\n      },\n      \"localInstrument\": \"SEPA_INSTANT\",\n      \"originalPaymentId\": \"<string>\",\n      \"refId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"registrationId\": \"<string>\"\n    }\n  }\n}",
+              "createdAt": "2026-07-28T11:04:50.000Z",
+              "updatedAt": "2026-07-28T11:04:50.000Z",
+              "uid": "35240-b774f81e-a7ba-4e3d-9bb2-7017c1cc8c0d"
+            },
+            {
+              "id": "4f0598e3-cd80-44ee-8ff5-23b460015e62",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"localInstrument\": \"SEPA_INSTANT\",\n    \"originalPaymentId\": \"<string>\",\n    \"refId\": \"<string>\",\n    \"description\": \"<string>\",\n    \"registrationId\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\",\n    \"accountVerificationId\": \"<string>\",\n    \"corporateApiDebtor\": {\n      \"accountId\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/refunds",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "refunds"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:50.000Z",
+              "updatedAt": "2026-07-28T11:04:50.000Z",
+              "uid": "35240-4f0598e3-cd80-44ee-8ff5-23b460015e62"
+            },
+            {
+              "id": "fd3f6dae-b9ab-4710-b57d-da363233b45a",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"localInstrument\": \"SEPA_INSTANT\",\n    \"originalPaymentId\": \"<string>\",\n    \"refId\": \"<string>\",\n    \"description\": \"<string>\",\n    \"registrationId\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\",\n    \"accountVerificationId\": \"<string>\",\n    \"corporateApiDebtor\": {\n      \"accountId\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/refunds",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "refunds"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:50.000Z",
+              "updatedAt": "2026-07-28T11:04:50.000Z",
+              "uid": "35240-fd3f6dae-b9ab-4710-b57d-da363233b45a"
+            },
+            {
+              "id": "0b453658-c9a5-4fe0-9f75-b34a605b001f",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"localInstrument\": \"SEPA_INSTANT\",\n    \"originalPaymentId\": \"<string>\",\n    \"refId\": \"<string>\",\n    \"description\": \"<string>\",\n    \"registrationId\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\",\n    \"accountVerificationId\": \"<string>\",\n    \"corporateApiDebtor\": {\n      \"accountId\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/refunds",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "refunds"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"est id eu velit\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:50.000Z",
+              "updatedAt": "2026-07-28T11:04:50.000Z",
+              "uid": "35240-0b453658-c9a5-4fe0-9f75-b34a605b001f"
+            },
+            {
+              "id": "793b2ab4-8794-4663-b3e1-46a7d885e68e",
+              "name": "The requested entity, such as a payment, was not found",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"localInstrument\": \"SEPA_INSTANT\",\n    \"originalPaymentId\": \"<string>\",\n    \"refId\": \"<string>\",\n    \"description\": \"<string>\",\n    \"registrationId\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\",\n    \"accountVerificationId\": \"<string>\",\n    \"corporateApiDebtor\": {\n      \"accountId\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/refunds",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "refunds"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"proident non veniam\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"enim aliquip in\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:50.000Z",
+              "updatedAt": "2026-07-28T11:04:50.000Z",
+              "uid": "35240-793b2ab4-8794-4663-b3e1-46a7d885e68e"
+            },
+            {
+              "id": "38bcc0af-af35-459d-8e55-e8ffa6bad5f7",
+              "name": "Too many requests",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"localInstrument\": \"SEPA_INSTANT\",\n    \"originalPaymentId\": \"<string>\",\n    \"refId\": \"<string>\",\n    \"description\": \"<string>\",\n    \"registrationId\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\",\n    \"accountVerificationId\": \"<string>\",\n    \"corporateApiDebtor\": {\n      \"accountId\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/refunds",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "refunds"
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"magna tempor sint reprehenderit\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"dolor officia\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:50.000Z",
+              "updatedAt": "2026-07-28T11:04:50.000Z",
+              "uid": "35240-38bcc0af-af35-459d-8e55-e8ffa6bad5f7"
+            },
+            {
+              "id": "19928b26-d3bc-4c8b-a052-3c83106002e7",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"localInstrument\": \"SEPA_INSTANT\",\n    \"originalPaymentId\": \"<string>\",\n    \"refId\": \"<string>\",\n    \"description\": \"<string>\",\n    \"registrationId\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\",\n    \"accountVerificationId\": \"<string>\",\n    \"corporateApiDebtor\": {\n      \"accountId\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/refunds",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "refunds"
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:50.000Z",
+              "updatedAt": "2026-07-28T11:04:50.000Z",
+              "uid": "35240-19928b26-d3bc-4c8b-a052-3c83106002e7"
+            },
+            {
+              "id": "0cac7c67-0994-4d14-9746-f857c8f96582",
+              "name": "The operation was not implemented",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"localInstrument\": \"SEPA_INSTANT\",\n    \"originalPaymentId\": \"<string>\",\n    \"refId\": \"<string>\",\n    \"description\": \"<string>\",\n    \"registrationId\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\",\n    \"accountVerificationId\": \"<string>\",\n    \"corporateApiDebtor\": {\n      \"accountId\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/refunds",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "refunds"
+                  ]
+                }
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"dolor id ut sint commodo\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"exercitation pariatur sit nostrud irure\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:50.000Z",
+              "updatedAt": "2026-07-28T11:04:50.000Z",
+              "uid": "35240-0cac7c67-0994-4d14-9746-f857c8f96582"
+            },
+            {
+              "id": "eec7c494-90a5-4929-ac38-79b72de170b2",
+              "name": "Service is unavailable",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"localInstrument\": \"SEPA_INSTANT\",\n    \"originalPaymentId\": \"<string>\",\n    \"refId\": \"<string>\",\n    \"description\": \"<string>\",\n    \"registrationId\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\",\n    \"accountVerificationId\": \"<string>\",\n    \"corporateApiDebtor\": {\n      \"accountId\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/refunds",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "refunds"
+                  ]
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"culpa Duis aute ut\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"sit Excepteur commodo\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:50.000Z",
+              "updatedAt": "2026-07-28T11:04:50.000Z",
+              "uid": "35240-eec7c494-90a5-4929-ac38-79b72de170b2"
+            },
+            {
+              "id": "ed15d41f-25e6-4f24-aaf3-448bed49b24a",
+              "name": "Gateway has timed out",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"localInstrument\": \"SEPA_INSTANT\",\n    \"originalPaymentId\": \"<string>\",\n    \"refId\": \"<string>\",\n    \"description\": \"<string>\",\n    \"registrationId\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\",\n    \"accountVerificationId\": \"<string>\",\n    \"corporateApiDebtor\": {\n      \"accountId\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/refunds",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "refunds"
+                  ]
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"est dolore\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"tempor quis ut\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:50.000Z",
+              "updatedAt": "2026-07-28T11:04:50.000Z",
+              "uid": "35240-ed15d41f-25e6-4f24-aaf3-448bed49b24a"
+            }
+          ],
+          "createdAt": "2026-07-28T11:04:50.000Z",
+          "updatedAt": "2026-07-28T11:04:50.000Z",
+          "uid": "35240-c9a02fe9-1a4c-4b59-932a-e640ccf9f9ff"
+        },
+        {
+          "name": "Get refunds",
+          "id": "eb0991b0-7745-4201-b03d-3b516c32ff1d",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/refunds?limit=<integer>&offset=<string>&startDate=<string>&endDate=<string>&ids=<string>&ids=<string>&invertIds=<boolean>&statuses=<array>&invertStatuses=<boolean>&refIds=<string>&refIds=<string>&partial=<boolean>&onBehalfOfIds=<string>&onBehalfOfIds=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "refunds"
+              ],
+              "query": [
+                {
+                  "description": "(Required) The maximum number of records to return.",
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "description": "The offset from the previous page.",
+                  "key": "offset",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Lower bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or after the given date will be returned.",
+                  "key": "startDate",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Upper bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or before the given date will be returned.",
+                  "key": "endDate",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Filters refunds by their ids - returns only refunds with ids listed in this parameter.",
+                  "key": "ids",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Filters refunds by their ids - returns only refunds with ids listed in this parameter.",
+                  "key": "ids",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Invert ids query - returns only refunds with ids not listed in the ids parameter.",
+                  "key": "invertIds",
+                  "value": "<boolean>"
+                },
+                {
+                  "description": "Filters refunds by their statuses - returns only refunds with statuses listed in this parameter.",
+                  "key": "statuses",
+                  "value": "<array>"
+                },
+                {
+                  "description": "Invert statuses query - returns only refunds with statuses not listed in the statuses parameter.",
+                  "key": "invertStatuses",
+                  "value": "<boolean>"
+                },
+                {
+                  "description": "Filters refunds by their `refId` values - returns only refunds with `refIds` listed in this parameter.",
+                  "key": "refIds",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Filters refunds by their `refId` values - returns only refunds with `refIds` listed in this parameter.",
+                  "key": "refIds",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Returns refunds in a partial format - with only id and status fields populated.",
+                  "key": "partial",
+                  "value": "<boolean>"
+                },
+                {
+                  "description": "Filters payouts by their `onBehalfOfId` values - returns only payouts with the `onBehalfOfId` values specified in this parameter. This field is mandatory for unregulated TPPs.",
+                  "key": "onBehalfOfIds",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Filters payouts by their `onBehalfOfId` values - returns only payouts with the `onBehalfOfId` values specified in this parameter. This field is mandatory for unregulated TPPs.",
+                  "key": "onBehalfOfIds",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "The `GET /refunds` endpoint retrieves a complete or filtered list of refunds."
+          },
+          "response": [
+            {
+              "id": "54012814-5279-4472-9d86-1f81456591a4",
+              "name": "Successful response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/refunds?limit=<integer>&offset=<string>&startDate=<string>&endDate=<string>&ids=<string>&invertIds=<boolean>&statuses=<array>&invertStatuses=<boolean>&refIds=<string>&partial=<boolean>&onBehalfOfIds=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "refunds"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The maximum number of records to return.",
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The offset from the previous page.",
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Lower bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or after the given date will be returned.",
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Upper bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or before the given date will be returned.",
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters refunds by their ids - returns only refunds with ids listed in this parameter.",
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Invert ids query - returns only refunds with ids not listed in the ids parameter.",
+                      "key": "invertIds",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters refunds by their statuses - returns only refunds with statuses listed in this parameter.",
+                      "key": "statuses",
+                      "value": "<array>"
+                    },
+                    {
+                      "description": "Invert statuses query - returns only refunds with statuses not listed in the statuses parameter.",
+                      "key": "invertStatuses",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters refunds by their `refId` values - returns only refunds with `refIds` listed in this parameter.",
+                      "key": "refIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Returns refunds in a partial format - with only id and status fields populated.",
+                      "key": "partial",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their `onBehalfOfId` values - returns only payouts with the `onBehalfOfId` values specified in this parameter. This field is mandatory for unregulated TPPs.",
+                      "key": "onBehalfOfIds",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"refunds\": [\n    {\n      \"createdDateTime\": \"<string>\",\n      \"id\": \"<string>\",\n      \"memberId\": \"<string>\",\n      \"status\": \"INITIATION_PENDING\",\n      \"updatedDateTime\": \"<string>\",\n      \"bankTransactionId\": \"<string>\",\n      \"bankPaymentStatus\": \"<string>\",\n      \"statusReasonInformation\": \"<string>\",\n      \"initiation\": {\n        \"amount\": {\n          \"currency\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        \"creditor\": {\n          \"iban\": \"<string>\",\n          \"name\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"ultimateCreditorName\": \"<string>\",\n          \"address\": {\n            \"addressLine\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"streetName\": \"<string>\",\n            \"buildingNumber\": \"<string>\",\n            \"postCode\": \"<string>\",\n            \"townName\": \"<string>\",\n            \"state\": \"<string>\",\n            \"district\": \"<string>\",\n            \"country\": \"<string>\"\n          },\n          \"bankName\": \"<string>\",\n          \"accountVerificationId\": \"<string>\"\n        },\n        \"debtor\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"name\": \"<string>\",\n          \"ultimateDebtorName\": \"<string>\",\n          \"address\": {\n            \"addressLine\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"streetName\": \"<string>\",\n            \"buildingNumber\": \"<string>\",\n            \"postCode\": \"<string>\",\n            \"townName\": \"<string>\",\n            \"state\": \"<string>\",\n            \"district\": \"<string>\",\n            \"country\": \"<string>\"\n          }\n        },\n        \"localInstrument\": \"SEPA_INSTANT\",\n        \"originalPaymentId\": \"<string>\",\n        \"refId\": \"<string>\",\n        \"description\": \"<string>\",\n        \"registrationId\": \"<string>\"\n      }\n    },\n    {\n      \"createdDateTime\": \"<string>\",\n      \"id\": \"<string>\",\n      \"memberId\": \"<string>\",\n      \"status\": \"INITIATION_PENDING\",\n      \"updatedDateTime\": \"<string>\",\n      \"bankTransactionId\": \"<string>\",\n      \"bankPaymentStatus\": \"<string>\",\n      \"statusReasonInformation\": \"<string>\",\n      \"initiation\": {\n        \"amount\": {\n          \"currency\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        \"creditor\": {\n          \"iban\": \"<string>\",\n          \"name\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"ultimateCreditorName\": \"<string>\",\n          \"address\": {\n            \"addressLine\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"streetName\": \"<string>\",\n            \"buildingNumber\": \"<string>\",\n            \"postCode\": \"<string>\",\n            \"townName\": \"<string>\",\n            \"state\": \"<string>\",\n            \"district\": \"<string>\",\n            \"country\": \"<string>\"\n          },\n          \"bankName\": \"<string>\",\n          \"accountVerificationId\": \"<string>\"\n        },\n        \"debtor\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"name\": \"<string>\",\n          \"ultimateDebtorName\": \"<string>\",\n          \"address\": {\n            \"addressLine\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"streetName\": \"<string>\",\n            \"buildingNumber\": \"<string>\",\n            \"postCode\": \"<string>\",\n            \"townName\": \"<string>\",\n            \"state\": \"<string>\",\n            \"district\": \"<string>\",\n            \"country\": \"<string>\"\n          }\n        },\n        \"localInstrument\": \"SEPA\",\n        \"originalPaymentId\": \"<string>\",\n        \"refId\": \"<string>\",\n        \"description\": \"<string>\",\n        \"registrationId\": \"<string>\"\n      }\n    }\n  ],\n  \"paging\": {\n    \"limit\": \"<integer>\",\n    \"offset\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:50.000Z",
+              "updatedAt": "2026-07-28T11:04:50.000Z",
+              "uid": "35240-54012814-5279-4472-9d86-1f81456591a4"
+            },
+            {
+              "id": "74af958b-ab94-4ff3-b3ff-259d6dff1202",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/refunds?limit=<integer>&offset=<string>&startDate=<string>&endDate=<string>&ids=<string>&invertIds=<boolean>&statuses=<array>&invertStatuses=<boolean>&refIds=<string>&partial=<boolean>&onBehalfOfIds=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "refunds"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The maximum number of records to return.",
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The offset from the previous page.",
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Lower bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or after the given date will be returned.",
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Upper bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or before the given date will be returned.",
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters refunds by their ids - returns only refunds with ids listed in this parameter.",
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Invert ids query - returns only refunds with ids not listed in the ids parameter.",
+                      "key": "invertIds",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters refunds by their statuses - returns only refunds with statuses listed in this parameter.",
+                      "key": "statuses",
+                      "value": "<array>"
+                    },
+                    {
+                      "description": "Invert statuses query - returns only refunds with statuses not listed in the statuses parameter.",
+                      "key": "invertStatuses",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters refunds by their `refId` values - returns only refunds with `refIds` listed in this parameter.",
+                      "key": "refIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Returns refunds in a partial format - with only id and status fields populated.",
+                      "key": "partial",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their `onBehalfOfId` values - returns only payouts with the `onBehalfOfId` values specified in this parameter. This field is mandatory for unregulated TPPs.",
+                      "key": "onBehalfOfIds",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:50.000Z",
+              "updatedAt": "2026-07-28T11:04:50.000Z",
+              "uid": "35240-74af958b-ab94-4ff3-b3ff-259d6dff1202"
+            },
+            {
+              "id": "0dc04ed0-70cb-4ba0-89e9-a6e987f6ae56",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/refunds?limit=<integer>&offset=<string>&startDate=<string>&endDate=<string>&ids=<string>&invertIds=<boolean>&statuses=<array>&invertStatuses=<boolean>&refIds=<string>&partial=<boolean>&onBehalfOfIds=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "refunds"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The maximum number of records to return.",
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The offset from the previous page.",
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Lower bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or after the given date will be returned.",
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Upper bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or before the given date will be returned.",
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters refunds by their ids - returns only refunds with ids listed in this parameter.",
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Invert ids query - returns only refunds with ids not listed in the ids parameter.",
+                      "key": "invertIds",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters refunds by their statuses - returns only refunds with statuses listed in this parameter.",
+                      "key": "statuses",
+                      "value": "<array>"
+                    },
+                    {
+                      "description": "Invert statuses query - returns only refunds with statuses not listed in the statuses parameter.",
+                      "key": "invertStatuses",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters refunds by their `refId` values - returns only refunds with `refIds` listed in this parameter.",
+                      "key": "refIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Returns refunds in a partial format - with only id and status fields populated.",
+                      "key": "partial",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their `onBehalfOfId` values - returns only payouts with the `onBehalfOfId` values specified in this parameter. This field is mandatory for unregulated TPPs.",
+                      "key": "onBehalfOfIds",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:50.000Z",
+              "updatedAt": "2026-07-28T11:04:50.000Z",
+              "uid": "35240-0dc04ed0-70cb-4ba0-89e9-a6e987f6ae56"
+            },
+            {
+              "id": "738d9176-881c-47ed-9a48-57a47020b885",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/refunds?limit=<integer>&offset=<string>&startDate=<string>&endDate=<string>&ids=<string>&invertIds=<boolean>&statuses=<array>&invertStatuses=<boolean>&refIds=<string>&partial=<boolean>&onBehalfOfIds=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "refunds"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The maximum number of records to return.",
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The offset from the previous page.",
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Lower bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or after the given date will be returned.",
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Upper bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or before the given date will be returned.",
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters refunds by their ids - returns only refunds with ids listed in this parameter.",
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Invert ids query - returns only refunds with ids not listed in the ids parameter.",
+                      "key": "invertIds",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters refunds by their statuses - returns only refunds with statuses listed in this parameter.",
+                      "key": "statuses",
+                      "value": "<array>"
+                    },
+                    {
+                      "description": "Invert statuses query - returns only refunds with statuses not listed in the statuses parameter.",
+                      "key": "invertStatuses",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters refunds by their `refId` values - returns only refunds with `refIds` listed in this parameter.",
+                      "key": "refIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Returns refunds in a partial format - with only id and status fields populated.",
+                      "key": "partial",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their `onBehalfOfId` values - returns only payouts with the `onBehalfOfId` values specified in this parameter. This field is mandatory for unregulated TPPs.",
+                      "key": "onBehalfOfIds",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"est id eu velit\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:50.000Z",
+              "updatedAt": "2026-07-28T11:04:50.000Z",
+              "uid": "35240-738d9176-881c-47ed-9a48-57a47020b885"
+            },
+            {
+              "id": "cede56ff-00ef-4337-86e1-071cd15e8bc1",
+              "name": "The requested entity, such as a payment, was not found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/refunds?limit=<integer>&offset=<string>&startDate=<string>&endDate=<string>&ids=<string>&invertIds=<boolean>&statuses=<array>&invertStatuses=<boolean>&refIds=<string>&partial=<boolean>&onBehalfOfIds=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "refunds"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The maximum number of records to return.",
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The offset from the previous page.",
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Lower bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or after the given date will be returned.",
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Upper bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or before the given date will be returned.",
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters refunds by their ids - returns only refunds with ids listed in this parameter.",
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Invert ids query - returns only refunds with ids not listed in the ids parameter.",
+                      "key": "invertIds",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters refunds by their statuses - returns only refunds with statuses listed in this parameter.",
+                      "key": "statuses",
+                      "value": "<array>"
+                    },
+                    {
+                      "description": "Invert statuses query - returns only refunds with statuses not listed in the statuses parameter.",
+                      "key": "invertStatuses",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters refunds by their `refId` values - returns only refunds with `refIds` listed in this parameter.",
+                      "key": "refIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Returns refunds in a partial format - with only id and status fields populated.",
+                      "key": "partial",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their `onBehalfOfId` values - returns only payouts with the `onBehalfOfId` values specified in this parameter. This field is mandatory for unregulated TPPs.",
+                      "key": "onBehalfOfIds",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"proident non veniam\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"enim aliquip in\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:50.000Z",
+              "updatedAt": "2026-07-28T11:04:50.000Z",
+              "uid": "35240-cede56ff-00ef-4337-86e1-071cd15e8bc1"
+            },
+            {
+              "id": "606f3762-7f91-4fdf-99f8-2c4e9cf873d6",
+              "name": "Too many requests",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/refunds?limit=<integer>&offset=<string>&startDate=<string>&endDate=<string>&ids=<string>&invertIds=<boolean>&statuses=<array>&invertStatuses=<boolean>&refIds=<string>&partial=<boolean>&onBehalfOfIds=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "refunds"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The maximum number of records to return.",
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The offset from the previous page.",
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Lower bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or after the given date will be returned.",
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Upper bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or before the given date will be returned.",
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters refunds by their ids - returns only refunds with ids listed in this parameter.",
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Invert ids query - returns only refunds with ids not listed in the ids parameter.",
+                      "key": "invertIds",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters refunds by their statuses - returns only refunds with statuses listed in this parameter.",
+                      "key": "statuses",
+                      "value": "<array>"
+                    },
+                    {
+                      "description": "Invert statuses query - returns only refunds with statuses not listed in the statuses parameter.",
+                      "key": "invertStatuses",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters refunds by their `refId` values - returns only refunds with `refIds` listed in this parameter.",
+                      "key": "refIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Returns refunds in a partial format - with only id and status fields populated.",
+                      "key": "partial",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their `onBehalfOfId` values - returns only payouts with the `onBehalfOfId` values specified in this parameter. This field is mandatory for unregulated TPPs.",
+                      "key": "onBehalfOfIds",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"magna tempor sint reprehenderit\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"dolor officia\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:50.000Z",
+              "updatedAt": "2026-07-28T11:04:50.000Z",
+              "uid": "35240-606f3762-7f91-4fdf-99f8-2c4e9cf873d6"
+            },
+            {
+              "id": "8412c2a3-f6f1-4f7f-8ce8-8fb201454c1e",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/refunds?limit=<integer>&offset=<string>&startDate=<string>&endDate=<string>&ids=<string>&invertIds=<boolean>&statuses=<array>&invertStatuses=<boolean>&refIds=<string>&partial=<boolean>&onBehalfOfIds=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "refunds"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The maximum number of records to return.",
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The offset from the previous page.",
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Lower bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or after the given date will be returned.",
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Upper bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or before the given date will be returned.",
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters refunds by their ids - returns only refunds with ids listed in this parameter.",
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Invert ids query - returns only refunds with ids not listed in the ids parameter.",
+                      "key": "invertIds",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters refunds by their statuses - returns only refunds with statuses listed in this parameter.",
+                      "key": "statuses",
+                      "value": "<array>"
+                    },
+                    {
+                      "description": "Invert statuses query - returns only refunds with statuses not listed in the statuses parameter.",
+                      "key": "invertStatuses",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters refunds by their `refId` values - returns only refunds with `refIds` listed in this parameter.",
+                      "key": "refIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Returns refunds in a partial format - with only id and status fields populated.",
+                      "key": "partial",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their `onBehalfOfId` values - returns only payouts with the `onBehalfOfId` values specified in this parameter. This field is mandatory for unregulated TPPs.",
+                      "key": "onBehalfOfIds",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:50.000Z",
+              "updatedAt": "2026-07-28T11:04:50.000Z",
+              "uid": "35240-8412c2a3-f6f1-4f7f-8ce8-8fb201454c1e"
+            },
+            {
+              "id": "9c5fa1ad-5295-4b68-8c8b-6d7368a79105",
+              "name": "The operation was not implemented",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/refunds?limit=<integer>&offset=<string>&startDate=<string>&endDate=<string>&ids=<string>&invertIds=<boolean>&statuses=<array>&invertStatuses=<boolean>&refIds=<string>&partial=<boolean>&onBehalfOfIds=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "refunds"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The maximum number of records to return.",
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The offset from the previous page.",
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Lower bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or after the given date will be returned.",
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Upper bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or before the given date will be returned.",
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters refunds by their ids - returns only refunds with ids listed in this parameter.",
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Invert ids query - returns only refunds with ids not listed in the ids parameter.",
+                      "key": "invertIds",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters refunds by their statuses - returns only refunds with statuses listed in this parameter.",
+                      "key": "statuses",
+                      "value": "<array>"
+                    },
+                    {
+                      "description": "Invert statuses query - returns only refunds with statuses not listed in the statuses parameter.",
+                      "key": "invertStatuses",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters refunds by their `refId` values - returns only refunds with `refIds` listed in this parameter.",
+                      "key": "refIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Returns refunds in a partial format - with only id and status fields populated.",
+                      "key": "partial",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their `onBehalfOfId` values - returns only payouts with the `onBehalfOfId` values specified in this parameter. This field is mandatory for unregulated TPPs.",
+                      "key": "onBehalfOfIds",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"dolor id ut sint commodo\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"exercitation pariatur sit nostrud irure\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:50.000Z",
+              "updatedAt": "2026-07-28T11:04:50.000Z",
+              "uid": "35240-9c5fa1ad-5295-4b68-8c8b-6d7368a79105"
+            },
+            {
+              "id": "c765d080-43d5-45bf-8439-3aaf1b3e1812",
+              "name": "Service is unavailable",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/refunds?limit=<integer>&offset=<string>&startDate=<string>&endDate=<string>&ids=<string>&invertIds=<boolean>&statuses=<array>&invertStatuses=<boolean>&refIds=<string>&partial=<boolean>&onBehalfOfIds=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "refunds"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The maximum number of records to return.",
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The offset from the previous page.",
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Lower bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or after the given date will be returned.",
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Upper bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or before the given date will be returned.",
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters refunds by their ids - returns only refunds with ids listed in this parameter.",
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Invert ids query - returns only refunds with ids not listed in the ids parameter.",
+                      "key": "invertIds",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters refunds by their statuses - returns only refunds with statuses listed in this parameter.",
+                      "key": "statuses",
+                      "value": "<array>"
+                    },
+                    {
+                      "description": "Invert statuses query - returns only refunds with statuses not listed in the statuses parameter.",
+                      "key": "invertStatuses",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters refunds by their `refId` values - returns only refunds with `refIds` listed in this parameter.",
+                      "key": "refIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Returns refunds in a partial format - with only id and status fields populated.",
+                      "key": "partial",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their `onBehalfOfId` values - returns only payouts with the `onBehalfOfId` values specified in this parameter. This field is mandatory for unregulated TPPs.",
+                      "key": "onBehalfOfIds",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"culpa Duis aute ut\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"sit Excepteur commodo\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:50.000Z",
+              "updatedAt": "2026-07-28T11:04:50.000Z",
+              "uid": "35240-c765d080-43d5-45bf-8439-3aaf1b3e1812"
+            },
+            {
+              "id": "4a01356b-4b34-4555-9b43-6d5a2b41a7c2",
+              "name": "Gateway has timed out",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/refunds?limit=<integer>&offset=<string>&startDate=<string>&endDate=<string>&ids=<string>&invertIds=<boolean>&statuses=<array>&invertStatuses=<boolean>&refIds=<string>&partial=<boolean>&onBehalfOfIds=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "refunds"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The maximum number of records to return.",
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The offset from the previous page.",
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Lower bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or after the given date will be returned.",
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Upper bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or before the given date will be returned.",
+                      "key": "endDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters refunds by their ids - returns only refunds with ids listed in this parameter.",
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Invert ids query - returns only refunds with ids not listed in the ids parameter.",
+                      "key": "invertIds",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters refunds by their statuses - returns only refunds with statuses listed in this parameter.",
+                      "key": "statuses",
+                      "value": "<array>"
+                    },
+                    {
+                      "description": "Invert statuses query - returns only refunds with statuses not listed in the statuses parameter.",
+                      "key": "invertStatuses",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters refunds by their `refId` values - returns only refunds with `refIds` listed in this parameter.",
+                      "key": "refIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Returns refunds in a partial format - with only id and status fields populated.",
+                      "key": "partial",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters payouts by their `onBehalfOfId` values - returns only payouts with the `onBehalfOfId` values specified in this parameter. This field is mandatory for unregulated TPPs.",
+                      "key": "onBehalfOfIds",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"est dolore\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"tempor quis ut\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:04:50.000Z",
+              "updatedAt": "2026-07-28T11:04:50.000Z",
+              "uid": "35240-4a01356b-4b34-4555-9b43-6d5a2b41a7c2"
+            }
+          ],
+          "createdAt": "2026-07-28T11:04:50.000Z",
+          "updatedAt": "2026-07-28T11:04:50.000Z",
+          "uid": "35240-eb0991b0-7745-4201-b03d-3b516c32ff1d"
+        }
+      ],
+      "id": "0ec1b61b-e296-4215-bfe4-393fa7360e8b",
+      "createdAt": "2026-07-28T11:04:50.000Z",
+      "updatedAt": "2026-07-28T11:04:50.000Z",
+      "uid": "35240-0ec1b61b-e296-4215-bfe4-393fa7360e8b"
+    },
+    {
+      "name": "transfers",
+      "item": [
+        {
+          "name": "{id}",
+          "item": [
+            {
+              "name": "refunds",
+              "item": [
+                {
+                  "name": "Get all refunds by transfer",
+                  "id": "16fbbeaa-fda4-46f0-ae88-f248f4de0407",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transfers/:id/refunds?limit=<integer>&offset=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transfers",
+                        ":id",
+                        "refunds"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) The maximum number of records to return.",
+                          "key": "limit",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "The offset from the previous page.",
+                          "key": "offset",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "c566e647-163d-4995-886a-c4c0ff1f6aef",
+                          "key": "id",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "The `GET /transfers/{id}/refunds` endpoint retrieves all refunds associated with a given transfer."
+                  },
+                  "response": [
+                    {
+                      "id": "f4bc749e-4187-48f7-8a6b-1efecc6e4959",
+                      "name": "Successful response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/transfers/:id/refunds?limit=<integer>&offset=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "transfers",
+                            ":id",
+                            "refunds"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The maximum number of records to return.",
+                              "key": "limit",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "The offset from the previous page.",
+                              "key": "offset",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"refunds\": [\n    {\n      \"createdDateTime\": \"<string>\",\n      \"id\": \"<string>\",\n      \"memberId\": \"<string>\",\n      \"status\": \"INITIATION_PENDING\",\n      \"updatedDateTime\": \"<string>\",\n      \"bankTransactionId\": \"<string>\",\n      \"bankPaymentStatus\": \"<string>\",\n      \"statusReasonInformation\": \"<string>\",\n      \"initiation\": {\n        \"amount\": {\n          \"currency\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        \"creditor\": {\n          \"iban\": \"<string>\",\n          \"name\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"ultimateCreditorName\": \"<string>\",\n          \"address\": {\n            \"addressLine\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"streetName\": \"<string>\",\n            \"buildingNumber\": \"<string>\",\n            \"postCode\": \"<string>\",\n            \"townName\": \"<string>\",\n            \"state\": \"<string>\",\n            \"district\": \"<string>\",\n            \"country\": \"<string>\"\n          },\n          \"bankName\": \"<string>\",\n          \"accountVerificationId\": \"<string>\"\n        },\n        \"debtor\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"name\": \"<string>\",\n          \"ultimateDebtorName\": \"<string>\",\n          \"address\": {\n            \"addressLine\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"streetName\": \"<string>\",\n            \"buildingNumber\": \"<string>\",\n            \"postCode\": \"<string>\",\n            \"townName\": \"<string>\",\n            \"state\": \"<string>\",\n            \"district\": \"<string>\",\n            \"country\": \"<string>\"\n          }\n        },\n        \"localInstrument\": \"SEPA_INSTANT\",\n        \"originalPaymentId\": \"<string>\",\n        \"refId\": \"<string>\",\n        \"description\": \"<string>\",\n        \"registrationId\": \"<string>\"\n      }\n    },\n    {\n      \"createdDateTime\": \"<string>\",\n      \"id\": \"<string>\",\n      \"memberId\": \"<string>\",\n      \"status\": \"INITIATION_PENDING\",\n      \"updatedDateTime\": \"<string>\",\n      \"bankTransactionId\": \"<string>\",\n      \"bankPaymentStatus\": \"<string>\",\n      \"statusReasonInformation\": \"<string>\",\n      \"initiation\": {\n        \"amount\": {\n          \"currency\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        \"creditor\": {\n          \"iban\": \"<string>\",\n          \"name\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"ultimateCreditorName\": \"<string>\",\n          \"address\": {\n            \"addressLine\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"streetName\": \"<string>\",\n            \"buildingNumber\": \"<string>\",\n            \"postCode\": \"<string>\",\n            \"townName\": \"<string>\",\n            \"state\": \"<string>\",\n            \"district\": \"<string>\",\n            \"country\": \"<string>\"\n          },\n          \"bankName\": \"<string>\",\n          \"accountVerificationId\": \"<string>\"\n        },\n        \"debtor\": {\n          \"iban\": \"<string>\",\n          \"bic\": \"<string>\",\n          \"name\": \"<string>\",\n          \"ultimateDebtorName\": \"<string>\",\n          \"address\": {\n            \"addressLine\": [\n              \"<string>\",\n              \"<string>\"\n            ],\n            \"streetName\": \"<string>\",\n            \"buildingNumber\": \"<string>\",\n            \"postCode\": \"<string>\",\n            \"townName\": \"<string>\",\n            \"state\": \"<string>\",\n            \"district\": \"<string>\",\n            \"country\": \"<string>\"\n          }\n        },\n        \"localInstrument\": \"SEPA\",\n        \"originalPaymentId\": \"<string>\",\n        \"refId\": \"<string>\",\n        \"description\": \"<string>\",\n        \"registrationId\": \"<string>\"\n      }\n    }\n  ],\n  \"paging\": {\n    \"limit\": \"<integer>\",\n    \"offset\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:50.000Z",
+                      "updatedAt": "2026-07-28T11:04:50.000Z",
+                      "uid": "35240-f4bc749e-4187-48f7-8a6b-1efecc6e4959"
+                    },
+                    {
+                      "id": "838dfecb-6f92-46c8-9740-b93e7ebfe58c",
+                      "name": "The client specified an invalid argument",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/transfers/:id/refunds?limit=<integer>&offset=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "transfers",
+                            ":id",
+                            "refunds"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The maximum number of records to return.",
+                              "key": "limit",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "The offset from the previous page.",
+                              "key": "offset",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:50.000Z",
+                      "updatedAt": "2026-07-28T11:04:50.000Z",
+                      "uid": "35240-838dfecb-6f92-46c8-9740-b93e7ebfe58c"
+                    },
+                    {
+                      "id": "644d555d-9ea3-43ff-bf88-76863df9114a",
+                      "name": "The authorization information is missing or invalid",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/transfers/:id/refunds?limit=<integer>&offset=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "transfers",
+                            ":id",
+                            "refunds"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The maximum number of records to return.",
+                              "key": "limit",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "The offset from the previous page.",
+                              "key": "offset",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:50.000Z",
+                      "updatedAt": "2026-07-28T11:04:50.000Z",
+                      "uid": "35240-644d555d-9ea3-43ff-bf88-76863df9114a"
+                    },
+                    {
+                      "id": "00006f78-9d22-400f-9cb4-99793ac1534b",
+                      "name": "Permission to access this endpoint is denied",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/transfers/:id/refunds?limit=<integer>&offset=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "transfers",
+                            ":id",
+                            "refunds"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The maximum number of records to return.",
+                              "key": "limit",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "The offset from the previous page.",
+                              "key": "offset",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"est id eu velit\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:50.000Z",
+                      "updatedAt": "2026-07-28T11:04:50.000Z",
+                      "uid": "35240-00006f78-9d22-400f-9cb4-99793ac1534b"
+                    },
+                    {
+                      "id": "0903cd49-6202-4ecb-ba51-d97119d6e6f3",
+                      "name": "The requested entity, such as a payment, was not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/transfers/:id/refunds?limit=<integer>&offset=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "transfers",
+                            ":id",
+                            "refunds"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The maximum number of records to return.",
+                              "key": "limit",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "The offset from the previous page.",
+                              "key": "offset",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"proident non veniam\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"enim aliquip in\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:50.000Z",
+                      "updatedAt": "2026-07-28T11:04:50.000Z",
+                      "uid": "35240-0903cd49-6202-4ecb-ba51-d97119d6e6f3"
+                    },
+                    {
+                      "id": "3feffbde-8792-40bf-9595-ba356aa9f523",
+                      "name": "Too many requests",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/transfers/:id/refunds?limit=<integer>&offset=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "transfers",
+                            ":id",
+                            "refunds"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The maximum number of records to return.",
+                              "key": "limit",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "The offset from the previous page.",
+                              "key": "offset",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"magna tempor sint reprehenderit\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"dolor officia\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:50.000Z",
+                      "updatedAt": "2026-07-28T11:04:50.000Z",
+                      "uid": "35240-3feffbde-8792-40bf-9595-ba356aa9f523"
+                    },
+                    {
+                      "id": "b3165791-0ed4-44e8-bc81-301bc61a2f3d",
+                      "name": "An unexpected or internal server error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/transfers/:id/refunds?limit=<integer>&offset=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "transfers",
+                            ":id",
+                            "refunds"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The maximum number of records to return.",
+                              "key": "limit",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "The offset from the previous page.",
+                              "key": "offset",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:50.000Z",
+                      "updatedAt": "2026-07-28T11:04:50.000Z",
+                      "uid": "35240-b3165791-0ed4-44e8-bc81-301bc61a2f3d"
+                    },
+                    {
+                      "id": "28023086-d1c5-4ca7-ad76-a2d0d5026914",
+                      "name": "The operation was not implemented",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/transfers/:id/refunds?limit=<integer>&offset=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "transfers",
+                            ":id",
+                            "refunds"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The maximum number of records to return.",
+                              "key": "limit",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "The offset from the previous page.",
+                              "key": "offset",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Implemented",
+                      "code": 501,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"dolor id ut sint commodo\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"exercitation pariatur sit nostrud irure\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:50.000Z",
+                      "updatedAt": "2026-07-28T11:04:50.000Z",
+                      "uid": "35240-28023086-d1c5-4ca7-ad76-a2d0d5026914"
+                    },
+                    {
+                      "id": "11610a9e-b6fa-4479-b5c1-ceeb1a22ec96",
+                      "name": "Service is unavailable",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/transfers/:id/refunds?limit=<integer>&offset=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "transfers",
+                            ":id",
+                            "refunds"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The maximum number of records to return.",
+                              "key": "limit",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "The offset from the previous page.",
+                              "key": "offset",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Service Unavailable",
+                      "code": 503,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"culpa Duis aute ut\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"sit Excepteur commodo\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:50.000Z",
+                      "updatedAt": "2026-07-28T11:04:50.000Z",
+                      "uid": "35240-11610a9e-b6fa-4479-b5c1-ceeb1a22ec96"
+                    },
+                    {
+                      "id": "e623d795-9dff-4667-ae78-575868cb6c19",
+                      "name": "Gateway has timed out",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/transfers/:id/refunds?limit=<integer>&offset=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "transfers",
+                            ":id",
+                            "refunds"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The maximum number of records to return.",
+                              "key": "limit",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "The offset from the previous page.",
+                              "key": "offset",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Gateway Timeout",
+                      "code": 504,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": {\n    \"errorCode\": \"est dolore\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"tempor quis ut\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T11:04:50.000Z",
+                      "updatedAt": "2026-07-28T11:04:50.000Z",
+                      "uid": "35240-e623d795-9dff-4667-ae78-575868cb6c19"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T11:04:50.000Z",
+                  "updatedAt": "2026-07-28T11:04:50.000Z",
+                  "uid": "35240-16fbbeaa-fda4-46f0-ae88-f248f4de0407"
+                }
+              ],
+              "id": "a1a1cf29-100a-47a6-addc-b67bee91ed30",
+              "createdAt": "2026-07-28T11:04:50.000Z",
+              "updatedAt": "2026-07-28T11:04:50.000Z",
+              "uid": "35240-a1a1cf29-100a-47a6-addc-b67bee91ed30"
+            }
+          ],
+          "id": "b0e696fd-9d12-4477-9ce3-800343edd5e4",
+          "createdAt": "2026-07-28T11:04:50.000Z",
+          "updatedAt": "2026-07-28T11:04:50.000Z",
+          "uid": "35240-b0e696fd-9d12-4477-9ce3-800343edd5e4"
+        }
+      ],
+      "id": "d344c966-e088-41d2-b411-1090f7591970",
+      "createdAt": "2026-07-28T11:04:50.000Z",
+      "updatedAt": "2026-07-28T11:04:50.000Z",
+      "uid": "35240-d344c966-e088-41d2-b411-1090f7591970"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.token.io"
+    }
+  ]
+}

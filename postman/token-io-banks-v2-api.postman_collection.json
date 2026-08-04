@@ -1,0 +1,1772 @@
+{
+  "info": {
+    "_postman_id": "fcfcf265-5a4e-45d1-a759-2f393741bdd5",
+    "name": "Token.io's Open Banking API for TPPs Account on File Banks v2 API",
+    "description": "<b>Token.io's Open Banking API</b><br/><br/>Token.io Support: <a href=\"https://support.token.io\" target=\"_blank\">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user's account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href=\"https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm\" target=\"_blank\">developer documentation</a>.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T11:04:32.000Z",
+    "updatedAt": "2026-07-28T11:04:33.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-fcfcf265-5a4e-45d1-a759-2f393741bdd5"
+  },
+  "item": [
+    {
+      "name": "v2",
+      "item": [
+        {
+          "name": "banks",
+          "item": [
+            {
+              "name": "Get banks v2",
+              "id": "b8115334-b9e5-45a8-8cf9-95c1b020eb17",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/v2/banks?page=<integer>&perPage=200&sort=NAME&memberId=<string>&tppId=<string>&ids=<string>&ids=<string>&search=<string>&bankGroup=<string>&bankSubGroup=<string>&bankCode=<string>&openBankingStandards=UK_Open_Banking_Standard&openBankingStandards=UK_Open_Banking_Standard&countries=<string>&countries=<string>&bics=<string>&bics=<string>&supportedLocalInstruments=<string>&supportedLocalInstruments=<string>&supportsAccountList=<boolean>&supportsAccountDetails=<boolean>&supportsAccountBalance=<boolean>&supportsTransactionList=<boolean>&supportsTransactionDetails=<boolean>&supportsStandingOrderList=<boolean>&supportsTransactionsDateFilter=<boolean>&requiresOneStepPayment=<boolean>&supportsSinglePayment=<boolean>&supportsScheduledPayment=<boolean>&supportsStandingOrder=<boolean>&supportsReturnRefundAccount=<boolean>&supportsReturnRefundAccountHolderName=<boolean>&supportsFundsConfirmation=<boolean>&supportsVariableRecurringPayment=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "banks"
+                  ],
+                  "query": [
+                    {
+                      "description": "The index of the page currently being retrieved.",
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "The number of records per page.",
+                      "key": "perPage",
+                      "value": "200"
+                    },
+                    {
+                      "description": "The key to sort the result. This can be `NAME` (Bank's name), `STANDARD` (OpenBankingStandard), `RANK`, or `COUNTRY`.",
+                      "key": "sort",
+                      "value": "NAME"
+                    },
+                    {
+                      "description": "The Token.io-assigned member id of the TPP.",
+                      "key": "memberId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters for banks for which the TPP represented by this `tppId` has access.",
+                      "key": "tppId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters for banks with a `bankId` (case-insensitive) matching any of the ids listed, up to a maximum of 1000. Only exact (full string) matches are returned.",
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters for banks with a `bankId` (case-insensitive) matching any of the ids listed, up to a maximum of 1000. Only exact (full string) matches are returned.",
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters for banks with a name or identifiers containing this search string.",
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters for banks that are members of the bank group specified.",
+                      "key": "bankGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters for banks that are part of the bank sub-group specified.",
+                      "key": "bankSubGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters for banks with a BIC (or BLZ, if German) that matches this `bankCode`. The BIC must have a string length of 8 or 11. The BLZ must have a string length of 8.",
+                      "key": "bankCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters for banks that are accessed through any of the listed standards.",
+                      "key": "openBankingStandards",
+                      "value": "UK_Open_Banking_Standard"
+                    },
+                    {
+                      "description": "Filters for banks that are accessed through any of the listed standards.",
+                      "key": "openBankingStandards",
+                      "value": "UK_Open_Banking_Standard"
+                    },
+                    {
+                      "description": "Filters for banks that are located in the countries specified by this list of two-letter country code in upper case (ISO 3166-1 alpha-2).",
+                      "key": "countries",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters for banks that are located in the countries specified by this list of two-letter country code in upper case (ISO 3166-1 alpha-2).",
+                      "key": "countries",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters for banks whose BIC matches any of the listed BICs (case-insensitive), up to a maximum of 1000.",
+                      "key": "bics",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters for banks whose BIC matches any of the listed BICs (case-insensitive), up to a maximum of 1000.",
+                      "key": "bics",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters for banks that support any of the listed payment networks.",
+                      "key": "supportedLocalInstruments",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters for banks that support any of the listed payment networks.",
+                      "key": "supportedLocalInstruments",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filters for banks that support fetching accounts.",
+                      "key": "supportsAccountList",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters for banks that support fetching account details.",
+                      "key": "supportsAccountDetails",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters for banks that support fetching account balances.",
+                      "key": "supportsAccountBalance",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters for banks that support fetching transactions.",
+                      "key": "supportsTransactionList",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters for banks that support fetching transaction details.",
+                      "key": "supportsTransactionDetails",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters for banks that support the fetching standing orders.",
+                      "key": "supportsStandingOrderList",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters for banks that support feting transactions using a date filter.",
+                      "key": "supportsTransactionsDateFilter",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters for banks that only support immediate redemption of transfers.",
+                      "key": "requiresOneStepPayment",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters for banks that support single immediate payments.",
+                      "key": "supportsSinglePayment",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters for banks that support future dated scheduled payments.",
+                      "key": "supportsScheduledPayment",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters for banks that support recurring payments/standing orders.",
+                      "key": "supportsStandingOrder",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters for the banks that support request of refund account.",
+                      "key": "supportsReturnRefundAccount",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters for banks that support returning the refund account holder name.",
+                      "key": "supportsReturnRefundAccountHolderName",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters for the banks that support confirmation of available funds.",
+                      "key": "supportsFundsConfirmation",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filters for banks that support variable recurring payments.",
+                      "key": "supportsVariableRecurringPayment",
+                      "value": "<boolean>"
+                    }
+                  ]
+                },
+                "description": "The `GET /v2/banks` endpoint retrieves a list of connected banks matching the parameters specified."
+              },
+              "response": [
+                {
+                  "id": "c1ab168c-3ef3-4281-8333-fdbf522d4f02",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/banks?page=<integer>&perPage=200&sort=NAME&memberId=<string>&tppId=<string>&ids=<string>&search=<string>&bankGroup=<string>&bankSubGroup=<string>&bankCode=<string>&openBankingStandards=UK_Open_Banking_Standard&countries=<string>&bics=<string>&supportedLocalInstruments=<string>&supportsAccountList=<boolean>&supportsAccountDetails=<boolean>&supportsAccountBalance=<boolean>&supportsTransactionList=<boolean>&supportsTransactionDetails=<boolean>&supportsStandingOrderList=<boolean>&supportsTransactionsDateFilter=<boolean>&requiresOneStepPayment=<boolean>&supportsSinglePayment=<boolean>&supportsScheduledPayment=<boolean>&supportsStandingOrder=<boolean>&supportsReturnRefundAccount=<boolean>&supportsReturnRefundAccountHolderName=<boolean>&supportsFundsConfirmation=<boolean>&supportsVariableRecurringPayment=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "banks"
+                      ],
+                      "query": [
+                        {
+                          "description": "The index of the page currently being retrieved.",
+                          "key": "page",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "The number of records per page.",
+                          "key": "perPage",
+                          "value": "200"
+                        },
+                        {
+                          "description": "The key to sort the result. This can be `NAME` (Bank's name), `STANDARD` (OpenBankingStandard), `RANK`, or `COUNTRY`.",
+                          "key": "sort",
+                          "value": "NAME"
+                        },
+                        {
+                          "description": "The Token.io-assigned member id of the TPP.",
+                          "key": "memberId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks for which the TPP represented by this `tppId` has access.",
+                          "key": "tppId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks with a `bankId` (case-insensitive) matching any of the ids listed, up to a maximum of 1000. Only exact (full string) matches are returned.",
+                          "key": "ids",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks with a name or identifiers containing this search string.",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that are members of the bank group specified.",
+                          "key": "bankGroup",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that are part of the bank sub-group specified.",
+                          "key": "bankSubGroup",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks with a BIC (or BLZ, if German) that matches this `bankCode`. The BIC must have a string length of 8 or 11. The BLZ must have a string length of 8.",
+                          "key": "bankCode",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that are accessed through any of the listed standards.",
+                          "key": "openBankingStandards",
+                          "value": "UK_Open_Banking_Standard"
+                        },
+                        {
+                          "description": "Filters for banks that are located in the countries specified by this list of two-letter country code in upper case (ISO 3166-1 alpha-2).",
+                          "key": "countries",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks whose BIC matches any of the listed BICs (case-insensitive), up to a maximum of 1000.",
+                          "key": "bics",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that support any of the listed payment networks.",
+                          "key": "supportedLocalInstruments",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching accounts.",
+                          "key": "supportsAccountList",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching account details.",
+                          "key": "supportsAccountDetails",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching account balances.",
+                          "key": "supportsAccountBalance",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching transactions.",
+                          "key": "supportsTransactionList",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching transaction details.",
+                          "key": "supportsTransactionDetails",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support the fetching standing orders.",
+                          "key": "supportsStandingOrderList",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support feting transactions using a date filter.",
+                          "key": "supportsTransactionsDateFilter",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that only support immediate redemption of transfers.",
+                          "key": "requiresOneStepPayment",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support single immediate payments.",
+                          "key": "supportsSinglePayment",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support future dated scheduled payments.",
+                          "key": "supportsScheduledPayment",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support recurring payments/standing orders.",
+                          "key": "supportsStandingOrder",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for the banks that support request of refund account.",
+                          "key": "supportsReturnRefundAccount",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support returning the refund account holder name.",
+                          "key": "supportsReturnRefundAccountHolderName",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for the banks that support confirmation of available funds.",
+                          "key": "supportsFundsConfirmation",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support variable recurring payments.",
+                          "key": "supportsVariableRecurringPayment",
+                          "value": "<boolean>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"banks\": [\n    {\n      \"id\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"name\": \"<string>\",\n      \"logoUri\": \"<string>\",\n      \"bankGroup\": \"<string>\",\n      \"bankSubGroup\": \"<string>\",\n      \"countries\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"openBankingStandard\": \"Invalid_Standard\",\n      \"initialEmbeddedAuthFields\": {\n        \"displayName\": \"<string>\",\n        \"id\": \"<string>\",\n        \"type\": \"CHOICE_FIELD\",\n        \"additionalInformation\": \"<string>\",\n        \"options\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"mandatoryFields\": [\n        {\n          \"products\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"fieldPaths\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"paymentTypes\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"localInstruments\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"products\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"fieldPaths\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"paymentTypes\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"localInstruments\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"maintenanceWindow\": [\n        {\n          \"startTime\": \"<string>\",\n          \"endTime\": \"<string>\",\n          \"type\": \"INVALID\",\n          \"productType\": \"INVALID\"\n        },\n        {\n          \"startTime\": \"<string>\",\n          \"endTime\": \"<string>\",\n          \"type\": \"INVALID\",\n          \"productType\": \"INVALID\"\n        }\n      ],\n      \"scaMethods\": [\n        \"INVALID_SCA_METHOD\",\n        \"INVALID_SCA_METHOD\"\n      ],\n      \"fieldsFormatInformation\": [\n        {\n          \"constraint\": \"<string>\",\n          \"v2Name\": \"<string>\",\n          \"v2Path\": \"<string>\"\n        },\n        {\n          \"constraint\": \"<string>\",\n          \"v2Name\": \"<string>\",\n          \"v2Path\": \"<string>\"\n        }\n      ],\n      \"supportedLocalInstruments\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"operationalTime\": \"<string>\",\n      \"transactionHistoryLimit\": -1,\n      \"supportsAccountList\": \"<boolean>\",\n      \"supportsAccountDetails\": \"<boolean>\",\n      \"supportsAccountBalance\": \"<boolean>\",\n      \"supportsTransactionList\": \"<boolean>\",\n      \"supportsTransactionDetails\": \"<boolean>\",\n      \"supportsStandingOrderList\": \"<boolean>\",\n      \"supportsTransactionsDateFilter\": \"<boolean>\",\n      \"requiresOneStepPayment\": \"<boolean>\",\n      \"supportsSinglePayment\": \"<boolean>\",\n      \"supportsScheduledPayment\": \"<boolean>\",\n      \"supportsSendPayment\": false,\n      \"supportsReceivePayment\": false,\n      \"supportsStandingOrder\": \"<boolean>\",\n      \"supportsReturnRefundAccount\": \"<boolean>\",\n      \"supportsFundsConfirmation\": \"<boolean>\",\n      \"supportsVariableRecurringPayment\": \"<boolean>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"name\": \"<string>\",\n      \"logoUri\": \"<string>\",\n      \"bankGroup\": \"<string>\",\n      \"bankSubGroup\": \"<string>\",\n      \"countries\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"openBankingStandard\": \"Invalid_Standard\",\n      \"initialEmbeddedAuthFields\": {\n        \"displayName\": \"<string>\",\n        \"id\": \"<string>\",\n        \"type\": \"PASSWORD\",\n        \"additionalInformation\": \"<string>\",\n        \"options\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"mandatoryFields\": [\n        {\n          \"products\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"fieldPaths\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"paymentTypes\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"localInstruments\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"products\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"fieldPaths\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"paymentTypes\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"localInstruments\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"maintenanceWindow\": [\n        {\n          \"startTime\": \"<string>\",\n          \"endTime\": \"<string>\",\n          \"type\": \"INVALID\",\n          \"productType\": \"INVALID\"\n        },\n        {\n          \"startTime\": \"<string>\",\n          \"endTime\": \"<string>\",\n          \"type\": \"INVALID\",\n          \"productType\": \"INVALID\"\n        }\n      ],\n      \"scaMethods\": [\n        \"INVALID_SCA_METHOD\",\n        \"INVALID_SCA_METHOD\"\n      ],\n      \"fieldsFormatInformation\": [\n        {\n          \"constraint\": \"<string>\",\n          \"v2Name\": \"<string>\",\n          \"v2Path\": \"<string>\"\n        },\n        {\n          \"constraint\": \"<string>\",\n          \"v2Name\": \"<string>\",\n          \"v2Path\": \"<string>\"\n        }\n      ],\n      \"supportedLocalInstruments\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"operationalTime\": \"<string>\",\n      \"transactionHistoryLimit\": -1,\n      \"supportsAccountList\": \"<boolean>\",\n      \"supportsAccountDetails\": \"<boolean>\",\n      \"supportsAccountBalance\": \"<boolean>\",\n      \"supportsTransactionList\": \"<boolean>\",\n      \"supportsTransactionDetails\": \"<boolean>\",\n      \"supportsStandingOrderList\": \"<boolean>\",\n      \"supportsTransactionsDateFilter\": \"<boolean>\",\n      \"requiresOneStepPayment\": \"<boolean>\",\n      \"supportsSinglePayment\": \"<boolean>\",\n      \"supportsScheduledPayment\": \"<boolean>\",\n      \"supportsSendPayment\": false,\n      \"supportsReceivePayment\": false,\n      \"supportsStandingOrder\": \"<boolean>\",\n      \"supportsReturnRefundAccount\": \"<boolean>\",\n      \"supportsFundsConfirmation\": \"<boolean>\",\n      \"supportsVariableRecurringPayment\": \"<boolean>\"\n    }\n  ],\n  \"paging\": {\n    \"page\": \"<integer>\",\n    \"pageCount\": \"<integer>\",\n    \"perPage\": \"<integer>\",\n    \"totalCount\": \"<integer>\"\n  },\n  \"rank\": \"<integer>\",\n  \"bankSubGroup\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T11:04:33.000Z",
+                  "updatedAt": "2026-07-28T11:04:33.000Z",
+                  "uid": "35240-c1ab168c-3ef3-4281-8333-fdbf522d4f02"
+                },
+                {
+                  "id": "fa307853-7252-40ff-bcf4-8e09d3741efb",
+                  "name": "The client specified an invalid argument",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/banks?page=<integer>&perPage=200&sort=NAME&memberId=<string>&tppId=<string>&ids=<string>&search=<string>&bankGroup=<string>&bankSubGroup=<string>&bankCode=<string>&openBankingStandards=UK_Open_Banking_Standard&countries=<string>&bics=<string>&supportedLocalInstruments=<string>&supportsAccountList=<boolean>&supportsAccountDetails=<boolean>&supportsAccountBalance=<boolean>&supportsTransactionList=<boolean>&supportsTransactionDetails=<boolean>&supportsStandingOrderList=<boolean>&supportsTransactionsDateFilter=<boolean>&requiresOneStepPayment=<boolean>&supportsSinglePayment=<boolean>&supportsScheduledPayment=<boolean>&supportsStandingOrder=<boolean>&supportsReturnRefundAccount=<boolean>&supportsReturnRefundAccountHolderName=<boolean>&supportsFundsConfirmation=<boolean>&supportsVariableRecurringPayment=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "banks"
+                      ],
+                      "query": [
+                        {
+                          "description": "The index of the page currently being retrieved.",
+                          "key": "page",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "The number of records per page.",
+                          "key": "perPage",
+                          "value": "200"
+                        },
+                        {
+                          "description": "The key to sort the result. This can be `NAME` (Bank's name), `STANDARD` (OpenBankingStandard), `RANK`, or `COUNTRY`.",
+                          "key": "sort",
+                          "value": "NAME"
+                        },
+                        {
+                          "description": "The Token.io-assigned member id of the TPP.",
+                          "key": "memberId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks for which the TPP represented by this `tppId` has access.",
+                          "key": "tppId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks with a `bankId` (case-insensitive) matching any of the ids listed, up to a maximum of 1000. Only exact (full string) matches are returned.",
+                          "key": "ids",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks with a name or identifiers containing this search string.",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that are members of the bank group specified.",
+                          "key": "bankGroup",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that are part of the bank sub-group specified.",
+                          "key": "bankSubGroup",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks with a BIC (or BLZ, if German) that matches this `bankCode`. The BIC must have a string length of 8 or 11. The BLZ must have a string length of 8.",
+                          "key": "bankCode",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that are accessed through any of the listed standards.",
+                          "key": "openBankingStandards",
+                          "value": "UK_Open_Banking_Standard"
+                        },
+                        {
+                          "description": "Filters for banks that are located in the countries specified by this list of two-letter country code in upper case (ISO 3166-1 alpha-2).",
+                          "key": "countries",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks whose BIC matches any of the listed BICs (case-insensitive), up to a maximum of 1000.",
+                          "key": "bics",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that support any of the listed payment networks.",
+                          "key": "supportedLocalInstruments",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching accounts.",
+                          "key": "supportsAccountList",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching account details.",
+                          "key": "supportsAccountDetails",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching account balances.",
+                          "key": "supportsAccountBalance",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching transactions.",
+                          "key": "supportsTransactionList",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching transaction details.",
+                          "key": "supportsTransactionDetails",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support the fetching standing orders.",
+                          "key": "supportsStandingOrderList",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support feting transactions using a date filter.",
+                          "key": "supportsTransactionsDateFilter",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that only support immediate redemption of transfers.",
+                          "key": "requiresOneStepPayment",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support single immediate payments.",
+                          "key": "supportsSinglePayment",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support future dated scheduled payments.",
+                          "key": "supportsScheduledPayment",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support recurring payments/standing orders.",
+                          "key": "supportsStandingOrder",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for the banks that support request of refund account.",
+                          "key": "supportsReturnRefundAccount",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support returning the refund account holder name.",
+                          "key": "supportsReturnRefundAccountHolderName",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for the banks that support confirmation of available funds.",
+                          "key": "supportsFundsConfirmation",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support variable recurring payments.",
+                          "key": "supportsVariableRecurringPayment",
+                          "value": "<boolean>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"commodo tempor sint ex cillum\",\n    \"message\": \"<string>\",\n    \"paths\": [\n      \"laborum est sed Duis id\",\n      \"proident amet dolore laboris\"\n    ],\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:33.000Z",
+                  "updatedAt": "2026-07-28T11:04:33.000Z",
+                  "uid": "35240-fa307853-7252-40ff-bcf4-8e09d3741efb"
+                },
+                {
+                  "id": "b35b441f-6b89-4d6f-bdf8-8e6de12f787e",
+                  "name": "The authorization information is missing or invalid",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/banks?page=<integer>&perPage=200&sort=NAME&memberId=<string>&tppId=<string>&ids=<string>&search=<string>&bankGroup=<string>&bankSubGroup=<string>&bankCode=<string>&openBankingStandards=UK_Open_Banking_Standard&countries=<string>&bics=<string>&supportedLocalInstruments=<string>&supportsAccountList=<boolean>&supportsAccountDetails=<boolean>&supportsAccountBalance=<boolean>&supportsTransactionList=<boolean>&supportsTransactionDetails=<boolean>&supportsStandingOrderList=<boolean>&supportsTransactionsDateFilter=<boolean>&requiresOneStepPayment=<boolean>&supportsSinglePayment=<boolean>&supportsScheduledPayment=<boolean>&supportsStandingOrder=<boolean>&supportsReturnRefundAccount=<boolean>&supportsReturnRefundAccountHolderName=<boolean>&supportsFundsConfirmation=<boolean>&supportsVariableRecurringPayment=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "banks"
+                      ],
+                      "query": [
+                        {
+                          "description": "The index of the page currently being retrieved.",
+                          "key": "page",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "The number of records per page.",
+                          "key": "perPage",
+                          "value": "200"
+                        },
+                        {
+                          "description": "The key to sort the result. This can be `NAME` (Bank's name), `STANDARD` (OpenBankingStandard), `RANK`, or `COUNTRY`.",
+                          "key": "sort",
+                          "value": "NAME"
+                        },
+                        {
+                          "description": "The Token.io-assigned member id of the TPP.",
+                          "key": "memberId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks for which the TPP represented by this `tppId` has access.",
+                          "key": "tppId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks with a `bankId` (case-insensitive) matching any of the ids listed, up to a maximum of 1000. Only exact (full string) matches are returned.",
+                          "key": "ids",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks with a name or identifiers containing this search string.",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that are members of the bank group specified.",
+                          "key": "bankGroup",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that are part of the bank sub-group specified.",
+                          "key": "bankSubGroup",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks with a BIC (or BLZ, if German) that matches this `bankCode`. The BIC must have a string length of 8 or 11. The BLZ must have a string length of 8.",
+                          "key": "bankCode",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that are accessed through any of the listed standards.",
+                          "key": "openBankingStandards",
+                          "value": "UK_Open_Banking_Standard"
+                        },
+                        {
+                          "description": "Filters for banks that are located in the countries specified by this list of two-letter country code in upper case (ISO 3166-1 alpha-2).",
+                          "key": "countries",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks whose BIC matches any of the listed BICs (case-insensitive), up to a maximum of 1000.",
+                          "key": "bics",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that support any of the listed payment networks.",
+                          "key": "supportedLocalInstruments",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching accounts.",
+                          "key": "supportsAccountList",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching account details.",
+                          "key": "supportsAccountDetails",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching account balances.",
+                          "key": "supportsAccountBalance",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching transactions.",
+                          "key": "supportsTransactionList",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching transaction details.",
+                          "key": "supportsTransactionDetails",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support the fetching standing orders.",
+                          "key": "supportsStandingOrderList",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support feting transactions using a date filter.",
+                          "key": "supportsTransactionsDateFilter",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that only support immediate redemption of transfers.",
+                          "key": "requiresOneStepPayment",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support single immediate payments.",
+                          "key": "supportsSinglePayment",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support future dated scheduled payments.",
+                          "key": "supportsScheduledPayment",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support recurring payments/standing orders.",
+                          "key": "supportsStandingOrder",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for the banks that support request of refund account.",
+                          "key": "supportsReturnRefundAccount",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support returning the refund account holder name.",
+                          "key": "supportsReturnRefundAccountHolderName",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for the banks that support confirmation of available funds.",
+                          "key": "supportsFundsConfirmation",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support variable recurring payments.",
+                          "key": "supportsVariableRecurringPayment",
+                          "value": "<boolean>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:33.000Z",
+                  "updatedAt": "2026-07-28T11:04:33.000Z",
+                  "uid": "35240-b35b441f-6b89-4d6f-bdf8-8e6de12f787e"
+                },
+                {
+                  "id": "d6d1a9b1-a836-41a6-9c0e-a11d97b3b24e",
+                  "name": "Permission to access this endpoint is denied",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/banks?page=<integer>&perPage=200&sort=NAME&memberId=<string>&tppId=<string>&ids=<string>&search=<string>&bankGroup=<string>&bankSubGroup=<string>&bankCode=<string>&openBankingStandards=UK_Open_Banking_Standard&countries=<string>&bics=<string>&supportedLocalInstruments=<string>&supportsAccountList=<boolean>&supportsAccountDetails=<boolean>&supportsAccountBalance=<boolean>&supportsTransactionList=<boolean>&supportsTransactionDetails=<boolean>&supportsStandingOrderList=<boolean>&supportsTransactionsDateFilter=<boolean>&requiresOneStepPayment=<boolean>&supportsSinglePayment=<boolean>&supportsScheduledPayment=<boolean>&supportsStandingOrder=<boolean>&supportsReturnRefundAccount=<boolean>&supportsReturnRefundAccountHolderName=<boolean>&supportsFundsConfirmation=<boolean>&supportsVariableRecurringPayment=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "banks"
+                      ],
+                      "query": [
+                        {
+                          "description": "The index of the page currently being retrieved.",
+                          "key": "page",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "The number of records per page.",
+                          "key": "perPage",
+                          "value": "200"
+                        },
+                        {
+                          "description": "The key to sort the result. This can be `NAME` (Bank's name), `STANDARD` (OpenBankingStandard), `RANK`, or `COUNTRY`.",
+                          "key": "sort",
+                          "value": "NAME"
+                        },
+                        {
+                          "description": "The Token.io-assigned member id of the TPP.",
+                          "key": "memberId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks for which the TPP represented by this `tppId` has access.",
+                          "key": "tppId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks with a `bankId` (case-insensitive) matching any of the ids listed, up to a maximum of 1000. Only exact (full string) matches are returned.",
+                          "key": "ids",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks with a name or identifiers containing this search string.",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that are members of the bank group specified.",
+                          "key": "bankGroup",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that are part of the bank sub-group specified.",
+                          "key": "bankSubGroup",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks with a BIC (or BLZ, if German) that matches this `bankCode`. The BIC must have a string length of 8 or 11. The BLZ must have a string length of 8.",
+                          "key": "bankCode",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that are accessed through any of the listed standards.",
+                          "key": "openBankingStandards",
+                          "value": "UK_Open_Banking_Standard"
+                        },
+                        {
+                          "description": "Filters for banks that are located in the countries specified by this list of two-letter country code in upper case (ISO 3166-1 alpha-2).",
+                          "key": "countries",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks whose BIC matches any of the listed BICs (case-insensitive), up to a maximum of 1000.",
+                          "key": "bics",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that support any of the listed payment networks.",
+                          "key": "supportedLocalInstruments",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching accounts.",
+                          "key": "supportsAccountList",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching account details.",
+                          "key": "supportsAccountDetails",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching account balances.",
+                          "key": "supportsAccountBalance",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching transactions.",
+                          "key": "supportsTransactionList",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching transaction details.",
+                          "key": "supportsTransactionDetails",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support the fetching standing orders.",
+                          "key": "supportsStandingOrderList",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support feting transactions using a date filter.",
+                          "key": "supportsTransactionsDateFilter",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that only support immediate redemption of transfers.",
+                          "key": "requiresOneStepPayment",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support single immediate payments.",
+                          "key": "supportsSinglePayment",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support future dated scheduled payments.",
+                          "key": "supportsScheduledPayment",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support recurring payments/standing orders.",
+                          "key": "supportsStandingOrder",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for the banks that support request of refund account.",
+                          "key": "supportsReturnRefundAccount",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support returning the refund account holder name.",
+                          "key": "supportsReturnRefundAccountHolderName",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for the banks that support confirmation of available funds.",
+                          "key": "supportsFundsConfirmation",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support variable recurring payments.",
+                          "key": "supportsVariableRecurringPayment",
+                          "value": "<boolean>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"aliqua et\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:33.000Z",
+                  "updatedAt": "2026-07-28T11:04:33.000Z",
+                  "uid": "35240-d6d1a9b1-a836-41a6-9c0e-a11d97b3b24e"
+                },
+                {
+                  "id": "7f4004bf-d554-4216-ac13-1d19fae636b4",
+                  "name": "An unexpected or internal server error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/banks?page=<integer>&perPage=200&sort=NAME&memberId=<string>&tppId=<string>&ids=<string>&search=<string>&bankGroup=<string>&bankSubGroup=<string>&bankCode=<string>&openBankingStandards=UK_Open_Banking_Standard&countries=<string>&bics=<string>&supportedLocalInstruments=<string>&supportsAccountList=<boolean>&supportsAccountDetails=<boolean>&supportsAccountBalance=<boolean>&supportsTransactionList=<boolean>&supportsTransactionDetails=<boolean>&supportsStandingOrderList=<boolean>&supportsTransactionsDateFilter=<boolean>&requiresOneStepPayment=<boolean>&supportsSinglePayment=<boolean>&supportsScheduledPayment=<boolean>&supportsStandingOrder=<boolean>&supportsReturnRefundAccount=<boolean>&supportsReturnRefundAccountHolderName=<boolean>&supportsFundsConfirmation=<boolean>&supportsVariableRecurringPayment=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "banks"
+                      ],
+                      "query": [
+                        {
+                          "description": "The index of the page currently being retrieved.",
+                          "key": "page",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "The number of records per page.",
+                          "key": "perPage",
+                          "value": "200"
+                        },
+                        {
+                          "description": "The key to sort the result. This can be `NAME` (Bank's name), `STANDARD` (OpenBankingStandard), `RANK`, or `COUNTRY`.",
+                          "key": "sort",
+                          "value": "NAME"
+                        },
+                        {
+                          "description": "The Token.io-assigned member id of the TPP.",
+                          "key": "memberId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks for which the TPP represented by this `tppId` has access.",
+                          "key": "tppId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks with a `bankId` (case-insensitive) matching any of the ids listed, up to a maximum of 1000. Only exact (full string) matches are returned.",
+                          "key": "ids",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks with a name or identifiers containing this search string.",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that are members of the bank group specified.",
+                          "key": "bankGroup",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that are part of the bank sub-group specified.",
+                          "key": "bankSubGroup",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks with a BIC (or BLZ, if German) that matches this `bankCode`. The BIC must have a string length of 8 or 11. The BLZ must have a string length of 8.",
+                          "key": "bankCode",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that are accessed through any of the listed standards.",
+                          "key": "openBankingStandards",
+                          "value": "UK_Open_Banking_Standard"
+                        },
+                        {
+                          "description": "Filters for banks that are located in the countries specified by this list of two-letter country code in upper case (ISO 3166-1 alpha-2).",
+                          "key": "countries",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks whose BIC matches any of the listed BICs (case-insensitive), up to a maximum of 1000.",
+                          "key": "bics",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that support any of the listed payment networks.",
+                          "key": "supportedLocalInstruments",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching accounts.",
+                          "key": "supportsAccountList",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching account details.",
+                          "key": "supportsAccountDetails",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching account balances.",
+                          "key": "supportsAccountBalance",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching transactions.",
+                          "key": "supportsTransactionList",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching transaction details.",
+                          "key": "supportsTransactionDetails",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support the fetching standing orders.",
+                          "key": "supportsStandingOrderList",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support feting transactions using a date filter.",
+                          "key": "supportsTransactionsDateFilter",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that only support immediate redemption of transfers.",
+                          "key": "requiresOneStepPayment",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support single immediate payments.",
+                          "key": "supportsSinglePayment",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support future dated scheduled payments.",
+                          "key": "supportsScheduledPayment",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support recurring payments/standing orders.",
+                          "key": "supportsStandingOrder",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for the banks that support request of refund account.",
+                          "key": "supportsReturnRefundAccount",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support returning the refund account holder name.",
+                          "key": "supportsReturnRefundAccountHolderName",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for the banks that support confirmation of available funds.",
+                          "key": "supportsFundsConfirmation",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support variable recurring payments.",
+                          "key": "supportsVariableRecurringPayment",
+                          "value": "<boolean>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"<string>\",\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:33.000Z",
+                  "updatedAt": "2026-07-28T11:04:33.000Z",
+                  "uid": "35240-7f4004bf-d554-4216-ac13-1d19fae636b4"
+                },
+                {
+                  "id": "00e6da03-7d02-4683-b659-1f6e631c913f",
+                  "name": "The operation was not implemented",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/banks?page=<integer>&perPage=200&sort=NAME&memberId=<string>&tppId=<string>&ids=<string>&search=<string>&bankGroup=<string>&bankSubGroup=<string>&bankCode=<string>&openBankingStandards=UK_Open_Banking_Standard&countries=<string>&bics=<string>&supportedLocalInstruments=<string>&supportsAccountList=<boolean>&supportsAccountDetails=<boolean>&supportsAccountBalance=<boolean>&supportsTransactionList=<boolean>&supportsTransactionDetails=<boolean>&supportsStandingOrderList=<boolean>&supportsTransactionsDateFilter=<boolean>&requiresOneStepPayment=<boolean>&supportsSinglePayment=<boolean>&supportsScheduledPayment=<boolean>&supportsStandingOrder=<boolean>&supportsReturnRefundAccount=<boolean>&supportsReturnRefundAccountHolderName=<boolean>&supportsFundsConfirmation=<boolean>&supportsVariableRecurringPayment=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "banks"
+                      ],
+                      "query": [
+                        {
+                          "description": "The index of the page currently being retrieved.",
+                          "key": "page",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "The number of records per page.",
+                          "key": "perPage",
+                          "value": "200"
+                        },
+                        {
+                          "description": "The key to sort the result. This can be `NAME` (Bank's name), `STANDARD` (OpenBankingStandard), `RANK`, or `COUNTRY`.",
+                          "key": "sort",
+                          "value": "NAME"
+                        },
+                        {
+                          "description": "The Token.io-assigned member id of the TPP.",
+                          "key": "memberId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks for which the TPP represented by this `tppId` has access.",
+                          "key": "tppId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks with a `bankId` (case-insensitive) matching any of the ids listed, up to a maximum of 1000. Only exact (full string) matches are returned.",
+                          "key": "ids",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks with a name or identifiers containing this search string.",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that are members of the bank group specified.",
+                          "key": "bankGroup",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that are part of the bank sub-group specified.",
+                          "key": "bankSubGroup",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks with a BIC (or BLZ, if German) that matches this `bankCode`. The BIC must have a string length of 8 or 11. The BLZ must have a string length of 8.",
+                          "key": "bankCode",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that are accessed through any of the listed standards.",
+                          "key": "openBankingStandards",
+                          "value": "UK_Open_Banking_Standard"
+                        },
+                        {
+                          "description": "Filters for banks that are located in the countries specified by this list of two-letter country code in upper case (ISO 3166-1 alpha-2).",
+                          "key": "countries",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks whose BIC matches any of the listed BICs (case-insensitive), up to a maximum of 1000.",
+                          "key": "bics",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that support any of the listed payment networks.",
+                          "key": "supportedLocalInstruments",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching accounts.",
+                          "key": "supportsAccountList",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching account details.",
+                          "key": "supportsAccountDetails",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching account balances.",
+                          "key": "supportsAccountBalance",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching transactions.",
+                          "key": "supportsTransactionList",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching transaction details.",
+                          "key": "supportsTransactionDetails",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support the fetching standing orders.",
+                          "key": "supportsStandingOrderList",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support feting transactions using a date filter.",
+                          "key": "supportsTransactionsDateFilter",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that only support immediate redemption of transfers.",
+                          "key": "requiresOneStepPayment",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support single immediate payments.",
+                          "key": "supportsSinglePayment",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support future dated scheduled payments.",
+                          "key": "supportsScheduledPayment",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support recurring payments/standing orders.",
+                          "key": "supportsStandingOrder",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for the banks that support request of refund account.",
+                          "key": "supportsReturnRefundAccount",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support returning the refund account holder name.",
+                          "key": "supportsReturnRefundAccountHolderName",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for the banks that support confirmation of available funds.",
+                          "key": "supportsFundsConfirmation",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support variable recurring payments.",
+                          "key": "supportsVariableRecurringPayment",
+                          "value": "<boolean>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Implemented",
+                  "code": 501,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"sed consectetur dolore\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"et Duis qui\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:33.000Z",
+                  "updatedAt": "2026-07-28T11:04:33.000Z",
+                  "uid": "35240-00e6da03-7d02-4683-b659-1f6e631c913f"
+                },
+                {
+                  "id": "51c9d170-5a6d-4154-ae77-e7985b3202f1",
+                  "name": "Service is unavailable",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/banks?page=<integer>&perPage=200&sort=NAME&memberId=<string>&tppId=<string>&ids=<string>&search=<string>&bankGroup=<string>&bankSubGroup=<string>&bankCode=<string>&openBankingStandards=UK_Open_Banking_Standard&countries=<string>&bics=<string>&supportedLocalInstruments=<string>&supportsAccountList=<boolean>&supportsAccountDetails=<boolean>&supportsAccountBalance=<boolean>&supportsTransactionList=<boolean>&supportsTransactionDetails=<boolean>&supportsStandingOrderList=<boolean>&supportsTransactionsDateFilter=<boolean>&requiresOneStepPayment=<boolean>&supportsSinglePayment=<boolean>&supportsScheduledPayment=<boolean>&supportsStandingOrder=<boolean>&supportsReturnRefundAccount=<boolean>&supportsReturnRefundAccountHolderName=<boolean>&supportsFundsConfirmation=<boolean>&supportsVariableRecurringPayment=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "banks"
+                      ],
+                      "query": [
+                        {
+                          "description": "The index of the page currently being retrieved.",
+                          "key": "page",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "The number of records per page.",
+                          "key": "perPage",
+                          "value": "200"
+                        },
+                        {
+                          "description": "The key to sort the result. This can be `NAME` (Bank's name), `STANDARD` (OpenBankingStandard), `RANK`, or `COUNTRY`.",
+                          "key": "sort",
+                          "value": "NAME"
+                        },
+                        {
+                          "description": "The Token.io-assigned member id of the TPP.",
+                          "key": "memberId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks for which the TPP represented by this `tppId` has access.",
+                          "key": "tppId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks with a `bankId` (case-insensitive) matching any of the ids listed, up to a maximum of 1000. Only exact (full string) matches are returned.",
+                          "key": "ids",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks with a name or identifiers containing this search string.",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that are members of the bank group specified.",
+                          "key": "bankGroup",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that are part of the bank sub-group specified.",
+                          "key": "bankSubGroup",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks with a BIC (or BLZ, if German) that matches this `bankCode`. The BIC must have a string length of 8 or 11. The BLZ must have a string length of 8.",
+                          "key": "bankCode",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that are accessed through any of the listed standards.",
+                          "key": "openBankingStandards",
+                          "value": "UK_Open_Banking_Standard"
+                        },
+                        {
+                          "description": "Filters for banks that are located in the countries specified by this list of two-letter country code in upper case (ISO 3166-1 alpha-2).",
+                          "key": "countries",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks whose BIC matches any of the listed BICs (case-insensitive), up to a maximum of 1000.",
+                          "key": "bics",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that support any of the listed payment networks.",
+                          "key": "supportedLocalInstruments",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching accounts.",
+                          "key": "supportsAccountList",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching account details.",
+                          "key": "supportsAccountDetails",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching account balances.",
+                          "key": "supportsAccountBalance",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching transactions.",
+                          "key": "supportsTransactionList",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching transaction details.",
+                          "key": "supportsTransactionDetails",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support the fetching standing orders.",
+                          "key": "supportsStandingOrderList",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support feting transactions using a date filter.",
+                          "key": "supportsTransactionsDateFilter",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that only support immediate redemption of transfers.",
+                          "key": "requiresOneStepPayment",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support single immediate payments.",
+                          "key": "supportsSinglePayment",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support future dated scheduled payments.",
+                          "key": "supportsScheduledPayment",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support recurring payments/standing orders.",
+                          "key": "supportsStandingOrder",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for the banks that support request of refund account.",
+                          "key": "supportsReturnRefundAccount",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support returning the refund account holder name.",
+                          "key": "supportsReturnRefundAccountHolderName",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for the banks that support confirmation of available funds.",
+                          "key": "supportsFundsConfirmation",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support variable recurring payments.",
+                          "key": "supportsVariableRecurringPayment",
+                          "value": "<boolean>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Service Unavailable",
+                  "code": 503,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"sed\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"quis in ut officia esse\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:33.000Z",
+                  "updatedAt": "2026-07-28T11:04:33.000Z",
+                  "uid": "35240-51c9d170-5a6d-4154-ae77-e7985b3202f1"
+                },
+                {
+                  "id": "fb096651-14c6-4a14-bb50-deeefc478444",
+                  "name": "Gateway has timed out",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/banks?page=<integer>&perPage=200&sort=NAME&memberId=<string>&tppId=<string>&ids=<string>&search=<string>&bankGroup=<string>&bankSubGroup=<string>&bankCode=<string>&openBankingStandards=UK_Open_Banking_Standard&countries=<string>&bics=<string>&supportedLocalInstruments=<string>&supportsAccountList=<boolean>&supportsAccountDetails=<boolean>&supportsAccountBalance=<boolean>&supportsTransactionList=<boolean>&supportsTransactionDetails=<boolean>&supportsStandingOrderList=<boolean>&supportsTransactionsDateFilter=<boolean>&requiresOneStepPayment=<boolean>&supportsSinglePayment=<boolean>&supportsScheduledPayment=<boolean>&supportsStandingOrder=<boolean>&supportsReturnRefundAccount=<boolean>&supportsReturnRefundAccountHolderName=<boolean>&supportsFundsConfirmation=<boolean>&supportsVariableRecurringPayment=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "banks"
+                      ],
+                      "query": [
+                        {
+                          "description": "The index of the page currently being retrieved.",
+                          "key": "page",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "The number of records per page.",
+                          "key": "perPage",
+                          "value": "200"
+                        },
+                        {
+                          "description": "The key to sort the result. This can be `NAME` (Bank's name), `STANDARD` (OpenBankingStandard), `RANK`, or `COUNTRY`.",
+                          "key": "sort",
+                          "value": "NAME"
+                        },
+                        {
+                          "description": "The Token.io-assigned member id of the TPP.",
+                          "key": "memberId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks for which the TPP represented by this `tppId` has access.",
+                          "key": "tppId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks with a `bankId` (case-insensitive) matching any of the ids listed, up to a maximum of 1000. Only exact (full string) matches are returned.",
+                          "key": "ids",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks with a name or identifiers containing this search string.",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that are members of the bank group specified.",
+                          "key": "bankGroup",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that are part of the bank sub-group specified.",
+                          "key": "bankSubGroup",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks with a BIC (or BLZ, if German) that matches this `bankCode`. The BIC must have a string length of 8 or 11. The BLZ must have a string length of 8.",
+                          "key": "bankCode",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that are accessed through any of the listed standards.",
+                          "key": "openBankingStandards",
+                          "value": "UK_Open_Banking_Standard"
+                        },
+                        {
+                          "description": "Filters for banks that are located in the countries specified by this list of two-letter country code in upper case (ISO 3166-1 alpha-2).",
+                          "key": "countries",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks whose BIC matches any of the listed BICs (case-insensitive), up to a maximum of 1000.",
+                          "key": "bics",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that support any of the listed payment networks.",
+                          "key": "supportedLocalInstruments",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching accounts.",
+                          "key": "supportsAccountList",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching account details.",
+                          "key": "supportsAccountDetails",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching account balances.",
+                          "key": "supportsAccountBalance",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching transactions.",
+                          "key": "supportsTransactionList",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support fetching transaction details.",
+                          "key": "supportsTransactionDetails",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support the fetching standing orders.",
+                          "key": "supportsStandingOrderList",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support feting transactions using a date filter.",
+                          "key": "supportsTransactionsDateFilter",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that only support immediate redemption of transfers.",
+                          "key": "requiresOneStepPayment",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support single immediate payments.",
+                          "key": "supportsSinglePayment",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support future dated scheduled payments.",
+                          "key": "supportsScheduledPayment",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support recurring payments/standing orders.",
+                          "key": "supportsStandingOrder",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for the banks that support request of refund account.",
+                          "key": "supportsReturnRefundAccount",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support returning the refund account holder name.",
+                          "key": "supportsReturnRefundAccountHolderName",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for the banks that support confirmation of available funds.",
+                          "key": "supportsFundsConfirmation",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Filters for banks that support variable recurring payments.",
+                          "key": "supportsVariableRecurringPayment",
+                          "value": "<boolean>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Gateway Timeout",
+                  "code": 504,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"errorCode\": \"labore dolor\",\n    \"message\": \"<string>\",\n    \"paymentId\": \"exercitation\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T11:04:33.000Z",
+                  "updatedAt": "2026-07-28T11:04:33.000Z",
+                  "uid": "35240-fb096651-14c6-4a14-bb50-deeefc478444"
+                }
+              ],
+              "createdAt": "2026-07-28T11:04:33.000Z",
+              "updatedAt": "2026-07-28T11:04:33.000Z",
+              "uid": "35240-b8115334-b9e5-45a8-8cf9-95c1b020eb17"
+            }
+          ],
+          "id": "be078ce6-159e-4cc4-8511-d87331ac901c",
+          "createdAt": "2026-07-28T11:04:33.000Z",
+          "updatedAt": "2026-07-28T11:04:33.000Z",
+          "uid": "35240-be078ce6-159e-4cc4-8511-d87331ac901c"
+        }
+      ],
+      "id": "02c2e678-d1b3-42d7-b7c2-8843cfc540c6",
+      "createdAt": "2026-07-28T11:04:33.000Z",
+      "updatedAt": "2026-07-28T11:04:33.000Z",
+      "uid": "35240-02c2e678-d1b3-42d7-b7c2-8843cfc540c6"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.token.io"
+    }
+  ]
+}

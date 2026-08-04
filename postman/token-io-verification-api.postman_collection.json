@@ -1,0 +1,196 @@
+{
+  "info": {
+    "_postman_id": "9fc3b2de-3809-472a-9be6-49426f3969e7",
+    "name": "Token.io's Open Banking API for TPPs Account on File Verification API",
+    "description": "<b>Token.io's Open Banking API</b><br/><br/>Token.io Support: <a href=\"https://support.token.io\" target=\"_blank\">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user's account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href=\"https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm\" target=\"_blank\">developer documentation</a>.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T11:05:03.000Z",
+    "updatedAt": "2026-07-28T11:05:03.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-9fc3b2de-3809-472a-9be6-49426f3969e7"
+  },
+  "item": [
+    {
+      "name": "account-verifications",
+      "item": [
+        {
+          "name": "Initiate an account verification check",
+          "id": "9318d175-ff01-41f0-87fe-f2176d975e3b",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account\": {\n    \"name\": \"<string>\",\n    \"currency\": \"EUR\",\n    \"iban\": \"<string>\"\n  },\n  \"virtualAccountId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/account-verifications",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "account-verifications"
+              ]
+            },
+            "description": "This endpoint allows clients to verify whether the provided account details (such as sort code and account number or IBAN) match the name of the intended account holder, whether an individual or a business"
+          },
+          "response": [
+            {
+              "id": "3368381f-abbb-4d5b-82fd-3a2427519da5",
+              "name": "OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account\": {\n    \"name\": \"<string>\",\n    \"currency\": \"EUR\",\n    \"iban\": \"<string>\"\n  },\n  \"virtualAccountId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/account-verifications",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "account-verifications"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"id\": \"<string>\",\n  \"result\": {\n    \"status\": \"CLOSE_MATCH\",\n    \"reasons\": [\n      \"ACCOUNT_MISMATCH\",\n      \"UNKNOWN\"\n    ],\n    \"details\": \"<string>\",\n    \"matched\": {\n      \"name\": \"<string>\"\n    }\n  }\n}",
+              "createdAt": "2026-07-28T11:05:03.000Z",
+              "updatedAt": "2026-07-28T11:05:03.000Z",
+              "uid": "35240-3368381f-abbb-4d5b-82fd-3a2427519da5"
+            },
+            {
+              "id": "58788e55-6728-4acc-8688-f5977c16d4d0",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account\": {\n    \"name\": \"<string>\",\n    \"currency\": \"EUR\",\n    \"iban\": \"<string>\"\n  },\n  \"virtualAccountId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/account-verifications",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "account-verifications"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"tokenTraceId\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T11:05:03.000Z",
+              "updatedAt": "2026-07-28T11:05:03.000Z",
+              "uid": "35240-58788e55-6728-4acc-8688-f5977c16d4d0"
+            }
+          ],
+          "createdAt": "2026-07-28T11:05:03.000Z",
+          "updatedAt": "2026-07-28T11:05:03.000Z",
+          "uid": "35240-9318d175-ff01-41f0-87fe-f2176d975e3b"
+        }
+      ],
+      "id": "b87e1194-1459-49a6-85e0-c3321153c2c8",
+      "createdAt": "2026-07-28T11:05:03.000Z",
+      "updatedAt": "2026-07-28T11:05:03.000Z",
+      "uid": "35240-b87e1194-1459-49a6-85e0-c3321153c2c8"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.token.io"
+    }
+  ]
+}
