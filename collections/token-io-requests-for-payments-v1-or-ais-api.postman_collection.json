@@ -1,0 +1,2429 @@
+{
+  "item": [
+    {
+      "id": "c39e10f3-a3ed-4fb5-a443-93caa9398cb5",
+      "name": "Requests - for Payments v1 or AIS",
+      "description": {
+        "content": "These endpoints allow you to initiate a Payments v1 request or an AIS request, and retrieve the status of the request.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f92c6dd4-de45-480b-a677-a2700be5e621",
+          "name": "Initiate a token request",
+          "request": {
+            "name": "Initiate a token request",
+            "description": {
+              "content": "The `POST /token-requests` endpoint persists the required information used by AIS requests and PIS requests using the API and the Token.io Hosted Pages.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "token-requests"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requestPayload\": {\n    \"transferBody\": {\n      \"currency\": \"<string>\",\n      \"lifetimeAmount\": \"<string>\",\n      \"instructions\": {\n        \"transferDestinations\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"metadata\": {\n          \"chargeBearer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"providerTransferMetadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"purposeCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"ultimateCreditor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"ultimateDebtor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"source\": {\n          \"accountIdentifier\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bankId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bic\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"customerData\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"confirmFunds\": false,\n      \"executionDate\": \"<string>\",\n      \"remittanceReference\": \"<string>\",\n      \"returnRefundAccount\": false,\n      \"setTransferDestinationsUrl\": \"<string>\"\n    }\n  },\n  \"requestOptions\": {\n    \"bankId\": \"<string>\",\n    \"from\": {\n      \"id\": \"<string>\",\n      \"alias\": {\n        \"realmId\": \"<string>\",\n        \"type\": \"INVALID\",\n        \"value\": \"<string>\"\n      }\n    },\n    \"psuId\": \"<string>\",\n    \"receiptRequested\": false,\n    \"tokenInternal\": {\n      \"redirectUrl\": \"<string>\",\n      \"usingWebApp\": false\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "98ce2081-42ad-4a09-8e99-28a23afa473f",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestPayload\": {\n    \"transferBody\": {\n      \"currency\": \"EUR\",\n      \"lifetimeAmount\": \"10000.00\",\n      \"instructions\": {\n        \"transferDestinations\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"metadata\": {\n          \"chargeBearer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"providerTransferMetadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"purposeCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"ultimateCreditor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"ultimateDebtor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"source\": {\n          \"accountIdentifier\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bankId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bic\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"customerData\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"confirmFunds\": false,\n      \"executionDate\": \"2023-02-28\",\n      \"remittanceReference\": \"MFt6s64vn6aDyMiwBA3\",\n      \"returnRefundAccount\": false,\n      \"setTransferDestinationsUrl\": \"<string>\"\n    }\n  },\n  \"requestOptions\": {\n    \"bankId\": \"ob-modelo\",\n    \"from\": {\n      \"id\": \"m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq\",\n      \"alias\": {\n        \"realmId\": \"m:vHZUAMFt6s64vn6aDyMiwBYbPDN:5zKtXEAq\",\n        \"type\": \"EMAIL\",\n        \"value\": \"e-sales@token.io\"\n      }\n    },\n    \"psuId\": \"a:TASDo3124fcsmF0vsmdv4mf4mklsdwls3mcixz14fkasdv5\",\n    \"receiptRequested\": false,\n    \"tokenInternal\": {\n      \"redirectUrl\": \"http://psu-redirect.com\",\n      \"usingWebApp\": false\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tokenRequest\": {\n    \"id\": \"rq:ej5ACWNwi1EcqBeuDPc4Z8C4Bgc:5zKtXEAq\",\n    \"requestOptions\": {\n      \"bankId\": \"ob-modelo\",\n      \"from\": {\n        \"id\": \"m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq\",\n        \"alias\": {\n          \"realmId\": \"m:vHZUAMFt6s64vn6aDyMiwBYbPDN:5zKtXEAq\",\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"e-sales@token.io\"\n        }\n      },\n      \"psuId\": \"a:TASDo3124fcsmF0vsmdv4mf4mklsdwls3mcixz14fkasdv5\",\n      \"receiptRequested\": false,\n      \"tokenInternal\": {\n        \"redirectUrl\": \"http://psu-redirect.com\",\n        \"usingWebApp\": false\n      }\n    },\n    \"requestPayload\": {\n      \"transferBody\": {\n        \"currency\": \"EUR\",\n        \"lifetimeAmount\": \"10000.00\",\n        \"instructions\": {\n          \"transferDestinations\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"source\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"confirmFunds\": false,\n        \"executionDate\": \"2023-02-28\",\n        \"remittanceReference\": \"MFt6s64vn6aDyMiwBA3\",\n        \"returnRefundAccount\": false,\n        \"setTransferDestinationsUrl\": \"<string>\"\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7942744b-7af7-4458-883b-c37edd9620e0",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestPayload\": {\n    \"transferBody\": {\n      \"currency\": \"EUR\",\n      \"lifetimeAmount\": \"10000.00\",\n      \"instructions\": {\n        \"transferDestinations\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"metadata\": {\n          \"chargeBearer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"providerTransferMetadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"purposeCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"ultimateCreditor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"ultimateDebtor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"source\": {\n          \"accountIdentifier\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bankId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bic\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"customerData\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"confirmFunds\": false,\n      \"executionDate\": \"2023-02-28\",\n      \"remittanceReference\": \"MFt6s64vn6aDyMiwBA3\",\n      \"returnRefundAccount\": false,\n      \"setTransferDestinationsUrl\": \"<string>\"\n    }\n  },\n  \"requestOptions\": {\n    \"bankId\": \"ob-modelo\",\n    \"from\": {\n      \"id\": \"m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq\",\n      \"alias\": {\n        \"realmId\": \"m:vHZUAMFt6s64vn6aDyMiwBYbPDN:5zKtXEAq\",\n        \"type\": \"EMAIL\",\n        \"value\": \"e-sales@token.io\"\n      }\n    },\n    \"psuId\": \"a:TASDo3124fcsmF0vsmdv4mf4mklsdwls3mcixz14fkasdv5\",\n    \"receiptRequested\": false,\n    \"tokenInternal\": {\n      \"redirectUrl\": \"http://psu-redirect.com\",\n      \"usingWebApp\": false\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "431749e8-e0e1-4599-bbfd-bf2bcbecf646",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestPayload\": {\n    \"transferBody\": {\n      \"currency\": \"EUR\",\n      \"lifetimeAmount\": \"10000.00\",\n      \"instructions\": {\n        \"transferDestinations\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"metadata\": {\n          \"chargeBearer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"providerTransferMetadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"purposeCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"ultimateCreditor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"ultimateDebtor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"source\": {\n          \"accountIdentifier\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bankId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bic\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"customerData\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"confirmFunds\": false,\n      \"executionDate\": \"2023-02-28\",\n      \"remittanceReference\": \"MFt6s64vn6aDyMiwBA3\",\n      \"returnRefundAccount\": false,\n      \"setTransferDestinationsUrl\": \"<string>\"\n    }\n  },\n  \"requestOptions\": {\n    \"bankId\": \"ob-modelo\",\n    \"from\": {\n      \"id\": \"m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq\",\n      \"alias\": {\n        \"realmId\": \"m:vHZUAMFt6s64vn6aDyMiwBYbPDN:5zKtXEAq\",\n        \"type\": \"EMAIL\",\n        \"value\": \"e-sales@token.io\"\n      }\n    },\n    \"psuId\": \"a:TASDo3124fcsmF0vsmdv4mf4mklsdwls3mcixz14fkasdv5\",\n    \"receiptRequested\": false,\n    \"tokenInternal\": {\n      \"redirectUrl\": \"http://psu-redirect.com\",\n      \"usingWebApp\": false\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a8a387b1-bed0-4dc3-be62-51b396dcd5c8",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestPayload\": {\n    \"transferBody\": {\n      \"currency\": \"EUR\",\n      \"lifetimeAmount\": \"10000.00\",\n      \"instructions\": {\n        \"transferDestinations\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"metadata\": {\n          \"chargeBearer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"providerTransferMetadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"purposeCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"ultimateCreditor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"ultimateDebtor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"source\": {\n          \"accountIdentifier\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bankId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bic\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"customerData\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"confirmFunds\": false,\n      \"executionDate\": \"2023-02-28\",\n      \"remittanceReference\": \"MFt6s64vn6aDyMiwBA3\",\n      \"returnRefundAccount\": false,\n      \"setTransferDestinationsUrl\": \"<string>\"\n    }\n  },\n  \"requestOptions\": {\n    \"bankId\": \"ob-modelo\",\n    \"from\": {\n      \"id\": \"m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq\",\n      \"alias\": {\n        \"realmId\": \"m:vHZUAMFt6s64vn6aDyMiwBYbPDN:5zKtXEAq\",\n        \"type\": \"EMAIL\",\n        \"value\": \"e-sales@token.io\"\n      }\n    },\n    \"psuId\": \"a:TASDo3124fcsmF0vsmdv4mf4mklsdwls3mcixz14fkasdv5\",\n    \"receiptRequested\": false,\n    \"tokenInternal\": {\n      \"redirectUrl\": \"http://psu-redirect.com\",\n      \"usingWebApp\": false\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ae253063-041c-444b-a209-092ee0e0d087",
+              "name": "The requested entity, such as a payment, was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestPayload\": {\n    \"transferBody\": {\n      \"currency\": \"EUR\",\n      \"lifetimeAmount\": \"10000.00\",\n      \"instructions\": {\n        \"transferDestinations\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"metadata\": {\n          \"chargeBearer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"providerTransferMetadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"purposeCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"ultimateCreditor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"ultimateDebtor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"source\": {\n          \"accountIdentifier\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bankId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bic\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"customerData\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"confirmFunds\": false,\n      \"executionDate\": \"2023-02-28\",\n      \"remittanceReference\": \"MFt6s64vn6aDyMiwBA3\",\n      \"returnRefundAccount\": false,\n      \"setTransferDestinationsUrl\": \"<string>\"\n    }\n  },\n  \"requestOptions\": {\n    \"bankId\": \"ob-modelo\",\n    \"from\": {\n      \"id\": \"m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq\",\n      \"alias\": {\n        \"realmId\": \"m:vHZUAMFt6s64vn6aDyMiwBYbPDN:5zKtXEAq\",\n        \"type\": \"EMAIL\",\n        \"value\": \"e-sales@token.io\"\n      }\n    },\n    \"psuId\": \"a:TASDo3124fcsmF0vsmdv4mf4mklsdwls3mcixz14fkasdv5\",\n    \"receiptRequested\": false,\n    \"tokenInternal\": {\n      \"redirectUrl\": \"http://psu-redirect.com\",\n      \"usingWebApp\": false\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "060e198e-c962-4cd7-bff9-3fcbad961345",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestPayload\": {\n    \"transferBody\": {\n      \"currency\": \"EUR\",\n      \"lifetimeAmount\": \"10000.00\",\n      \"instructions\": {\n        \"transferDestinations\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"metadata\": {\n          \"chargeBearer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"providerTransferMetadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"purposeCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"ultimateCreditor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"ultimateDebtor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"source\": {\n          \"accountIdentifier\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bankId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bic\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"customerData\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"confirmFunds\": false,\n      \"executionDate\": \"2023-02-28\",\n      \"remittanceReference\": \"MFt6s64vn6aDyMiwBA3\",\n      \"returnRefundAccount\": false,\n      \"setTransferDestinationsUrl\": \"<string>\"\n    }\n  },\n  \"requestOptions\": {\n    \"bankId\": \"ob-modelo\",\n    \"from\": {\n      \"id\": \"m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq\",\n      \"alias\": {\n        \"realmId\": \"m:vHZUAMFt6s64vn6aDyMiwBYbPDN:5zKtXEAq\",\n        \"type\": \"EMAIL\",\n        \"value\": \"e-sales@token.io\"\n      }\n    },\n    \"psuId\": \"a:TASDo3124fcsmF0vsmdv4mf4mklsdwls3mcixz14fkasdv5\",\n    \"receiptRequested\": false,\n    \"tokenInternal\": {\n      \"redirectUrl\": \"http://psu-redirect.com\",\n      \"usingWebApp\": false\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d458438e-0b2f-43de-91bb-40dc507f48f4",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestPayload\": {\n    \"transferBody\": {\n      \"currency\": \"EUR\",\n      \"lifetimeAmount\": \"10000.00\",\n      \"instructions\": {\n        \"transferDestinations\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"metadata\": {\n          \"chargeBearer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"providerTransferMetadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"purposeCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"ultimateCreditor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"ultimateDebtor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"source\": {\n          \"accountIdentifier\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bankId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bic\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"customerData\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"confirmFunds\": false,\n      \"executionDate\": \"2023-02-28\",\n      \"remittanceReference\": \"MFt6s64vn6aDyMiwBA3\",\n      \"returnRefundAccount\": false,\n      \"setTransferDestinationsUrl\": \"<string>\"\n    }\n  },\n  \"requestOptions\": {\n    \"bankId\": \"ob-modelo\",\n    \"from\": {\n      \"id\": \"m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq\",\n      \"alias\": {\n        \"realmId\": \"m:vHZUAMFt6s64vn6aDyMiwBYbPDN:5zKtXEAq\",\n        \"type\": \"EMAIL\",\n        \"value\": \"e-sales@token.io\"\n      }\n    },\n    \"psuId\": \"a:TASDo3124fcsmF0vsmdv4mf4mklsdwls3mcixz14fkasdv5\",\n    \"receiptRequested\": false,\n    \"tokenInternal\": {\n      \"redirectUrl\": \"http://psu-redirect.com\",\n      \"usingWebApp\": false\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "427c6763-5a5b-4076-9b99-f1b490158563",
+              "name": "The operation was not implemented",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestPayload\": {\n    \"transferBody\": {\n      \"currency\": \"EUR\",\n      \"lifetimeAmount\": \"10000.00\",\n      \"instructions\": {\n        \"transferDestinations\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"metadata\": {\n          \"chargeBearer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"providerTransferMetadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"purposeCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"ultimateCreditor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"ultimateDebtor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"source\": {\n          \"accountIdentifier\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bankId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bic\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"customerData\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"confirmFunds\": false,\n      \"executionDate\": \"2023-02-28\",\n      \"remittanceReference\": \"MFt6s64vn6aDyMiwBA3\",\n      \"returnRefundAccount\": false,\n      \"setTransferDestinationsUrl\": \"<string>\"\n    }\n  },\n  \"requestOptions\": {\n    \"bankId\": \"ob-modelo\",\n    \"from\": {\n      \"id\": \"m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq\",\n      \"alias\": {\n        \"realmId\": \"m:vHZUAMFt6s64vn6aDyMiwBYbPDN:5zKtXEAq\",\n        \"type\": \"EMAIL\",\n        \"value\": \"e-sales@token.io\"\n      }\n    },\n    \"psuId\": \"a:TASDo3124fcsmF0vsmdv4mf4mklsdwls3mcixz14fkasdv5\",\n    \"receiptRequested\": false,\n    \"tokenInternal\": {\n      \"redirectUrl\": \"http://psu-redirect.com\",\n      \"usingWebApp\": false\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "53a58cab-382c-4ef6-9439-fa1a5af9aced",
+              "name": "Service is unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestPayload\": {\n    \"transferBody\": {\n      \"currency\": \"EUR\",\n      \"lifetimeAmount\": \"10000.00\",\n      \"instructions\": {\n        \"transferDestinations\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"metadata\": {\n          \"chargeBearer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"providerTransferMetadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"purposeCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"ultimateCreditor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"ultimateDebtor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"source\": {\n          \"accountIdentifier\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bankId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bic\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"customerData\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"confirmFunds\": false,\n      \"executionDate\": \"2023-02-28\",\n      \"remittanceReference\": \"MFt6s64vn6aDyMiwBA3\",\n      \"returnRefundAccount\": false,\n      \"setTransferDestinationsUrl\": \"<string>\"\n    }\n  },\n  \"requestOptions\": {\n    \"bankId\": \"ob-modelo\",\n    \"from\": {\n      \"id\": \"m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq\",\n      \"alias\": {\n        \"realmId\": \"m:vHZUAMFt6s64vn6aDyMiwBYbPDN:5zKtXEAq\",\n        \"type\": \"EMAIL\",\n        \"value\": \"e-sales@token.io\"\n      }\n    },\n    \"psuId\": \"a:TASDo3124fcsmF0vsmdv4mf4mklsdwls3mcixz14fkasdv5\",\n    \"receiptRequested\": false,\n    \"tokenInternal\": {\n      \"redirectUrl\": \"http://psu-redirect.com\",\n      \"usingWebApp\": false\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "233ba1fa-3570-4c6a-8041-ea19ad381a9f",
+              "name": "Gateway has timed out",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestPayload\": {\n    \"transferBody\": {\n      \"currency\": \"EUR\",\n      \"lifetimeAmount\": \"10000.00\",\n      \"instructions\": {\n        \"transferDestinations\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"metadata\": {\n          \"chargeBearer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"providerTransferMetadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"purposeCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"ultimateCreditor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"ultimateDebtor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"source\": {\n          \"accountIdentifier\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bankId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bic\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"customerData\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"confirmFunds\": false,\n      \"executionDate\": \"2023-02-28\",\n      \"remittanceReference\": \"MFt6s64vn6aDyMiwBA3\",\n      \"returnRefundAccount\": false,\n      \"setTransferDestinationsUrl\": \"<string>\"\n    }\n  },\n  \"requestOptions\": {\n    \"bankId\": \"ob-modelo\",\n    \"from\": {\n      \"id\": \"m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq\",\n      \"alias\": {\n        \"realmId\": \"m:vHZUAMFt6s64vn6aDyMiwBYbPDN:5zKtXEAq\",\n        \"type\": \"EMAIL\",\n        \"value\": \"e-sales@token.io\"\n      }\n    },\n    \"psuId\": \"a:TASDo3124fcsmF0vsmdv4mf4mklsdwls3mcixz14fkasdv5\",\n    \"receiptRequested\": false,\n    \"tokenInternal\": {\n      \"redirectUrl\": \"http://psu-redirect.com\",\n      \"usingWebApp\": false\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "17bcd4b5-c03a-448e-a6d8-053050058b3c",
+          "name": "Get a token request",
+          "request": {
+            "name": "Get a token request",
+            "description": {
+              "content": "The `GET /token-requests/{requestId}` endpoint retrieves a specific token request by its id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "token-requests",
+                ":requestId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "requestId",
+                  "description": "(Required) The request id received in response to the original token request."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b0d73a43-0245-4779-bcd2-9b52882d4f87",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":requestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "requestId",
+                      "description": "(Required) The request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tokenRequest\": {\n    \"id\": \"rq:ej5ACWNwi1EcqBeuDPc4Z8C4Bgc:5zKtXEAq\",\n    \"requestOptions\": {\n      \"bankId\": \"ob-modelo\",\n      \"from\": {\n        \"id\": \"m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq\",\n        \"alias\": {\n          \"realmId\": \"m:vHZUAMFt6s64vn6aDyMiwBYbPDN:5zKtXEAq\",\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": \"e-sales@token.io\"\n        }\n      },\n      \"psuId\": \"a:TASDo3124fcsmF0vsmdv4mf4mklsdwls3mcixz14fkasdv5\",\n      \"receiptRequested\": false,\n      \"tokenInternal\": {\n        \"redirectUrl\": \"http://psu-redirect.com\",\n        \"usingWebApp\": false\n      }\n    },\n    \"requestPayload\": {\n      \"transferBody\": {\n        \"currency\": \"EUR\",\n        \"lifetimeAmount\": \"10000.00\",\n        \"instructions\": {\n          \"transferDestinations\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"source\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"confirmFunds\": false,\n        \"executionDate\": \"2023-02-28\",\n        \"remittanceReference\": \"MFt6s64vn6aDyMiwBA3\",\n        \"returnRefundAccount\": false,\n        \"setTransferDestinationsUrl\": \"<string>\"\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d0b823c-2bff-487f-8b39-829e38a77f93",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":requestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "requestId",
+                      "description": "(Required) The request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "81985691-a09e-4b00-b637-0e3816b389de",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":requestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "requestId",
+                      "description": "(Required) The request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "52ce9ba3-1398-4f81-a1c8-a6c5a7e3423b",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":requestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "requestId",
+                      "description": "(Required) The request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c1a61f6-366a-45c6-a3d1-41cba3e0a59f",
+              "name": "The requested entity, such as a token request, was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":requestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "requestId",
+                      "description": "(Required) The request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ae8d013-f351-4ed8-af01-fa9255de763d",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":requestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "requestId",
+                      "description": "(Required) The request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1c89430b-2169-4f84-94a4-419c5339f0f5",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":requestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "requestId",
+                      "description": "(Required) The request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d5c9702f-4928-486e-8116-c4a3c6185080",
+              "name": "The operation was not implemented",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":requestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "requestId",
+                      "description": "(Required) The request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c9fb82f-36fb-4d3a-b02a-1872f380b62c",
+              "name": "Service is unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":requestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "requestId",
+                      "description": "(Required) The request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8035126-5506-45d0-b846-5b705e76d170",
+              "name": "Gateway has timed out",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":requestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "requestId",
+                      "description": "(Required) The request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7b37a645-4de4-4d3f-a4c2-46e41eb05106",
+          "name": "Get a token request result",
+          "request": {
+            "name": "Get a token request result",
+            "description": {
+              "content": "The `GET /token-requests/{tokenRequestId}/result` endpoint checks whether a token request result is available. This endpoint will return a `PENDING` status while the result is not available. The status will become `PROCESSED` once the result is available. If the request is rejected by the bank, the status will become `REJECTED`. The status will become `EXPIRED` if the request is not processed or rejected before the token request expiration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "token-requests",
+                ":tokenRequestId",
+                "result"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tokenRequestId",
+                  "description": "(Required) The token request id received in response to the original token request."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ff93fc8f-c8c2-4b42-a5c1-ff2c0d35d415",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":tokenRequestId",
+                    "result"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tokenRequestId",
+                      "description": "(Required) The token request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"PROCESSED\",\n  \"transferId\": \"t:2UhwCZ3BMaEcAUK8bZdukor7NL4tH6TBuu6aJMp5KKfX:5zKcENpV\",\n  \"tokenId\": \"tt:8zK1dic95omjWb72gvc3z3ELKbTNfnGd89MbDnM73er4:ZhBVAJSH8DeU1\",\n  \"signature\": {\n    \"keyId\": \"CqSTHPvWY_dgVh-f\",\n    \"memberId\": \"m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq\",\n    \"signature\": \"ODRWmM0xMRM7CKmK3bNl4e2Kb2btavTbZssCsrHsu8yopoKxBzouBrD9q5-E63tgdV1DpB7i31vwNDKywA0CAE\"\n  },\n  \"statusReasonInformation\": \"The token request is processing.\",\n  \"bankId\": \"ob-modelo\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ea0c762d-2a7b-4297-8626-f1476e1e3b02",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":tokenRequestId",
+                    "result"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tokenRequestId",
+                      "description": "(Required) The token request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ed4c9a2-dc07-4912-8495-8fbb74efa3a0",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":tokenRequestId",
+                    "result"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tokenRequestId",
+                      "description": "(Required) The token request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34481cd7-aab2-4bc7-8994-56baa2481961",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":tokenRequestId",
+                    "result"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tokenRequestId",
+                      "description": "(Required) The token request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e60f916-1d23-4138-9a48-ee6d83b06dfd",
+              "name": "The requested entity, such as a token request, was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":tokenRequestId",
+                    "result"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tokenRequestId",
+                      "description": "(Required) The token request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e860c724-4cd1-4aac-9146-694f5b19bbb2",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":tokenRequestId",
+                    "result"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tokenRequestId",
+                      "description": "(Required) The token request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ebd19b5-7d17-42e5-a873-4a4581f18be8",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":tokenRequestId",
+                    "result"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tokenRequestId",
+                      "description": "(Required) The token request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0d7f8e2-9fb0-421b-9789-983bfe2827f2",
+              "name": "The operation was not implemented",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":tokenRequestId",
+                    "result"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tokenRequestId",
+                      "description": "(Required) The token request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e229575d-bc70-41fd-a831-d81d52305e3d",
+              "name": "Service is unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":tokenRequestId",
+                    "result"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tokenRequestId",
+                      "description": "(Required) The token request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c6243976-f56a-44b6-ad69-69ab811b3775",
+              "name": "Gateway has timed out",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":tokenRequestId",
+                    "result"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tokenRequestId",
+                      "description": "(Required) The token request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8365ba5c-c0a1-459b-b412-9638e5bf4f51",
+          "name": "Initiate bank authorization",
+          "request": {
+            "name": "Initiate bank authorization",
+            "description": {
+              "content": "The `POST /token-requests/{tokenRequestId}/authorization` endpoint initiates the bank authorization process with a given bank id and token request id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "token-requests",
+                ":tokenRequestId",
+                "authorization"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tokenRequestId",
+                  "description": "(Required) The token request id received in response to the original token request."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"consentAccepted\": false,\n  \"credentials\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"useCredentialFlow\": false,\n  \"useWebappCredentialsFlow\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "926aaced-9ab0-4188-8e1c-379805d808a8",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":tokenRequestId",
+                    "authorization"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tokenRequestId",
+                      "description": "(Required) The token request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"consentAccepted\": false,\n  \"credentials\": {\n    \"key_0\": \"<string>\"\n  },\n  \"useCredentialFlow\": false,\n  \"useWebappCredentialsFlow\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"fields\": {\n    \"fields\": [\n      {\n        \"description\": \"User authentication\",\n        \"displayName\": \"Client ID\",\n        \"flickerCode\": \"FLICKERCODE\",\n        \"id\": \"clientId\",\n        \"image\": \"YWJAeXoyWhAeXohteQ\",\n        \"options\": [\n          \"SMS\",\n          \"Phone call\"\n        ],\n        \"type\": \"PASSWORD\"\n      },\n      {\n        \"description\": \"User authentication\",\n        \"displayName\": \"Client ID\",\n        \"flickerCode\": \"FLICKERCODE\",\n        \"id\": \"clientId\",\n        \"image\": \"YWJAeXoyWhAeXohteQ\",\n        \"options\": [\n          \"SMS\",\n          \"Phone call\"\n        ],\n        \"type\": \"PASSWORD\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4f56ca49-f444-40c4-acf8-8f30d8be3ce8",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":tokenRequestId",
+                    "authorization"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tokenRequestId",
+                      "description": "(Required) The token request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"consentAccepted\": false,\n  \"credentials\": {\n    \"key_0\": \"<string>\"\n  },\n  \"useCredentialFlow\": false,\n  \"useWebappCredentialsFlow\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "80daa38f-19c6-4e92-93f6-7f6c759a3d9b",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":tokenRequestId",
+                    "authorization"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tokenRequestId",
+                      "description": "(Required) The token request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"consentAccepted\": false,\n  \"credentials\": {\n    \"key_0\": \"<string>\"\n  },\n  \"useCredentialFlow\": false,\n  \"useWebappCredentialsFlow\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "14b3c802-42b1-4d05-b3b5-953d2c592e60",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":tokenRequestId",
+                    "authorization"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tokenRequestId",
+                      "description": "(Required) The token request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"consentAccepted\": false,\n  \"credentials\": {\n    \"key_0\": \"<string>\"\n  },\n  \"useCredentialFlow\": false,\n  \"useWebappCredentialsFlow\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d796e169-6db5-4072-9658-6b189130e9ea",
+              "name": "The requested entity, such as a payment, was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":tokenRequestId",
+                    "authorization"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tokenRequestId",
+                      "description": "(Required) The token request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"consentAccepted\": false,\n  \"credentials\": {\n    \"key_0\": \"<string>\"\n  },\n  \"useCredentialFlow\": false,\n  \"useWebappCredentialsFlow\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "03dc219d-7e5a-44f6-bfd5-19481cb9835f",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":tokenRequestId",
+                    "authorization"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tokenRequestId",
+                      "description": "(Required) The token request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"consentAccepted\": false,\n  \"credentials\": {\n    \"key_0\": \"<string>\"\n  },\n  \"useCredentialFlow\": false,\n  \"useWebappCredentialsFlow\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b93450a8-febf-4966-8bb1-0abe777cad0a",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":tokenRequestId",
+                    "authorization"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tokenRequestId",
+                      "description": "(Required) The token request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"consentAccepted\": false,\n  \"credentials\": {\n    \"key_0\": \"<string>\"\n  },\n  \"useCredentialFlow\": false,\n  \"useWebappCredentialsFlow\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "abf54ca6-3431-48f1-887a-76b9e85f3531",
+              "name": "The operation was not implemented",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":tokenRequestId",
+                    "authorization"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tokenRequestId",
+                      "description": "(Required) The token request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"consentAccepted\": false,\n  \"credentials\": {\n    \"key_0\": \"<string>\"\n  },\n  \"useCredentialFlow\": false,\n  \"useWebappCredentialsFlow\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3b9bd2a7-c6c3-4ec4-857a-10b21f64e882",
+              "name": "Service is unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":tokenRequestId",
+                    "authorization"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tokenRequestId",
+                      "description": "(Required) The token request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"consentAccepted\": false,\n  \"credentials\": {\n    \"key_0\": \"<string>\"\n  },\n  \"useCredentialFlow\": false,\n  \"useWebappCredentialsFlow\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f94855d3-b398-43c5-8a14-52078efaef66",
+              "name": "Gateway has timed out",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "token-requests",
+                    ":tokenRequestId",
+                    "authorization"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tokenRequestId",
+                      "description": "(Required) The token request id received in response to the original token request."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"consentAccepted\": false,\n  \"credentials\": {\n    \"key_0\": \"<string>\"\n  },\n  \"useCredentialFlow\": false,\n  \"useWebappCredentialsFlow\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.token.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ba900171-2df2-4a41-8756-c5799675165c",
+    "name": "Token.io's Open Banking API for TPPs Account on File Requests - for Payments v1 or AIS API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "<b>Token.io's Open Banking API</b><br/><br/>Token.io Support: <a href=\"https://support.token.io\" target=\"_blank\">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user's account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href=\"https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm\" target=\"_blank\">developer documentation</a>.",
+      "type": "text/plain"
+    }
+  }
+}

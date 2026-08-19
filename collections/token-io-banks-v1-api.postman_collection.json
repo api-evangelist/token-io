@@ -1,0 +1,3661 @@
+{
+  "item": [
+    {
+      "id": "b9db502f-123f-4b9f-9aee-237d9d1ee69f",
+      "name": "Banks v1",
+      "description": {
+        "content": "These endpoints filter and fetch the list of connected banks, get information on specific banks, and initiate authorization with user-selected banks using Payments v1.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b952a79e-e3b2-4dbf-8cc8-843acde8bae6",
+          "name": "Get banks v1",
+          "request": {
+            "name": "Get banks v1",
+            "description": {
+              "content": "The `GET /banks` endpoint retrieves a list of connected banks matching the parameters specified.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "banks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "The index of the page currently being retrieved."
+                },
+                {
+                  "disabled": false,
+                  "key": "perPage",
+                  "value": "<integer>",
+                  "description": "The number of records per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "name",
+                  "description": "The key to sort the result. This can be `name` (<i>i.e.</i>, bank name), `provider`, or `country`."
+                },
+                {
+                  "disabled": false,
+                  "key": "memberId",
+                  "value": "<string>",
+                  "description": "The Token.io-assigned member id of the TPP."
+                },
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<string>",
+                  "description": "Filters for banks with a `bankId` (case-insensitive) matching any of the ids listed, up to a maximum of 1000. Only exact (full string) matches are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<string>",
+                  "description": "Filters for banks with a `bankId` (case-insensitive) matching any of the ids listed, up to a maximum of 1000. Only exact (full string) matches are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "Filters for banks with a name or identifiers containing this search string."
+                },
+                {
+                  "disabled": false,
+                  "key": "tppId",
+                  "value": "<string>",
+                  "description": "Filters for banks for which the TPP represented by this `tppId` has access."
+                },
+                {
+                  "disabled": false,
+                  "key": "providers",
+                  "value": "<string>",
+                  "description": "Filters for banks that are accessed through any of the listed providers."
+                },
+                {
+                  "disabled": false,
+                  "key": "providers",
+                  "value": "<string>",
+                  "description": "Filters for banks that are accessed through any of the listed providers."
+                },
+                {
+                  "disabled": false,
+                  "key": "bankCode",
+                  "value": "<string>",
+                  "description": "Filters for banks with a BIC (or BLZ, if German) that matches this `bankCode`. The BIC must have a string length of 8 or 11. The BLZ must have a string length of 8."
+                },
+                {
+                  "disabled": false,
+                  "key": "countries",
+                  "value": "<string>",
+                  "description": "Filters for banks that are located in the countries specified by this list of two-letter country codes in upper case (ISO 3166-1 alpha-2)."
+                },
+                {
+                  "disabled": false,
+                  "key": "countries",
+                  "value": "<string>",
+                  "description": "Filters for banks that are located in the countries specified by this list of two-letter country codes in upper case (ISO 3166-1 alpha-2)."
+                },
+                {
+                  "disabled": false,
+                  "key": "bank_features.supports_send_payment.value",
+                  "value": "false",
+                  "description": "Filters for banks that support payment initiation."
+                },
+                {
+                  "disabled": false,
+                  "key": "bank_features.supports_receive_payment.value",
+                  "value": "false",
+                  "description": "Filters for banks that support receiving payments."
+                },
+                {
+                  "disabled": false,
+                  "key": "bank_features.supports_balance.value",
+                  "value": "false",
+                  "description": "Filters for the banks that support retrieving balances."
+                },
+                {
+                  "disabled": false,
+                  "key": "bank_features.supports_scheduled_payment.value",
+                  "value": "false",
+                  "description": "Filters for banks that support future dated scheduled payments."
+                },
+                {
+                  "disabled": false,
+                  "key": "bank_features.supports_standing_order.value",
+                  "value": "false",
+                  "description": "Filters for banks that support recurring payments/standing orders."
+                },
+                {
+                  "disabled": false,
+                  "key": "bank_features.requires_one_step_payment.value",
+                  "value": "false",
+                  "description": "Filters for banks that only support immediate redemption of transfers."
+                },
+                {
+                  "disabled": false,
+                  "key": "bank_features.supports_funds_confirmation.value",
+                  "value": "false",
+                  "description": "Filters for the banks that support confirmation of available funds."
+                },
+                {
+                  "disabled": false,
+                  "key": "bank_features.supports_return_refund_account.value",
+                  "value": "false",
+                  "description": "Filters for the banks that support request of refund account."
+                },
+                {
+                  "disabled": false,
+                  "key": "bank_features.supports_transactions_date_filter.value",
+                  "value": "false",
+                  "description": "Filters for banks that support retrieving transactions by date filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "bank_features.supports_account_information.value",
+                  "value": "false",
+                  "description": "Filters for banks that support retrieval of account information."
+                },
+                {
+                  "disabled": false,
+                  "key": "bank_features.supports_single_payment.value",
+                  "value": "false",
+                  "description": "Filters for banks that support single immediate payments."
+                },
+                {
+                  "disabled": false,
+                  "key": "bank_features.supports_variable_recurring_payment.value",
+                  "value": "false",
+                  "description": "Filters for banks that support variable recurring payments."
+                },
+                {
+                  "disabled": false,
+                  "key": "bics",
+                  "value": "<string>",
+                  "description": "Filters for banks whose BIC matches any of the listed BICs (case-insensitive), up to a maximum of 1000."
+                },
+                {
+                  "disabled": false,
+                  "key": "bics",
+                  "value": "<string>",
+                  "description": "Filters for banks whose BIC matches any of the listed BICs (case-insensitive), up to a maximum of 1000."
+                },
+                {
+                  "disabled": false,
+                  "key": "supportedPaymentNetworks",
+                  "value": "<string>",
+                  "description": "Filters for banks that support any of the listed payment networks."
+                },
+                {
+                  "disabled": false,
+                  "key": "supportedPaymentNetworks",
+                  "value": "<string>",
+                  "description": "Filters for banks that support any of the listed payment networks."
+                },
+                {
+                  "disabled": false,
+                  "key": "bankGroup",
+                  "value": "<string>",
+                  "description": "Filters for banks that are part of the bank group specified."
+                },
+                {
+                  "disabled": false,
+                  "key": "bankSubGroup",
+                  "value": "<string>",
+                  "description": "Filters for banks that are part of the bank sub-group specified."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e9d26f0a-0edd-4334-8de9-8a0be1d376ab",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "banks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "175"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "country"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "goldbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "opalbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "platinumbank"
+                    },
+                    {
+                      "key": "search",
+                      "value": "hsbc"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "4h27g823-g73s-07v3-l49s-prte94bf21v"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "NBAGDE3E"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "IT"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "DE"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "RO"
+                    },
+                    {
+                      "key": "bank_features.supports_send_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_receive_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_balance.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_scheduled_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_standing_order.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.requires_one_step_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_funds_confirmation.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_return_refund_account.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_transactions_date_filter.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_account_information.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_single_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_variable_recurring_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L, BNPAFRPH, NBAGDE3E"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L, BNPAFRPH, NBAGDE3E"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankSubGroup",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"banks\": [\n    {\n      \"bankGroup\": \"XYZ-Bank-Group\",\n      \"bic\": \"BOFIIE2D\",\n      \"countries\": [\n        \"DE\",\n        \"IT\",\n        \"GB\"\n      ],\n      \"credentialFields\": {\n        \"fields\": [\n          {\n            \"description\": \"User authentication\",\n            \"displayName\": \"Client ID\",\n            \"flickerCode\": \"FLICKERCODE\",\n            \"id\": \"clientId\",\n            \"image\": \"YWJAeXoyWhAeXohteQ\",\n            \"options\": [\n              \"SMS\",\n              \"Phone call\"\n            ],\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"description\": \"User authentication\",\n            \"displayName\": \"Client ID\",\n            \"flickerCode\": \"FLICKERCODE\",\n            \"id\": \"clientId\",\n            \"image\": \"YWJAeXoyWhAeXohteQ\",\n            \"options\": [\n              \"SMS\",\n              \"Phone call\"\n            ],\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"fieldsFormatInformation\": [\n        {\n          \"constraint\": \"^[A-Za-z0-9?:()./,'+\\\\-\\\\s]*$\",\n          \"name\": \"description\",\n          \"path\": \"credentials.credentials1\"\n        },\n        {\n          \"constraint\": \"^[A-Za-z0-9?:()./,'+\\\\-\\\\s]*$\",\n          \"name\": \"description\",\n          \"path\": \"credentials.credentials1\"\n        }\n      ],\n      \"fullLogoUri\": \"https://s3-us-west-2.amazonaws.com/tokenio-assets/1.0.0/logos/gold/gold_full.png\",\n      \"id\": \"ob-modelo\",\n      \"identifier\": \"BLZ\",\n      \"logoUri\": \"https://s3-us-west-2.amazonaws.com/tokenio-assets/1.0.0/logos/gold/gold_square.png\",\n      \"mandatoryFields\": {\n        \"access\": {\n          \"domestic\": {\n            \"fields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"PolishApiFields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"StetFields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"international\": {\n            \"fields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"PolishApiFields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"StetFields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"standingOrder\": {\n          \"domestic\": {\n            \"fields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"PolishApiFields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"StetFields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"international\": {\n            \"fields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"PolishApiFields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"StetFields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"transfer\": {\n          \"domestic\": {\n            \"fields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"PolishApiFields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"StetFields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"international\": {\n            \"fields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"PolishApiFields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"StetFields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      },\n      \"maintenanceWindow\": [\n        {\n          \"startTime\": \"2023-05-03T12:28:20.466Z\",\n          \"endTime\": \"2023-05-03T12:40:25.47Z\",\n          \"type\": \"OUTAGE\",\n          \"productType\": \"SIP\"\n        },\n        {\n          \"startTime\": \"2023-05-03T12:28:20.466Z\",\n          \"endTime\": \"2023-05-03T12:40:25.47Z\",\n          \"type\": \"OUTAGE\",\n          \"productType\": \"SIP\"\n        }\n      ],\n      \"name\": \"Gold Bank\",\n      \"openBankingStandard\": \"UK_Open_Banking_Standard\",\n      \"operationalTime\": \"MON to FRI, 00:00 to 24:00 GMT+1\",\n      \"provider\": \"Token.io\",\n      \"requiresExternalAuth\": false,\n      \"requiresOneStepPayment\": false,\n      \"scaMethods\": [\n        \"REDIRECT\",\n        \"REDIRECT\"\n      ],\n      \"supportedTransferDestinationTypes\": [\n        {\n          \"bankgiroNumber\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bic\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"bankgiroNumber\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bic\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"supportsBalance\": false,\n      \"supportsFundsConfirmation\": false,\n      \"supportsAccountInformation\": false,\n      \"supportsReceivePayment\": false,\n      \"supportsReturnRefundAccount\": false,\n      \"supportsScheduledPayment\": false,\n      \"supportsSendPayment\": false,\n      \"supportsStandingOrder\": false,\n      \"supportsTransactionsDateFilter\": false,\n      \"supportsSinglePayment\": false,\n      \"supportsVariableRecurringPayment\": false,\n      \"transactionHistoryLimit\": 65\n    },\n    {\n      \"bankGroup\": \"XYZ-Bank-Group\",\n      \"bic\": \"BOFIIE2D\",\n      \"countries\": [\n        \"DE\",\n        \"IT\",\n        \"GB\"\n      ],\n      \"credentialFields\": {\n        \"fields\": [\n          {\n            \"description\": \"User authentication\",\n            \"displayName\": \"Client ID\",\n            \"flickerCode\": \"FLICKERCODE\",\n            \"id\": \"clientId\",\n            \"image\": \"YWJAeXoyWhAeXohteQ\",\n            \"options\": [\n              \"SMS\",\n              \"Phone call\"\n            ],\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"description\": \"User authentication\",\n            \"displayName\": \"Client ID\",\n            \"flickerCode\": \"FLICKERCODE\",\n            \"id\": \"clientId\",\n            \"image\": \"YWJAeXoyWhAeXohteQ\",\n            \"options\": [\n              \"SMS\",\n              \"Phone call\"\n            ],\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"fieldsFormatInformation\": [\n        {\n          \"constraint\": \"^[A-Za-z0-9?:()./,'+\\\\-\\\\s]*$\",\n          \"name\": \"description\",\n          \"path\": \"credentials.credentials1\"\n        },\n        {\n          \"constraint\": \"^[A-Za-z0-9?:()./,'+\\\\-\\\\s]*$\",\n          \"name\": \"description\",\n          \"path\": \"credentials.credentials1\"\n        }\n      ],\n      \"fullLogoUri\": \"https://s3-us-west-2.amazonaws.com/tokenio-assets/1.0.0/logos/gold/gold_full.png\",\n      \"id\": \"ob-modelo\",\n      \"identifier\": \"BLZ\",\n      \"logoUri\": \"https://s3-us-west-2.amazonaws.com/tokenio-assets/1.0.0/logos/gold/gold_square.png\",\n      \"mandatoryFields\": {\n        \"access\": {\n          \"domestic\": {\n            \"fields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"PolishApiFields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"StetFields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"international\": {\n            \"fields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"PolishApiFields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"StetFields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"standingOrder\": {\n          \"domestic\": {\n            \"fields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"PolishApiFields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"StetFields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"international\": {\n            \"fields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"PolishApiFields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"StetFields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"transfer\": {\n          \"domestic\": {\n            \"fields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"PolishApiFields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"StetFields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"international\": {\n            \"fields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"PolishApiFields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"StetFields\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      },\n      \"maintenanceWindow\": [\n        {\n          \"startTime\": \"2023-05-03T12:28:20.466Z\",\n          \"endTime\": \"2023-05-03T12:40:25.47Z\",\n          \"type\": \"OUTAGE\",\n          \"productType\": \"SIP\"\n        },\n        {\n          \"startTime\": \"2023-05-03T12:28:20.466Z\",\n          \"endTime\": \"2023-05-03T12:40:25.47Z\",\n          \"type\": \"OUTAGE\",\n          \"productType\": \"SIP\"\n        }\n      ],\n      \"name\": \"Gold Bank\",\n      \"openBankingStandard\": \"UK_Open_Banking_Standard\",\n      \"operationalTime\": \"MON to FRI, 00:00 to 24:00 GMT+1\",\n      \"provider\": \"Token.io\",\n      \"requiresExternalAuth\": false,\n      \"requiresOneStepPayment\": false,\n      \"scaMethods\": [\n        \"REDIRECT\",\n        \"REDIRECT\"\n      ],\n      \"supportedTransferDestinationTypes\": [\n        {\n          \"bankgiroNumber\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bic\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"bankgiroNumber\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bic\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"supportsBalance\": false,\n      \"supportsFundsConfirmation\": false,\n      \"supportsAccountInformation\": false,\n      \"supportsReceivePayment\": false,\n      \"supportsReturnRefundAccount\": false,\n      \"supportsScheduledPayment\": false,\n      \"supportsSendPayment\": false,\n      \"supportsStandingOrder\": false,\n      \"supportsTransactionsDateFilter\": false,\n      \"supportsSinglePayment\": false,\n      \"supportsVariableRecurringPayment\": false,\n      \"transactionHistoryLimit\": 65\n    }\n  ],\n  \"paging\": {\n    \"page\": 15,\n    \"pageCount\": 80,\n    \"perPage\": 32,\n    \"totalCount\": 2500\n  },\n  \"rank\": 6686,\n  \"bankSubGroup\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "19e972be-659f-4739-a7b0-a193aff26f15",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "banks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "175"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "country"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "goldbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "opalbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "platinumbank"
+                    },
+                    {
+                      "key": "search",
+                      "value": "hsbc"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "4h27g823-g73s-07v3-l49s-prte94bf21v"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "NBAGDE3E"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "IT"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "DE"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "RO"
+                    },
+                    {
+                      "key": "bank_features.supports_send_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_receive_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_balance.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_scheduled_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_standing_order.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.requires_one_step_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_funds_confirmation.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_return_refund_account.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_transactions_date_filter.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_account_information.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_single_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_variable_recurring_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L, BNPAFRPH, NBAGDE3E"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L, BNPAFRPH, NBAGDE3E"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankSubGroup",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e67d763b-12ca-4104-a499-713049775341",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "banks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "175"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "country"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "goldbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "opalbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "platinumbank"
+                    },
+                    {
+                      "key": "search",
+                      "value": "hsbc"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "4h27g823-g73s-07v3-l49s-prte94bf21v"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "NBAGDE3E"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "IT"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "DE"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "RO"
+                    },
+                    {
+                      "key": "bank_features.supports_send_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_receive_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_balance.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_scheduled_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_standing_order.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.requires_one_step_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_funds_confirmation.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_return_refund_account.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_transactions_date_filter.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_account_information.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_single_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_variable_recurring_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L, BNPAFRPH, NBAGDE3E"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L, BNPAFRPH, NBAGDE3E"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankSubGroup",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6417019e-df14-478d-96e8-28fc941afe18",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "banks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "175"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "country"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "goldbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "opalbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "platinumbank"
+                    },
+                    {
+                      "key": "search",
+                      "value": "hsbc"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "4h27g823-g73s-07v3-l49s-prte94bf21v"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "NBAGDE3E"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "IT"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "DE"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "RO"
+                    },
+                    {
+                      "key": "bank_features.supports_send_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_receive_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_balance.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_scheduled_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_standing_order.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.requires_one_step_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_funds_confirmation.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_return_refund_account.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_transactions_date_filter.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_account_information.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_single_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_variable_recurring_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L, BNPAFRPH, NBAGDE3E"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L, BNPAFRPH, NBAGDE3E"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankSubGroup",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0efd001f-1854-43be-8ec7-39fa438d4f0c",
+              "name": "The requested entity, such as a payment, was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "banks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "175"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "country"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "goldbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "opalbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "platinumbank"
+                    },
+                    {
+                      "key": "search",
+                      "value": "hsbc"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "4h27g823-g73s-07v3-l49s-prte94bf21v"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "NBAGDE3E"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "IT"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "DE"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "RO"
+                    },
+                    {
+                      "key": "bank_features.supports_send_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_receive_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_balance.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_scheduled_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_standing_order.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.requires_one_step_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_funds_confirmation.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_return_refund_account.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_transactions_date_filter.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_account_information.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_single_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_variable_recurring_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L, BNPAFRPH, NBAGDE3E"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L, BNPAFRPH, NBAGDE3E"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankSubGroup",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "67666b6d-64f4-4a46-8503-bf4ccc19d031",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "banks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "175"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "country"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "goldbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "opalbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "platinumbank"
+                    },
+                    {
+                      "key": "search",
+                      "value": "hsbc"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "4h27g823-g73s-07v3-l49s-prte94bf21v"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "NBAGDE3E"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "IT"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "DE"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "RO"
+                    },
+                    {
+                      "key": "bank_features.supports_send_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_receive_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_balance.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_scheduled_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_standing_order.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.requires_one_step_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_funds_confirmation.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_return_refund_account.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_transactions_date_filter.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_account_information.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_single_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_variable_recurring_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L, BNPAFRPH, NBAGDE3E"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L, BNPAFRPH, NBAGDE3E"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankSubGroup",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c35591ad-961b-4440-9a1d-0bfd538c8a9f",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "banks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "175"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "country"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "goldbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "opalbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "platinumbank"
+                    },
+                    {
+                      "key": "search",
+                      "value": "hsbc"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "4h27g823-g73s-07v3-l49s-prte94bf21v"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "NBAGDE3E"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "IT"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "DE"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "RO"
+                    },
+                    {
+                      "key": "bank_features.supports_send_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_receive_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_balance.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_scheduled_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_standing_order.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.requires_one_step_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_funds_confirmation.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_return_refund_account.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_transactions_date_filter.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_account_information.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_single_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_variable_recurring_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L, BNPAFRPH, NBAGDE3E"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L, BNPAFRPH, NBAGDE3E"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankSubGroup",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "823e332f-c8f6-4298-bbb4-eb287eb5e6c7",
+              "name": "The operation was not implemented",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "banks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "175"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "country"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "goldbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "opalbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "platinumbank"
+                    },
+                    {
+                      "key": "search",
+                      "value": "hsbc"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "4h27g823-g73s-07v3-l49s-prte94bf21v"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "NBAGDE3E"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "IT"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "DE"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "RO"
+                    },
+                    {
+                      "key": "bank_features.supports_send_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_receive_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_balance.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_scheduled_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_standing_order.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.requires_one_step_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_funds_confirmation.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_return_refund_account.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_transactions_date_filter.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_account_information.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_single_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_variable_recurring_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L, BNPAFRPH, NBAGDE3E"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L, BNPAFRPH, NBAGDE3E"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankSubGroup",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d598c22-fff4-4d02-9772-789ce14d7e74",
+              "name": "Service is unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "banks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "175"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "country"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "goldbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "opalbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "platinumbank"
+                    },
+                    {
+                      "key": "search",
+                      "value": "hsbc"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "4h27g823-g73s-07v3-l49s-prte94bf21v"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "NBAGDE3E"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "IT"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "DE"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "RO"
+                    },
+                    {
+                      "key": "bank_features.supports_send_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_receive_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_balance.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_scheduled_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_standing_order.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.requires_one_step_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_funds_confirmation.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_return_refund_account.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_transactions_date_filter.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_account_information.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_single_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_variable_recurring_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L, BNPAFRPH, NBAGDE3E"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L, BNPAFRPH, NBAGDE3E"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankSubGroup",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9764d507-642d-4f5b-8277-285f3a76e20d",
+              "name": "Gateway has timed out",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "banks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "175"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "country"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "goldbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "opalbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "platinumbank"
+                    },
+                    {
+                      "key": "search",
+                      "value": "hsbc"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "4h27g823-g73s-07v3-l49s-prte94bf21v"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "NBAGDE3E"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "IT"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "DE"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "RO"
+                    },
+                    {
+                      "key": "bank_features.supports_send_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_receive_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_balance.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_scheduled_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_standing_order.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.requires_one_step_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_funds_confirmation.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_return_refund_account.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_transactions_date_filter.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_account_information.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_single_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_variable_recurring_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L, BNPAFRPH, NBAGDE3E"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L, BNPAFRPH, NBAGDE3E"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankSubGroup",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1214f184-8dde-4ed4-a9d0-b5b356fe9380",
+          "name": "Get bank countries",
+          "request": {
+            "name": "Get bank countries",
+            "description": {
+              "content": "The `GET /banks/countries` endpoint retrieves the list of countries that have connected banks which match the parameters specified.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bank",
+                "countries"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<string>",
+                  "description": "Filters for banks with bank ids that are represented in this list of ids (case-insensitive), up to a maximum of 1000."
+                },
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<string>",
+                  "description": "Filters for banks with bank ids that are represented in this list of ids (case-insensitive), up to a maximum of 1000."
+                },
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "Filters for banks with names or identifiers that contain this search string (case sensitive)."
+                },
+                {
+                  "disabled": false,
+                  "key": "tppId",
+                  "value": "<string>",
+                  "description": "Filters for banks to which the TPP with this `tppId` has access."
+                },
+                {
+                  "disabled": false,
+                  "key": "bankCode",
+                  "value": "<string>",
+                  "description": "Filters for banks with a BIC (or BLZ, if German) that matches this `bankCode`. The BIC must have a string length of 8 or 11. The BLZ must have a string length of 8."
+                },
+                {
+                  "disabled": false,
+                  "key": "countries",
+                  "value": "<string>",
+                  "description": "Filters for banks that are located in the countries specified by this list of two-letter country code in upper case (ISO 3166-1 alpha-2)."
+                },
+                {
+                  "disabled": false,
+                  "key": "countries",
+                  "value": "<string>",
+                  "description": "Filters for banks that are located in the countries specified by this list of two-letter country code in upper case (ISO 3166-1 alpha-2)."
+                },
+                {
+                  "disabled": false,
+                  "key": "providers",
+                  "value": "<string>",
+                  "description": "Filters for banks that are accessed through any of this list of providers."
+                },
+                {
+                  "disabled": false,
+                  "key": "providers",
+                  "value": "<string>",
+                  "description": "Filters for banks that are accessed through any of this list of providers."
+                },
+                {
+                  "disabled": false,
+                  "key": "bank_features.supports_send_payment.value",
+                  "value": "false",
+                  "description": "Filters for banks that support payment initiation."
+                },
+                {
+                  "disabled": false,
+                  "key": "bank_features.supports_receive_payment.value",
+                  "value": "false",
+                  "description": "Filters for banks that support the receipt of payments."
+                },
+                {
+                  "disabled": false,
+                  "key": "bank_features.supports_balance.value",
+                  "value": "false",
+                  "description": "Filters for the banks that support retrieving account balances."
+                },
+                {
+                  "disabled": false,
+                  "key": "bank_features.supports_scheduled_payment.value",
+                  "value": "false",
+                  "description": "Filters for banks that support future dated scheduled payments."
+                },
+                {
+                  "disabled": false,
+                  "key": "bank_features.supports_standing_order.value",
+                  "value": "false",
+                  "description": "Filters for banks that support standing orders/recurring payments."
+                },
+                {
+                  "disabled": false,
+                  "key": "bank_features.requires_one_step_payment.value",
+                  "value": "false",
+                  "description": "Filters for banks that only support immediate redemption of transfer tokens."
+                },
+                {
+                  "disabled": false,
+                  "key": "bank_features.supports_funds_confirmation.value",
+                  "value": "false",
+                  "description": "Filters for banks that support confirmation of available funds."
+                },
+                {
+                  "disabled": false,
+                  "key": "bank_features.supports_return_refund_account.value",
+                  "value": "false",
+                  "description": "Filters for banks that support the request of refund account."
+                },
+                {
+                  "disabled": false,
+                  "key": "bank_features.supports_transactions_date_filter.value",
+                  "value": "false",
+                  "description": "Filters for banks that support retrieving transactions by date filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "bank_features.supports_account_information.value",
+                  "value": "false",
+                  "description": "Filters for banks that support retrieving account information using Account Information Services (AIS)."
+                },
+                {
+                  "disabled": false,
+                  "key": "bank_features.supports_single_payment.value",
+                  "value": "false",
+                  "description": "Filters for banks that support single immediate payments."
+                },
+                {
+                  "disabled": false,
+                  "key": "bank_features.supports_variable_recurring_payment.value",
+                  "value": "false",
+                  "description": "Filters for banks that support variable recurring payments."
+                },
+                {
+                  "disabled": false,
+                  "key": "memberId",
+                  "value": "<string>",
+                  "description": "The Token.io-assigned member id of the TPP."
+                },
+                {
+                  "disabled": false,
+                  "key": "supportedPaymentNetworks",
+                  "value": "<string>",
+                  "description": "Filters for banks that support any of the listed payment networks."
+                },
+                {
+                  "disabled": false,
+                  "key": "supportedPaymentNetworks",
+                  "value": "<string>",
+                  "description": "Filters for banks that support any of the listed payment networks."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "514136f9-1860-43b1-92cf-f50c1a0405b2",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank",
+                    "countries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "goldbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "opalbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "platinumbank"
+                    },
+                    {
+                      "key": "search",
+                      "value": "banca"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "9fk3m361-f12r-04b9-p39f-rio2m3pw9v8s"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "NBAGDE3E"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "GB, RO, AT"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "GB, RO, AT"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bank_features.supports_send_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_receive_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_balance.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_scheduled_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_standing_order.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.requires_one_step_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_funds_confirmation.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_return_refund_account.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_transactions_date_filter.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_account_information.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_single_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_variable_recurring_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "SEPA"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "SEPA"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"countries\": [\n    \"RO, AT, DE, FR\",\n    \"RO, AT, DE, FR\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc83423d-effe-4779-bcbb-88732e1b2775",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank",
+                    "countries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "goldbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "opalbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "platinumbank"
+                    },
+                    {
+                      "key": "search",
+                      "value": "banca"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "9fk3m361-f12r-04b9-p39f-rio2m3pw9v8s"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "NBAGDE3E"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "GB, RO, AT"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "GB, RO, AT"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bank_features.supports_send_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_receive_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_balance.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_scheduled_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_standing_order.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.requires_one_step_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_funds_confirmation.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_return_refund_account.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_transactions_date_filter.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_account_information.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_single_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_variable_recurring_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "SEPA"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "SEPA"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "85b06c2b-9b29-4bb7-a055-d831642a4869",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank",
+                    "countries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "goldbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "opalbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "platinumbank"
+                    },
+                    {
+                      "key": "search",
+                      "value": "banca"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "9fk3m361-f12r-04b9-p39f-rio2m3pw9v8s"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "NBAGDE3E"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "GB, RO, AT"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "GB, RO, AT"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bank_features.supports_send_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_receive_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_balance.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_scheduled_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_standing_order.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.requires_one_step_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_funds_confirmation.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_return_refund_account.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_transactions_date_filter.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_account_information.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_single_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_variable_recurring_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "SEPA"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "SEPA"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d259034d-0ee0-46b2-a3e6-ad35bf730fea",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank",
+                    "countries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "goldbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "opalbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "platinumbank"
+                    },
+                    {
+                      "key": "search",
+                      "value": "banca"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "9fk3m361-f12r-04b9-p39f-rio2m3pw9v8s"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "NBAGDE3E"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "GB, RO, AT"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "GB, RO, AT"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bank_features.supports_send_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_receive_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_balance.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_scheduled_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_standing_order.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.requires_one_step_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_funds_confirmation.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_return_refund_account.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_transactions_date_filter.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_account_information.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_single_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_variable_recurring_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "SEPA"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "SEPA"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0d6de4d-df2d-4833-a858-b17c0d1d9b49",
+              "name": "The requested entity, such as a payment, was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank",
+                    "countries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "goldbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "opalbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "platinumbank"
+                    },
+                    {
+                      "key": "search",
+                      "value": "banca"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "9fk3m361-f12r-04b9-p39f-rio2m3pw9v8s"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "NBAGDE3E"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "GB, RO, AT"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "GB, RO, AT"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bank_features.supports_send_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_receive_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_balance.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_scheduled_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_standing_order.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.requires_one_step_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_funds_confirmation.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_return_refund_account.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_transactions_date_filter.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_account_information.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_single_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_variable_recurring_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "SEPA"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "SEPA"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "129c7c82-f977-4731-bb90-5de8ac45d359",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank",
+                    "countries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "goldbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "opalbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "platinumbank"
+                    },
+                    {
+                      "key": "search",
+                      "value": "banca"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "9fk3m361-f12r-04b9-p39f-rio2m3pw9v8s"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "NBAGDE3E"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "GB, RO, AT"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "GB, RO, AT"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bank_features.supports_send_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_receive_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_balance.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_scheduled_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_standing_order.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.requires_one_step_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_funds_confirmation.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_return_refund_account.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_transactions_date_filter.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_account_information.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_single_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_variable_recurring_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "SEPA"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "SEPA"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "52bb733f-d360-4470-85e1-6d9d7ed77aae",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank",
+                    "countries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "goldbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "opalbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "platinumbank"
+                    },
+                    {
+                      "key": "search",
+                      "value": "banca"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "9fk3m361-f12r-04b9-p39f-rio2m3pw9v8s"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "NBAGDE3E"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "GB, RO, AT"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "GB, RO, AT"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bank_features.supports_send_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_receive_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_balance.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_scheduled_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_standing_order.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.requires_one_step_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_funds_confirmation.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_return_refund_account.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_transactions_date_filter.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_account_information.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_single_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_variable_recurring_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "SEPA"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "SEPA"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "69e6b59d-ea3c-48c9-a82b-4608c32dec56",
+              "name": "The operation was not implemented",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank",
+                    "countries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "goldbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "opalbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "platinumbank"
+                    },
+                    {
+                      "key": "search",
+                      "value": "banca"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "9fk3m361-f12r-04b9-p39f-rio2m3pw9v8s"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "NBAGDE3E"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "GB, RO, AT"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "GB, RO, AT"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bank_features.supports_send_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_receive_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_balance.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_scheduled_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_standing_order.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.requires_one_step_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_funds_confirmation.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_return_refund_account.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_transactions_date_filter.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_account_information.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_single_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_variable_recurring_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "SEPA"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "SEPA"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c2594696-3826-4dd5-aed2-8501d17f2d9b",
+              "name": "Service is unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank",
+                    "countries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "goldbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "opalbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "platinumbank"
+                    },
+                    {
+                      "key": "search",
+                      "value": "banca"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "9fk3m361-f12r-04b9-p39f-rio2m3pw9v8s"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "NBAGDE3E"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "GB, RO, AT"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "GB, RO, AT"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bank_features.supports_send_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_receive_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_balance.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_scheduled_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_standing_order.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.requires_one_step_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_funds_confirmation.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_return_refund_account.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_transactions_date_filter.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_account_information.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_single_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_variable_recurring_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "SEPA"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "SEPA"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0caad28-4147-40e4-9e76-cafaa21d70da",
+              "name": "Gateway has timed out",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank",
+                    "countries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "goldbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "opalbank"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "platinumbank"
+                    },
+                    {
+                      "key": "search",
+                      "value": "banca"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "9fk3m361-f12r-04b9-p39f-rio2m3pw9v8s"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "NBAGDE3E"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "GB, RO, AT"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "GB, RO, AT"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bank_features.supports_send_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_receive_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_balance.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_scheduled_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_standing_order.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.requires_one_step_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_funds_confirmation.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_return_refund_account.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_transactions_date_filter.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_account_information.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_single_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "bank_features.supports_variable_recurring_payment.value",
+                      "value": "false"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "SEPA"
+                    },
+                    {
+                      "key": "supportedPaymentNetworks",
+                      "value": "SEPA"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.token.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e1bcd326-b8a1-4c3c-ba55-3ee273ed284f",
+    "name": "Token.io's Open Banking API for TPPs Account on File Banks v1 API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "<b>Token.io's Open Banking API</b><br/><br/>Token.io Support: <a href=\"https://support.token.io\" target=\"_blank\">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user's account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href=\"https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm\" target=\"_blank\">developer documentation</a>.",
+      "type": "text/plain"
+    }
+  }
+}

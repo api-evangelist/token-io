@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Token.io's Open Banking API for TPPs Account on File Reports API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get bank statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/reports/banks/status",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /reports/banks/status` endpoint returns the current AIS and PIS service status along with server status for all banks."
+        },
+        {
+          "info": {
+            "name": "Get a bank status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/reports/banks/:bankId/status",
+            "params": [
+              {
+                "name": "bankId",
+                "value": "ob-goldbank",
+                "type": "path",
+                "description": "The bank identifier, identical to the `id` in the repsonse to `GET /banks`."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /reports/banks/{bankId}/status` endpoint returns the current AIS and PIS service status for a specific bank."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

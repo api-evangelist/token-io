@@ -1,0 +1,2252 @@
+{
+  "item": [
+    {
+      "id": "dee7d9ac-1740-4775-9e13-9b3933bb2dd1",
+      "name": "Payouts",
+      "description": {
+        "content": "These endpoints allow you to make payouts.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b04893c9-8e3d-45ec-8934-2f89aae561c5",
+          "name": "Initiate a payout",
+          "request": {
+            "name": "Initiate a payout",
+            "description": {
+              "content": "The `POST /payouts` endpoint initiates a payout.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payouts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"refId\": \"<string>\",\n    \"debtor\": {\n      \"accountId\": \"<string>\"\n    },\n    \"creditor\": {\n      \"name\": \"<string>\",\n      \"ultimateCreditorName\": \"<string>\",\n      \"bankName\": \"<string>\",\n      \"iban\": \"<string>\",\n      \"bic\": \"<string>\",\n      \"accountNumber\": \"<string>\",\n      \"sortCode\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"description\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "75c1e57c-91ee-4139-8267-db34da671a73",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.23\"\n    },\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"debtor\": {\n      \"accountId\": \"a12345\"\n    },\n    \"creditor\": {\n      \"name\": \"Customer Inc.\",\n      \"ultimateCreditorName\": \"Customer Inc.\",\n      \"bankName\": \"<string>\",\n      \"iban\": \"GB29NWBK60161331926819\",\n      \"bic\": \"BOFIIE2D\",\n      \"accountNumber\": \"12345678\",\n      \"sortCode\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"description\": \"e49j-2145-sp17-k3h0\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payout\": {\n    \"createdDateTime\": \"2017-04-05T10:43:07.000+00:00\",\n    \"id\": \"po:yj6sSEf7ZYFP8yxN6XWi1KkMEcB:2gFUX1NDget\",\n    \"memberId\": \"m:123456abcd:abcd\",\n    \"status\": \"INITIATION_COMPLETED\",\n    \"updatedDateTime\": \"2017-04-05T10:45:07.000+00:00\",\n    \"bankTransactionId\": \"2UhwCZ3BMaEcAUK8bZdukor7NL4tH6TBuu6aJMp5KKfX:5zKcENpV\",\n    \"bankPaymentStatus\": \"ACPC\",\n    \"statusReasonInformation\": \"The payment is settled on debtor side.\",\n    \"initiation\": {\n      \"amount\": {\n        \"currency\": \"EUR\",\n        \"value\": \"10.23\"\n      },\n      \"creditor\": {\n        \"name\": \"Customer Inc.\",\n        \"ultimateCreditorName\": \"Customer Inc.\",\n        \"bankName\": \"<string>\",\n        \"iban\": \"GB29NWBK60161331926819\",\n        \"bic\": \"BOFIIE2D\",\n        \"accountNumber\": \"12345678\",\n        \"sortCode\": \"<string>\",\n        \"accountVerificationId\": \"<string>\"\n      },\n      \"debtor\": {\n        \"accountId\": \"a12345\"\n      },\n      \"refId\": \"9htio4a1sp2akdr1aa\",\n      \"description\": \"payout for some reason\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "896da70d-514f-4262-8362-17b48b581e63",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.23\"\n    },\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"debtor\": {\n      \"accountId\": \"a12345\"\n    },\n    \"creditor\": {\n      \"name\": \"Customer Inc.\",\n      \"ultimateCreditorName\": \"Customer Inc.\",\n      \"bankName\": \"<string>\",\n      \"iban\": \"GB29NWBK60161331926819\",\n      \"bic\": \"BOFIIE2D\",\n      \"accountNumber\": \"12345678\",\n      \"sortCode\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"description\": \"e49j-2145-sp17-k3h0\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ac2e4fda-fe57-48a8-be7e-312cd48a439d",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.23\"\n    },\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"debtor\": {\n      \"accountId\": \"a12345\"\n    },\n    \"creditor\": {\n      \"name\": \"Customer Inc.\",\n      \"ultimateCreditorName\": \"Customer Inc.\",\n      \"bankName\": \"<string>\",\n      \"iban\": \"GB29NWBK60161331926819\",\n      \"bic\": \"BOFIIE2D\",\n      \"accountNumber\": \"12345678\",\n      \"sortCode\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"description\": \"e49j-2145-sp17-k3h0\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9967e490-791b-480d-a1f2-8521ef65d196",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.23\"\n    },\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"debtor\": {\n      \"accountId\": \"a12345\"\n    },\n    \"creditor\": {\n      \"name\": \"Customer Inc.\",\n      \"ultimateCreditorName\": \"Customer Inc.\",\n      \"bankName\": \"<string>\",\n      \"iban\": \"GB29NWBK60161331926819\",\n      \"bic\": \"BOFIIE2D\",\n      \"accountNumber\": \"12345678\",\n      \"sortCode\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"description\": \"e49j-2145-sp17-k3h0\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5955c0e8-0665-4d6a-a5d3-81fbed43e044",
+              "name": "The requested entity, such as a payment, was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.23\"\n    },\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"debtor\": {\n      \"accountId\": \"a12345\"\n    },\n    \"creditor\": {\n      \"name\": \"Customer Inc.\",\n      \"ultimateCreditorName\": \"Customer Inc.\",\n      \"bankName\": \"<string>\",\n      \"iban\": \"GB29NWBK60161331926819\",\n      \"bic\": \"BOFIIE2D\",\n      \"accountNumber\": \"12345678\",\n      \"sortCode\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"description\": \"e49j-2145-sp17-k3h0\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91324de5-46e9-401f-a381-2e4894a22b32",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.23\"\n    },\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"debtor\": {\n      \"accountId\": \"a12345\"\n    },\n    \"creditor\": {\n      \"name\": \"Customer Inc.\",\n      \"ultimateCreditorName\": \"Customer Inc.\",\n      \"bankName\": \"<string>\",\n      \"iban\": \"GB29NWBK60161331926819\",\n      \"bic\": \"BOFIIE2D\",\n      \"accountNumber\": \"12345678\",\n      \"sortCode\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"description\": \"e49j-2145-sp17-k3h0\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "54eefd0f-1635-42c0-9b87-fb1c11c547cb",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.23\"\n    },\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"debtor\": {\n      \"accountId\": \"a12345\"\n    },\n    \"creditor\": {\n      \"name\": \"Customer Inc.\",\n      \"ultimateCreditorName\": \"Customer Inc.\",\n      \"bankName\": \"<string>\",\n      \"iban\": \"GB29NWBK60161331926819\",\n      \"bic\": \"BOFIIE2D\",\n      \"accountNumber\": \"12345678\",\n      \"sortCode\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"description\": \"e49j-2145-sp17-k3h0\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13923d53-04d7-4ef8-bba0-f997874407fd",
+              "name": "The operation was not implemented",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.23\"\n    },\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"debtor\": {\n      \"accountId\": \"a12345\"\n    },\n    \"creditor\": {\n      \"name\": \"Customer Inc.\",\n      \"ultimateCreditorName\": \"Customer Inc.\",\n      \"bankName\": \"<string>\",\n      \"iban\": \"GB29NWBK60161331926819\",\n      \"bic\": \"BOFIIE2D\",\n      \"accountNumber\": \"12345678\",\n      \"sortCode\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"description\": \"e49j-2145-sp17-k3h0\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "944929e4-d0cb-4a32-a138-655fbc567ae2",
+              "name": "Service is unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.23\"\n    },\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"debtor\": {\n      \"accountId\": \"a12345\"\n    },\n    \"creditor\": {\n      \"name\": \"Customer Inc.\",\n      \"ultimateCreditorName\": \"Customer Inc.\",\n      \"bankName\": \"<string>\",\n      \"iban\": \"GB29NWBK60161331926819\",\n      \"bic\": \"BOFIIE2D\",\n      \"accountNumber\": \"12345678\",\n      \"sortCode\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"description\": \"e49j-2145-sp17-k3h0\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "37b4e3c5-3026-4488-a788-1d817a15ef05",
+              "name": "Gateway has timed out",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.23\"\n    },\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"debtor\": {\n      \"accountId\": \"a12345\"\n    },\n    \"creditor\": {\n      \"name\": \"Customer Inc.\",\n      \"ultimateCreditorName\": \"Customer Inc.\",\n      \"bankName\": \"<string>\",\n      \"iban\": \"GB29NWBK60161331926819\",\n      \"bic\": \"BOFIIE2D\",\n      \"accountNumber\": \"12345678\",\n      \"sortCode\": \"<string>\",\n      \"accountVerificationId\": \"<string>\"\n    },\n    \"description\": \"e49j-2145-sp17-k3h0\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b902aadb-8c1f-4f71-a3b3-0192dd125744",
+          "name": "Get payouts",
+          "request": {
+            "name": "Get payouts",
+            "description": {
+              "content": "The `GET /payouts` endpoint retrieves a complete or filtered list of payouts.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payouts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "(Required) The maximum number of records to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<string>",
+                  "description": "The offset from the previous page."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<string>",
+                  "description": "Lower bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or after the given date will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<string>",
+                  "description": "Upper bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or before the given date will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<string>",
+                  "description": "Filters payouts by their ids - returns only payouts with ids listed in this parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<string>",
+                  "description": "Filters payouts by their ids - returns only payouts with ids listed in this parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "invertIds",
+                  "value": "<boolean>",
+                  "description": "Invert ids query - returns only payouts with ids not listed in the ids parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "statuses",
+                  "value": "INITIATION_PENDING",
+                  "description": "Filters payouts by their statuses - returns only payouts with statuses listed in this parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "statuses",
+                  "value": "INITIATION_PENDING",
+                  "description": "Filters payouts by their statuses - returns only payouts with statuses listed in this parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "invertStatuses",
+                  "value": "<boolean>",
+                  "description": "Invert statuses query - returns only payouts with statuses not listed in the statuses parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "refIds",
+                  "value": "<string>",
+                  "description": "Filters payouts by their `refId` values - returns only payouts with `refIds` listed in this parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "refIds",
+                  "value": "<string>",
+                  "description": "Filters payouts by their `refId` values - returns only payouts with `refIds` listed in this parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "onBehalfOfId",
+                  "value": "<string>",
+                  "description": "Filters payouts by their `onBehalfOfId` value - returns only payouts with the `onBehalfOfId` value specified in this parameter. This field is mandatory for unregulated TPPs."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "bb607f08-a920-423b-bf8f-61db093a7d48",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "po:28oivvd3iFhBrcbNj4tmtLEhxRTk:2gFUX1NE1T6"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "po:3ZfdHxbpXmRZ1TVmiYNPgcwEocBy:2gFUX1NDdqr"
+                    },
+                    {
+                      "key": "invertIds",
+                      "value": "false"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_COMPLETED"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_REJECTED"
+                    },
+                    {
+                      "key": "invertStatuses",
+                      "value": "true"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "ShBdcTeqFabqJJhUF"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "N5cJDFsQzVca3Q"
+                    },
+                    {
+                      "key": "onBehalfOfId",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payouts\": [\n    {\n      \"createdDateTime\": \"2017-04-05T10:43:07.000+00:00\",\n      \"id\": \"po:yj6sSEf7ZYFP8yxN6XWi1KkMEcB:2gFUX1NDget\",\n      \"memberId\": \"m:123456abcd:abcd\",\n      \"status\": \"INITIATION_COMPLETED\",\n      \"updatedDateTime\": \"2017-04-05T10:45:07.000+00:00\",\n      \"bankTransactionId\": \"2UhwCZ3BMaEcAUK8bZdukor7NL4tH6TBuu6aJMp5KKfX:5zKcENpV\",\n      \"bankPaymentStatus\": \"ACPC\",\n      \"statusReasonInformation\": \"The payment is settled on debtor side.\",\n      \"initiation\": {\n        \"amount\": {\n          \"currency\": \"EUR\",\n          \"value\": \"10.23\"\n        },\n        \"creditor\": {\n          \"name\": \"Customer Inc.\",\n          \"ultimateCreditorName\": \"Customer Inc.\",\n          \"bankName\": \"<string>\",\n          \"iban\": \"GB29NWBK60161331926819\",\n          \"bic\": \"BOFIIE2D\",\n          \"accountNumber\": \"12345678\",\n          \"sortCode\": \"<string>\",\n          \"accountVerificationId\": \"<string>\"\n        },\n        \"debtor\": {\n          \"accountId\": \"a12345\"\n        },\n        \"refId\": \"9htio4a1sp2akdr1aa\",\n        \"description\": \"payout for some reason\"\n      }\n    },\n    {\n      \"createdDateTime\": \"2017-04-05T10:43:07.000+00:00\",\n      \"id\": \"po:yj6sSEf7ZYFP8yxN6XWi1KkMEcB:2gFUX1NDget\",\n      \"memberId\": \"m:123456abcd:abcd\",\n      \"status\": \"INITIATION_COMPLETED\",\n      \"updatedDateTime\": \"2017-04-05T10:45:07.000+00:00\",\n      \"bankTransactionId\": \"2UhwCZ3BMaEcAUK8bZdukor7NL4tH6TBuu6aJMp5KKfX:5zKcENpV\",\n      \"bankPaymentStatus\": \"ACPC\",\n      \"statusReasonInformation\": \"The payment is settled on debtor side.\",\n      \"initiation\": {\n        \"amount\": {\n          \"currency\": \"EUR\",\n          \"value\": \"10.23\"\n        },\n        \"creditor\": {\n          \"name\": \"Customer Inc.\",\n          \"ultimateCreditorName\": \"Customer Inc.\",\n          \"bankName\": \"<string>\",\n          \"iban\": \"GB29NWBK60161331926819\",\n          \"bic\": \"BOFIIE2D\",\n          \"accountNumber\": \"12345678\",\n          \"sortCode\": \"<string>\",\n          \"accountVerificationId\": \"<string>\"\n        },\n        \"debtor\": {\n          \"accountId\": \"a12345\"\n        },\n        \"refId\": \"9htio4a1sp2akdr1aa\",\n        \"description\": \"payout for some reason\"\n      }\n    }\n  ],\n  \"paging\": {\n    \"limit\": 9663,\n    \"offset\": \"LerV6Jmex\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13510b1b-b65d-4448-abde-076775d16266",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "po:28oivvd3iFhBrcbNj4tmtLEhxRTk:2gFUX1NE1T6"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "po:3ZfdHxbpXmRZ1TVmiYNPgcwEocBy:2gFUX1NDdqr"
+                    },
+                    {
+                      "key": "invertIds",
+                      "value": "false"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_COMPLETED"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_REJECTED"
+                    },
+                    {
+                      "key": "invertStatuses",
+                      "value": "true"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "ShBdcTeqFabqJJhUF"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "N5cJDFsQzVca3Q"
+                    },
+                    {
+                      "key": "onBehalfOfId",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "10a9a541-1d16-4383-b10e-3dd6a6575cbb",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "po:28oivvd3iFhBrcbNj4tmtLEhxRTk:2gFUX1NE1T6"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "po:3ZfdHxbpXmRZ1TVmiYNPgcwEocBy:2gFUX1NDdqr"
+                    },
+                    {
+                      "key": "invertIds",
+                      "value": "false"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_COMPLETED"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_REJECTED"
+                    },
+                    {
+                      "key": "invertStatuses",
+                      "value": "true"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "ShBdcTeqFabqJJhUF"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "N5cJDFsQzVca3Q"
+                    },
+                    {
+                      "key": "onBehalfOfId",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bfff3921-5f2d-458b-9d80-2d92b45001a1",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "po:28oivvd3iFhBrcbNj4tmtLEhxRTk:2gFUX1NE1T6"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "po:3ZfdHxbpXmRZ1TVmiYNPgcwEocBy:2gFUX1NDdqr"
+                    },
+                    {
+                      "key": "invertIds",
+                      "value": "false"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_COMPLETED"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_REJECTED"
+                    },
+                    {
+                      "key": "invertStatuses",
+                      "value": "true"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "ShBdcTeqFabqJJhUF"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "N5cJDFsQzVca3Q"
+                    },
+                    {
+                      "key": "onBehalfOfId",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "faa381bb-9011-44d9-ba46-0de584f7e01c",
+              "name": "The requested entity, such as a payment, was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "po:28oivvd3iFhBrcbNj4tmtLEhxRTk:2gFUX1NE1T6"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "po:3ZfdHxbpXmRZ1TVmiYNPgcwEocBy:2gFUX1NDdqr"
+                    },
+                    {
+                      "key": "invertIds",
+                      "value": "false"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_COMPLETED"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_REJECTED"
+                    },
+                    {
+                      "key": "invertStatuses",
+                      "value": "true"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "ShBdcTeqFabqJJhUF"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "N5cJDFsQzVca3Q"
+                    },
+                    {
+                      "key": "onBehalfOfId",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f08ed0a-0395-4369-9d19-a392b0d01aca",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "po:28oivvd3iFhBrcbNj4tmtLEhxRTk:2gFUX1NE1T6"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "po:3ZfdHxbpXmRZ1TVmiYNPgcwEocBy:2gFUX1NDdqr"
+                    },
+                    {
+                      "key": "invertIds",
+                      "value": "false"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_COMPLETED"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_REJECTED"
+                    },
+                    {
+                      "key": "invertStatuses",
+                      "value": "true"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "ShBdcTeqFabqJJhUF"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "N5cJDFsQzVca3Q"
+                    },
+                    {
+                      "key": "onBehalfOfId",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "69004ebe-5c6c-4914-be84-add101e2fc8c",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "po:28oivvd3iFhBrcbNj4tmtLEhxRTk:2gFUX1NE1T6"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "po:3ZfdHxbpXmRZ1TVmiYNPgcwEocBy:2gFUX1NDdqr"
+                    },
+                    {
+                      "key": "invertIds",
+                      "value": "false"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_COMPLETED"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_REJECTED"
+                    },
+                    {
+                      "key": "invertStatuses",
+                      "value": "true"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "ShBdcTeqFabqJJhUF"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "N5cJDFsQzVca3Q"
+                    },
+                    {
+                      "key": "onBehalfOfId",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f95f4fe5-cab2-4e6c-9c47-55192fff06b3",
+              "name": "The operation was not implemented",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "po:28oivvd3iFhBrcbNj4tmtLEhxRTk:2gFUX1NE1T6"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "po:3ZfdHxbpXmRZ1TVmiYNPgcwEocBy:2gFUX1NDdqr"
+                    },
+                    {
+                      "key": "invertIds",
+                      "value": "false"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_COMPLETED"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_REJECTED"
+                    },
+                    {
+                      "key": "invertStatuses",
+                      "value": "true"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "ShBdcTeqFabqJJhUF"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "N5cJDFsQzVca3Q"
+                    },
+                    {
+                      "key": "onBehalfOfId",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "abcbf4ed-824f-4d78-a526-981f28f1197f",
+              "name": "Service is unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "po:28oivvd3iFhBrcbNj4tmtLEhxRTk:2gFUX1NE1T6"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "po:3ZfdHxbpXmRZ1TVmiYNPgcwEocBy:2gFUX1NDdqr"
+                    },
+                    {
+                      "key": "invertIds",
+                      "value": "false"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_COMPLETED"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_REJECTED"
+                    },
+                    {
+                      "key": "invertStatuses",
+                      "value": "true"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "ShBdcTeqFabqJJhUF"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "N5cJDFsQzVca3Q"
+                    },
+                    {
+                      "key": "onBehalfOfId",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0865e0b9-2994-422d-a070-3d6ca9c8377f",
+              "name": "Gateway has timed out",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "po:28oivvd3iFhBrcbNj4tmtLEhxRTk:2gFUX1NE1T6"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "po:3ZfdHxbpXmRZ1TVmiYNPgcwEocBy:2gFUX1NDdqr"
+                    },
+                    {
+                      "key": "invertIds",
+                      "value": "false"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_COMPLETED"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_REJECTED"
+                    },
+                    {
+                      "key": "invertStatuses",
+                      "value": "true"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "ShBdcTeqFabqJJhUF"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "N5cJDFsQzVca3Q"
+                    },
+                    {
+                      "key": "onBehalfOfId",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dc946d88-b2b2-4135-a669-cf878744fc5e",
+          "name": "Get a payout",
+          "request": {
+            "name": "Get a payout",
+            "description": {
+              "content": "The `GET /payouts/{id}` endpoint retrieves a given payout.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payouts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c0980632-dcf0-4a93-8ec0-f81c96ae8c10",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payout\": {\n    \"createdDateTime\": \"2017-04-05T10:43:07.000+00:00\",\n    \"id\": \"po:yj6sSEf7ZYFP8yxN6XWi1KkMEcB:2gFUX1NDget\",\n    \"memberId\": \"m:123456abcd:abcd\",\n    \"status\": \"INITIATION_COMPLETED\",\n    \"updatedDateTime\": \"2017-04-05T10:45:07.000+00:00\",\n    \"bankTransactionId\": \"2UhwCZ3BMaEcAUK8bZdukor7NL4tH6TBuu6aJMp5KKfX:5zKcENpV\",\n    \"bankPaymentStatus\": \"ACPC\",\n    \"statusReasonInformation\": \"The payment is settled on debtor side.\",\n    \"initiation\": {\n      \"amount\": {\n        \"currency\": \"EUR\",\n        \"value\": \"10.23\"\n      },\n      \"creditor\": {\n        \"name\": \"Customer Inc.\",\n        \"ultimateCreditorName\": \"Customer Inc.\",\n        \"bankName\": \"<string>\",\n        \"iban\": \"GB29NWBK60161331926819\",\n        \"bic\": \"BOFIIE2D\",\n        \"accountNumber\": \"12345678\",\n        \"sortCode\": \"<string>\",\n        \"accountVerificationId\": \"<string>\"\n      },\n      \"debtor\": {\n        \"accountId\": \"a12345\"\n      },\n      \"refId\": \"9htio4a1sp2akdr1aa\",\n      \"description\": \"payout for some reason\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c2a9d7e7-170f-48a8-8636-56a0d73a512a",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d34cc12-6df7-426b-a447-2e1588169283",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e478385-d3a9-426e-9542-2c3d0ced8d7f",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dc05480d-1110-4e28-93b0-ac5873bf4fac",
+              "name": "The requested entity, such as a payment, was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "84a35d67-4769-40d8-b88f-92aad1f153ce",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44b5a87f-030f-4f91-8cc1-f136b17f4735",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "50a4c312-f820-484a-8373-9325e7ee937a",
+              "name": "The operation was not implemented",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a9fb09a-1cbf-4550-b544-588b81a67268",
+              "name": "Service is unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fa5aea0d-5a05-48b8-9d5b-9ba681791535",
+              "name": "Gateway has timed out",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.token.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "184871c4-26cf-4a24-98aa-880a526f4a22",
+    "name": "Token.io's Open Banking API for TPPs Account on File Payouts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "<b>Token.io's Open Banking API</b><br/><br/>Token.io Support: <a href=\"https://support.token.io\" target=\"_blank\">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user's account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href=\"https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm\" target=\"_blank\">developer documentation</a>.",
+      "type": "text/plain"
+    }
+  }
+}

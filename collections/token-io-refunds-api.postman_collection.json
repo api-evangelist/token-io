@@ -1,0 +1,3024 @@
+{
+  "item": [
+    {
+      "id": "8dfe8619-1893-4b39-88a8-5e96dfc2569a",
+      "name": "Refunds",
+      "description": {
+        "content": "These endpoints allow you to handle registration, posting, and retrieval of refunds associated with original transaction account information.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5b5c47b1-27f3-4cb1-a181-479593548c46",
+          "name": "Initiate a refund",
+          "request": {
+            "name": "Initiate a refund",
+            "description": {
+              "content": "The `POST /refunds` endpoint initiates a refund. After the refund is settled, the refund status of the original transfer will be updated. <br/> The debtor field can be optional if you're using the debtor in registration. The creditor field can be optional if the information is available in the original payment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "refunds"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"localInstrument\": \"<string>\",\n    \"originalPaymentId\": \"<string>\",\n    \"refId\": \"<string>\",\n    \"description\": \"<string>\",\n    \"registrationId\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\",\n    \"accountVerificationId\": \"<string>\",\n    \"corporateApiDebtor\": {\n      \"accountId\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5e198192-a625-4b3a-92ea-edf4257d48c7",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.23\"\n    },\n    \"localInstrument\": \"SEPA_INSTANT\",\n    \"originalPaymentId\": \"t:sdsds:sdsd\",\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"description\": \"refund for some reason\",\n    \"registrationId\": \"regId\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n    \"accountVerificationId\": \"<string>\",\n    \"corporateApiDebtor\": {\n      \"accountId\": \"a12345\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"refund\": {\n    \"createdDateTime\": \"2017-04-05T10:43:07.000+00:00\",\n    \"id\": \"rf:12345abcd:abcd\",\n    \"memberId\": \"m:123456abcd:abcd\",\n    \"status\": \"INITIATION_COMPLETED\",\n    \"updatedDateTime\": \"2017-04-05T10:45:07.000+00:00\",\n    \"bankTransactionId\": \"2UhwCZ3BMaEcAUK8bZdukor7NL4tH6TBuu6aJMp5KKfX:5zKcENpV\",\n    \"bankPaymentStatus\": \"ACCP\",\n    \"statusReasonInformation\": \"The payment is settled on debtor side.\",\n    \"initiation\": {\n      \"amount\": {\n        \"currency\": \"EUR\",\n        \"value\": \"10.23\"\n      },\n      \"creditor\": {\n        \"iban\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": \"Customer Inc.\",\n        \"bic\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"ultimateCreditorName\": \"Customer Inc.\",\n        \"address\": {\n          \"addressLine\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"streetName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"buildingNumber\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"postCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"townName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"state\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"district\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"country\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"bankName\": \"string\",\n        \"accountVerificationId\": \"<string>\"\n      },\n      \"debtor\": {\n        \"iban\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"bic\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": \"John Smith\",\n        \"ultimateDebtorName\": \"John Smith\",\n        \"address\": {\n          \"addressLine\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"streetName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"buildingNumber\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"postCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"townName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"state\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"district\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"country\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"localInstrument\": \"SEPA_INSTANT\",\n      \"originalPaymentId\": \"t:sdsds:sdsd\",\n      \"refId\": \"9htio4a1sp2akdr1aa\",\n      \"description\": \"refund for some reason\",\n      \"registrationId\": \"regId\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "87ae4a6e-0e93-4fe6-a4f5-3f3b4b8f7074",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.23\"\n    },\n    \"localInstrument\": \"SEPA_INSTANT\",\n    \"originalPaymentId\": \"t:sdsds:sdsd\",\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"description\": \"refund for some reason\",\n    \"registrationId\": \"regId\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n    \"accountVerificationId\": \"<string>\",\n    \"corporateApiDebtor\": {\n      \"accountId\": \"a12345\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4e7e131a-91a2-4828-8c98-ec78c27c6699",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.23\"\n    },\n    \"localInstrument\": \"SEPA_INSTANT\",\n    \"originalPaymentId\": \"t:sdsds:sdsd\",\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"description\": \"refund for some reason\",\n    \"registrationId\": \"regId\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n    \"accountVerificationId\": \"<string>\",\n    \"corporateApiDebtor\": {\n      \"accountId\": \"a12345\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4bcd9650-5ad5-4f77-98df-7a92ec788918",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.23\"\n    },\n    \"localInstrument\": \"SEPA_INSTANT\",\n    \"originalPaymentId\": \"t:sdsds:sdsd\",\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"description\": \"refund for some reason\",\n    \"registrationId\": \"regId\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n    \"accountVerificationId\": \"<string>\",\n    \"corporateApiDebtor\": {\n      \"accountId\": \"a12345\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b6114458-b72f-4e0e-8778-8665d8f97f8e",
+              "name": "The requested entity, such as a payment, was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.23\"\n    },\n    \"localInstrument\": \"SEPA_INSTANT\",\n    \"originalPaymentId\": \"t:sdsds:sdsd\",\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"description\": \"refund for some reason\",\n    \"registrationId\": \"regId\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n    \"accountVerificationId\": \"<string>\",\n    \"corporateApiDebtor\": {\n      \"accountId\": \"a12345\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8222735-12b2-49fb-99e8-e11a6d74f875",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.23\"\n    },\n    \"localInstrument\": \"SEPA_INSTANT\",\n    \"originalPaymentId\": \"t:sdsds:sdsd\",\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"description\": \"refund for some reason\",\n    \"registrationId\": \"regId\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n    \"accountVerificationId\": \"<string>\",\n    \"corporateApiDebtor\": {\n      \"accountId\": \"a12345\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "51f66323-f7be-495a-b8ac-587d807fca34",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.23\"\n    },\n    \"localInstrument\": \"SEPA_INSTANT\",\n    \"originalPaymentId\": \"t:sdsds:sdsd\",\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"description\": \"refund for some reason\",\n    \"registrationId\": \"regId\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n    \"accountVerificationId\": \"<string>\",\n    \"corporateApiDebtor\": {\n      \"accountId\": \"a12345\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d5e739d-c584-434c-8f00-0eea6804e846",
+              "name": "The operation was not implemented",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.23\"\n    },\n    \"localInstrument\": \"SEPA_INSTANT\",\n    \"originalPaymentId\": \"t:sdsds:sdsd\",\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"description\": \"refund for some reason\",\n    \"registrationId\": \"regId\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n    \"accountVerificationId\": \"<string>\",\n    \"corporateApiDebtor\": {\n      \"accountId\": \"a12345\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20e8bc1d-ce47-4306-aa2b-56306990d363",
+              "name": "Service is unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.23\"\n    },\n    \"localInstrument\": \"SEPA_INSTANT\",\n    \"originalPaymentId\": \"t:sdsds:sdsd\",\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"description\": \"refund for some reason\",\n    \"registrationId\": \"regId\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n    \"accountVerificationId\": \"<string>\",\n    \"corporateApiDebtor\": {\n      \"accountId\": \"a12345\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "370a40a2-1460-4918-9022-67c2185e322b",
+              "name": "Gateway has timed out",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.23\"\n    },\n    \"localInstrument\": \"SEPA_INSTANT\",\n    \"originalPaymentId\": \"t:sdsds:sdsd\",\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"description\": \"refund for some reason\",\n    \"registrationId\": \"regId\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n    \"accountVerificationId\": \"<string>\",\n    \"corporateApiDebtor\": {\n      \"accountId\": \"a12345\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d52597f1-42f3-4a27-94f2-d2ab50af383d",
+          "name": "Get refunds",
+          "request": {
+            "name": "Get refunds",
+            "description": {
+              "content": "The `GET /refunds` endpoint retrieves a complete or filtered list of refunds.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "refunds"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "(Required) The maximum number of records to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<string>",
+                  "description": "The offset from the previous page."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<string>",
+                  "description": "Lower bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or after the given date will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<string>",
+                  "description": "Upper bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or before the given date will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<string>",
+                  "description": "Filters refunds by their ids - returns only refunds with ids listed in this parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<string>",
+                  "description": "Filters refunds by their ids - returns only refunds with ids listed in this parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "invertIds",
+                  "value": "<boolean>",
+                  "description": "Invert ids query - returns only refunds with ids not listed in the ids parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "statuses",
+                  "value": "<array>",
+                  "description": "Filters refunds by their statuses - returns only refunds with statuses listed in this parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "invertStatuses",
+                  "value": "<boolean>",
+                  "description": "Invert statuses query - returns only refunds with statuses not listed in the statuses parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "refIds",
+                  "value": "<string>",
+                  "description": "Filters refunds by their `refId` values - returns only refunds with `refIds` listed in this parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "refIds",
+                  "value": "<string>",
+                  "description": "Filters refunds by their `refId` values - returns only refunds with `refIds` listed in this parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "partial",
+                  "value": "<boolean>",
+                  "description": "Returns refunds in a partial format - with only id and status fields populated."
+                },
+                {
+                  "disabled": false,
+                  "key": "onBehalfOfIds",
+                  "value": "<string>",
+                  "description": "Filters payouts by their `onBehalfOfId` values - returns only payouts with the `onBehalfOfId` values specified in this parameter. This field is mandatory for unregulated TPPs."
+                },
+                {
+                  "disabled": false,
+                  "key": "onBehalfOfIds",
+                  "value": "<string>",
+                  "description": "Filters payouts by their `onBehalfOfId` values - returns only payouts with the `onBehalfOfId` values specified in this parameter. This field is mandatory for unregulated TPPs."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "48ea7418-ebbc-47dd-b94a-179332f173f7",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "rf:4QExXrhKTxfShBdcTeqFabqJJhUF:2gFUX1NDgpN"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "rf:N5cJDFsQzVca3Qvr8kQocgEnjgX:2gFUX1NEdYA"
+                    },
+                    {
+                      "key": "invertIds",
+                      "value": "false"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_COMPLETED"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_REJECTED"
+                    },
+                    {
+                      "key": "invertStatuses",
+                      "value": "true"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "ShBdcTeqFabqJJhUF"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "N5cJDFsQzVca3Q"
+                    },
+                    {
+                      "key": "partial",
+                      "value": "true"
+                    },
+                    {
+                      "key": "onBehalfOfIds",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    },
+                    {
+                      "key": "onBehalfOfIds",
+                      "value": "6f34h397-b29h-23b0-s30g-hkd0d2dk4k1s"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"refunds\": [\n    {\n      \"createdDateTime\": \"2017-04-05T10:43:07.000+00:00\",\n      \"id\": \"rf:12345abcd:abcd\",\n      \"memberId\": \"m:123456abcd:abcd\",\n      \"status\": \"INITIATION_COMPLETED\",\n      \"updatedDateTime\": \"2017-04-05T10:45:07.000+00:00\",\n      \"bankTransactionId\": \"2UhwCZ3BMaEcAUK8bZdukor7NL4tH6TBuu6aJMp5KKfX:5zKcENpV\",\n      \"bankPaymentStatus\": \"ACCP\",\n      \"statusReasonInformation\": \"The payment is settled on debtor side.\",\n      \"initiation\": {\n        \"amount\": {\n          \"currency\": \"EUR\",\n          \"value\": \"10.23\"\n        },\n        \"creditor\": {\n          \"name\": \"Customer Inc.\",\n          \"ultimateCreditorName\": \"Customer Inc.\",\n          \"address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bankName\": \"string\",\n          \"accountVerificationId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"debtor\": {\n          \"name\": \"John Smith\",\n          \"ultimateDebtorName\": \"John Smith\",\n          \"address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"localInstrument\": \"SEPA_INSTANT\",\n        \"originalPaymentId\": \"t:sdsds:sdsd\",\n        \"refId\": \"9htio4a1sp2akdr1aa\",\n        \"description\": \"refund for some reason\",\n        \"registrationId\": \"regId\"\n      }\n    },\n    {\n      \"createdDateTime\": \"2017-04-05T10:43:07.000+00:00\",\n      \"id\": \"rf:12345abcd:abcd\",\n      \"memberId\": \"m:123456abcd:abcd\",\n      \"status\": \"INITIATION_COMPLETED\",\n      \"updatedDateTime\": \"2017-04-05T10:45:07.000+00:00\",\n      \"bankTransactionId\": \"2UhwCZ3BMaEcAUK8bZdukor7NL4tH6TBuu6aJMp5KKfX:5zKcENpV\",\n      \"bankPaymentStatus\": \"ACCP\",\n      \"statusReasonInformation\": \"The payment is settled on debtor side.\",\n      \"initiation\": {\n        \"amount\": {\n          \"currency\": \"EUR\",\n          \"value\": \"10.23\"\n        },\n        \"creditor\": {\n          \"name\": \"Customer Inc.\",\n          \"ultimateCreditorName\": \"Customer Inc.\",\n          \"address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bankName\": \"string\",\n          \"accountVerificationId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"debtor\": {\n          \"name\": \"John Smith\",\n          \"ultimateDebtorName\": \"John Smith\",\n          \"address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"localInstrument\": \"SEPA_INSTANT\",\n        \"originalPaymentId\": \"t:sdsds:sdsd\",\n        \"refId\": \"9htio4a1sp2akdr1aa\",\n        \"description\": \"refund for some reason\",\n        \"registrationId\": \"regId\"\n      }\n    }\n  ],\n  \"paging\": {\n    \"limit\": 218,\n    \"offset\": \"LerV6Jmex\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b788d3dd-3899-4fa4-80b2-f23e203ec5b9",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "rf:4QExXrhKTxfShBdcTeqFabqJJhUF:2gFUX1NDgpN"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "rf:N5cJDFsQzVca3Qvr8kQocgEnjgX:2gFUX1NEdYA"
+                    },
+                    {
+                      "key": "invertIds",
+                      "value": "false"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_COMPLETED"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_REJECTED"
+                    },
+                    {
+                      "key": "invertStatuses",
+                      "value": "true"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "ShBdcTeqFabqJJhUF"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "N5cJDFsQzVca3Q"
+                    },
+                    {
+                      "key": "partial",
+                      "value": "true"
+                    },
+                    {
+                      "key": "onBehalfOfIds",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    },
+                    {
+                      "key": "onBehalfOfIds",
+                      "value": "6f34h397-b29h-23b0-s30g-hkd0d2dk4k1s"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2153ac55-c6f6-43f0-b978-ec737919f048",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "rf:4QExXrhKTxfShBdcTeqFabqJJhUF:2gFUX1NDgpN"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "rf:N5cJDFsQzVca3Qvr8kQocgEnjgX:2gFUX1NEdYA"
+                    },
+                    {
+                      "key": "invertIds",
+                      "value": "false"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_COMPLETED"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_REJECTED"
+                    },
+                    {
+                      "key": "invertStatuses",
+                      "value": "true"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "ShBdcTeqFabqJJhUF"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "N5cJDFsQzVca3Q"
+                    },
+                    {
+                      "key": "partial",
+                      "value": "true"
+                    },
+                    {
+                      "key": "onBehalfOfIds",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    },
+                    {
+                      "key": "onBehalfOfIds",
+                      "value": "6f34h397-b29h-23b0-s30g-hkd0d2dk4k1s"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "18ddcdae-5473-4115-be4b-f40300fac42c",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "rf:4QExXrhKTxfShBdcTeqFabqJJhUF:2gFUX1NDgpN"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "rf:N5cJDFsQzVca3Qvr8kQocgEnjgX:2gFUX1NEdYA"
+                    },
+                    {
+                      "key": "invertIds",
+                      "value": "false"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_COMPLETED"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_REJECTED"
+                    },
+                    {
+                      "key": "invertStatuses",
+                      "value": "true"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "ShBdcTeqFabqJJhUF"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "N5cJDFsQzVca3Q"
+                    },
+                    {
+                      "key": "partial",
+                      "value": "true"
+                    },
+                    {
+                      "key": "onBehalfOfIds",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    },
+                    {
+                      "key": "onBehalfOfIds",
+                      "value": "6f34h397-b29h-23b0-s30g-hkd0d2dk4k1s"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ae6af7fb-94af-49e4-8d65-ca8577768d46",
+              "name": "The requested entity, such as a payment, was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "rf:4QExXrhKTxfShBdcTeqFabqJJhUF:2gFUX1NDgpN"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "rf:N5cJDFsQzVca3Qvr8kQocgEnjgX:2gFUX1NEdYA"
+                    },
+                    {
+                      "key": "invertIds",
+                      "value": "false"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_COMPLETED"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_REJECTED"
+                    },
+                    {
+                      "key": "invertStatuses",
+                      "value": "true"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "ShBdcTeqFabqJJhUF"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "N5cJDFsQzVca3Q"
+                    },
+                    {
+                      "key": "partial",
+                      "value": "true"
+                    },
+                    {
+                      "key": "onBehalfOfIds",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    },
+                    {
+                      "key": "onBehalfOfIds",
+                      "value": "6f34h397-b29h-23b0-s30g-hkd0d2dk4k1s"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9984badd-04e4-467a-a05e-5cd2f4747a6e",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "rf:4QExXrhKTxfShBdcTeqFabqJJhUF:2gFUX1NDgpN"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "rf:N5cJDFsQzVca3Qvr8kQocgEnjgX:2gFUX1NEdYA"
+                    },
+                    {
+                      "key": "invertIds",
+                      "value": "false"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_COMPLETED"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_REJECTED"
+                    },
+                    {
+                      "key": "invertStatuses",
+                      "value": "true"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "ShBdcTeqFabqJJhUF"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "N5cJDFsQzVca3Q"
+                    },
+                    {
+                      "key": "partial",
+                      "value": "true"
+                    },
+                    {
+                      "key": "onBehalfOfIds",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    },
+                    {
+                      "key": "onBehalfOfIds",
+                      "value": "6f34h397-b29h-23b0-s30g-hkd0d2dk4k1s"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "58136bcb-4d96-4601-8533-32f07fbb0702",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "rf:4QExXrhKTxfShBdcTeqFabqJJhUF:2gFUX1NDgpN"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "rf:N5cJDFsQzVca3Qvr8kQocgEnjgX:2gFUX1NEdYA"
+                    },
+                    {
+                      "key": "invertIds",
+                      "value": "false"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_COMPLETED"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_REJECTED"
+                    },
+                    {
+                      "key": "invertStatuses",
+                      "value": "true"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "ShBdcTeqFabqJJhUF"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "N5cJDFsQzVca3Q"
+                    },
+                    {
+                      "key": "partial",
+                      "value": "true"
+                    },
+                    {
+                      "key": "onBehalfOfIds",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    },
+                    {
+                      "key": "onBehalfOfIds",
+                      "value": "6f34h397-b29h-23b0-s30g-hkd0d2dk4k1s"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "55a87b4c-8fe5-45a7-bd01-d8fc39143ccb",
+              "name": "The operation was not implemented",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "rf:4QExXrhKTxfShBdcTeqFabqJJhUF:2gFUX1NDgpN"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "rf:N5cJDFsQzVca3Qvr8kQocgEnjgX:2gFUX1NEdYA"
+                    },
+                    {
+                      "key": "invertIds",
+                      "value": "false"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_COMPLETED"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_REJECTED"
+                    },
+                    {
+                      "key": "invertStatuses",
+                      "value": "true"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "ShBdcTeqFabqJJhUF"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "N5cJDFsQzVca3Q"
+                    },
+                    {
+                      "key": "partial",
+                      "value": "true"
+                    },
+                    {
+                      "key": "onBehalfOfIds",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    },
+                    {
+                      "key": "onBehalfOfIds",
+                      "value": "6f34h397-b29h-23b0-s30g-hkd0d2dk4k1s"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a79f4112-6132-459e-bcb8-b0f0cb60951c",
+              "name": "Service is unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "rf:4QExXrhKTxfShBdcTeqFabqJJhUF:2gFUX1NDgpN"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "rf:N5cJDFsQzVca3Qvr8kQocgEnjgX:2gFUX1NEdYA"
+                    },
+                    {
+                      "key": "invertIds",
+                      "value": "false"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_COMPLETED"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_REJECTED"
+                    },
+                    {
+                      "key": "invertStatuses",
+                      "value": "true"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "ShBdcTeqFabqJJhUF"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "N5cJDFsQzVca3Q"
+                    },
+                    {
+                      "key": "partial",
+                      "value": "true"
+                    },
+                    {
+                      "key": "onBehalfOfIds",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    },
+                    {
+                      "key": "onBehalfOfIds",
+                      "value": "6f34h397-b29h-23b0-s30g-hkd0d2dk4k1s"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b325992-9d97-4aa4-b52c-e8a7b4819ed3",
+              "name": "Gateway has timed out",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2010-01-01"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "rf:4QExXrhKTxfShBdcTeqFabqJJhUF:2gFUX1NDgpN"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "rf:N5cJDFsQzVca3Qvr8kQocgEnjgX:2gFUX1NEdYA"
+                    },
+                    {
+                      "key": "invertIds",
+                      "value": "false"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_COMPLETED"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_REJECTED"
+                    },
+                    {
+                      "key": "invertStatuses",
+                      "value": "true"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "ShBdcTeqFabqJJhUF"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "N5cJDFsQzVca3Q"
+                    },
+                    {
+                      "key": "partial",
+                      "value": "true"
+                    },
+                    {
+                      "key": "onBehalfOfIds",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    },
+                    {
+                      "key": "onBehalfOfIds",
+                      "value": "6f34h397-b29h-23b0-s30g-hkd0d2dk4k1s"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2895865d-320a-4d26-960c-139e25a94109",
+          "name": "Get a refund",
+          "request": {
+            "name": "Get a refund",
+            "description": {
+              "content": "The `GET /refunds/{id}` endpoint retrieves a given refund.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "refunds",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0d47d9d1-29e7-40d6-9b5b-519cb9dbff57",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"refund\": {\n    \"createdDateTime\": \"2017-04-05T10:43:07.000+00:00\",\n    \"id\": \"rf:12345abcd:abcd\",\n    \"memberId\": \"m:123456abcd:abcd\",\n    \"status\": \"INITIATION_COMPLETED\",\n    \"updatedDateTime\": \"2017-04-05T10:45:07.000+00:00\",\n    \"bankTransactionId\": \"2UhwCZ3BMaEcAUK8bZdukor7NL4tH6TBuu6aJMp5KKfX:5zKcENpV\",\n    \"bankPaymentStatus\": \"ACCP\",\n    \"statusReasonInformation\": \"The payment is settled on debtor side.\",\n    \"initiation\": {\n      \"amount\": {\n        \"currency\": \"EUR\",\n        \"value\": \"10.23\"\n      },\n      \"creditor\": {\n        \"iban\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": \"Customer Inc.\",\n        \"bic\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"ultimateCreditorName\": \"Customer Inc.\",\n        \"address\": {\n          \"addressLine\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"streetName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"buildingNumber\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"postCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"townName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"state\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"district\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"country\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"bankName\": \"string\",\n        \"accountVerificationId\": \"<string>\"\n      },\n      \"debtor\": {\n        \"iban\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"bic\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": \"John Smith\",\n        \"ultimateDebtorName\": \"John Smith\",\n        \"address\": {\n          \"addressLine\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"streetName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"buildingNumber\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"postCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"townName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"state\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"district\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"country\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"localInstrument\": \"SEPA_INSTANT\",\n      \"originalPaymentId\": \"t:sdsds:sdsd\",\n      \"refId\": \"9htio4a1sp2akdr1aa\",\n      \"description\": \"refund for some reason\",\n      \"registrationId\": \"regId\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fafb0c44-6251-458e-a5e5-e9a5daaf6d2e",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "29b97bae-b023-43da-8bea-5bce9293690e",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "09d3471c-8a22-45a6-bf54-97102d53452b",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6809ca85-482b-4a5a-901a-010a0ff79815",
+              "name": "The requested entity, such as a payment, was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a9a0e51c-70f6-432c-bd93-5717b8ef3cad",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fbb3da6b-a5bf-4e84-a750-98c0faa68a1b",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "38f69c66-ea3c-4c34-afec-a09b008ddf9a",
+              "name": "The operation was not implemented",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7241ba07-baec-4c51-a404-d70f102d4428",
+              "name": "Service is unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a1d884fd-0061-4600-8859-aad57a1d2958",
+              "name": "Gateway has timed out",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b901a5e5-cbf3-43f8-a3fd-177f69098827",
+          "name": "Get all refunds by transfer",
+          "request": {
+            "name": "Get all refunds by transfer",
+            "description": {
+              "content": "The `GET /transfers/{id}/refunds` endpoint retrieves all refunds associated with a given transfer.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "transfers",
+                ":id",
+                "refunds"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "(Required) The maximum number of records to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<string>",
+                  "description": "The offset from the previous page."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "51832f8c-b020-403a-a63f-3fda9cebd63b",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transfers",
+                    ":id",
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"refunds\": [\n    {\n      \"createdDateTime\": \"2017-04-05T10:43:07.000+00:00\",\n      \"id\": \"rf:12345abcd:abcd\",\n      \"memberId\": \"m:123456abcd:abcd\",\n      \"status\": \"INITIATION_COMPLETED\",\n      \"updatedDateTime\": \"2017-04-05T10:45:07.000+00:00\",\n      \"bankTransactionId\": \"2UhwCZ3BMaEcAUK8bZdukor7NL4tH6TBuu6aJMp5KKfX:5zKcENpV\",\n      \"bankPaymentStatus\": \"ACCP\",\n      \"statusReasonInformation\": \"The payment is settled on debtor side.\",\n      \"initiation\": {\n        \"amount\": {\n          \"currency\": \"EUR\",\n          \"value\": \"10.23\"\n        },\n        \"creditor\": {\n          \"name\": \"Customer Inc.\",\n          \"ultimateCreditorName\": \"Customer Inc.\",\n          \"address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bankName\": \"string\",\n          \"accountVerificationId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"debtor\": {\n          \"name\": \"John Smith\",\n          \"ultimateDebtorName\": \"John Smith\",\n          \"address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"localInstrument\": \"SEPA_INSTANT\",\n        \"originalPaymentId\": \"t:sdsds:sdsd\",\n        \"refId\": \"9htio4a1sp2akdr1aa\",\n        \"description\": \"refund for some reason\",\n        \"registrationId\": \"regId\"\n      }\n    },\n    {\n      \"createdDateTime\": \"2017-04-05T10:43:07.000+00:00\",\n      \"id\": \"rf:12345abcd:abcd\",\n      \"memberId\": \"m:123456abcd:abcd\",\n      \"status\": \"INITIATION_COMPLETED\",\n      \"updatedDateTime\": \"2017-04-05T10:45:07.000+00:00\",\n      \"bankTransactionId\": \"2UhwCZ3BMaEcAUK8bZdukor7NL4tH6TBuu6aJMp5KKfX:5zKcENpV\",\n      \"bankPaymentStatus\": \"ACCP\",\n      \"statusReasonInformation\": \"The payment is settled on debtor side.\",\n      \"initiation\": {\n        \"amount\": {\n          \"currency\": \"EUR\",\n          \"value\": \"10.23\"\n        },\n        \"creditor\": {\n          \"name\": \"Customer Inc.\",\n          \"ultimateCreditorName\": \"Customer Inc.\",\n          \"address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bankName\": \"string\",\n          \"accountVerificationId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"debtor\": {\n          \"name\": \"John Smith\",\n          \"ultimateDebtorName\": \"John Smith\",\n          \"address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"localInstrument\": \"SEPA_INSTANT\",\n        \"originalPaymentId\": \"t:sdsds:sdsd\",\n        \"refId\": \"9htio4a1sp2akdr1aa\",\n        \"description\": \"refund for some reason\",\n        \"registrationId\": \"regId\"\n      }\n    }\n  ],\n  \"paging\": {\n    \"limit\": 8663,\n    \"offset\": \"LerV6Jmex\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bdcca86e-965f-4cb7-a4ca-5905e6827cab",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transfers",
+                    ":id",
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "99e10bc9-3154-47b5-8e2b-e888529381de",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transfers",
+                    ":id",
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ec22e04-8917-4b58-a836-3b629c069845",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transfers",
+                    ":id",
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2a0dec2f-49ea-46be-9049-417fad6d0f22",
+              "name": "The requested entity, such as a payment, was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transfers",
+                    ":id",
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "12083513-cf45-4718-9c2b-2623beb8cbda",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transfers",
+                    ":id",
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a437d568-3c06-4adf-ba28-2f4d1433accd",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transfers",
+                    ":id",
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb39cc4d-310f-4c92-8cac-be5779f2ef08",
+              "name": "The operation was not implemented",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transfers",
+                    ":id",
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b6248eb-6202-4d24-92e9-8ff383d2fa79",
+              "name": "Service is unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transfers",
+                    ":id",
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f91d60fc-3808-43bc-b70d-91cf4c06e901",
+              "name": "Gateway has timed out",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transfers",
+                    ":id",
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.token.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "bbc8a942-d554-408c-8089-7119b0c54e4f",
+    "name": "Token.io's Open Banking API for TPPs Account on File Refunds API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "<b>Token.io's Open Banking API</b><br/><br/>Token.io Support: <a href=\"https://support.token.io\" target=\"_blank\">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user's account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href=\"https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm\" target=\"_blank\">developer documentation</a>.",
+      "type": "text/plain"
+    }
+  }
+}

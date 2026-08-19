@@ -1,0 +1,110 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Token.io's Open Banking API for TPPs Account on File Requests - for Payments v1 or AIS API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Requests - for Payments v1 or AIS",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Initiate a token request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/token-requests",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `POST /token-requests` endpoint persists the required information used by AIS requests and PIS requests using the API and the Token.io Hosted Pages."
+        },
+        {
+          "info": {
+            "name": "Get a token request",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/token-requests/:requestId",
+            "params": [
+              {
+                "name": "requestId",
+                "value": "",
+                "type": "path",
+                "description": "The request id received in response to the original token request."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /token-requests/{requestId}` endpoint retrieves a specific token request by its id."
+        },
+        {
+          "info": {
+            "name": "Get a token request result",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/token-requests/:tokenRequestId/result",
+            "params": [
+              {
+                "name": "tokenRequestId",
+                "value": "",
+                "type": "path",
+                "description": "The token request id received in response to the original token request."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /token-requests/{tokenRequestId}/result` endpoint checks whether a token request result is available. This endpoint will return a `PENDING` status while the result is not available. The status will become `PROCESSED` once the result is available. If the request is rejected by the bank, the status will become `REJECTED`. The status will become `EXPIRED` if the request is not processed or rejected before the token request expiration."
+        },
+        {
+          "info": {
+            "name": "Initiate bank authorization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/token-requests/:tokenRequestId/authorization",
+            "params": [
+              {
+                "name": "tokenRequestId",
+                "value": "",
+                "type": "path",
+                "description": "The token request id received in response to the original token request."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `POST /token-requests/{tokenRequestId}/authorization` endpoint initiates the bank authorization process with a given bank id and token request id."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

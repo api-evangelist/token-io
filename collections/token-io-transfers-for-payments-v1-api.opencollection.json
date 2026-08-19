@@ -1,0 +1,149 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Token.io's Open Banking API for TPPs Account on File Transfers - for Payments v1 API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transfers - for Payments v1",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get transfers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/transfers",
+            "params": [
+              {
+                "name": "tokenId",
+                "value": "",
+                "type": "query",
+                "description": "Identifies the authorization token for the request."
+              },
+              {
+                "name": "page.offset",
+                "value": "LerV6Jmex",
+                "type": "query",
+                "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way."
+              },
+              {
+                "name": "page.limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of records to return. This must be less than 200."
+              },
+              {
+                "name": "filter.tokenId",
+                "value": "tt:3kFGtpEKHu8S2fJuEkb6YPnHZ4bJ2oUrYPCsJop68vCH:5zKcENpV",
+                "type": "query",
+                "description": "Filters by the authorization token id."
+              },
+              {
+                "name": "filter.startTimeMs",
+                "value": "72799",
+                "type": "query",
+                "description": "Filtered list start time boundary in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000."
+              },
+              {
+                "name": "filter.endTimeMs",
+                "value": "3341983424",
+                "type": "query",
+                "description": "Filtered list end time boundary in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000."
+              },
+              {
+                "name": "filter.transactionStatus",
+                "value": "",
+                "type": "query",
+                "description": "Filters by transaction status. <ul> <li><b>PROCESSING</b> – This status indicates that the transaction is in process and that the final status has not been received from the bank.</li><li><b>SUCCESS</b> – This status indicates that successful payment initiation has been received from the bank. Settlement might not be complete.</li> <li><b>INITIATED</b> – This status is set when the previous status has remained as `PROCESSING` for 30 days and cannot be updated. The transaction has been initiated but the result is unknown. This is the final status and will not get updated later because Token.io has stopped polling the bank.<br/> This status is also returned in a two-step payment flow in the event that a user’s request has been authorized at the bank but the payment confirmation has subsequently failed.</li><li><b>PENDING_EXTERNAL_AUTHORIZATION</b> – This status indicates that the user has been sent to the bank to complete the authorization process. If not completed within the allowed timeframe (usually around 15 mins, but there are variations between banks) the transaction will expire and transition to `FAILURE_EXPIRED`. This status is only relevant for 1-step payment flows.</li> <li><b>FAILURE_GENERIC</b> – This status usually indicates a technical failure. Possibly, a failure callback was received from the bank, with no transaction status and no further information.</li> <li><b>FAILURE_PERMISSION_DENIED</b> – This status indicates that the user has been denied authorization at the bank This status is only relevant for two-step payment flows.</li> <li><b>FAILURE_CANCELED</b> – This status indicates that the payment initiation has been canceled before execution.</li> <li><b>FAILURE_EXPIRED</b> – This status indicates that the user did not complete the authorization process within the allowed timeframe (usually around 15 mins, but there are variations between banks) and the payment has expired.</li> <li><b>FAILURE_INSUFFICIENT_FUNDS</b> – This status indicates that the payment initiation request has been rejected due to insufficient funds.</li> <li><b>FAILURE_DECLINED</b> – This status indicates that the payment initiation has been rejected by the bank.</li> <li><b>SETTLEMENT_IN_PROGRESS</b> – This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Token.io is waiting for the payment to reach the payee bank. No action is required; await the next step, <i>e.g.</i>, Token.io sends a webhook with the status update, or a polling call. The status will change to `SETTLEMENT_IN_PROGRESS` soon after Token.io receives the final status from the debtor bank.</li> <li><b>SETTLEMENT_COMPLETED</b> – This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. The payment has reached the payee bank and Token.io has matched the transaction in the TPP’s settlement account to the initiated payment. For instant payments, `SETTLEMENT_COMPLETED` will be achieved within 30-45 minutes from payment initiation, at the latest. For non-instant payments, the time to reach `SETTLEMENT_COMPLETED` will depend on the clearing period for the payment.</li><li><b>SETTLEMENT_INCOMPLETE</b> – This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Reconciliation has failed. This happens when Token.io doesn't find the corresponding transaction in the TPP’s settlement account automatically.</li></ul><br/>During settlement of a settlement accounts payment, the status update job will run first for up to 30 days. Payment will then enter into a 'final' status, normally `SUCCESS`.<br/>Once the status update job has run, the reconciliation job looks for matching inbound payments.For SEPA payments:<ul><li>if a matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>For SEPA Instant payments:<ul><li>if a matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>"
+              },
+              {
+                "name": "filter.role",
+                "value": "",
+                "type": "query",
+                "description": "Filters list by the account holder role."
+              },
+              {
+                "name": "filter.actingAsRefId",
+                "value": "",
+                "type": "query",
+                "description": "Filters the list by the sub-TPP identifier generated by Token.io once a TPP has been onboarded."
+              },
+              {
+                "name": "filter.refId",
+                "value": "",
+                "type": "query",
+                "description": "Filters list by `refID`."
+              },
+              {
+                "name": "filter.transferRefundStatus",
+                "value": "",
+                "type": "query",
+                "description": "Filters list by refund status."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /transfers` endpoint retrieves information for all transfers."
+        },
+        {
+          "info": {
+            "name": "Redeem a transfer token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/transfers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `POST /transfers` endpoint is only required when you explicitly redeem the request token, <i>i.e.</i>, auto-redeem is not enabled."
+        },
+        {
+          "info": {
+            "name": "Get a transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/transfers/:transferId",
+            "params": [
+              {
+                "name": "transferId",
+                "value": "",
+                "type": "path",
+                "description": "The unique id of the transfer sent in the `POST /transfers` response and/or included in a respective `GET /transfers` response."
+              },
+              {
+                "name": "skipTransferUpdate",
+                "value": "",
+                "type": "query",
+                "description": "If `skipTransferUpdate` is false, the request will call the bank for a status update. If set to true, the cached result will be returned instead."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /transfers/{transferId}` endpoint retrieves information about a specific transfer in a given account."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

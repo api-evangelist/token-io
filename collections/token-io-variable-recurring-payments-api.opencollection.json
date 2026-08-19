@@ -1,0 +1,204 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Token.io's Open Banking API for TPPs Account on File Variable Recurring Payments API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Variable Recurring Payments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get VRP consents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/vrp-consents",
+            "params": [
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "The maximum number of records to return."
+              },
+              {
+                "name": "offset",
+                "value": "LerV6Jmex",
+                "type": "query",
+                "description": "The offset from the previous page."
+              },
+              {
+                "name": "createdAfter",
+                "value": "2022-04-05T17:00:00.000Z",
+                "type": "query",
+                "description": "Returns only Vrp consents created after this time (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)."
+              },
+              {
+                "name": "createdBefore",
+                "value": "2023-04-05T17:00:00.000Z",
+                "type": "query",
+                "description": "Returns only Vrp consents created before this time (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)."
+              },
+              {
+                "name": "statuses",
+                "value": "PENDING,AUTHORIZED",
+                "type": "query",
+                "description": "Filters Vrp consents by statuses"
+              },
+              {
+                "name": "scheme",
+                "value": "OBL_SWEEPING",
+                "type": "query",
+                "description": "Filters Vrp consents by Vrp scheme (only OBL_SWEEPING is currently supported)"
+              },
+              {
+                "name": "onBehalfOfId",
+                "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7",
+                "type": "query",
+                "description": "Filters Vrp consents by their `onBehalfOfId` value."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /vrp-consents` endpoint retrieves all VRP consents created by the calling member."
+        },
+        {
+          "info": {
+            "name": "Create a VRP consent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/vrp-consents",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `POST /vrp-consents` endpoint creates a new VRP consent."
+        },
+        {
+          "info": {
+            "name": "Get a VRP consent",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/vrp-consents/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /vrp-consents/{id}` endpoint retrieves the details for an individual VRP consent."
+        },
+        {
+          "info": {
+            "name": "Revoke a VRP consent",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.token.io/vrp-consents/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `DELETE /vrp-consents/{id}` endpoint revokes an individual VRP consent."
+        },
+        {
+          "info": {
+            "name": "Get payments under a VRP consent",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/vrp-consents/:id/payments",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "VRP consent id"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "The maximum number of records to return."
+              },
+              {
+                "name": "offset",
+                "value": "LerV6Jmex",
+                "type": "query",
+                "description": "The offset from the previous page."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /vrp-consents/{id}/payments` endpoint retrieves the payments under a given VRP consent."
+        },
+        {
+          "info": {
+            "name": "Verify if funds are available or not",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/vrps/:id/confirm-funds",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The VRP consent id."
+              },
+              {
+                "name": "amount",
+                "value": "",
+                "type": "query",
+                "description": "The amount to confirm availability for."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /vrps/{id}/confirm-funds` endpoint confirms whether the funds are available to initiate VRP."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

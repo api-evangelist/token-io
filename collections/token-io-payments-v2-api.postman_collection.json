@@ -1,0 +1,2141 @@
+{
+  "item": [
+    {
+      "id": "fd037393-adc8-4cdc-accc-4e9ea2f04e2b",
+      "name": "Payments v2",
+      "description": {
+        "content": "Creates and initiates a single immediate payment or a future-dated payment. Also supports initiating a Variable Recurring Payment (VRP) using an existing VRP mandate that has been created and authorised via the `/vrp-consent` endpoint.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c28b3847-ae77-4a15-be40-21a6d6048409",
+          "name": "Initiate a payment",
+          "request": {
+            "name": "Initiate a payment",
+            "description": {
+              "content": "The `POST /v2/payments` endpoint enables you to initiate a payment with a bank.<br/><br/>Once the payment has been initiated, the end user needs to authenticate themselves with their bank.<br/><br/><b>Check payment status:</b><br/><ol><li>If the status in the initiation response is `INITIATION_PENDING_REDIRECT_AUTH` or `INITIATION_PENDING_REDIRECT_HP`, redirect the user to the redirect url found in the authentication payload of the payment, to authenticate at the bank or at Token.io's Hosted Pages.</li><br/><li>If the status in the initiation response is `INITIATION_PENDING_REDIRECT_PBL`, redirect the user to the payment link (redirect URL) found in the authentication payload. The user will be taken to Token.io’s Hosted Pages, where any missing information (such as amount or reference) can be provided before proceeding with payment authentication.</li><br/><li>If the status in the initiation response is `INITIATION_PENDING_EMBEDDED_AUTH`, collect the requested data listed in the authentication payload of the payment and use the `POST /v2/payments/{paymentId}/embedded-auth` endpoint to provide the requested field values.</li><br/><li>If the status in the initiation response is `INITIATION_PENDING`, Token.io needs more time to process this request with the bank. In the case of a successful scenario, the status will be updated to `INITIATION_PENDING_REDIRECT_AUTH`, `INITIATION_PENDING_EMBEDDED_AUTH` or `INITIATION_PENDING_DECOUPLED_AUTH` when the authentication details are ready. The update can be checked by the `GET /v2/payments/{paymentId}` endpoint or received via a webhook (see <a href=\"https://developer.token.io/token_rest_api_doc/content/e-rest/webhooks.htm\" target=\"_blank\">Webhooks</a>).</li><br/><li>If the status is `INITIATION_PENDING_DECOUPLED_AUTH`, the bank has requested a decoupled authentication from the user and Token.io is awaiting the result. No further action is required.</li></ol><br/><b>`request-timeout` header:</b><br/><br/>Banks may take some time to respond when a request is made. Therefore, Token.io recommends that you set a `request-timeout` header in your API-only `POST /v2/payments` requests to match the timeout of your client and avoid `DEADLINE_EXCEEDED` errors. If this is set, Token.io sends a response when this timeout period has passed and will update payment status as soon as the bank has responded.<br/>The following example demonstrates what happens when you set a timeout of 10 seconds and the call to the bank takes 15 seconds:<br/><br/><ol><li>The TPP makes a `POST /v2/payments` call.</li><br/><li>Token.io creates a resource with the status `INITIATION_PENDING`.</li><br/><li>Token.io starts the call to the bank.</li><br/><li>After 10 seconds from (1): Token.io returns the payment status `INITIATION_PENDING`.</li><br/><li>After 15 seconds from (3): Token.io receives a response from the bank and changes the status to, for example, `INITIATION_PENDING_REDIRECT_AUTH`. The update will be sent in a webhook, if TPP is subscribed for webhooks.</li><br/><li>The TPP makes the `GET /v2/payments/{id}` call and receives the payment with the status `INITIATION_PENDING_REDIRECT_AUTH`.</li></ol>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                "key": "request-timeout",
+                "value": "<integer>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"initiation\": {\n    \"flowType\": \"<string>\",\n    \"callbackUrl\": \"<string>\",\n    \"creditor\": \"<object>\",\n    \"localInstrument\": \"<string>\",\n    \"refId\": \"<string>\",\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"remittanceInformationPrimary\": \"<string>\",\n    \"bankId\": \"<string>\",\n    \"remittanceInformationSecondary\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\",\n    \"vrpConsentId\": \"<string>\",\n    \"debtor\": {\n      \"iban\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"name\": \"<string>\",\n      \"bic\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"ultimateDebtorName\": \"<string>\",\n      \"address\": {\n        \"addressLine\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"streetName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"buildingNumber\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"postCode\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"townName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"state\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"district\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"country\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    \"executionDate\": \"<string>\",\n    \"confirmFunds\": \"<boolean>\",\n    \"returnRefundAccount\": \"<boolean>\",\n    \"disableFutureDatedPaymentConversion\": \"<boolean>\",\n    \"returnTokenizedAccount\": \"<boolean>\",\n    \"callbackState\": \"<string>\",\n    \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"<string>\",\n      \"paymentPurposeCode\": \"CASH\",\n      \"merchantCategoryCode\": \"<string>\",\n      \"beneficiaryAccountType\": \"<string>\",\n      \"contractPresentIndicator\": \"<boolean>\",\n      \"beneficiaryPrepopulatedIndicator\": \"<boolean>\",\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"addressType\": \"INVALID_ADDRESS_TYPE\",\n        \"buildingNumber\": \"<string>\",\n        \"country\": \"<string>\",\n        \"countrySubDivision\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"department\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"streetName\": \"<string>\",\n        \"subDepartment\": \"<string>\",\n        \"townName\": \"<string>\"\n      }\n    },\n    \"externalPsuReference\": \"<string>\"\n  },\n  \"pispConsentAccepted\": false,\n  \"initialEmbeddedAuth\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b3dec484-4d76-4fe6-9ca8-a5e9630ae554",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                    "key": "request-timeout",
+                    "value": "10"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"flowType\": \"FULL_HOSTED_PAGES\",\n    \"callbackUrl\": \"https://tpp.com/callback\",\n    \"creditor\": \"<object>\",\n    \"localInstrument\": \"SEPA\",\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.23\"\n    },\n    \"remittanceInformationPrimary\": \"Sweepco\",\n    \"bankId\": \"ob-modelo\",\n    \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n    \"vrpConsentId\": \"<string>\",\n    \"debtor\": {\n      \"iban\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"name\": \"<string>\",\n      \"bic\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"ultimateDebtorName\": \"<string>\",\n      \"address\": {\n        \"addressLine\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"streetName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"buildingNumber\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"postCode\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"townName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"state\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"district\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"country\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    \"executionDate\": \"2023-04-29\",\n    \"confirmFunds\": false,\n    \"returnRefundAccount\": false,\n    \"disableFutureDatedPaymentConversion\": false,\n    \"returnTokenizedAccount\": true,\n    \"callbackState\": \"6242e45e-3063-4c42-8376\",\n    \"chargeBearer\": \"CRED\",\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"PISP_PAYEE\",\n      \"paymentPurposeCode\": \"DVPM\",\n      \"merchantCategoryCode\": \"4812\",\n      \"beneficiaryAccountType\": \"BUSINESS\",\n      \"contractPresentIndicator\": true,\n      \"beneficiaryPrepopulatedIndicator\": true,\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"Flat 2, The Red Lodge, 1 High Street\"\n        ],\n        \"addressType\": \"BUSINESS\",\n        \"buildingNumber\": \"1\",\n        \"country\": \"GB\",\n        \"countrySubDivision\": [\n          \"North Yorkshire\"\n        ],\n        \"department\": \"1\",\n        \"postCode\": \"YO62 5JB\",\n        \"streetName\": \"High Street\",\n        \"subDepartment\": \"Flat 2\",\n        \"townName\": \"York\"\n      }\n    },\n    \"externalPsuReference\": \"psu external reference 12345\"\n  },\n  \"pispConsentAccepted\": false,\n  \"initialEmbeddedAuth\": {\n    \"username\": \"John Smith\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payment\": {\n    \"createdDateTime\": \"2023-04-05T17:02:11.954Z\",\n    \"id\": \"pm:12345abcd:abcd\",\n    \"initiation\": {\n      \"flowType\": \"FULL_HOSTED_PAGES\",\n      \"callbackUrl\": \"https://tpp.com/callback\",\n      \"creditor\": \"<object>\",\n      \"localInstrument\": \"SEPA\",\n      \"refId\": \"9htio4a1sp2akdr1aa\",\n      \"amount\": {\n        \"currency\": \"EUR\",\n        \"value\": \"10.23\"\n      },\n      \"remittanceInformationPrimary\": \"Sweepco\",\n      \"bankId\": \"ob-modelo\",\n      \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n      \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n      \"vrpConsentId\": \"<string>\",\n      \"debtor\": {\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"ultimateDebtorName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"address\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"executionDate\": \"2023-04-29\",\n      \"confirmFunds\": false,\n      \"returnRefundAccount\": false,\n      \"disableFutureDatedPaymentConversion\": false,\n      \"returnTokenizedAccount\": true,\n      \"callbackState\": \"6242e45e-3063-4c42-8376\",\n      \"chargeBearer\": \"CRED\",\n      \"risk\": {\n        \"psuId\": \"<string>\",\n        \"paymentContextCode\": \"PISP_PAYEE\",\n        \"paymentPurposeCode\": \"DVPM\",\n        \"merchantCategoryCode\": \"4812\",\n        \"beneficiaryAccountType\": \"BUSINESS\",\n        \"contractPresentIndicator\": true,\n        \"beneficiaryPrepopulatedIndicator\": true,\n        \"deliveryAddress\": {\n          \"addressLine\": [\n            \"Flat 2, The Red Lodge, 1 High Street\"\n          ],\n          \"addressType\": \"BUSINESS\",\n          \"buildingNumber\": \"1\",\n          \"country\": \"GB\",\n          \"countrySubDivision\": [\n            \"North Yorkshire\"\n          ],\n          \"department\": \"1\",\n          \"postCode\": \"YO62 5JB\",\n          \"streetName\": \"High Street\",\n          \"subDepartment\": \"Flat 2\",\n          \"townName\": \"York\"\n        }\n      },\n      \"externalPsuReference\": \"psu external reference 12345\"\n    },\n    \"memberId\": \"m:123456abcd:abcd\",\n    \"status\": \"INITIATION_COMPLETED\",\n    \"updatedDateTime\": \"2023-04-05T17:02:11.954Z\",\n    \"convertedToFutureDatedPayment\": false,\n    \"refundDetails\": {\n      \"refundAccount\": {\n        \"iban\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"bic\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": \"John Smith\"\n      },\n      \"paymentRefundStatus\": \"NONE\",\n      \"settledRefundAmount\": {\n        \"currency\": \"EUR\",\n        \"value\": \"10.23\"\n      },\n      \"remainingRefundAmount\": {\n        \"currency\": \"EUR\",\n        \"value\": \"10.23\"\n      }\n    },\n    \"statusReasonInformation\": \"The payment is settled on the debtor side.\",\n    \"bankPaymentStatus\": \"ACPC\",\n    \"bankPaymentId\": \"1231423\",\n    \"bankTransactionId\": \"2UhwCZ3BMaEcAUK8bZdukor7NL4tH6TBuu6aJMp5KKfX:5zKcENpV\",\n    \"bankVrpId\": \"string\",\n    \"bankVrpStatus\": \"AcceptedCreditSettlementCompleted\",\n    \"authentication\": {\n      \"redirectUrl\": \"http://psu-redirect.com\"\n    },\n    \"errorInfo\": {\n      \"httpErrorCode\": 503,\n      \"message\": \"UNAVAILABLE: HTTP connection failed\",\n      \"tokenExternalError\": true,\n      \"tokenTraceId\": \"eASI3Onqkpi1unAM59O5\"\n    },\n    \"paymentLinkStatus\": \"LINK_ACTIVE\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ddc3b2f7-180c-457c-966d-b249a9723418",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                    "key": "request-timeout",
+                    "value": "10"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"flowType\": \"FULL_HOSTED_PAGES\",\n    \"callbackUrl\": \"https://tpp.com/callback\",\n    \"creditor\": \"<object>\",\n    \"localInstrument\": \"SEPA\",\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.23\"\n    },\n    \"remittanceInformationPrimary\": \"Sweepco\",\n    \"bankId\": \"ob-modelo\",\n    \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n    \"vrpConsentId\": \"<string>\",\n    \"debtor\": {\n      \"iban\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"name\": \"<string>\",\n      \"bic\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"ultimateDebtorName\": \"<string>\",\n      \"address\": {\n        \"addressLine\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"streetName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"buildingNumber\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"postCode\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"townName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"state\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"district\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"country\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    \"executionDate\": \"2023-04-29\",\n    \"confirmFunds\": false,\n    \"returnRefundAccount\": false,\n    \"disableFutureDatedPaymentConversion\": false,\n    \"returnTokenizedAccount\": true,\n    \"callbackState\": \"6242e45e-3063-4c42-8376\",\n    \"chargeBearer\": \"CRED\",\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"PISP_PAYEE\",\n      \"paymentPurposeCode\": \"DVPM\",\n      \"merchantCategoryCode\": \"4812\",\n      \"beneficiaryAccountType\": \"BUSINESS\",\n      \"contractPresentIndicator\": true,\n      \"beneficiaryPrepopulatedIndicator\": true,\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"Flat 2, The Red Lodge, 1 High Street\"\n        ],\n        \"addressType\": \"BUSINESS\",\n        \"buildingNumber\": \"1\",\n        \"country\": \"GB\",\n        \"countrySubDivision\": [\n          \"North Yorkshire\"\n        ],\n        \"department\": \"1\",\n        \"postCode\": \"YO62 5JB\",\n        \"streetName\": \"High Street\",\n        \"subDepartment\": \"Flat 2\",\n        \"townName\": \"York\"\n      }\n    },\n    \"externalPsuReference\": \"psu external reference 12345\"\n  },\n  \"pispConsentAccepted\": false,\n  \"initialEmbeddedAuth\": {\n    \"username\": \"John Smith\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"`RefId` should not be longer than 35 symbols.\",\n    \"paths\": [\n      \"initiation.refId\",\n      \"initiation.refId\"\n    ],\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "51c8d336-e517-4074-a7af-3f22357029cf",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                    "key": "request-timeout",
+                    "value": "10"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"flowType\": \"FULL_HOSTED_PAGES\",\n    \"callbackUrl\": \"https://tpp.com/callback\",\n    \"creditor\": \"<object>\",\n    \"localInstrument\": \"SEPA\",\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.23\"\n    },\n    \"remittanceInformationPrimary\": \"Sweepco\",\n    \"bankId\": \"ob-modelo\",\n    \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n    \"vrpConsentId\": \"<string>\",\n    \"debtor\": {\n      \"iban\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"name\": \"<string>\",\n      \"bic\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"ultimateDebtorName\": \"<string>\",\n      \"address\": {\n        \"addressLine\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"streetName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"buildingNumber\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"postCode\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"townName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"state\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"district\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"country\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    \"executionDate\": \"2023-04-29\",\n    \"confirmFunds\": false,\n    \"returnRefundAccount\": false,\n    \"disableFutureDatedPaymentConversion\": false,\n    \"returnTokenizedAccount\": true,\n    \"callbackState\": \"6242e45e-3063-4c42-8376\",\n    \"chargeBearer\": \"CRED\",\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"PISP_PAYEE\",\n      \"paymentPurposeCode\": \"DVPM\",\n      \"merchantCategoryCode\": \"4812\",\n      \"beneficiaryAccountType\": \"BUSINESS\",\n      \"contractPresentIndicator\": true,\n      \"beneficiaryPrepopulatedIndicator\": true,\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"Flat 2, The Red Lodge, 1 High Street\"\n        ],\n        \"addressType\": \"BUSINESS\",\n        \"buildingNumber\": \"1\",\n        \"country\": \"GB\",\n        \"countrySubDivision\": [\n          \"North Yorkshire\"\n        ],\n        \"department\": \"1\",\n        \"postCode\": \"YO62 5JB\",\n        \"streetName\": \"High Street\",\n        \"subDepartment\": \"Flat 2\",\n        \"townName\": \"York\"\n      }\n    },\n    \"externalPsuReference\": \"psu external reference 12345\"\n  },\n  \"pispConsentAccepted\": false,\n  \"initialEmbeddedAuth\": {\n    \"username\": \"John Smith\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5f311e37-5727-4073-98ef-1604db1828b0",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                    "key": "request-timeout",
+                    "value": "10"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"flowType\": \"FULL_HOSTED_PAGES\",\n    \"callbackUrl\": \"https://tpp.com/callback\",\n    \"creditor\": \"<object>\",\n    \"localInstrument\": \"SEPA\",\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.23\"\n    },\n    \"remittanceInformationPrimary\": \"Sweepco\",\n    \"bankId\": \"ob-modelo\",\n    \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n    \"vrpConsentId\": \"<string>\",\n    \"debtor\": {\n      \"iban\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"name\": \"<string>\",\n      \"bic\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"ultimateDebtorName\": \"<string>\",\n      \"address\": {\n        \"addressLine\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"streetName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"buildingNumber\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"postCode\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"townName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"state\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"district\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"country\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    \"executionDate\": \"2023-04-29\",\n    \"confirmFunds\": false,\n    \"returnRefundAccount\": false,\n    \"disableFutureDatedPaymentConversion\": false,\n    \"returnTokenizedAccount\": true,\n    \"callbackState\": \"6242e45e-3063-4c42-8376\",\n    \"chargeBearer\": \"CRED\",\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"PISP_PAYEE\",\n      \"paymentPurposeCode\": \"DVPM\",\n      \"merchantCategoryCode\": \"4812\",\n      \"beneficiaryAccountType\": \"BUSINESS\",\n      \"contractPresentIndicator\": true,\n      \"beneficiaryPrepopulatedIndicator\": true,\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"Flat 2, The Red Lodge, 1 High Street\"\n        ],\n        \"addressType\": \"BUSINESS\",\n        \"buildingNumber\": \"1\",\n        \"country\": \"GB\",\n        \"countrySubDivision\": [\n          \"North Yorkshire\"\n        ],\n        \"department\": \"1\",\n        \"postCode\": \"YO62 5JB\",\n        \"streetName\": \"High Street\",\n        \"subDepartment\": \"Flat 2\",\n        \"townName\": \"York\"\n      }\n    },\n    \"externalPsuReference\": \"psu external reference 12345\"\n  },\n  \"pispConsentAccepted\": false,\n  \"initialEmbeddedAuth\": {\n    \"username\": \"John Smith\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3a97182e-8e24-4688-ad80-6e023d424e00",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                    "key": "request-timeout",
+                    "value": "10"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"flowType\": \"FULL_HOSTED_PAGES\",\n    \"callbackUrl\": \"https://tpp.com/callback\",\n    \"creditor\": \"<object>\",\n    \"localInstrument\": \"SEPA\",\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.23\"\n    },\n    \"remittanceInformationPrimary\": \"Sweepco\",\n    \"bankId\": \"ob-modelo\",\n    \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n    \"vrpConsentId\": \"<string>\",\n    \"debtor\": {\n      \"iban\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"name\": \"<string>\",\n      \"bic\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"ultimateDebtorName\": \"<string>\",\n      \"address\": {\n        \"addressLine\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"streetName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"buildingNumber\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"postCode\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"townName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"state\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"district\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"country\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    \"executionDate\": \"2023-04-29\",\n    \"confirmFunds\": false,\n    \"returnRefundAccount\": false,\n    \"disableFutureDatedPaymentConversion\": false,\n    \"returnTokenizedAccount\": true,\n    \"callbackState\": \"6242e45e-3063-4c42-8376\",\n    \"chargeBearer\": \"CRED\",\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"PISP_PAYEE\",\n      \"paymentPurposeCode\": \"DVPM\",\n      \"merchantCategoryCode\": \"4812\",\n      \"beneficiaryAccountType\": \"BUSINESS\",\n      \"contractPresentIndicator\": true,\n      \"beneficiaryPrepopulatedIndicator\": true,\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"Flat 2, The Red Lodge, 1 High Street\"\n        ],\n        \"addressType\": \"BUSINESS\",\n        \"buildingNumber\": \"1\",\n        \"country\": \"GB\",\n        \"countrySubDivision\": [\n          \"North Yorkshire\"\n        ],\n        \"department\": \"1\",\n        \"postCode\": \"YO62 5JB\",\n        \"streetName\": \"High Street\",\n        \"subDepartment\": \"Flat 2\",\n        \"townName\": \"York\"\n      }\n    },\n    \"externalPsuReference\": \"psu external reference 12345\"\n  },\n  \"pispConsentAccepted\": false,\n  \"initialEmbeddedAuth\": {\n    \"username\": \"John Smith\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "81972c25-1875-4a6f-90f4-02dead873076",
+          "name": "Get payments",
+          "request": {
+            "name": "Get payments",
+            "description": {
+              "content": "The `GET /v2/payments` endpoint provides you with a list of payments and their details.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "(Required) The maximum number of records to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<string>",
+                  "description": "The offset from the previous page."
+                },
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<string>",
+                  "description": "Filters payments by their ids - returns only payments with ids listed in this parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<string>",
+                  "description": "Filters payments by their ids - returns only payments with ids listed in this parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "invertIds",
+                  "value": "<boolean>",
+                  "description": "Invert ids query - returns only payments with ids not listed in the ids parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "statuses",
+                  "value": "<string>",
+                  "description": "Filters payments by their statuses - returns only payments with statuses listed in this parameter. For VRP payments (when type=VARIABLE_RECURRING_PAYMENT), only the following PaymentStatus values are supported:<br/>• INITIATION_PENDING<br/>• INITIATION_PROCESSING<br/>• INITIATION_COMPLETED<br/>• INITIATION_REJECTED<br/>• INITIATION_REJECTED_INSUFFICIENT_FUNDS<br/>• INITIATION_FAILED<br/>• INITIATION_NO_FINAL_STATUS_AVAILABLE<br/>Using unsupported statuses for VRP payments will result in an error.<br/><br/>For single immediate payments, all PaymentStatus values are supported."
+                },
+                {
+                  "disabled": false,
+                  "key": "statuses",
+                  "value": "<string>",
+                  "description": "Filters payments by their statuses - returns only payments with statuses listed in this parameter. For VRP payments (when type=VARIABLE_RECURRING_PAYMENT), only the following PaymentStatus values are supported:<br/>• INITIATION_PENDING<br/>• INITIATION_PROCESSING<br/>• INITIATION_COMPLETED<br/>• INITIATION_REJECTED<br/>• INITIATION_REJECTED_INSUFFICIENT_FUNDS<br/>• INITIATION_FAILED<br/>• INITIATION_NO_FINAL_STATUS_AVAILABLE<br/>Using unsupported statuses for VRP payments will result in an error.<br/><br/>For single immediate payments, all PaymentStatus values are supported."
+                },
+                {
+                  "disabled": false,
+                  "key": "invertStatuses",
+                  "value": "<boolean>",
+                  "description": "Invert statuses query - returns only payments with statuses not listed in the statuses parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "createdAfter",
+                  "value": "<string>",
+                  "description": "Returns only payments created after this time (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)."
+                },
+                {
+                  "disabled": false,
+                  "key": "createdBefore",
+                  "value": "<string>",
+                  "description": "Returns only payments created before this time (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)."
+                },
+                {
+                  "disabled": false,
+                  "key": "refIds",
+                  "value": "<string>",
+                  "description": "Filters payments by their `refId` values - returns only payments with `refIds` listed in this parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "refIds",
+                  "value": "<string>",
+                  "description": "Filters payments by their `refId` values - returns only payments with `refIds` listed in this parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "onBehalfOfId",
+                  "value": "<string>",
+                  "description": "Filters payments by the `onBehalfOfId` value - returns only payments with the `onBehalfOfId` value specified in this parameter. This field is mandatory for unregulated TPPs."
+                },
+                {
+                  "disabled": false,
+                  "key": "refundStatuses",
+                  "value": "<string>",
+                  "description": "Filters payments by their refund status values - returns only payments with refund statuses listed in this parameter. Not supported for Vrp."
+                },
+                {
+                  "disabled": false,
+                  "key": "refundStatuses",
+                  "value": "<string>",
+                  "description": "Filters payments by their refund status values - returns only payments with refund statuses listed in this parameter. Not supported for Vrp."
+                },
+                {
+                  "disabled": false,
+                  "key": "partial",
+                  "value": "<boolean>",
+                  "description": "Returns payments in a partial format - with only id and status fields populated."
+                },
+                {
+                  "disabled": false,
+                  "key": "externalPsuReference",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Filter by payment type - single immediate or variable recurring payment. Defaults to SINGLE_IMMEDIATE_PAYMENT if not specified."
+                },
+                {
+                  "disabled": false,
+                  "key": "vrpConsentId",
+                  "value": "<string>",
+                  "description": "Filter by Vrp consent id value. Only applied if type is VARIABLE_RECURRING_PAYMENT."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "26a17d30-8b4c-4c11-8cba-f0fcebe80ad7",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "pm2:4QExXrhKTxfShBdcTeqFabqJJhUF:2gFUX1NDgpN"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "pm2:N5cJDFsQzVca3Qvr8kQocgEnjgX:2gFUX1NEdYA"
+                    },
+                    {
+                      "key": "invertIds",
+                      "value": "false"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_COMPLETED"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_REJECTED"
+                    },
+                    {
+                      "key": "invertStatuses",
+                      "value": "true"
+                    },
+                    {
+                      "key": "createdAfter",
+                      "value": "2022-04-05T17:00:00.000Z"
+                    },
+                    {
+                      "key": "createdBefore",
+                      "value": "2022-04-05T17:00:00.000Z"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "ShBdcTeqFabqJJhUF"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "N5cJDFsQzVca3Q"
+                    },
+                    {
+                      "key": "onBehalfOfId",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    },
+                    {
+                      "key": "refundStatuses",
+                      "value": "PARTIAL"
+                    },
+                    {
+                      "key": "refundStatuses",
+                      "value": "NONE"
+                    },
+                    {
+                      "key": "partial",
+                      "value": "true"
+                    },
+                    {
+                      "key": "externalPsuReference",
+                      "value": "psu external reference 12345"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "vrpConsentId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pageInfo\": {\n    \"limit\": 20,\n    \"offset\": \"LerV6Jmex\",\n    \"nextOffset\": \"KgwG8Qkat\",\n    \"haveMore\": false\n  },\n  \"payments\": [\n    {\n      \"createdDateTime\": \"2023-04-05T17:02:11.954Z\",\n      \"id\": \"pm:12345abcd:abcd\",\n      \"initiation\": {\n        \"flowType\": \"FULL_HOSTED_PAGES\",\n        \"callbackUrl\": \"https://tpp.com/callback\",\n        \"creditor\": \"<object>\",\n        \"localInstrument\": \"SEPA\",\n        \"refId\": \"9htio4a1sp2akdr1aa\",\n        \"amount\": {\n          \"currency\": \"EUR\",\n          \"value\": \"10.23\"\n        },\n        \"remittanceInformationPrimary\": \"Sweepco\",\n        \"bankId\": \"ob-modelo\",\n        \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n        \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n        \"vrpConsentId\": \"<string>\",\n        \"debtor\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"executionDate\": \"2023-04-29\",\n        \"confirmFunds\": false,\n        \"returnRefundAccount\": false,\n        \"disableFutureDatedPaymentConversion\": false,\n        \"returnTokenizedAccount\": true,\n        \"callbackState\": \"6242e45e-3063-4c42-8376\",\n        \"chargeBearer\": \"CRED\",\n        \"risk\": {\n          \"psuId\": \"<string>\",\n          \"paymentContextCode\": \"PISP_PAYEE\",\n          \"paymentPurposeCode\": \"DVPM\",\n          \"merchantCategoryCode\": \"4812\",\n          \"beneficiaryAccountType\": \"BUSINESS\",\n          \"contractPresentIndicator\": true,\n          \"beneficiaryPrepopulatedIndicator\": true,\n          \"deliveryAddress\": {\n            \"addressLine\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"addressType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"buildingNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"country\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"countrySubDivision\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"department\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"postCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"streetName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"subDepartment\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"townName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"externalPsuReference\": \"psu external reference 12345\"\n      },\n      \"memberId\": \"m:123456abcd:abcd\",\n      \"status\": \"INITIATION_COMPLETED\",\n      \"updatedDateTime\": \"2023-04-05T17:02:11.954Z\",\n      \"convertedToFutureDatedPayment\": false,\n      \"refundDetails\": {\n        \"refundAccount\": {\n          \"name\": \"John Smith\"\n        },\n        \"paymentRefundStatus\": \"NONE\",\n        \"settledRefundAmount\": {\n          \"currency\": \"EUR\",\n          \"value\": \"10.23\"\n        },\n        \"remainingRefundAmount\": {\n          \"currency\": \"EUR\",\n          \"value\": \"10.23\"\n        }\n      },\n      \"statusReasonInformation\": \"The payment is settled on the debtor side.\",\n      \"bankPaymentStatus\": \"ACPC\",\n      \"bankPaymentId\": \"1231423\",\n      \"bankTransactionId\": \"2UhwCZ3BMaEcAUK8bZdukor7NL4tH6TBuu6aJMp5KKfX:5zKcENpV\",\n      \"bankVrpId\": \"string\",\n      \"bankVrpStatus\": \"AcceptedCreditSettlementCompleted\",\n      \"authentication\": {\n        \"redirectUrl\": \"http://psu-redirect.com\"\n      },\n      \"errorInfo\": {\n        \"httpErrorCode\": 503,\n        \"message\": \"UNAVAILABLE: HTTP connection failed\",\n        \"tokenExternalError\": true,\n        \"tokenTraceId\": \"eASI3Onqkpi1unAM59O5\"\n      },\n      \"paymentLinkStatus\": \"LINK_ACTIVE\"\n    },\n    {\n      \"createdDateTime\": \"2023-04-05T17:02:11.954Z\",\n      \"id\": \"pm:12345abcd:abcd\",\n      \"initiation\": {\n        \"flowType\": \"FULL_HOSTED_PAGES\",\n        \"callbackUrl\": \"https://tpp.com/callback\",\n        \"creditor\": \"<object>\",\n        \"localInstrument\": \"SEPA\",\n        \"refId\": \"9htio4a1sp2akdr1aa\",\n        \"amount\": {\n          \"currency\": \"EUR\",\n          \"value\": \"10.23\"\n        },\n        \"remittanceInformationPrimary\": \"Sweepco\",\n        \"bankId\": \"ob-modelo\",\n        \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n        \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n        \"vrpConsentId\": \"<string>\",\n        \"debtor\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"executionDate\": \"2023-04-29\",\n        \"confirmFunds\": false,\n        \"returnRefundAccount\": false,\n        \"disableFutureDatedPaymentConversion\": false,\n        \"returnTokenizedAccount\": true,\n        \"callbackState\": \"6242e45e-3063-4c42-8376\",\n        \"chargeBearer\": \"CRED\",\n        \"risk\": {\n          \"psuId\": \"<string>\",\n          \"paymentContextCode\": \"PISP_PAYEE\",\n          \"paymentPurposeCode\": \"DVPM\",\n          \"merchantCategoryCode\": \"4812\",\n          \"beneficiaryAccountType\": \"BUSINESS\",\n          \"contractPresentIndicator\": true,\n          \"beneficiaryPrepopulatedIndicator\": true,\n          \"deliveryAddress\": {\n            \"addressLine\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"addressType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"buildingNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"country\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"countrySubDivision\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"department\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"postCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"streetName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"subDepartment\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"townName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"externalPsuReference\": \"psu external reference 12345\"\n      },\n      \"memberId\": \"m:123456abcd:abcd\",\n      \"status\": \"INITIATION_COMPLETED\",\n      \"updatedDateTime\": \"2023-04-05T17:02:11.954Z\",\n      \"convertedToFutureDatedPayment\": false,\n      \"refundDetails\": {\n        \"refundAccount\": {\n          \"name\": \"John Smith\"\n        },\n        \"paymentRefundStatus\": \"NONE\",\n        \"settledRefundAmount\": {\n          \"currency\": \"EUR\",\n          \"value\": \"10.23\"\n        },\n        \"remainingRefundAmount\": {\n          \"currency\": \"EUR\",\n          \"value\": \"10.23\"\n        }\n      },\n      \"statusReasonInformation\": \"The payment is settled on the debtor side.\",\n      \"bankPaymentStatus\": \"ACPC\",\n      \"bankPaymentId\": \"1231423\",\n      \"bankTransactionId\": \"2UhwCZ3BMaEcAUK8bZdukor7NL4tH6TBuu6aJMp5KKfX:5zKcENpV\",\n      \"bankVrpId\": \"string\",\n      \"bankVrpStatus\": \"AcceptedCreditSettlementCompleted\",\n      \"authentication\": {\n        \"redirectUrl\": \"http://psu-redirect.com\"\n      },\n      \"errorInfo\": {\n        \"httpErrorCode\": 503,\n        \"message\": \"UNAVAILABLE: HTTP connection failed\",\n        \"tokenExternalError\": true,\n        \"tokenTraceId\": \"eASI3Onqkpi1unAM59O5\"\n      },\n      \"paymentLinkStatus\": \"LINK_ACTIVE\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5ff8ff47-e2cd-4a78-97c3-191e2656cf03",
+              "name": "The client specified an invalid argument.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "pm2:4QExXrhKTxfShBdcTeqFabqJJhUF:2gFUX1NDgpN"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "pm2:N5cJDFsQzVca3Qvr8kQocgEnjgX:2gFUX1NEdYA"
+                    },
+                    {
+                      "key": "invertIds",
+                      "value": "false"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_COMPLETED"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_REJECTED"
+                    },
+                    {
+                      "key": "invertStatuses",
+                      "value": "true"
+                    },
+                    {
+                      "key": "createdAfter",
+                      "value": "2022-04-05T17:00:00.000Z"
+                    },
+                    {
+                      "key": "createdBefore",
+                      "value": "2022-04-05T17:00:00.000Z"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "ShBdcTeqFabqJJhUF"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "N5cJDFsQzVca3Q"
+                    },
+                    {
+                      "key": "onBehalfOfId",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    },
+                    {
+                      "key": "refundStatuses",
+                      "value": "PARTIAL"
+                    },
+                    {
+                      "key": "refundStatuses",
+                      "value": "NONE"
+                    },
+                    {
+                      "key": "partial",
+                      "value": "true"
+                    },
+                    {
+                      "key": "externalPsuReference",
+                      "value": "psu external reference 12345"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "vrpConsentId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"InternalServerError\",\n  \"message\": \"`RefId` should not be longer than 35 symbols.\",\n  \"paths\": [\n    \"initiation.refId\",\n    \"initiation.refId\"\n  ],\n  \"tokenTraceId\": \"5678912345\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "82c08a0f-f66a-44e8-b5fa-39e616bcc074",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "pm2:4QExXrhKTxfShBdcTeqFabqJJhUF:2gFUX1NDgpN"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "pm2:N5cJDFsQzVca3Qvr8kQocgEnjgX:2gFUX1NEdYA"
+                    },
+                    {
+                      "key": "invertIds",
+                      "value": "false"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_COMPLETED"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_REJECTED"
+                    },
+                    {
+                      "key": "invertStatuses",
+                      "value": "true"
+                    },
+                    {
+                      "key": "createdAfter",
+                      "value": "2022-04-05T17:00:00.000Z"
+                    },
+                    {
+                      "key": "createdBefore",
+                      "value": "2022-04-05T17:00:00.000Z"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "ShBdcTeqFabqJJhUF"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "N5cJDFsQzVca3Q"
+                    },
+                    {
+                      "key": "onBehalfOfId",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    },
+                    {
+                      "key": "refundStatuses",
+                      "value": "PARTIAL"
+                    },
+                    {
+                      "key": "refundStatuses",
+                      "value": "NONE"
+                    },
+                    {
+                      "key": "partial",
+                      "value": "true"
+                    },
+                    {
+                      "key": "externalPsuReference",
+                      "value": "psu external reference 12345"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "vrpConsentId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0a672c84-5cf0-4e81-b472-0315040fd248",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "pm2:4QExXrhKTxfShBdcTeqFabqJJhUF:2gFUX1NDgpN"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "pm2:N5cJDFsQzVca3Qvr8kQocgEnjgX:2gFUX1NEdYA"
+                    },
+                    {
+                      "key": "invertIds",
+                      "value": "false"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_COMPLETED"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "INITIATION_REJECTED"
+                    },
+                    {
+                      "key": "invertStatuses",
+                      "value": "true"
+                    },
+                    {
+                      "key": "createdAfter",
+                      "value": "2022-04-05T17:00:00.000Z"
+                    },
+                    {
+                      "key": "createdBefore",
+                      "value": "2022-04-05T17:00:00.000Z"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "ShBdcTeqFabqJJhUF"
+                    },
+                    {
+                      "key": "refIds",
+                      "value": "N5cJDFsQzVca3Q"
+                    },
+                    {
+                      "key": "onBehalfOfId",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    },
+                    {
+                      "key": "refundStatuses",
+                      "value": "PARTIAL"
+                    },
+                    {
+                      "key": "refundStatuses",
+                      "value": "NONE"
+                    },
+                    {
+                      "key": "partial",
+                      "value": "true"
+                    },
+                    {
+                      "key": "externalPsuReference",
+                      "value": "psu external reference 12345"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "vrpConsentId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "90674215-e41f-4960-b5b6-0e939dd3c29f",
+          "name": "Get a payment",
+          "request": {
+            "name": "Get a payment",
+            "description": {
+              "content": "The `GET /v2/payments/{paymentId}` endpoint provides you with details of an individual payment and checks the payment status for the next step, if any.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "payments",
+                ":paymentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "paymentId",
+                  "description": "(Required) The payment id."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                "key": "request-timeout",
+                "value": "<integer>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "34372638-73cf-4197-a0ae-2c603405f075",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payments",
+                    ":paymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) The payment id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                    "key": "request-timeout",
+                    "value": "10"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payment\": {\n    \"createdDateTime\": \"2023-04-05T17:02:11.954Z\",\n    \"id\": \"pm:12345abcd:abcd\",\n    \"initiation\": {\n      \"flowType\": \"FULL_HOSTED_PAGES\",\n      \"callbackUrl\": \"https://tpp.com/callback\",\n      \"creditor\": \"<object>\",\n      \"localInstrument\": \"SEPA\",\n      \"refId\": \"9htio4a1sp2akdr1aa\",\n      \"amount\": {\n        \"currency\": \"EUR\",\n        \"value\": \"10.23\"\n      },\n      \"remittanceInformationPrimary\": \"Sweepco\",\n      \"bankId\": \"ob-modelo\",\n      \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n      \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n      \"vrpConsentId\": \"<string>\",\n      \"debtor\": {\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"ultimateDebtorName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"address\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"executionDate\": \"2023-04-29\",\n      \"confirmFunds\": false,\n      \"returnRefundAccount\": false,\n      \"disableFutureDatedPaymentConversion\": false,\n      \"returnTokenizedAccount\": true,\n      \"callbackState\": \"6242e45e-3063-4c42-8376\",\n      \"chargeBearer\": \"CRED\",\n      \"risk\": {\n        \"psuId\": \"<string>\",\n        \"paymentContextCode\": \"PISP_PAYEE\",\n        \"paymentPurposeCode\": \"DVPM\",\n        \"merchantCategoryCode\": \"4812\",\n        \"beneficiaryAccountType\": \"BUSINESS\",\n        \"contractPresentIndicator\": true,\n        \"beneficiaryPrepopulatedIndicator\": true,\n        \"deliveryAddress\": {\n          \"addressLine\": [\n            \"Flat 2, The Red Lodge, 1 High Street\"\n          ],\n          \"addressType\": \"BUSINESS\",\n          \"buildingNumber\": \"1\",\n          \"country\": \"GB\",\n          \"countrySubDivision\": [\n            \"North Yorkshire\"\n          ],\n          \"department\": \"1\",\n          \"postCode\": \"YO62 5JB\",\n          \"streetName\": \"High Street\",\n          \"subDepartment\": \"Flat 2\",\n          \"townName\": \"York\"\n        }\n      },\n      \"externalPsuReference\": \"psu external reference 12345\"\n    },\n    \"memberId\": \"m:123456abcd:abcd\",\n    \"status\": \"INITIATION_COMPLETED\",\n    \"updatedDateTime\": \"2023-04-05T17:02:11.954Z\",\n    \"convertedToFutureDatedPayment\": false,\n    \"refundDetails\": {\n      \"refundAccount\": {\n        \"iban\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"bic\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": \"John Smith\"\n      },\n      \"paymentRefundStatus\": \"NONE\",\n      \"settledRefundAmount\": {\n        \"currency\": \"EUR\",\n        \"value\": \"10.23\"\n      },\n      \"remainingRefundAmount\": {\n        \"currency\": \"EUR\",\n        \"value\": \"10.23\"\n      }\n    },\n    \"statusReasonInformation\": \"The payment is settled on the debtor side.\",\n    \"bankPaymentStatus\": \"ACPC\",\n    \"bankPaymentId\": \"1231423\",\n    \"bankTransactionId\": \"2UhwCZ3BMaEcAUK8bZdukor7NL4tH6TBuu6aJMp5KKfX:5zKcENpV\",\n    \"bankVrpId\": \"string\",\n    \"bankVrpStatus\": \"AcceptedCreditSettlementCompleted\",\n    \"authentication\": {\n      \"redirectUrl\": \"http://psu-redirect.com\"\n    },\n    \"errorInfo\": {\n      \"httpErrorCode\": 503,\n      \"message\": \"UNAVAILABLE: HTTP connection failed\",\n      \"tokenExternalError\": true,\n      \"tokenTraceId\": \"eASI3Onqkpi1unAM59O5\"\n    },\n    \"paymentLinkStatus\": \"LINK_ACTIVE\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b7e710a9-4af1-4f8b-8589-913a241488c4",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payments",
+                    ":paymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) The payment id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                    "key": "request-timeout",
+                    "value": "10"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c37fad6d-895e-416b-9daf-111f23a396f8",
+              "name": "The requested entity, such as a payment, was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payments",
+                    ":paymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) The payment id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                    "key": "request-timeout",
+                    "value": "10"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "18572ff4-3e87-46e7-87c3-b5b7ac1273d1",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payments",
+                    ":paymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) The payment id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                    "key": "request-timeout",
+                    "value": "10"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5d6dcd17-988b-4054-b146-0c02c3e36e1e",
+          "name": "Provide information for embedded authentication",
+          "request": {
+            "name": "Provide information for embedded authentication",
+            "description": {
+              "content": "The `POST /v2/payments/{paymentId}/embedded-auth` endpoint provides you with the requested information when the payment status is `INITIATION_PENDING_EMBEDDED_AUTH`. The requested information can be found in the authentication field of the payment. <br/> <br/> It's possible that some banks might request the user's input multiple times. In this case you might need to call this endpoint again for a new field set.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "payments",
+                ":paymentId",
+                "embedded-auth"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "paymentId",
+                  "description": "(Required) The payment id."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                "key": "request-timeout",
+                "value": "<integer>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"embeddedAuth\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3195e192-4f43-45ec-8c5e-81f1eb7e26c4",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payments",
+                    ":paymentId",
+                    "embedded-auth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) The payment id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                    "key": "request-timeout",
+                    "value": "10"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"embeddedAuth\": {\n    \"123\": \"SMS message\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payment\": {\n    \"createdDateTime\": \"2023-04-05T17:02:11.954Z\",\n    \"id\": \"pm:12345abcd:abcd\",\n    \"initiation\": {\n      \"flowType\": \"FULL_HOSTED_PAGES\",\n      \"callbackUrl\": \"https://tpp.com/callback\",\n      \"creditor\": \"<object>\",\n      \"localInstrument\": \"SEPA\",\n      \"refId\": \"9htio4a1sp2akdr1aa\",\n      \"amount\": {\n        \"currency\": \"EUR\",\n        \"value\": \"10.23\"\n      },\n      \"remittanceInformationPrimary\": \"Sweepco\",\n      \"bankId\": \"ob-modelo\",\n      \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n      \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n      \"vrpConsentId\": \"<string>\",\n      \"debtor\": {\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"ultimateDebtorName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"address\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"executionDate\": \"2023-04-29\",\n      \"confirmFunds\": false,\n      \"returnRefundAccount\": false,\n      \"disableFutureDatedPaymentConversion\": false,\n      \"returnTokenizedAccount\": true,\n      \"callbackState\": \"6242e45e-3063-4c42-8376\",\n      \"chargeBearer\": \"CRED\",\n      \"risk\": {\n        \"psuId\": \"<string>\",\n        \"paymentContextCode\": \"PISP_PAYEE\",\n        \"paymentPurposeCode\": \"DVPM\",\n        \"merchantCategoryCode\": \"4812\",\n        \"beneficiaryAccountType\": \"BUSINESS\",\n        \"contractPresentIndicator\": true,\n        \"beneficiaryPrepopulatedIndicator\": true,\n        \"deliveryAddress\": {\n          \"addressLine\": [\n            \"Flat 2, The Red Lodge, 1 High Street\"\n          ],\n          \"addressType\": \"BUSINESS\",\n          \"buildingNumber\": \"1\",\n          \"country\": \"GB\",\n          \"countrySubDivision\": [\n            \"North Yorkshire\"\n          ],\n          \"department\": \"1\",\n          \"postCode\": \"YO62 5JB\",\n          \"streetName\": \"High Street\",\n          \"subDepartment\": \"Flat 2\",\n          \"townName\": \"York\"\n        }\n      },\n      \"externalPsuReference\": \"psu external reference 12345\"\n    },\n    \"memberId\": \"m:123456abcd:abcd\",\n    \"status\": \"INITIATION_COMPLETED\",\n    \"updatedDateTime\": \"2023-04-05T17:02:11.954Z\",\n    \"convertedToFutureDatedPayment\": false,\n    \"refundDetails\": {\n      \"refundAccount\": {\n        \"iban\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"bic\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": \"John Smith\"\n      },\n      \"paymentRefundStatus\": \"NONE\",\n      \"settledRefundAmount\": {\n        \"currency\": \"EUR\",\n        \"value\": \"10.23\"\n      },\n      \"remainingRefundAmount\": {\n        \"currency\": \"EUR\",\n        \"value\": \"10.23\"\n      }\n    },\n    \"statusReasonInformation\": \"The payment is settled on the debtor side.\",\n    \"bankPaymentStatus\": \"ACPC\",\n    \"bankPaymentId\": \"1231423\",\n    \"bankTransactionId\": \"2UhwCZ3BMaEcAUK8bZdukor7NL4tH6TBuu6aJMp5KKfX:5zKcENpV\",\n    \"bankVrpId\": \"string\",\n    \"bankVrpStatus\": \"AcceptedCreditSettlementCompleted\",\n    \"authentication\": {\n      \"redirectUrl\": \"http://psu-redirect.com\"\n    },\n    \"errorInfo\": {\n      \"httpErrorCode\": 503,\n      \"message\": \"UNAVAILABLE: HTTP connection failed\",\n      \"tokenExternalError\": true,\n      \"tokenTraceId\": \"eASI3Onqkpi1unAM59O5\"\n    },\n    \"paymentLinkStatus\": \"LINK_ACTIVE\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e63ad2f5-4647-49f4-987a-14b5deb0d3c9",
+              "name": "The client specified an invalid argument.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payments",
+                    ":paymentId",
+                    "embedded-auth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) The payment id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                    "key": "request-timeout",
+                    "value": "10"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"embeddedAuth\": {\n    \"123\": \"SMS message\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"`RefId` should not be longer than 35 symbols.\",\n    \"paths\": [\n      \"initiation.refId\",\n      \"initiation.refId\"\n    ],\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d968c238-6316-4215-a6cf-8fef28863ece",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payments",
+                    ":paymentId",
+                    "embedded-auth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) The payment id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                    "key": "request-timeout",
+                    "value": "10"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"embeddedAuth\": {\n    \"123\": \"SMS message\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "996c4ef5-11f4-4c5c-b617-bd405b3db63d",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payments",
+                    ":paymentId",
+                    "embedded-auth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) The payment id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                    "key": "request-timeout",
+                    "value": "10"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"embeddedAuth\": {\n    \"123\": \"SMS message\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "816013d0-d672-4979-910c-2c7af6dc9a31",
+              "name": "The requested entity, such as a payment, was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payments",
+                    ":paymentId",
+                    "embedded-auth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) The payment id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                    "key": "request-timeout",
+                    "value": "10"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"embeddedAuth\": {\n    \"123\": \"SMS message\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16aa7d6d-d5a0-47d3-826e-60e4f243884d",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payments",
+                    ":paymentId",
+                    "embedded-auth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) The payment id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Sets the number of elapsed seconds until Token.io sends the response back, even if the call is not finished by that time (in which case the call will be completed asynchronously).",
+                    "key": "request-timeout",
+                    "value": "10"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"embeddedAuth\": {\n    \"123\": \"SMS message\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8b928e66-2d5f-4fa9-a749-ae380a0f5e22",
+          "name": "Generate QR code",
+          "request": {
+            "name": "Generate QR code",
+            "description": {
+              "content": "The `GET /qr-code` endpoint generates a QR code in fixed SVG format (240x240 px). This allows TPPs to programmatically obtain a scannable QR code .",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "qr-code"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "data",
+                  "value": "<string>",
+                  "description": "(Required) The encoded URL to use while generating the QR code. The link must be URL encoded."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "image/svg+xml"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "505c1dbc-1a61-467d-972e-1adc12f4f9aa",
+              "name": "QR code successfully generated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qr-code"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "data",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "image/svg+xml"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "image/svg+xml"
+                }
+              ],
+              "body": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"240\" height=\"240\" viewBox=\"0 0 240 240\">\n    <!-- more SVG content here -->\n</svg>\n",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "13325612-febf-4359-8e3f-ab3de1444f76",
+              "name": "The client specified an invalid argument (e.g., size too small)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qr-code"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "data",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83ee359a-c9bb-4ddb-9d9a-3e87c6a4ffc3",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qr-code"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "data",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "160fa231-6550-4e15-80f0-f3821ac672b6",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qr-code"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "data",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4446a080-fdf2-4317-b0bf-62813016c18b",
+              "name": "The requested payment was not found or does not have a link",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qr-code"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "data",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ea93c8d4-3f87-44fb-b743-06c06ac01fe9",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qr-code"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "data",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.token.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "97bd55a3-54e2-43d2-b639-ad1561aaeb6f",
+    "name": "Token.io's Open Banking API for TPPs Account on File Payments v2 API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "<b>Token.io's Open Banking API</b><br/><br/>Token.io Support: <a href=\"https://support.token.io\" target=\"_blank\">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user's account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href=\"https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm\" target=\"_blank\">developer documentation</a>.",
+      "type": "text/plain"
+    }
+  }
+}

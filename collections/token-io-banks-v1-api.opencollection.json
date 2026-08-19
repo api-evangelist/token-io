@@ -1,0 +1,328 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Token.io's Open Banking API for TPPs Account on File Banks v1 API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Banks v1",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get banks v1",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/banks",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "The index of the page currently being retrieved."
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "The number of records per page."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The key to sort the result. This can be `name` (<i>i.e.</i>, bank name), `provider`, or `country`."
+              },
+              {
+                "name": "memberId",
+                "value": "m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq",
+                "type": "query",
+                "description": "The Token.io-assigned member id of the TPP."
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks with a `bankId` (case-insensitive) matching any of the ids listed, up to a maximum of 1000. Only exact (full string) matches are returned."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks with a name or identifiers containing this search string."
+              },
+              {
+                "name": "tppId",
+                "value": "4h27g823-g73s-07v3-l49s-prte94bf21v",
+                "type": "query",
+                "description": "Filters for banks for which the TPP represented by this `tppId` has access."
+              },
+              {
+                "name": "providers",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that are accessed through any of the listed providers."
+              },
+              {
+                "name": "bankCode",
+                "value": "NBAGDE3E",
+                "type": "query",
+                "description": "Filters for banks with a BIC (or BLZ, if German) that matches this `bankCode`. The BIC must have a string length of 8 or 11. The BLZ must have a string length of 8."
+              },
+              {
+                "name": "countries",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that are located in the countries specified by this list of two-letter country codes in upper case (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "bank_features.supports_send_payment.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support payment initiation."
+              },
+              {
+                "name": "bank_features.supports_receive_payment.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support receiving payments."
+              },
+              {
+                "name": "bank_features.supports_balance.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for the banks that support retrieving balances."
+              },
+              {
+                "name": "bank_features.supports_scheduled_payment.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support future dated scheduled payments."
+              },
+              {
+                "name": "bank_features.supports_standing_order.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support recurring payments/standing orders."
+              },
+              {
+                "name": "bank_features.requires_one_step_payment.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that only support immediate redemption of transfers."
+              },
+              {
+                "name": "bank_features.supports_funds_confirmation.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for the banks that support confirmation of available funds."
+              },
+              {
+                "name": "bank_features.supports_return_refund_account.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for the banks that support request of refund account."
+              },
+              {
+                "name": "bank_features.supports_transactions_date_filter.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support retrieving transactions by date filter."
+              },
+              {
+                "name": "bank_features.supports_account_information.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support retrieval of account information."
+              },
+              {
+                "name": "bank_features.supports_single_payment.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support single immediate payments."
+              },
+              {
+                "name": "bank_features.supports_variable_recurring_payment.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support variable recurring payments."
+              },
+              {
+                "name": "bics",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks whose BIC matches any of the listed BICs (case-insensitive), up to a maximum of 1000."
+              },
+              {
+                "name": "supportedPaymentNetworks",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support any of the listed payment networks."
+              },
+              {
+                "name": "bankGroup",
+                "value": "HSBC,Coop",
+                "type": "query",
+                "description": "Filters for banks that are part of the bank group specified."
+              },
+              {
+                "name": "bankSubGroup",
+                "value": "CMM Grand,Banque Populaire,La Banque",
+                "type": "query",
+                "description": "Filters for banks that are part of the bank sub-group specified."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /banks` endpoint retrieves a list of connected banks matching the parameters specified."
+        },
+        {
+          "info": {
+            "name": "Get bank countries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/bank/countries",
+            "params": [
+              {
+                "name": "ids",
+                "value": "goldbank,opalbank,platinumbank",
+                "type": "query",
+                "description": "Filters for banks with bank ids that are represented in this list of ids (case-insensitive), up to a maximum of 1000."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks with names or identifiers that contain this search string (case sensitive)."
+              },
+              {
+                "name": "tppId",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks to which the TPP with this `tppId` has access."
+              },
+              {
+                "name": "bankCode",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks with a BIC (or BLZ, if German) that matches this `bankCode`. The BIC must have a string length of 8 or 11. The BLZ must have a string length of 8."
+              },
+              {
+                "name": "countries",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that are located in the countries specified by this list of two-letter country code in upper case (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "providers",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that are accessed through any of this list of providers."
+              },
+              {
+                "name": "bank_features.supports_send_payment.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support payment initiation."
+              },
+              {
+                "name": "bank_features.supports_receive_payment.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support the receipt of payments."
+              },
+              {
+                "name": "bank_features.supports_balance.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for the banks that support retrieving account balances."
+              },
+              {
+                "name": "bank_features.supports_scheduled_payment.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support future dated scheduled payments."
+              },
+              {
+                "name": "bank_features.supports_standing_order.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support standing orders/recurring payments."
+              },
+              {
+                "name": "bank_features.requires_one_step_payment.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that only support immediate redemption of transfer tokens."
+              },
+              {
+                "name": "bank_features.supports_funds_confirmation.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support confirmation of available funds."
+              },
+              {
+                "name": "bank_features.supports_return_refund_account.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support the request of refund account."
+              },
+              {
+                "name": "bank_features.supports_transactions_date_filter.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support retrieving transactions by date filter."
+              },
+              {
+                "name": "bank_features.supports_account_information.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support retrieving account information using Account Information Services (AIS)."
+              },
+              {
+                "name": "bank_features.supports_single_payment.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support single immediate payments."
+              },
+              {
+                "name": "bank_features.supports_variable_recurring_payment.value",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support variable recurring payments."
+              },
+              {
+                "name": "memberId",
+                "value": "m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq",
+                "type": "query",
+                "description": "The Token.io-assigned member id of the TPP."
+              },
+              {
+                "name": "supportedPaymentNetworks",
+                "value": "",
+                "type": "query",
+                "description": "Filters for banks that support any of the listed payment networks."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /banks/countries` endpoint retrieves the list of countries that have connected banks which match the parameters specified."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

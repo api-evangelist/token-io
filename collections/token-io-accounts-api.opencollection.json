@@ -1,0 +1,321 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Token.io's Open Banking API for TPPs Account on File Accounts API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get information for all accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/accounts",
+            "headers": [
+              {
+                "name": "on-behalf-of",
+                "value": "ta:3eYPU1BEKKunfmYgQuSKXFCeo851C5Y3XiZW3XA465TU:5zKtXEAq"
+              },
+              {
+                "name": "token-customer-ip-address",
+                "value": "172.16.254.1"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /accounts` endpoint retrieves information for all bank accounts."
+        },
+        {
+          "info": {
+            "name": "Get account information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/accounts/:accountId",
+            "headers": [
+              {
+                "name": "on-behalf-of",
+                "value": "ta:3eYPU1BEKKunfmYgQuSKXFCeo851C5Y3XiZW3XA465TU:5zKtXEAq"
+              },
+              {
+                "name": "token-customer-ip-address",
+                "value": "172.16.254.1"
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "a:8DbPteGnytmMbKXdnWTReeRB6cYWKXZ84JgLTBC7fKL4:5zKcENpV",
+                "type": "path",
+                "description": "The system-generated, unique bank account id, which specifies the account for which the information is requested."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /accounts/{accountId}` endpoint retrieves the information for a specific bank account."
+        },
+        {
+          "info": {
+            "name": "Get account balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/account-balance",
+            "headers": [
+              {
+                "name": "on-behalf-of",
+                "value": "ta:3eYPU1BEKKunfmYgQuSKXFCeo851C5Y3XiZW3XA465TU:5zKtXEAq"
+              },
+              {
+                "name": "token-customer-ip-address",
+                "value": "172.16.254.1"
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "a:8DbPteGnytmMbKXdnWTReeRB6cYWKXZ84JgLTBC7fKL4:5zKcENpV,a:9TFpwkcQmcsMbdjQcpdjfsEBosDw28503fAAGPEMF2MVF19hfk3nc,a:rtmv254gaskGLdkadQvdNesk2Y9ferbvpaom5mvepm0mv2nfGnaix",
+                "type": "query",
+                "description": "A list of account ids for which you wish to retrieve account balances. Each `accountId` should be specified separately as accountId=a:xxx:xxx&accountId=a:yyy:yyy."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /account-balance` endpoint retrieves the balances for multiple bank accounts."
+        },
+        {
+          "info": {
+            "name": "Get an account balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/accounts/:accountId/balance",
+            "headers": [
+              {
+                "name": "on-behalf-of",
+                "value": "ta:3eYPU1BEKKunfmYgQuSKXFCeo851C5Y3XiZW3XA465TU:5zKtXEAq"
+              },
+              {
+                "name": "token-customer-ip-address",
+                "value": "172.16.254.1"
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "a:8DbPteGnytmMbKXdnWTReeRB6cYWKXZ84JgLTBC7fKL4:5zKcENpV",
+                "type": "path",
+                "description": "The unique bank account id, which specifies the account for which the information is requested."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /accounts/{accountId}/balance` endpoint retrieves the balance for a given bank account."
+        },
+        {
+          "info": {
+            "name": "Get information for all standing orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/accounts/:accountId/standing-orders",
+            "headers": [
+              {
+                "name": "on-behalf-of",
+                "value": "ta:3eYPU1BEKKunfmYgQuSKXFCeo851C5Y3XiZW3XA465TU:5zKtXEAq"
+              },
+              {
+                "name": "token-customer-ip-address",
+                "value": "172.16.254.1"
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "a:8DbPteGnytmMbKXdnWTReeRB6cYWKXZ84JgLTBC7fKL4:5zKcENpV",
+                "type": "path",
+                "description": "The unique bank account id, which specifies the account for which the information is requested."
+              },
+              {
+                "name": "page.offset",
+                "value": "LerV6Jmex",
+                "type": "query",
+                "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br>The offset is not visible to a user and should not be parsed and/or understood in any way."
+              },
+              {
+                "name": "page.limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of records to return. This must be less than 200."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /accounts/{accountId}/standing-orders` endpoint retrieves information for all standing orders in a given account, once consent has been given."
+        },
+        {
+          "info": {
+            "name": "Get standing order information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/accounts/:accountId/standing-orders/:standingOrderId",
+            "headers": [
+              {
+                "name": "on-behalf-of",
+                "value": "ta:3eYPU1BEKKunfmYgQuSKXFCeo851C5Y3XiZW3XA465TU:5zKtXEAq"
+              },
+              {
+                "name": "token-customer-ip-address",
+                "value": "172.16.254.1"
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "a:8DbPteGnytmMbKXdnWTReeRB6cYWKXZ84JgLTBC7fKL4:5zKcENpV",
+                "type": "path",
+                "description": "The system-generated, unique bank account id, which specifies the account for which the information is requested."
+              },
+              {
+                "name": "standingOrderId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /accounts/{accountId}/standing-orders/{standingOrderId}` endpoint retrieves information for a specific standing order in a given account, once consent has been given."
+        },
+        {
+          "info": {
+            "name": "Get account transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/accounts/:accountId/transactions",
+            "headers": [
+              {
+                "name": "on-behalf-of",
+                "value": "ta:3eYPU1BEKKunfmYgQuSKXFCeo851C5Y3XiZW3XA465TU:5zKtXEAq"
+              },
+              {
+                "name": "token-customer-ip-address",
+                "value": "172.16.254.1"
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "a:8DbPteGnytmMbKXdnWTReeRB6cYWKXZ84JgLTBC7fKL4:5zKcENpV",
+                "type": "path",
+                "description": "The system-generated unique bank account id, which specifies the account for which the information is requested."
+              },
+              {
+                "name": "page.offset",
+                "value": "LerV6Jmex",
+                "type": "query",
+                "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way."
+              },
+              {
+                "name": "page.limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of records to return. This must be less than 200."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "The earliest transaction date requested, in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "The latest transaction date requested, in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /accounts/{accountId}/transactions` endpoint retrieves information for all transactions in a given account."
+        },
+        {
+          "info": {
+            "name": "Get transaction information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/accounts/:accountId/transaction/:transactionId",
+            "headers": [
+              {
+                "name": "on-behalf-of",
+                "value": "ta:3eYPU1BEKKunfmYgQuSKXFCeo851C5Y3XiZW3XA465TU:5zKtXEAq"
+              },
+              {
+                "name": "token-customer-ip-address",
+                "value": "172.16.254.1"
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "a:8DbPteGnytmMbKXdnWTReeRB6cYWKXZ84JgLTBC7fKL4:5zKcENpV",
+                "type": "path",
+                "description": "The unique bank account id, which specifies the account for which the information is requested."
+              },
+              {
+                "name": "transactionId",
+                "value": "42909b155d4942299c39017686b5dc36",
+                "type": "path",
+                "description": "The unique transaction identifier, which specifies the transaction requested."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /accounts/{accountId}/transaction/{transactionId}` endpoint retrieves information for a specific transaction in a given account."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

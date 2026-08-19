@@ -1,0 +1,1761 @@
+{
+  "item": [
+    {
+      "id": "b6c4fbfb-8270-48c6-a098-e3360b72f356",
+      "name": "Banks v2",
+      "description": {
+        "content": "This endpoint filters and fetches the list of connected banks, gets information on specific banks, and initiates authorization with user-selected banks using Payments v2.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "388ed569-dd93-4247-80ba-de8792b43348",
+          "name": "Get banks v2",
+          "request": {
+            "name": "Get banks v2",
+            "description": {
+              "content": "The `GET /v2/banks` endpoint retrieves a list of connected banks matching the parameters specified.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "banks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "The index of the page currently being retrieved."
+                },
+                {
+                  "disabled": false,
+                  "key": "perPage",
+                  "value": "200",
+                  "description": "The number of records per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "NAME",
+                  "description": "The key to sort the result. This can be `NAME` (Bank's name), `STANDARD` (OpenBankingStandard), `RANK`, or `COUNTRY`."
+                },
+                {
+                  "disabled": false,
+                  "key": "memberId",
+                  "value": "<string>",
+                  "description": "The Token.io-assigned member id of the TPP."
+                },
+                {
+                  "disabled": false,
+                  "key": "tppId",
+                  "value": "<string>",
+                  "description": "Filters for banks for which the TPP represented by this `tppId` has access."
+                },
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<string>",
+                  "description": "Filters for banks with a `bankId` (case-insensitive) matching any of the ids listed, up to a maximum of 1000. Only exact (full string) matches are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<string>",
+                  "description": "Filters for banks with a `bankId` (case-insensitive) matching any of the ids listed, up to a maximum of 1000. Only exact (full string) matches are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "Filters for banks with a name or identifiers containing this search string."
+                },
+                {
+                  "disabled": false,
+                  "key": "bankGroup",
+                  "value": "<string>",
+                  "description": "Filters for banks that are members of the bank group specified."
+                },
+                {
+                  "disabled": false,
+                  "key": "bankSubGroup",
+                  "value": "<string>",
+                  "description": "Filters for banks that are part of the bank sub-group specified."
+                },
+                {
+                  "disabled": false,
+                  "key": "bankCode",
+                  "value": "<string>",
+                  "description": "Filters for banks with a BIC (or BLZ, if German) that matches this `bankCode`. The BIC must have a string length of 8 or 11. The BLZ must have a string length of 8."
+                },
+                {
+                  "disabled": false,
+                  "key": "openBankingStandards",
+                  "value": "UK_Open_Banking_Standard",
+                  "description": "Filters for banks that are accessed through any of the listed standards."
+                },
+                {
+                  "disabled": false,
+                  "key": "openBankingStandards",
+                  "value": "UK_Open_Banking_Standard",
+                  "description": "Filters for banks that are accessed through any of the listed standards."
+                },
+                {
+                  "disabled": false,
+                  "key": "countries",
+                  "value": "<string>",
+                  "description": "Filters for banks that are located in the countries specified by this list of two-letter country code in upper case (ISO 3166-1 alpha-2)."
+                },
+                {
+                  "disabled": false,
+                  "key": "countries",
+                  "value": "<string>",
+                  "description": "Filters for banks that are located in the countries specified by this list of two-letter country code in upper case (ISO 3166-1 alpha-2)."
+                },
+                {
+                  "disabled": false,
+                  "key": "bics",
+                  "value": "<string>",
+                  "description": "Filters for banks whose BIC matches any of the listed BICs (case-insensitive), up to a maximum of 1000."
+                },
+                {
+                  "disabled": false,
+                  "key": "bics",
+                  "value": "<string>",
+                  "description": "Filters for banks whose BIC matches any of the listed BICs (case-insensitive), up to a maximum of 1000."
+                },
+                {
+                  "disabled": false,
+                  "key": "supportedLocalInstruments",
+                  "value": "<string>",
+                  "description": "Filters for banks that support any of the listed payment networks."
+                },
+                {
+                  "disabled": false,
+                  "key": "supportedLocalInstruments",
+                  "value": "<string>",
+                  "description": "Filters for banks that support any of the listed payment networks."
+                },
+                {
+                  "disabled": false,
+                  "key": "supportsAccountList",
+                  "value": "<boolean>",
+                  "description": "Filters for banks that support fetching accounts."
+                },
+                {
+                  "disabled": false,
+                  "key": "supportsAccountDetails",
+                  "value": "<boolean>",
+                  "description": "Filters for banks that support fetching account details."
+                },
+                {
+                  "disabled": false,
+                  "key": "supportsAccountBalance",
+                  "value": "<boolean>",
+                  "description": "Filters for banks that support fetching account balances."
+                },
+                {
+                  "disabled": false,
+                  "key": "supportsTransactionList",
+                  "value": "<boolean>",
+                  "description": "Filters for banks that support fetching transactions."
+                },
+                {
+                  "disabled": false,
+                  "key": "supportsTransactionDetails",
+                  "value": "<boolean>",
+                  "description": "Filters for banks that support fetching transaction details."
+                },
+                {
+                  "disabled": false,
+                  "key": "supportsStandingOrderList",
+                  "value": "<boolean>",
+                  "description": "Filters for banks that support the fetching standing orders."
+                },
+                {
+                  "disabled": false,
+                  "key": "supportsTransactionsDateFilter",
+                  "value": "<boolean>",
+                  "description": "Filters for banks that support feting transactions using a date filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "requiresOneStepPayment",
+                  "value": "<boolean>",
+                  "description": "Filters for banks that only support immediate redemption of transfers."
+                },
+                {
+                  "disabled": false,
+                  "key": "supportsSinglePayment",
+                  "value": "<boolean>",
+                  "description": "Filters for banks that support single immediate payments."
+                },
+                {
+                  "disabled": false,
+                  "key": "supportsScheduledPayment",
+                  "value": "<boolean>",
+                  "description": "Filters for banks that support future dated scheduled payments."
+                },
+                {
+                  "disabled": false,
+                  "key": "supportsStandingOrder",
+                  "value": "<boolean>",
+                  "description": "Filters for banks that support recurring payments/standing orders."
+                },
+                {
+                  "disabled": false,
+                  "key": "supportsReturnRefundAccount",
+                  "value": "<boolean>",
+                  "description": "Filters for the banks that support request of refund account."
+                },
+                {
+                  "disabled": false,
+                  "key": "supportsReturnRefundAccountHolderName",
+                  "value": "<boolean>",
+                  "description": "Filters for banks that support returning the refund account holder name."
+                },
+                {
+                  "disabled": false,
+                  "key": "supportsFundsConfirmation",
+                  "value": "<boolean>",
+                  "description": "Filters for the banks that support confirmation of available funds."
+                },
+                {
+                  "disabled": false,
+                  "key": "supportsVariableRecurringPayment",
+                  "value": "<boolean>",
+                  "description": "Filters for banks that support variable recurring payments."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c213132f-9a1c-4ade-a3b7-17e26eb7158b",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "banks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "COUNTRY"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "hsbc"
+                    },
+                    {
+                      "key": "bankGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankSubGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "openBankingStandards",
+                      "value": "UK_Open_Banking_Standard"
+                    },
+                    {
+                      "key": "openBankingStandards",
+                      "value": "UK_Open_Banking_Standard"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L"
+                    },
+                    {
+                      "key": "supportedLocalInstruments",
+                      "value": "SEPA"
+                    },
+                    {
+                      "key": "supportedLocalInstruments",
+                      "value": "SEPA_INSTANT"
+                    },
+                    {
+                      "key": "supportedLocalInstruments",
+                      "value": "FASTER_PAYMENTS"
+                    },
+                    {
+                      "key": "supportsAccountList",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsAccountDetails",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsAccountBalance",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsTransactionList",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsTransactionDetails",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsStandingOrderList",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsTransactionsDateFilter",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "requiresOneStepPayment",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsSinglePayment",
+                      "value": "true"
+                    },
+                    {
+                      "key": "supportsScheduledPayment",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsStandingOrder",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsReturnRefundAccount",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsReturnRefundAccountHolderName",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsFundsConfirmation",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsVariableRecurringPayment",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"banks\": [\n    {\n      \"id\": \"ob-modelo\",\n      \"bic\": \"BOFIIE2D\",\n      \"name\": \"GoldBank\",\n      \"logoUri\": \"https://example.com/path/full.png\",\n      \"bankGroup\": \"XYZ-Bank-Group\",\n      \"bankSubGroup\": \"Sub-XYZ-Bank-Group\",\n      \"countries\": [\n        \"DE\",\n        \"IT\"\n      ],\n      \"openBankingStandard\": \"UK_Open_Banking_Standard\",\n      \"initialEmbeddedAuthFields\": {\n        \"displayName\": \"Password:\",\n        \"id\": \"67891234\",\n        \"type\": \"FIELD\",\n        \"additionalInformation\": \"This field is required.\",\n        \"options\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"mandatoryFields\": [\n        {\n          \"products\": [\n            \"SIP\",\n            \"SIP\"\n          ],\n          \"fieldPaths\": [\n            \"initiation.debtor\",\n            \"initiation.debtor\"\n          ],\n          \"paymentTypes\": [\n            \"International\",\n            \"International\"\n          ],\n          \"localInstruments\": [\n            \"SEPA\",\n            \"SEPA\"\n          ]\n        },\n        {\n          \"products\": [\n            \"SIP\",\n            \"SIP\"\n          ],\n          \"fieldPaths\": [\n            \"initiation.debtor\",\n            \"initiation.debtor\"\n          ],\n          \"paymentTypes\": [\n            \"International\",\n            \"International\"\n          ],\n          \"localInstruments\": [\n            \"SEPA\",\n            \"SEPA\"\n          ]\n        }\n      ],\n      \"maintenanceWindow\": [\n        {\n          \"startTime\": \"2023-05-03T12:28:20.466Z\",\n          \"endTime\": \"2023-05-03T12:40:25.47Z\",\n          \"type\": \"OUTAGE\",\n          \"productType\": \"SIP\"\n        },\n        {\n          \"startTime\": \"2023-05-03T12:28:20.466Z\",\n          \"endTime\": \"2023-05-03T12:40:25.47Z\",\n          \"type\": \"OUTAGE\",\n          \"productType\": \"SIP\"\n        }\n      ],\n      \"scaMethods\": [\n        \"REDIRECT\",\n        \"REDIRECT\"\n      ],\n      \"fieldsFormatInformation\": [\n        {\n          \"constraint\": \"^[A-Za-z0-9?:()./,'+\\\\-\\\\s]*$\",\n          \"v2Name\": \"description\",\n          \"v2Path\": \"credentials.credentials1\"\n        },\n        {\n          \"constraint\": \"^[A-Za-z0-9?:()./,'+\\\\-\\\\s]*$\",\n          \"v2Name\": \"description\",\n          \"v2Path\": \"credentials.credentials1\"\n        }\n      ],\n      \"supportedLocalInstruments\": [\n        \"SEPA\",\n        \"SEPA_INSTANT\",\n        \"FASTER_PAYMENTS\"\n      ],\n      \"operationalTime\": \"MON to FRI, 00:00 to 24:00 GMT+1\",\n      \"transactionHistoryLimit\": 65,\n      \"supportsAccountList\": true,\n      \"supportsAccountDetails\": true,\n      \"supportsAccountBalance\": true,\n      \"supportsTransactionList\": true,\n      \"supportsTransactionDetails\": true,\n      \"supportsStandingOrderList\": true,\n      \"supportsTransactionsDateFilter\": true,\n      \"requiresOneStepPayment\": true,\n      \"supportsSinglePayment\": true,\n      \"supportsScheduledPayment\": true,\n      \"supportsSendPayment\": false,\n      \"supportsReceivePayment\": false,\n      \"supportsStandingOrder\": true,\n      \"supportsReturnRefundAccount\": true,\n      \"supportsFundsConfirmation\": true,\n      \"supportsVariableRecurringPayment\": true\n    },\n    {\n      \"id\": \"ob-modelo\",\n      \"bic\": \"BOFIIE2D\",\n      \"name\": \"GoldBank\",\n      \"logoUri\": \"https://example.com/path/full.png\",\n      \"bankGroup\": \"XYZ-Bank-Group\",\n      \"bankSubGroup\": \"Sub-XYZ-Bank-Group\",\n      \"countries\": [\n        \"DE\",\n        \"IT\"\n      ],\n      \"openBankingStandard\": \"UK_Open_Banking_Standard\",\n      \"initialEmbeddedAuthFields\": {\n        \"displayName\": \"Password:\",\n        \"id\": \"67891234\",\n        \"type\": \"CHOICE_FIELD\",\n        \"additionalInformation\": \"This field is required.\",\n        \"options\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"mandatoryFields\": [\n        {\n          \"products\": [\n            \"SIP\",\n            \"SIP\"\n          ],\n          \"fieldPaths\": [\n            \"initiation.debtor\",\n            \"initiation.debtor\"\n          ],\n          \"paymentTypes\": [\n            \"International\",\n            \"International\"\n          ],\n          \"localInstruments\": [\n            \"SEPA\",\n            \"SEPA\"\n          ]\n        },\n        {\n          \"products\": [\n            \"SIP\",\n            \"SIP\"\n          ],\n          \"fieldPaths\": [\n            \"initiation.debtor\",\n            \"initiation.debtor\"\n          ],\n          \"paymentTypes\": [\n            \"International\",\n            \"International\"\n          ],\n          \"localInstruments\": [\n            \"SEPA\",\n            \"SEPA\"\n          ]\n        }\n      ],\n      \"maintenanceWindow\": [\n        {\n          \"startTime\": \"2023-05-03T12:28:20.466Z\",\n          \"endTime\": \"2023-05-03T12:40:25.47Z\",\n          \"type\": \"OUTAGE\",\n          \"productType\": \"SIP\"\n        },\n        {\n          \"startTime\": \"2023-05-03T12:28:20.466Z\",\n          \"endTime\": \"2023-05-03T12:40:25.47Z\",\n          \"type\": \"OUTAGE\",\n          \"productType\": \"SIP\"\n        }\n      ],\n      \"scaMethods\": [\n        \"REDIRECT\",\n        \"REDIRECT\"\n      ],\n      \"fieldsFormatInformation\": [\n        {\n          \"constraint\": \"^[A-Za-z0-9?:()./,'+\\\\-\\\\s]*$\",\n          \"v2Name\": \"description\",\n          \"v2Path\": \"credentials.credentials1\"\n        },\n        {\n          \"constraint\": \"^[A-Za-z0-9?:()./,'+\\\\-\\\\s]*$\",\n          \"v2Name\": \"description\",\n          \"v2Path\": \"credentials.credentials1\"\n        }\n      ],\n      \"supportedLocalInstruments\": [\n        \"SEPA\",\n        \"SEPA_INSTANT\",\n        \"FASTER_PAYMENTS\"\n      ],\n      \"operationalTime\": \"MON to FRI, 00:00 to 24:00 GMT+1\",\n      \"transactionHistoryLimit\": 65,\n      \"supportsAccountList\": true,\n      \"supportsAccountDetails\": true,\n      \"supportsAccountBalance\": true,\n      \"supportsTransactionList\": true,\n      \"supportsTransactionDetails\": true,\n      \"supportsStandingOrderList\": true,\n      \"supportsTransactionsDateFilter\": true,\n      \"requiresOneStepPayment\": true,\n      \"supportsSinglePayment\": true,\n      \"supportsScheduledPayment\": true,\n      \"supportsSendPayment\": false,\n      \"supportsReceivePayment\": false,\n      \"supportsStandingOrder\": true,\n      \"supportsReturnRefundAccount\": true,\n      \"supportsFundsConfirmation\": true,\n      \"supportsVariableRecurringPayment\": true\n    }\n  ],\n  \"paging\": {\n    \"page\": 15,\n    \"pageCount\": 80,\n    \"perPage\": 32,\n    \"totalCount\": 2500\n  },\n  \"rank\": 7026,\n  \"bankSubGroup\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1ff922ca-da4e-4d17-8faa-cd830f6bd83a",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "banks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "COUNTRY"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "hsbc"
+                    },
+                    {
+                      "key": "bankGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankSubGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "openBankingStandards",
+                      "value": "UK_Open_Banking_Standard"
+                    },
+                    {
+                      "key": "openBankingStandards",
+                      "value": "UK_Open_Banking_Standard"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L"
+                    },
+                    {
+                      "key": "supportedLocalInstruments",
+                      "value": "SEPA"
+                    },
+                    {
+                      "key": "supportedLocalInstruments",
+                      "value": "SEPA_INSTANT"
+                    },
+                    {
+                      "key": "supportedLocalInstruments",
+                      "value": "FASTER_PAYMENTS"
+                    },
+                    {
+                      "key": "supportsAccountList",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsAccountDetails",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsAccountBalance",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsTransactionList",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsTransactionDetails",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsStandingOrderList",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsTransactionsDateFilter",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "requiresOneStepPayment",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsSinglePayment",
+                      "value": "true"
+                    },
+                    {
+                      "key": "supportsScheduledPayment",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsStandingOrder",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsReturnRefundAccount",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsReturnRefundAccountHolderName",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsFundsConfirmation",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsVariableRecurringPayment",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"`RefId` should not be longer than 35 symbols.\",\n    \"paths\": [\n      \"initiation.refId\",\n      \"initiation.refId\"\n    ],\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "576ce85e-4de3-46e1-a91b-e6d61aa83909",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "banks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "COUNTRY"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "hsbc"
+                    },
+                    {
+                      "key": "bankGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankSubGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "openBankingStandards",
+                      "value": "UK_Open_Banking_Standard"
+                    },
+                    {
+                      "key": "openBankingStandards",
+                      "value": "UK_Open_Banking_Standard"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L"
+                    },
+                    {
+                      "key": "supportedLocalInstruments",
+                      "value": "SEPA"
+                    },
+                    {
+                      "key": "supportedLocalInstruments",
+                      "value": "SEPA_INSTANT"
+                    },
+                    {
+                      "key": "supportedLocalInstruments",
+                      "value": "FASTER_PAYMENTS"
+                    },
+                    {
+                      "key": "supportsAccountList",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsAccountDetails",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsAccountBalance",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsTransactionList",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsTransactionDetails",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsStandingOrderList",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsTransactionsDateFilter",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "requiresOneStepPayment",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsSinglePayment",
+                      "value": "true"
+                    },
+                    {
+                      "key": "supportsScheduledPayment",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsStandingOrder",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsReturnRefundAccount",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsReturnRefundAccountHolderName",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsFundsConfirmation",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsVariableRecurringPayment",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92f65e91-1bc0-48e8-92b1-9e95ae918e51",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "banks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "COUNTRY"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "hsbc"
+                    },
+                    {
+                      "key": "bankGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankSubGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "openBankingStandards",
+                      "value": "UK_Open_Banking_Standard"
+                    },
+                    {
+                      "key": "openBankingStandards",
+                      "value": "UK_Open_Banking_Standard"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L"
+                    },
+                    {
+                      "key": "supportedLocalInstruments",
+                      "value": "SEPA"
+                    },
+                    {
+                      "key": "supportedLocalInstruments",
+                      "value": "SEPA_INSTANT"
+                    },
+                    {
+                      "key": "supportedLocalInstruments",
+                      "value": "FASTER_PAYMENTS"
+                    },
+                    {
+                      "key": "supportsAccountList",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsAccountDetails",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsAccountBalance",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsTransactionList",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsTransactionDetails",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsStandingOrderList",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsTransactionsDateFilter",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "requiresOneStepPayment",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsSinglePayment",
+                      "value": "true"
+                    },
+                    {
+                      "key": "supportsScheduledPayment",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsStandingOrder",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsReturnRefundAccount",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsReturnRefundAccountHolderName",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsFundsConfirmation",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsVariableRecurringPayment",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3992c591-f905-4c2f-a563-42091ba2e33c",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "banks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "COUNTRY"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "hsbc"
+                    },
+                    {
+                      "key": "bankGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankSubGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "openBankingStandards",
+                      "value": "UK_Open_Banking_Standard"
+                    },
+                    {
+                      "key": "openBankingStandards",
+                      "value": "UK_Open_Banking_Standard"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L"
+                    },
+                    {
+                      "key": "supportedLocalInstruments",
+                      "value": "SEPA"
+                    },
+                    {
+                      "key": "supportedLocalInstruments",
+                      "value": "SEPA_INSTANT"
+                    },
+                    {
+                      "key": "supportedLocalInstruments",
+                      "value": "FASTER_PAYMENTS"
+                    },
+                    {
+                      "key": "supportsAccountList",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsAccountDetails",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsAccountBalance",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsTransactionList",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsTransactionDetails",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsStandingOrderList",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsTransactionsDateFilter",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "requiresOneStepPayment",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsSinglePayment",
+                      "value": "true"
+                    },
+                    {
+                      "key": "supportsScheduledPayment",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsStandingOrder",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsReturnRefundAccount",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsReturnRefundAccountHolderName",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsFundsConfirmation",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsVariableRecurringPayment",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "79661f98-f70e-49e7-bae0-d8ca1fcbe3a7",
+              "name": "The operation was not implemented",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "banks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "COUNTRY"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "hsbc"
+                    },
+                    {
+                      "key": "bankGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankSubGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "openBankingStandards",
+                      "value": "UK_Open_Banking_Standard"
+                    },
+                    {
+                      "key": "openBankingStandards",
+                      "value": "UK_Open_Banking_Standard"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L"
+                    },
+                    {
+                      "key": "supportedLocalInstruments",
+                      "value": "SEPA"
+                    },
+                    {
+                      "key": "supportedLocalInstruments",
+                      "value": "SEPA_INSTANT"
+                    },
+                    {
+                      "key": "supportedLocalInstruments",
+                      "value": "FASTER_PAYMENTS"
+                    },
+                    {
+                      "key": "supportsAccountList",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsAccountDetails",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsAccountBalance",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsTransactionList",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsTransactionDetails",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsStandingOrderList",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsTransactionsDateFilter",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "requiresOneStepPayment",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsSinglePayment",
+                      "value": "true"
+                    },
+                    {
+                      "key": "supportsScheduledPayment",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsStandingOrder",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsReturnRefundAccount",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsReturnRefundAccountHolderName",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsFundsConfirmation",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsVariableRecurringPayment",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "029dfda2-d7c6-4518-8f59-66f10a6f5a7b",
+              "name": "Service is unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "banks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "COUNTRY"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "hsbc"
+                    },
+                    {
+                      "key": "bankGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankSubGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "openBankingStandards",
+                      "value": "UK_Open_Banking_Standard"
+                    },
+                    {
+                      "key": "openBankingStandards",
+                      "value": "UK_Open_Banking_Standard"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L"
+                    },
+                    {
+                      "key": "supportedLocalInstruments",
+                      "value": "SEPA"
+                    },
+                    {
+                      "key": "supportedLocalInstruments",
+                      "value": "SEPA_INSTANT"
+                    },
+                    {
+                      "key": "supportedLocalInstruments",
+                      "value": "FASTER_PAYMENTS"
+                    },
+                    {
+                      "key": "supportsAccountList",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsAccountDetails",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsAccountBalance",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsTransactionList",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsTransactionDetails",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsStandingOrderList",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsTransactionsDateFilter",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "requiresOneStepPayment",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsSinglePayment",
+                      "value": "true"
+                    },
+                    {
+                      "key": "supportsScheduledPayment",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsStandingOrder",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsReturnRefundAccount",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsReturnRefundAccountHolderName",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsFundsConfirmation",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsVariableRecurringPayment",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "38696af2-212a-44fe-863e-5097f04f2fe3",
+              "name": "Gateway has timed out",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "banks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "perPage",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "COUNTRY"
+                    },
+                    {
+                      "key": "memberId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tppId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "hsbc"
+                    },
+                    {
+                      "key": "bankGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankSubGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bankCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "openBankingStandards",
+                      "value": "UK_Open_Banking_Standard"
+                    },
+                    {
+                      "key": "openBankingStandards",
+                      "value": "UK_Open_Banking_Standard"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "countries",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L"
+                    },
+                    {
+                      "key": "bics",
+                      "value": "BKENGB2L"
+                    },
+                    {
+                      "key": "supportedLocalInstruments",
+                      "value": "SEPA"
+                    },
+                    {
+                      "key": "supportedLocalInstruments",
+                      "value": "SEPA_INSTANT"
+                    },
+                    {
+                      "key": "supportedLocalInstruments",
+                      "value": "FASTER_PAYMENTS"
+                    },
+                    {
+                      "key": "supportsAccountList",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsAccountDetails",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsAccountBalance",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsTransactionList",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsTransactionDetails",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsStandingOrderList",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsTransactionsDateFilter",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "requiresOneStepPayment",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsSinglePayment",
+                      "value": "true"
+                    },
+                    {
+                      "key": "supportsScheduledPayment",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsStandingOrder",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsReturnRefundAccount",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsReturnRefundAccountHolderName",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsFundsConfirmation",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "supportsVariableRecurringPayment",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.token.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "2f294ba7-06f3-44ff-9e25-554a802f746e",
+    "name": "Token.io's Open Banking API for TPPs Account on File Banks v2 API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "<b>Token.io's Open Banking API</b><br/><br/>Token.io Support: <a href=\"https://support.token.io\" target=\"_blank\">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user's account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href=\"https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm\" target=\"_blank\">developer documentation</a>.",
+      "type": "text/plain"
+    }
+  }
+}

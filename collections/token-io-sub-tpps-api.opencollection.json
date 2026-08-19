@@ -1,0 +1,147 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Token.io's Open Banking API for TPPs Account on File Sub-TPPs API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sub-TPPs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get sub-TPPs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/member/sub-tpps",
+            "params": [
+              {
+                "name": "page.offset",
+                "value": "LerV6Jmex",
+                "type": "query",
+                "description": "The offset for the current page. If the offset has been provided in the request, this offset will be equal to the provided one. But if no offset was provided in the request (<i>i.e.</i> this is the first page) and the page is not empty, this field will be populated with a non-empty string. This may be helpful for loading the same page again, which might not always be possible with an empty offset due to a dynamic nature of the data. <br/>The offset is not visible to a user and should not be parsed and/or understood in any way."
+              },
+              {
+                "name": "page.limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of records to return. This must be less than 200."
+              },
+              {
+                "name": "filter.byCompanyNames",
+                "value": "",
+                "type": "query",
+                "description": "Filters the sub-TPPs by the list of company names submitted."
+              },
+              {
+                "name": "filter.byRegistrationDates",
+                "value": "",
+                "type": "query",
+                "description": "Filters the sub-TPPs by the list of registration dates submitted."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /member/sub-tpps` endpoint retrieves a list of all sub-TPPs for a reseller."
+        },
+        {
+          "info": {
+            "name": "Create a sub-TPP",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/member/sub-tpps",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `POST /member/sub-tpps` endpoint creates a new sub-TPP for a reseller."
+        },
+        {
+          "info": {
+            "name": "Get sub-TPP information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/member/sub-tpps/:subTppId",
+            "params": [
+              {
+                "name": "subTppId",
+                "value": "",
+                "type": "path",
+                "description": "This id specifies the sub-TPP to be retrieved."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /member/sub-tpps/{subTppId}` endpoint retrieves the details of the specified sub-TPP for a reseller."
+        },
+        {
+          "info": {
+            "name": "Delete a sub-TPP",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.token.io/member/sub-tpps/:subTppId",
+            "params": [
+              {
+                "name": "subTppId",
+                "value": "8d54f066-c14a-47c0-b58b-fec6b0ed6b4c",
+                "type": "path",
+                "description": "This id specifies the sub-TPP to delete."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `DELETE /member/sub-tpps/{subTppId}` endpoint deletes an existing sub-TPP for a reseller."
+        },
+        {
+          "info": {
+            "name": "Get sub-TPP children",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/member/sub-tpps/:subTppId/children",
+            "params": [
+              {
+                "name": "subTppId",
+                "value": "",
+                "type": "path",
+                "description": "This id specifies the sub-TPP for which the children are to be retrieved."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /member/sub-tpps/{subTppId}/children` endpoint retrieves the sub-TPP children for given sub-TPP."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

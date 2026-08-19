@@ -1,0 +1,126 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Token.io's Open Banking API for TPPs Account on File Authentication keys API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication keys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get public keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/member/:memberId/keys",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path",
+                "description": "This id specifies the member for whom the public keys are to be retrieved."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /member/{memberId}/keys` endpoint retrieves a list of all public keys, for the specified member."
+        },
+        {
+          "info": {
+            "name": "Submit a public key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/member/:memberId/keys",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path",
+                "description": "This id specifies the member for whom the public key is to be submitted."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `POST /member/{memberId}/keys` endpoint submits a public key for authentication, for the specified member."
+        },
+        {
+          "info": {
+            "name": "Get a public key",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/member/:memberId/keys/:keyId",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path",
+                "description": "This id specifies the member for whom the public key is to be retrieved."
+              },
+              {
+                "name": "keyId",
+                "value": "",
+                "type": "path",
+                "description": "This id specifies the public key to be retrieved."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /member/{memberId}/keys/{keyId}` endpoint retrieves the details of a specific public key, for the specified member."
+        },
+        {
+          "info": {
+            "name": "Delete a public key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.token.io/member/:memberId/keys/:keyId",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path",
+                "description": "This id specifies the member for whom the public key is to be deleted."
+              },
+              {
+                "name": "keyId",
+                "value": "",
+                "type": "path",
+                "description": "This id specifies the public key to be deleted."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `DELETE /member/{memberId}/keys/{keyId}` endpoint deletes an existing public key, for the specified member."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

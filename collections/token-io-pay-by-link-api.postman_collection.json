@@ -1,0 +1,1726 @@
+{
+  "item": [
+    {
+      "id": "0583701d-39ae-45c8-868b-84aa8399bca1",
+      "name": "Pay by Link",
+      "description": {
+        "content": "These endpoints allow you to create and manage payment links. Payment links are reusable or single-use payment URLs that can be shared with customers, supporting fixed or variable amounts, usage limits, and expiration dates.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b0373f1c-af6c-49bb-9b72-0fd606cbb491",
+          "name": "Create a payment link",
+          "request": {
+            "name": "Create a payment link",
+            "description": {
+              "content": "The `POST /v2/payment-links` endpoint creates a new payment link with payment template and link configuration. Payment links allow you to create reusable or single-use payment URLs that can be shared with customers. The link can have fixed or variable amounts, usage limits, and expiration dates.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "payment-links"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"paymentTemplate\": {\n    \"localInstrument\": \"<string>\",\n    \"creditor\": \"<object>\",\n    \"refId\": \"<string>\",\n    \"id\": \"<string>\",\n    \"amount\": {\n      \"currency\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    \"remittanceInformationPrimary\": \"<string>\",\n    \"remittanceInformationSecondary\": \"<string>\",\n    \"externalPsuReference\": \"<string>\",\n    \"callbackUrl\": \"<string>\",\n    \"chargeBearer\": \"INVALID_CHARGE_BEARER\",\n    \"confirmFunds\": \"<boolean>\",\n    \"returnRefundAccount\": \"<boolean>\",\n    \"onBehalfOfId\": \"<string>\",\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"<string>\",\n      \"paymentPurposeCode\": \"CASH\",\n      \"merchantCategoryCode\": \"<string>\",\n      \"beneficiaryAccountType\": \"<string>\",\n      \"contractPresentIndicator\": \"<boolean>\",\n      \"beneficiaryPrepopulatedIndicator\": \"<boolean>\",\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"addressType\": \"INVALID_ADDRESS_TYPE\",\n        \"buildingNumber\": \"<string>\",\n        \"country\": \"<string>\",\n        \"countrySubDivision\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"department\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"streetName\": \"<string>\",\n        \"subDepartment\": \"<string>\",\n        \"townName\": \"<string>\"\n      }\n    }\n  },\n  \"linkConfig\": {\n    \"maxUsageCount\": 10000000,\n    \"perPaymentAmountLimit\": \"<string>\",\n    \"totalAmountLimit\": \"<string>\",\n    \"expiresAt\": \"<dateTime>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1c248e00-2aaf-4846-9f78-79330c167e35",
+              "name": "Payment link created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payment-links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paymentTemplate\": {\n    \"localInstrument\": \"SEPA\",\n    \"creditor\": \"<object>\",\n    \"refId\": \"COFFEESHOP123\",\n    \"id\": \"pt-019daa05-dcf3-7920-87fc-53b36d58deea\",\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.00\"\n    },\n    \"remittanceInformationPrimary\": \"Sweepco\",\n    \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n    \"externalPsuReference\": \"psu external reference 12345\",\n    \"callbackUrl\": \"https://tpp.com/callback\",\n    \"chargeBearer\": \"CRED\",\n    \"confirmFunds\": \"<boolean>\",\n    \"returnRefundAccount\": \"<boolean>\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"PISP_PAYEE\",\n      \"paymentPurposeCode\": \"DVPM\",\n      \"merchantCategoryCode\": \"4812\",\n      \"beneficiaryAccountType\": \"BUSINESS\",\n      \"contractPresentIndicator\": true,\n      \"beneficiaryPrepopulatedIndicator\": true,\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"Flat 2, The Red Lodge, 1 High Street\"\n        ],\n        \"addressType\": \"BUSINESS\",\n        \"buildingNumber\": \"1\",\n        \"country\": \"GB\",\n        \"countrySubDivision\": [\n          \"North Yorkshire\"\n        ],\n        \"department\": \"1\",\n        \"postCode\": \"YO62 5JB\",\n        \"streetName\": \"High Street\",\n        \"subDepartment\": \"Flat 2\",\n        \"townName\": \"York\"\n      }\n    }\n  },\n  \"linkConfig\": {\n    \"maxUsageCount\": 100,\n    \"perPaymentAmountLimit\": \"100.00\",\n    \"totalAmountLimit\": \"5000.00\",\n    \"expiresAt\": \"2026-12-31T23:59:59Z\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"paymentLink\": {\n    \"id\": \"pl-019c8a02-a30e-7307-83da-7428239da59d\",\n    \"memberId\": \"m:member123:token456\",\n    \"status\": \"LINK_ACTIVE\",\n    \"createdAt\": \"2026-01-01T00:00:00Z\",\n    \"paymentTemplate\": {\n      \"localInstrument\": \"SEPA\",\n      \"creditor\": \"<object>\",\n      \"refId\": \"COFFEESHOP123\",\n      \"id\": \"pt-019daa05-dcf3-7920-87fc-53b36d58deea\",\n      \"amount\": {\n        \"currency\": \"EUR\",\n        \"value\": \"10.00\"\n      },\n      \"remittanceInformationPrimary\": \"Sweepco\",\n      \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n      \"externalPsuReference\": \"psu external reference 12345\",\n      \"callbackUrl\": \"https://tpp.com/callback\",\n      \"chargeBearer\": \"CRED\",\n      \"confirmFunds\": \"<boolean>\",\n      \"returnRefundAccount\": \"<boolean>\",\n      \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n      \"risk\": {\n        \"psuId\": \"<string>\",\n        \"paymentContextCode\": \"PISP_PAYEE\",\n        \"paymentPurposeCode\": \"DVPM\",\n        \"merchantCategoryCode\": \"4812\",\n        \"beneficiaryAccountType\": \"BUSINESS\",\n        \"contractPresentIndicator\": true,\n        \"beneficiaryPrepopulatedIndicator\": true,\n        \"deliveryAddress\": {\n          \"addressLine\": [\n            \"Flat 2, The Red Lodge, 1 High Street\"\n          ],\n          \"addressType\": \"BUSINESS\",\n          \"buildingNumber\": \"1\",\n          \"country\": \"GB\",\n          \"countrySubDivision\": [\n            \"North Yorkshire\"\n          ],\n          \"department\": \"1\",\n          \"postCode\": \"YO62 5JB\",\n          \"streetName\": \"High Street\",\n          \"subDepartment\": \"Flat 2\",\n          \"townName\": \"York\"\n        }\n      }\n    },\n    \"linkConfig\": {\n      \"maxUsageCount\": 100,\n      \"perPaymentAmountLimit\": \"100.00\",\n      \"totalAmountLimit\": \"5000.00\",\n      \"expiresAt\": \"2026-12-31T23:59:59Z\"\n    },\n    \"url\": \"https://app.token.io/pay-by-link/pl-019c8a02-a30e-7307-83da-7428239da59d\",\n    \"currentUsage\": {\n      \"remainingCount\": 77,\n      \"remainingAmount\": \"4100.00\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6576f6ea-f06e-4c1f-9acc-0ac7db0600b0",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payment-links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paymentTemplate\": {\n    \"localInstrument\": \"SEPA\",\n    \"creditor\": \"<object>\",\n    \"refId\": \"COFFEESHOP123\",\n    \"id\": \"pt-019daa05-dcf3-7920-87fc-53b36d58deea\",\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.00\"\n    },\n    \"remittanceInformationPrimary\": \"Sweepco\",\n    \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n    \"externalPsuReference\": \"psu external reference 12345\",\n    \"callbackUrl\": \"https://tpp.com/callback\",\n    \"chargeBearer\": \"CRED\",\n    \"confirmFunds\": \"<boolean>\",\n    \"returnRefundAccount\": \"<boolean>\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"PISP_PAYEE\",\n      \"paymentPurposeCode\": \"DVPM\",\n      \"merchantCategoryCode\": \"4812\",\n      \"beneficiaryAccountType\": \"BUSINESS\",\n      \"contractPresentIndicator\": true,\n      \"beneficiaryPrepopulatedIndicator\": true,\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"Flat 2, The Red Lodge, 1 High Street\"\n        ],\n        \"addressType\": \"BUSINESS\",\n        \"buildingNumber\": \"1\",\n        \"country\": \"GB\",\n        \"countrySubDivision\": [\n          \"North Yorkshire\"\n        ],\n        \"department\": \"1\",\n        \"postCode\": \"YO62 5JB\",\n        \"streetName\": \"High Street\",\n        \"subDepartment\": \"Flat 2\",\n        \"townName\": \"York\"\n      }\n    }\n  },\n  \"linkConfig\": {\n    \"maxUsageCount\": 100,\n    \"perPaymentAmountLimit\": \"100.00\",\n    \"totalAmountLimit\": \"5000.00\",\n    \"expiresAt\": \"2026-12-31T23:59:59Z\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"`RefId` should not be longer than 35 symbols.\",\n    \"paths\": [\n      \"initiation.refId\",\n      \"initiation.refId\"\n    ],\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b09f99a6-897d-4991-affe-ee747f6df16f",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payment-links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paymentTemplate\": {\n    \"localInstrument\": \"SEPA\",\n    \"creditor\": \"<object>\",\n    \"refId\": \"COFFEESHOP123\",\n    \"id\": \"pt-019daa05-dcf3-7920-87fc-53b36d58deea\",\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.00\"\n    },\n    \"remittanceInformationPrimary\": \"Sweepco\",\n    \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n    \"externalPsuReference\": \"psu external reference 12345\",\n    \"callbackUrl\": \"https://tpp.com/callback\",\n    \"chargeBearer\": \"CRED\",\n    \"confirmFunds\": \"<boolean>\",\n    \"returnRefundAccount\": \"<boolean>\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"PISP_PAYEE\",\n      \"paymentPurposeCode\": \"DVPM\",\n      \"merchantCategoryCode\": \"4812\",\n      \"beneficiaryAccountType\": \"BUSINESS\",\n      \"contractPresentIndicator\": true,\n      \"beneficiaryPrepopulatedIndicator\": true,\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"Flat 2, The Red Lodge, 1 High Street\"\n        ],\n        \"addressType\": \"BUSINESS\",\n        \"buildingNumber\": \"1\",\n        \"country\": \"GB\",\n        \"countrySubDivision\": [\n          \"North Yorkshire\"\n        ],\n        \"department\": \"1\",\n        \"postCode\": \"YO62 5JB\",\n        \"streetName\": \"High Street\",\n        \"subDepartment\": \"Flat 2\",\n        \"townName\": \"York\"\n      }\n    }\n  },\n  \"linkConfig\": {\n    \"maxUsageCount\": 100,\n    \"perPaymentAmountLimit\": \"100.00\",\n    \"totalAmountLimit\": \"5000.00\",\n    \"expiresAt\": \"2026-12-31T23:59:59Z\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f942e3e0-1931-4136-97c0-158fd3ee44a6",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payment-links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paymentTemplate\": {\n    \"localInstrument\": \"SEPA\",\n    \"creditor\": \"<object>\",\n    \"refId\": \"COFFEESHOP123\",\n    \"id\": \"pt-019daa05-dcf3-7920-87fc-53b36d58deea\",\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.00\"\n    },\n    \"remittanceInformationPrimary\": \"Sweepco\",\n    \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n    \"externalPsuReference\": \"psu external reference 12345\",\n    \"callbackUrl\": \"https://tpp.com/callback\",\n    \"chargeBearer\": \"CRED\",\n    \"confirmFunds\": \"<boolean>\",\n    \"returnRefundAccount\": \"<boolean>\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"PISP_PAYEE\",\n      \"paymentPurposeCode\": \"DVPM\",\n      \"merchantCategoryCode\": \"4812\",\n      \"beneficiaryAccountType\": \"BUSINESS\",\n      \"contractPresentIndicator\": true,\n      \"beneficiaryPrepopulatedIndicator\": true,\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"Flat 2, The Red Lodge, 1 High Street\"\n        ],\n        \"addressType\": \"BUSINESS\",\n        \"buildingNumber\": \"1\",\n        \"country\": \"GB\",\n        \"countrySubDivision\": [\n          \"North Yorkshire\"\n        ],\n        \"department\": \"1\",\n        \"postCode\": \"YO62 5JB\",\n        \"streetName\": \"High Street\",\n        \"subDepartment\": \"Flat 2\",\n        \"townName\": \"York\"\n      }\n    }\n  },\n  \"linkConfig\": {\n    \"maxUsageCount\": 100,\n    \"perPaymentAmountLimit\": \"100.00\",\n    \"totalAmountLimit\": \"5000.00\",\n    \"expiresAt\": \"2026-12-31T23:59:59Z\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9f8a255c-08fc-4fd5-bc23-10c4c25a21e2",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payment-links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paymentTemplate\": {\n    \"localInstrument\": \"SEPA\",\n    \"creditor\": \"<object>\",\n    \"refId\": \"COFFEESHOP123\",\n    \"id\": \"pt-019daa05-dcf3-7920-87fc-53b36d58deea\",\n    \"amount\": {\n      \"currency\": \"EUR\",\n      \"value\": \"10.00\"\n    },\n    \"remittanceInformationPrimary\": \"Sweepco\",\n    \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n    \"externalPsuReference\": \"psu external reference 12345\",\n    \"callbackUrl\": \"https://tpp.com/callback\",\n    \"chargeBearer\": \"CRED\",\n    \"confirmFunds\": \"<boolean>\",\n    \"returnRefundAccount\": \"<boolean>\",\n    \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"PISP_PAYEE\",\n      \"paymentPurposeCode\": \"DVPM\",\n      \"merchantCategoryCode\": \"4812\",\n      \"beneficiaryAccountType\": \"BUSINESS\",\n      \"contractPresentIndicator\": true,\n      \"beneficiaryPrepopulatedIndicator\": true,\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"Flat 2, The Red Lodge, 1 High Street\"\n        ],\n        \"addressType\": \"BUSINESS\",\n        \"buildingNumber\": \"1\",\n        \"country\": \"GB\",\n        \"countrySubDivision\": [\n          \"North Yorkshire\"\n        ],\n        \"department\": \"1\",\n        \"postCode\": \"YO62 5JB\",\n        \"streetName\": \"High Street\",\n        \"subDepartment\": \"Flat 2\",\n        \"townName\": \"York\"\n      }\n    }\n  },\n  \"linkConfig\": {\n    \"maxUsageCount\": 100,\n    \"perPaymentAmountLimit\": \"100.00\",\n    \"totalAmountLimit\": \"5000.00\",\n    \"expiresAt\": \"2026-12-31T23:59:59Z\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5948e802-8367-46bb-83dc-a94f25912966",
+          "name": "List payment links",
+          "request": {
+            "name": "List payment links",
+            "description": {
+              "content": "The `GET /v2/payment-links` endpoint returns a list of payment links. At least one filter parameter must be provided. Results can be filtered by IDs, statuses, creation date range (createdAfter, createdBefore), expiration date range (expiresAfter, expiresBefore), external PSU reference, and on-behalf-of ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "payment-links"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<string>",
+                  "description": "Filter by payment link ID list"
+                },
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<string>",
+                  "description": "Filter by payment link ID list"
+                },
+                {
+                  "disabled": false,
+                  "key": "statuses",
+                  "value": "<string>",
+                  "description": "Filter by link statuses"
+                },
+                {
+                  "disabled": false,
+                  "key": "statuses",
+                  "value": "<string>",
+                  "description": "Filter by link statuses"
+                },
+                {
+                  "disabled": false,
+                  "key": "onBehalfOfId",
+                  "value": "<string>",
+                  "description": "Filter by on behalf of ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "externalPsuReference",
+                  "value": "<string>",
+                  "description": "Filter by external PSU Reference"
+                },
+                {
+                  "disabled": false,
+                  "key": "createdAfter",
+                  "value": "<dateTime>",
+                  "description": "Filter links created after this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)"
+                },
+                {
+                  "disabled": false,
+                  "key": "createdBefore",
+                  "value": "<dateTime>",
+                  "description": "Filter links created before this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)"
+                },
+                {
+                  "disabled": false,
+                  "key": "expiresAfter",
+                  "value": "<dateTime>",
+                  "description": "Filter links expiring after this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)"
+                },
+                {
+                  "disabled": false,
+                  "key": "expiresBefore",
+                  "value": "<dateTime>",
+                  "description": "Filter links expiring before this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of results to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<string>",
+                  "description": "The offset for the current page. The offset is not required to fetch the first page. To fetch subsequent pages, use the 'nextOffset' value from the previous page response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "eda2c01d-2b22-40e0-bfe1-4d7964b176f9",
+              "name": "List of payment links",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payment-links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "pl-019c8a02-a30e-7307-83da-7428239da59d"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "pl-019f0d3a-9c4b-7a1e-8c2f-0b7d9a4e3c12"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "LINK_ACTIVE"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "LINK_EXPIRED"
+                    },
+                    {
+                      "key": "onBehalfOfId",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    },
+                    {
+                      "key": "externalPsuReference",
+                      "value": "customer_456789_coffee_order"
+                    },
+                    {
+                      "key": "createdAfter",
+                      "value": "2026-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "createdBefore",
+                      "value": "2026-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "expiresAfter",
+                      "value": "2026-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "expiresBefore",
+                      "value": "2026-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "019f0d6b-3e21-7c9a-9f04-6a2b8d1c7e53"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"paymentLinks\": [\n    {\n      \"id\": \"pl-019c8a02-a30e-7307-83da-7428239da59d\",\n      \"memberId\": \"m:member123:token456\",\n      \"status\": \"LINK_ACTIVE\",\n      \"createdAt\": \"2026-01-01T00:00:00Z\",\n      \"paymentTemplate\": {\n        \"localInstrument\": \"SEPA\",\n        \"creditor\": \"<object>\",\n        \"refId\": \"COFFEESHOP123\",\n        \"id\": \"pt-019daa05-dcf3-7920-87fc-53b36d58deea\",\n        \"amount\": {\n          \"currency\": \"EUR\",\n          \"value\": \"10.00\"\n        },\n        \"remittanceInformationPrimary\": \"Sweepco\",\n        \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n        \"externalPsuReference\": \"customer_456789_coffee_order\",\n        \"callbackUrl\": \"https://tpp.com/callback\",\n        \"chargeBearer\": \"CRED\",\n        \"confirmFunds\": \"<boolean>\",\n        \"returnRefundAccount\": \"<boolean>\",\n        \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n        \"risk\": {\n          \"psuId\": \"<string>\",\n          \"paymentContextCode\": \"PISP_PAYEE\",\n          \"paymentPurposeCode\": \"DVPM\",\n          \"merchantCategoryCode\": \"4812\",\n          \"beneficiaryAccountType\": \"BUSINESS\",\n          \"contractPresentIndicator\": true,\n          \"beneficiaryPrepopulatedIndicator\": true,\n          \"deliveryAddress\": {\n            \"addressLine\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"addressType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"buildingNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"country\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"countrySubDivision\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"department\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"postCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"streetName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"subDepartment\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"townName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      },\n      \"linkConfig\": {\n        \"maxUsageCount\": 100,\n        \"perPaymentAmountLimit\": \"100.00\",\n        \"totalAmountLimit\": \"5000.00\",\n        \"expiresAt\": \"2026-12-31T23:59:59Z\"\n      },\n      \"url\": \"https://app.token.io/pay-by-link/pl-019c8a02-a30e-7307-83da-7428239da59d\",\n      \"currentUsage\": {\n        \"remainingCount\": 77,\n        \"remainingAmount\": \"4100.00\"\n      }\n    },\n    {\n      \"id\": \"pl-019c8a02-a30e-7307-83da-7428239da59d\",\n      \"memberId\": \"m:member123:token456\",\n      \"status\": \"LINK_ACTIVE\",\n      \"createdAt\": \"2026-01-01T00:00:00Z\",\n      \"paymentTemplate\": {\n        \"localInstrument\": \"SEPA\",\n        \"creditor\": \"<object>\",\n        \"refId\": \"COFFEESHOP123\",\n        \"id\": \"pt-019daa05-dcf3-7920-87fc-53b36d58deea\",\n        \"amount\": {\n          \"currency\": \"EUR\",\n          \"value\": \"10.00\"\n        },\n        \"remittanceInformationPrimary\": \"Sweepco\",\n        \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n        \"externalPsuReference\": \"customer_456789_coffee_order\",\n        \"callbackUrl\": \"https://tpp.com/callback\",\n        \"chargeBearer\": \"CRED\",\n        \"confirmFunds\": \"<boolean>\",\n        \"returnRefundAccount\": \"<boolean>\",\n        \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n        \"risk\": {\n          \"psuId\": \"<string>\",\n          \"paymentContextCode\": \"PISP_PAYEE\",\n          \"paymentPurposeCode\": \"DVPM\",\n          \"merchantCategoryCode\": \"4812\",\n          \"beneficiaryAccountType\": \"BUSINESS\",\n          \"contractPresentIndicator\": true,\n          \"beneficiaryPrepopulatedIndicator\": true,\n          \"deliveryAddress\": {\n            \"addressLine\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"addressType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"buildingNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"country\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"countrySubDivision\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"department\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"postCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"streetName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"subDepartment\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"townName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      },\n      \"linkConfig\": {\n        \"maxUsageCount\": 100,\n        \"perPaymentAmountLimit\": \"100.00\",\n        \"totalAmountLimit\": \"5000.00\",\n        \"expiresAt\": \"2026-12-31T23:59:59Z\"\n      },\n      \"url\": \"https://app.token.io/pay-by-link/pl-019c8a02-a30e-7307-83da-7428239da59d\",\n      \"currentUsage\": {\n        \"remainingCount\": 77,\n        \"remainingAmount\": \"4100.00\"\n      }\n    }\n  ],\n  \"pageInfo\": {\n    \"limit\": 20,\n    \"offset\": \"LerV6Jmex\",\n    \"nextOffset\": \"KgwG8Qkat\",\n    \"haveMore\": false\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "78072c49-c1b6-4eb6-981d-2a9dcf5fa150",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payment-links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "pl-019c8a02-a30e-7307-83da-7428239da59d"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "pl-019f0d3a-9c4b-7a1e-8c2f-0b7d9a4e3c12"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "LINK_ACTIVE"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "LINK_EXPIRED"
+                    },
+                    {
+                      "key": "onBehalfOfId",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    },
+                    {
+                      "key": "externalPsuReference",
+                      "value": "customer_456789_coffee_order"
+                    },
+                    {
+                      "key": "createdAfter",
+                      "value": "2026-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "createdBefore",
+                      "value": "2026-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "expiresAfter",
+                      "value": "2026-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "expiresBefore",
+                      "value": "2026-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "019f0d6b-3e21-7c9a-9f04-6a2b8d1c7e53"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"`RefId` should not be longer than 35 symbols.\",\n    \"paths\": [\n      \"initiation.refId\",\n      \"initiation.refId\"\n    ],\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2068bfa4-ca1b-4fa9-be39-7879e1031884",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payment-links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "pl-019c8a02-a30e-7307-83da-7428239da59d"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "pl-019f0d3a-9c4b-7a1e-8c2f-0b7d9a4e3c12"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "LINK_ACTIVE"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "LINK_EXPIRED"
+                    },
+                    {
+                      "key": "onBehalfOfId",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    },
+                    {
+                      "key": "externalPsuReference",
+                      "value": "customer_456789_coffee_order"
+                    },
+                    {
+                      "key": "createdAfter",
+                      "value": "2026-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "createdBefore",
+                      "value": "2026-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "expiresAfter",
+                      "value": "2026-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "expiresBefore",
+                      "value": "2026-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "019f0d6b-3e21-7c9a-9f04-6a2b8d1c7e53"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a4a3e31c-de6b-4d3e-81a9-0f281cceb6e7",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payment-links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "pl-019c8a02-a30e-7307-83da-7428239da59d"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "pl-019f0d3a-9c4b-7a1e-8c2f-0b7d9a4e3c12"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "LINK_ACTIVE"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "LINK_EXPIRED"
+                    },
+                    {
+                      "key": "onBehalfOfId",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    },
+                    {
+                      "key": "externalPsuReference",
+                      "value": "customer_456789_coffee_order"
+                    },
+                    {
+                      "key": "createdAfter",
+                      "value": "2026-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "createdBefore",
+                      "value": "2026-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "expiresAfter",
+                      "value": "2026-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "expiresBefore",
+                      "value": "2026-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "019f0d6b-3e21-7c9a-9f04-6a2b8d1c7e53"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "56ae5532-deec-4c8a-8408-6f7c09ccbc4c",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payment-links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "pl-019c8a02-a30e-7307-83da-7428239da59d"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "pl-019f0d3a-9c4b-7a1e-8c2f-0b7d9a4e3c12"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "LINK_ACTIVE"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "LINK_EXPIRED"
+                    },
+                    {
+                      "key": "onBehalfOfId",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    },
+                    {
+                      "key": "externalPsuReference",
+                      "value": "customer_456789_coffee_order"
+                    },
+                    {
+                      "key": "createdAfter",
+                      "value": "2026-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "createdBefore",
+                      "value": "2026-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "expiresAfter",
+                      "value": "2026-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "expiresBefore",
+                      "value": "2026-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "019f0d6b-3e21-7c9a-9f04-6a2b8d1c7e53"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c354ef59-738e-425f-a4d0-9cbd21b55e6d",
+          "name": "Get payment link details",
+          "request": {
+            "name": "Get payment link details",
+            "description": {
+              "content": "The `GET /v2/payment-links/{paymentLinkId}` endpoint retrieves detailed information about a specific payment link including current usage statistics.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "payment-links",
+                ":paymentLinkId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "paymentLinkId",
+                  "description": "(Required) Payment link ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ea57147b-51ef-4deb-9981-73e1c01642f0",
+              "name": "Payment link details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payment-links",
+                    ":paymentLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentLinkId",
+                      "description": "(Required) Payment link ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"paymentLink\": {\n    \"id\": \"pl-019c8a02-a30e-7307-83da-7428239da59d\",\n    \"memberId\": \"m:member123:token456\",\n    \"status\": \"LINK_ACTIVE\",\n    \"createdAt\": \"2026-01-01T00:00:00Z\",\n    \"paymentTemplate\": {\n      \"localInstrument\": \"SEPA\",\n      \"creditor\": \"<object>\",\n      \"refId\": \"COFFEESHOP123\",\n      \"id\": \"pt-019daa05-dcf3-7920-87fc-53b36d58deea\",\n      \"amount\": {\n        \"currency\": \"EUR\",\n        \"value\": \"10.00\"\n      },\n      \"remittanceInformationPrimary\": \"Sweepco\",\n      \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n      \"externalPsuReference\": \"customer_456789_coffee_order\",\n      \"callbackUrl\": \"https://tpp.com/callback\",\n      \"chargeBearer\": \"CRED\",\n      \"confirmFunds\": \"<boolean>\",\n      \"returnRefundAccount\": \"<boolean>\",\n      \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n      \"risk\": {\n        \"psuId\": \"<string>\",\n        \"paymentContextCode\": \"PISP_PAYEE\",\n        \"paymentPurposeCode\": \"DVPM\",\n        \"merchantCategoryCode\": \"4812\",\n        \"beneficiaryAccountType\": \"BUSINESS\",\n        \"contractPresentIndicator\": true,\n        \"beneficiaryPrepopulatedIndicator\": true,\n        \"deliveryAddress\": {\n          \"addressLine\": [\n            \"Flat 2, The Red Lodge, 1 High Street\"\n          ],\n          \"addressType\": \"BUSINESS\",\n          \"buildingNumber\": \"1\",\n          \"country\": \"GB\",\n          \"countrySubDivision\": [\n            \"North Yorkshire\"\n          ],\n          \"department\": \"1\",\n          \"postCode\": \"YO62 5JB\",\n          \"streetName\": \"High Street\",\n          \"subDepartment\": \"Flat 2\",\n          \"townName\": \"York\"\n        }\n      }\n    },\n    \"linkConfig\": {\n      \"maxUsageCount\": 100,\n      \"perPaymentAmountLimit\": \"100.00\",\n      \"totalAmountLimit\": \"5000.00\",\n      \"expiresAt\": \"2026-12-31T23:59:59Z\"\n    },\n    \"url\": \"https://app.token.io/pay-by-link/pl-019c8a02-a30e-7307-83da-7428239da59d\",\n    \"currentUsage\": {\n      \"remainingCount\": 77,\n      \"remainingAmount\": \"4100.00\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7b115eda-c87f-4071-aca4-28967fbb6796",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payment-links",
+                    ":paymentLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentLinkId",
+                      "description": "(Required) Payment link ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"`RefId` should not be longer than 35 symbols.\",\n    \"paths\": [\n      \"initiation.refId\",\n      \"initiation.refId\"\n    ],\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a98c9c4c-8445-46b0-930b-5cf5a16da830",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payment-links",
+                    ":paymentLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentLinkId",
+                      "description": "(Required) Payment link ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5ff5f321-94c1-4e02-84d4-b103dd78af2a",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payment-links",
+                    ":paymentLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentLinkId",
+                      "description": "(Required) Payment link ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ceb2ccbf-5293-4e36-b04f-3805c0eeeff7",
+              "name": "The requested payment link was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payment-links",
+                    ":paymentLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentLinkId",
+                      "description": "(Required) Payment link ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc8edcdb-da82-4852-b7b9-1b5a794eda63",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payment-links",
+                    ":paymentLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentLinkId",
+                      "description": "(Required) Payment link ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0c93f423-9095-4a23-8ca6-d816f868431c",
+          "name": "Deactivate payment link",
+          "request": {
+            "name": "Deactivate payment link",
+            "description": {
+              "content": "The `DELETE /v2/payment-links/{paymentLinkId}` endpoint deactivates a payment link, preventing further usage. Only active payment links can be deactivated.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "payment-links",
+                ":paymentLinkId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "paymentLinkId",
+                  "description": "(Required) Payment link ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1e4f6e35-0e91-4055-99af-7b50b646fb48",
+              "name": "Payment link deactivated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payment-links",
+                    ":paymentLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentLinkId",
+                      "description": "(Required) Payment link ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"paymentLink\": {\n    \"id\": \"pl-019c8a02-a30e-7307-83da-7428239da59d\",\n    \"memberId\": \"m:member123:token456\",\n    \"status\": \"LINK_ACTIVE\",\n    \"createdAt\": \"2026-01-01T00:00:00Z\",\n    \"paymentTemplate\": {\n      \"localInstrument\": \"SEPA\",\n      \"creditor\": \"<object>\",\n      \"refId\": \"COFFEESHOP123\",\n      \"id\": \"pt-019daa05-dcf3-7920-87fc-53b36d58deea\",\n      \"amount\": {\n        \"currency\": \"EUR\",\n        \"value\": \"10.00\"\n      },\n      \"remittanceInformationPrimary\": \"Sweepco\",\n      \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n      \"externalPsuReference\": \"customer_456789_coffee_order\",\n      \"callbackUrl\": \"https://tpp.com/callback\",\n      \"chargeBearer\": \"CRED\",\n      \"confirmFunds\": \"<boolean>\",\n      \"returnRefundAccount\": \"<boolean>\",\n      \"onBehalfOfId\": \"c5a863bc-86f2-4418-a26f-25b24c7983c7\",\n      \"risk\": {\n        \"psuId\": \"<string>\",\n        \"paymentContextCode\": \"PISP_PAYEE\",\n        \"paymentPurposeCode\": \"DVPM\",\n        \"merchantCategoryCode\": \"4812\",\n        \"beneficiaryAccountType\": \"BUSINESS\",\n        \"contractPresentIndicator\": true,\n        \"beneficiaryPrepopulatedIndicator\": true,\n        \"deliveryAddress\": {\n          \"addressLine\": [\n            \"Flat 2, The Red Lodge, 1 High Street\"\n          ],\n          \"addressType\": \"BUSINESS\",\n          \"buildingNumber\": \"1\",\n          \"country\": \"GB\",\n          \"countrySubDivision\": [\n            \"North Yorkshire\"\n          ],\n          \"department\": \"1\",\n          \"postCode\": \"YO62 5JB\",\n          \"streetName\": \"High Street\",\n          \"subDepartment\": \"Flat 2\",\n          \"townName\": \"York\"\n        }\n      }\n    },\n    \"linkConfig\": {\n      \"maxUsageCount\": 100,\n      \"perPaymentAmountLimit\": \"100.00\",\n      \"totalAmountLimit\": \"5000.00\",\n      \"expiresAt\": \"2026-12-31T23:59:59Z\"\n    },\n    \"url\": \"https://app.token.io/pay-by-link/pl-019c8a02-a30e-7307-83da-7428239da59d\",\n    \"currentUsage\": {\n      \"remainingCount\": 77,\n      \"remainingAmount\": \"4100.00\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c39abd91-4061-4ea5-a0c3-1aa5243a49c3",
+              "name": "The client specified an invalid argument",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payment-links",
+                    ":paymentLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentLinkId",
+                      "description": "(Required) Payment link ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"`RefId` should not be longer than 35 symbols.\",\n    \"paths\": [\n      \"initiation.refId\",\n      \"initiation.refId\"\n    ],\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e3a34f3e-0a94-4279-a704-0d0e1c93651c",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payment-links",
+                    ":paymentLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentLinkId",
+                      "description": "(Required) Payment link ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "224a59da-600d-4002-8163-4c4cb4ffdc87",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payment-links",
+                    ":paymentLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentLinkId",
+                      "description": "(Required) Payment link ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "24614bbd-b93f-44e5-acc7-06cbd0a52395",
+              "name": "The requested payment link was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payment-links",
+                    ":paymentLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentLinkId",
+                      "description": "(Required) Payment link ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb81b961-0aa8-4229-bf1c-6353c8f70f6a",
+              "name": "Payment link cannot be deactivated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payment-links",
+                    ":paymentLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentLinkId",
+                      "description": "(Required) Payment link ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"`RefId` should not be longer than 35 symbols.\",\n    \"paths\": [\n      \"initiation.refId\",\n      \"initiation.refId\"\n    ],\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3b87d519-2eb1-40ba-8bc0-4ef95a07ab03",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "payment-links",
+                    ":paymentLinkId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentLinkId",
+                      "description": "(Required) Payment link ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.token.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "bb71c7df-e061-4055-9993-2e482780c045",
+    "name": "Token.io's Open Banking API for TPPs Account on File Pay by Link API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "<b>Token.io's Open Banking API</b><br/><br/>Token.io Support: <a href=\"https://support.token.io\" target=\"_blank\">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user's account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href=\"https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm\" target=\"_blank\">developer documentation</a>.",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,176 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Token.io's Open Banking API for TPPs Account on File Refunds API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Refunds",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get refunds",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/refunds",
+            "params": [
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "The maximum number of records to return."
+              },
+              {
+                "name": "offset",
+                "value": "LerV6Jmex",
+                "type": "query",
+                "description": "The offset from the previous page."
+              },
+              {
+                "name": "startDate",
+                "value": "2010-01-01",
+                "type": "query",
+                "description": "Lower bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or after the given date will be returned."
+              },
+              {
+                "name": "endDate",
+                "value": "2010-01-01",
+                "type": "query",
+                "description": "Upper bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or before the given date will be returned."
+              },
+              {
+                "name": "ids",
+                "value": "rf:4QExXrhKTxfShBdcTeqFabqJJhUF:2gFUX1NDgpN,rf:N5cJDFsQzVca3Qvr8kQocgEnjgX:2gFUX1NEdYA",
+                "type": "query",
+                "description": "Filters refunds by their ids - returns only refunds with ids listed in this parameter."
+              },
+              {
+                "name": "invertIds",
+                "value": "false",
+                "type": "query",
+                "description": "Invert ids query - returns only refunds with ids not listed in the ids parameter."
+              },
+              {
+                "name": "statuses",
+                "value": "INITIATION_COMPLETED,INITIATION_REJECTED",
+                "type": "query",
+                "description": "Filters refunds by their statuses - returns only refunds with statuses listed in this parameter."
+              },
+              {
+                "name": "invertStatuses",
+                "value": "true",
+                "type": "query",
+                "description": "Invert statuses query - returns only refunds with statuses not listed in the statuses parameter."
+              },
+              {
+                "name": "refIds",
+                "value": "ShBdcTeqFabqJJhUF,N5cJDFsQzVca3Q",
+                "type": "query",
+                "description": "Filters refunds by their `refId` values - returns only refunds with `refIds` listed in this parameter."
+              },
+              {
+                "name": "partial",
+                "value": "true",
+                "type": "query",
+                "description": "Returns refunds in a partial format - with only id and status fields populated."
+              },
+              {
+                "name": "onBehalfOfIds",
+                "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7,6f34h397-b29h-23b0-s30g-hkd0d2dk4k1s",
+                "type": "query",
+                "description": "Filters payouts by their `onBehalfOfId` values - returns only payouts with the `onBehalfOfId` values specified in this parameter. This field is mandatory for unregulated TPPs."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /refunds` endpoint retrieves a complete or filtered list of refunds."
+        },
+        {
+          "info": {
+            "name": "Initiate a refund",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/refunds",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `POST /refunds` endpoint initiates a refund. After the refund is settled, the refund status of the original transfer will be updated. <br/> The debtor field can be optional if you're using the debtor in registration. The creditor field can be optional if the information is available in the original payment."
+        },
+        {
+          "info": {
+            "name": "Get a refund",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/refunds/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /refunds/{id}` endpoint retrieves a given refund."
+        },
+        {
+          "info": {
+            "name": "Get all refunds by transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/transfers/:id/refunds",
+            "params": [
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "The maximum number of records to return."
+              },
+              {
+                "name": "offset",
+                "value": "LerV6Jmex",
+                "type": "query",
+                "description": "The offset from the previous page."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /transfers/{id}/refunds` endpoint retrieves all refunds associated with a given transfer."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

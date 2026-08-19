@@ -1,0 +1,370 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Token.io's Open Banking API for TPPs Account on File Settlement Accounts API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Settlement Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get settlement accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/virtual-accounts",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of records to return. <br/>The maximum allowed limit is 200. If the passed limit is bigger than this, it will be set to 200."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The offset for the current page. The offset is not required to fetch the first page. To fetch subsequent pages, use the 'nextOffset' value from the previous page response. <br/>The offset value should not be parsed and/or understood in any way."
+              },
+              {
+                "name": "currency",
+                "value": "EUR",
+                "type": "query",
+                "description": "The <a href=\"https://www.iso.org/iso-4217-currency-codes.html\" target=\"_blank\">ISO 4217</a> three letter currency code."
+              },
+              {
+                "name": "country",
+                "value": "PL",
+                "type": "query",
+                "description": "Two-letter country code in upper case (ISO 3166-1 alpha-2)."
+              },
+              {
+                "name": "nickname",
+                "value": "Account Alias",
+                "type": "query",
+                "description": "The alias name that identifies the settlement account."
+              },
+              {
+                "name": "onBehalfOfId",
+                "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7",
+                "type": "query",
+                "description": "The id of the ultimate client on whose behalf the account is created. If the account is created on behalf of a sub-TPP, this field should contain the sub-TPP `referenceId`. This field is mandatory for unregulated TPPs."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /virtual-accounts` endpoint retrieves information for all settlement accounts."
+        },
+        {
+          "info": {
+            "name": "Create a settlement account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/virtual-accounts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `POST /virtual-accounts` endpoint creates a settlement account."
+        },
+        {
+          "info": {
+            "name": "Get a settlement account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/virtual-accounts/:accountId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The system-generated, unique id which specifies the settlement account."
+              },
+              {
+                "name": "onBehalfOfId",
+                "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7",
+                "type": "query",
+                "description": "Filters payments by the `onBehalfOfId` value - returns only payments with the `onBehalfOfId` value specified in this parameter.  This field is mandatory for unregulated TPPs."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /virtual-accounts/{accountId}` endpoint the information, for a given settlement account."
+        },
+        {
+          "info": {
+            "name": "Get settlement account transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/virtual-accounts/:accountId/transactions",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The system-generated, unique id which specifies the settlement account."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of records to return. <br/>The maximum allowed limit is 200. If the passed limit is bigger than this, it will be set to 200."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The offset for the current page. The offset is not required to fetch the first page. To fetch subsequent pages, use the 'nextOffset' value from the previous page response. <br/>The offset value should not be parsed and/or understood in any way."
+              },
+              {
+                "name": "refId",
+                "value": "",
+                "type": "query",
+                "description": "Filters transactions by their `refId` value - returns only transactions with `refId` mentioned in the reference."
+              },
+              {
+                "name": "startDate",
+                "value": "2022-04-05",
+                "type": "query",
+                "description": "Returns transactions created on or after this date, inclusive (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)."
+              },
+              {
+                "name": "endDate",
+                "value": "2022-04-05",
+                "type": "query",
+                "description": "Returns transactions created on or before this date, inclusive (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)."
+              },
+              {
+                "name": "amount",
+                "value": "",
+                "type": "query",
+                "description": "Filters transactions by their transaction amount."
+              },
+              {
+                "name": "providerPaymentId",
+                "value": "",
+                "type": "query",
+                "description": "Filters transactions by the provider-payment-id."
+              },
+              {
+                "name": "transactionType",
+                "value": "CREDIT",
+                "type": "query",
+                "description": "Filters transactions by type to include only CREDIT or DEBIT transactions."
+              },
+              {
+                "name": "onBehalfOfId",
+                "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7",
+                "type": "query",
+                "description": "Filters payments by the `onBehalfOfId` value - returns only payments with `onBehalfOfId` specified in this parameter. This field is mandatory for unregulated TPPs."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /virtual-accounts/{accountId}/transactions` endpoint retrieves transcation information in a given settlement account."
+        },
+        {
+          "info": {
+            "name": "Get a settlement account transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/virtual-accounts/:accountId/transactions/:providerPaymentId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The system-generated, unique id which specifies the settlement account."
+              },
+              {
+                "name": "providerPaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The settlement account provider-assigned unique transaction identifier."
+              },
+              {
+                "name": "onBehalfOfId",
+                "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7",
+                "type": "query",
+                "description": "Filters payments by the `onBehalfOfId` value - returns only payments with `onBehalfOfId` specified in this parameter. This field is mandatory for unregulated TPPs."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /virtual-accounts/{accountId}/transactions/{providerPaymentId}` endpoint retrieves information for a specific transaction in a given settlement account."
+        },
+        {
+          "info": {
+            "name": "Create a settlement rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/virtual-accounts/:accountId/settlement-rule",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The system-generated, unique id which specifies the settlement account."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `POST /virtual-accounts/{accountId}/settlement-rule` endpoint creates a settlement rule, for a given settlement account."
+        },
+        {
+          "info": {
+            "name": "Get settlement rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/virtual-accounts/:accountId/settlement-rules",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The system-generated, unique id which specifies the settlement account."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /virtual-accounts/{accountId}/settlement-rules` endpoint retrieves information about settlement rules, for a given settlement account, according to the settlement rule status in the request. If no status is provided, the endpoint retrieves all settlement rules for the settlement account."
+        },
+        {
+          "info": {
+            "name": "Get a settlement rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/virtual-accounts/:accountId/settlement-rules/:settlementRuleId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The system-generated, unique id which specifies the settlement account."
+              },
+              {
+                "name": "settlementRuleId",
+                "value": "",
+                "type": "path",
+                "description": "The id of the settlement rule."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /virtual-accounts/{accountId}/settlement-rules/{settlementRuleId}` endpoint retrieves information for a specific settlement rule, for a given settlement account."
+        },
+        {
+          "info": {
+            "name": "Delete a settlement rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.token.io/virtual-accounts/:accountId/settlement-rules/:settlementRuleId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The system-generated, unique id which specifies the settlement account."
+              },
+              {
+                "name": "settlementRuleId",
+                "value": "",
+                "type": "path",
+                "description": "The id of the settlement rule."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The ` DELETE /virtual-accounts/{accountId}/settlement-rules/{settlementRuleId}` endpoint delete an active settlement rule, for a given settlement account."
+        },
+        {
+          "info": {
+            "name": "Get settlement account payouts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/virtual-accounts/:accountId/settlement-rule-payouts",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The system-generated, unique id which specifies the settlement account."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /virtual-accounts/{accountId}/settlement-rule-payouts` endpoint retrieves information about payouts created by a settlement rule, for a given settlement account."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

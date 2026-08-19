@@ -1,0 +1,1865 @@
+{
+  "item": [
+    {
+      "id": "5971ca9d-eb30-449a-aa21-be628843f6a1",
+      "name": "Variable Recurring Payments",
+      "description": {
+        "content": "These endpoints enable you to initiate Variable Recurring Payments (VRP). Note, that VRP is also available in Payments v2 API.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9437a547-7fd7-4896-8ed0-5ed413da5927",
+          "name": "Create a VRP consent",
+          "request": {
+            "name": "Create a VRP consent",
+            "description": {
+              "content": "The `POST /vrp-consents` endpoint creates a new VRP consent.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vrp-consents"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"initiation\": {\n    \"callbackState\": \"<string>\",\n    \"callbackUrl\": \"<string>\",\n    \"creditor\": \"<object>\",\n    \"currency\": \"<string>\",\n    \"localInstrument\": \"<string>\",\n    \"maximumIndividualAmount\": \"<string>\",\n    \"periodicLimits\": [\n      {\n        \"maximumAmount\": \"<string>\",\n        \"periodType\": \"<string>\",\n        \"periodAlignment\": \"<string>\"\n      },\n      {\n        \"maximumAmount\": \"<string>\",\n        \"periodType\": \"<string>\",\n        \"periodAlignment\": \"<string>\"\n      }\n    ],\n    \"refId\": \"<string>\",\n    \"remittanceInformationPrimary\": \"<string>\",\n    \"scheme\": \"<string>\",\n    \"bankId\": \"<string>\",\n    \"remittanceInformationSecondary\": \"<string>\",\n    \"startDateTime\": \"<string>\",\n    \"endDateTime\": \"<string>\",\n    \"onBehalfOfId\": \"<string>\",\n    \"debtor\": {\n      \"accountNumber\": \"<string>\",\n      \"sortCode\": \"<string>\",\n      \"name\": \"<string>\",\n      \"ultimateDebtorName\": \"<string>\",\n      \"address\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"streetName\": \"<string>\",\n        \"buildingNumber\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"townName\": \"<string>\",\n        \"state\": \"<string>\",\n        \"district\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    },\n    \"minimumIndividualAmount\": \"<string>\",\n    \"maximumOccurrences\": \"<integer>\",\n    \"returnRefundAccount\": false,\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"<string>\",\n      \"paymentPurposeCode\": \"CASH\",\n      \"merchantCategoryCode\": \"<string>\",\n      \"beneficiaryAccountType\": \"<string>\",\n      \"contractPresentIndicator\": \"<boolean>\",\n      \"beneficiaryPrepopulatedIndicator\": \"<boolean>\",\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"addressType\": \"INVALID_ADDRESS_TYPE\",\n        \"buildingNumber\": \"<string>\",\n        \"country\": \"<string>\",\n        \"countrySubDivision\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"department\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"streetName\": \"<string>\",\n        \"subDepartment\": \"<string>\",\n        \"townName\": \"<string>\"\n      }\n    }\n  },\n  \"pispConsentAccepted\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "208230e3-3ba1-448f-8741-db0ec63d4d08",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vrp-consents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"callbackState\": \"6242e45e-3063-4c42-8376\",\n    \"callbackUrl\": \"https://tpp.com/callback\",\n    \"creditor\": \"<object>\",\n    \"currency\": \"EUR\",\n    \"localInstrument\": \"FASTER_PAYMENTS\",\n    \"maximumIndividualAmount\": \"10000.0\",\n    \"periodicLimits\": [\n      {\n        \"maximumAmount\": \"100.00\",\n        \"periodType\": \"DAY\",\n        \"periodAlignment\": \"CALENDAR\"\n      },\n      {\n        \"maximumAmount\": \"100.00\",\n        \"periodType\": \"DAY\",\n        \"periodAlignment\": \"CALENDAR\"\n      }\n    ],\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"remittanceInformationPrimary\": \"Sweepco\",\n    \"scheme\": \"OBL_SWEEPING\",\n    \"bankId\": \"ob-modelo\",\n    \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n    \"startDateTime\": \"2017-04-05T10:43:07.123+01:00\",\n    \"endDateTime\": \"2017-04-05T10:43:07.132+01:00\",\n    \"onBehalfOfId\": \"6f34h397-b29h-23b0-s30g-hkd0d2dk4k1s\",\n    \"debtor\": {\n      \"accountNumber\": \"12345678\",\n      \"sortCode\": \"123456\",\n      \"name\": \"John Smith\",\n      \"ultimateDebtorName\": \"John Smith\",\n      \"address\": {\n        \"addressLine\": [\n          \"The Coach House\",\n          \"The Coach House\"\n        ],\n        \"streetName\": \"221B\",\n        \"buildingNumber\": \"2C\",\n        \"postCode\": \"TR26 1EZ\",\n        \"townName\": \"Saint Ives\",\n        \"state\": \"Cornwall\",\n        \"district\": \"<string>\",\n        \"country\": \"GB\"\n      }\n    },\n    \"minimumIndividualAmount\": \"5.0\",\n    \"maximumOccurrences\": 3,\n    \"returnRefundAccount\": true,\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"PISP_PAYEE\",\n      \"paymentPurposeCode\": \"DVPM\",\n      \"merchantCategoryCode\": \"4812\",\n      \"beneficiaryAccountType\": \"BUSINESS\",\n      \"contractPresentIndicator\": true,\n      \"beneficiaryPrepopulatedIndicator\": true,\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"Flat 2, The Red Lodge, 1 High Street\"\n        ],\n        \"addressType\": \"BUSINESS\",\n        \"buildingNumber\": \"1\",\n        \"country\": \"GB\",\n        \"countrySubDivision\": [\n          \"North Yorkshire\"\n        ],\n        \"department\": \"1\",\n        \"postCode\": \"YO62 5JB\",\n        \"streetName\": \"High Street\",\n        \"subDepartment\": \"Flat 2\",\n        \"townName\": \"York\"\n      }\n    }\n  },\n  \"pispConsentAccepted\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"vrpConsent\": {\n    \"createdDateTime\": \"2017-04-05T10:43:07.123Z\",\n    \"id\": \"vc:12345abcd:abcde\",\n    \"initiation\": {\n      \"callbackState\": \"6242e45e-3063-4c42-8376\",\n      \"callbackUrl\": \"https://tpp.com/callback\",\n      \"creditor\": \"<object>\",\n      \"currency\": \"EUR\",\n      \"localInstrument\": \"FASTER_PAYMENTS\",\n      \"maximumIndividualAmount\": \"10000.0\",\n      \"periodicLimits\": [\n        {\n          \"maximumAmount\": \"100.00\",\n          \"periodType\": \"DAY\",\n          \"periodAlignment\": \"CALENDAR\"\n        },\n        {\n          \"maximumAmount\": \"100.00\",\n          \"periodType\": \"DAY\",\n          \"periodAlignment\": \"CALENDAR\"\n        }\n      ],\n      \"refId\": \"9htio4a1sp2akdr1aa\",\n      \"remittanceInformationPrimary\": \"Sweepco\",\n      \"scheme\": \"OBL_SWEEPING\",\n      \"bankId\": \"ob-modelo\",\n      \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n      \"startDateTime\": \"2017-04-05T10:43:07.123+01:00\",\n      \"endDateTime\": \"2017-04-05T10:43:07.132+01:00\",\n      \"onBehalfOfId\": \"6f34h397-b29h-23b0-s30g-hkd0d2dk4k1s\",\n      \"debtor\": {\n        \"accountNumber\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"sortCode\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": \"John Smith\",\n        \"ultimateDebtorName\": \"John Smith\",\n        \"address\": {\n          \"addressLine\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"streetName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"buildingNumber\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"postCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"townName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"state\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"district\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"country\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"minimumIndividualAmount\": \"5.0\",\n      \"maximumOccurrences\": 3,\n      \"returnRefundAccount\": true,\n      \"risk\": {\n        \"psuId\": \"<string>\",\n        \"paymentContextCode\": \"PISP_PAYEE\",\n        \"paymentPurposeCode\": \"DVPM\",\n        \"merchantCategoryCode\": \"4812\",\n        \"beneficiaryAccountType\": \"BUSINESS\",\n        \"contractPresentIndicator\": true,\n        \"beneficiaryPrepopulatedIndicator\": true,\n        \"deliveryAddress\": {\n          \"addressLine\": [\n            \"Flat 2, The Red Lodge, 1 High Street\"\n          ],\n          \"addressType\": \"BUSINESS\",\n          \"buildingNumber\": \"1\",\n          \"country\": \"GB\",\n          \"countrySubDivision\": [\n            \"North Yorkshire\"\n          ],\n          \"department\": \"1\",\n          \"postCode\": \"YO62 5JB\",\n          \"streetName\": \"High Street\",\n          \"subDepartment\": \"Flat 2\",\n          \"townName\": \"York\"\n        }\n      }\n    },\n    \"memberId\": \"m:123456abcd:abcd\",\n    \"status\": \"AUTHORIZED\",\n    \"updatedDateTime\": \"2017-04-05T10:45:07.123Z\",\n    \"bankVrpConsentId\": \"4jq34dwjgi9MCK2MXB9f7v\",\n    \"bankVrpConsentStatus\": \"AwaitingAuthorization\",\n    \"statusReasonInformation\": \"The consent resource is awaiting user authorization.\",\n    \"authentication\": {\n      \"redirectUrl\": \"http://psu-redirect.com\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0611ca43-3630-41e2-bde3-363d15b19f55",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vrp-consents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"callbackState\": \"6242e45e-3063-4c42-8376\",\n    \"callbackUrl\": \"https://tpp.com/callback\",\n    \"creditor\": \"<object>\",\n    \"currency\": \"EUR\",\n    \"localInstrument\": \"FASTER_PAYMENTS\",\n    \"maximumIndividualAmount\": \"10000.0\",\n    \"periodicLimits\": [\n      {\n        \"maximumAmount\": \"100.00\",\n        \"periodType\": \"DAY\",\n        \"periodAlignment\": \"CALENDAR\"\n      },\n      {\n        \"maximumAmount\": \"100.00\",\n        \"periodType\": \"DAY\",\n        \"periodAlignment\": \"CALENDAR\"\n      }\n    ],\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"remittanceInformationPrimary\": \"Sweepco\",\n    \"scheme\": \"OBL_SWEEPING\",\n    \"bankId\": \"ob-modelo\",\n    \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n    \"startDateTime\": \"2017-04-05T10:43:07.123+01:00\",\n    \"endDateTime\": \"2017-04-05T10:43:07.132+01:00\",\n    \"onBehalfOfId\": \"6f34h397-b29h-23b0-s30g-hkd0d2dk4k1s\",\n    \"debtor\": {\n      \"accountNumber\": \"12345678\",\n      \"sortCode\": \"123456\",\n      \"name\": \"John Smith\",\n      \"ultimateDebtorName\": \"John Smith\",\n      \"address\": {\n        \"addressLine\": [\n          \"The Coach House\",\n          \"The Coach House\"\n        ],\n        \"streetName\": \"221B\",\n        \"buildingNumber\": \"2C\",\n        \"postCode\": \"TR26 1EZ\",\n        \"townName\": \"Saint Ives\",\n        \"state\": \"Cornwall\",\n        \"district\": \"<string>\",\n        \"country\": \"GB\"\n      }\n    },\n    \"minimumIndividualAmount\": \"5.0\",\n    \"maximumOccurrences\": 3,\n    \"returnRefundAccount\": true,\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"PISP_PAYEE\",\n      \"paymentPurposeCode\": \"DVPM\",\n      \"merchantCategoryCode\": \"4812\",\n      \"beneficiaryAccountType\": \"BUSINESS\",\n      \"contractPresentIndicator\": true,\n      \"beneficiaryPrepopulatedIndicator\": true,\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"Flat 2, The Red Lodge, 1 High Street\"\n        ],\n        \"addressType\": \"BUSINESS\",\n        \"buildingNumber\": \"1\",\n        \"country\": \"GB\",\n        \"countrySubDivision\": [\n          \"North Yorkshire\"\n        ],\n        \"department\": \"1\",\n        \"postCode\": \"YO62 5JB\",\n        \"streetName\": \"High Street\",\n        \"subDepartment\": \"Flat 2\",\n        \"townName\": \"York\"\n      }\n    }\n  },\n  \"pispConsentAccepted\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"`RefId` should not be longer than 35 symbols.\",\n    \"paths\": [\n      \"initiation.refId\",\n      \"initiation.refId\"\n    ],\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "953cd95f-f824-4fca-aeda-8c9176854f0c",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vrp-consents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"callbackState\": \"6242e45e-3063-4c42-8376\",\n    \"callbackUrl\": \"https://tpp.com/callback\",\n    \"creditor\": \"<object>\",\n    \"currency\": \"EUR\",\n    \"localInstrument\": \"FASTER_PAYMENTS\",\n    \"maximumIndividualAmount\": \"10000.0\",\n    \"periodicLimits\": [\n      {\n        \"maximumAmount\": \"100.00\",\n        \"periodType\": \"DAY\",\n        \"periodAlignment\": \"CALENDAR\"\n      },\n      {\n        \"maximumAmount\": \"100.00\",\n        \"periodType\": \"DAY\",\n        \"periodAlignment\": \"CALENDAR\"\n      }\n    ],\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"remittanceInformationPrimary\": \"Sweepco\",\n    \"scheme\": \"OBL_SWEEPING\",\n    \"bankId\": \"ob-modelo\",\n    \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n    \"startDateTime\": \"2017-04-05T10:43:07.123+01:00\",\n    \"endDateTime\": \"2017-04-05T10:43:07.132+01:00\",\n    \"onBehalfOfId\": \"6f34h397-b29h-23b0-s30g-hkd0d2dk4k1s\",\n    \"debtor\": {\n      \"accountNumber\": \"12345678\",\n      \"sortCode\": \"123456\",\n      \"name\": \"John Smith\",\n      \"ultimateDebtorName\": \"John Smith\",\n      \"address\": {\n        \"addressLine\": [\n          \"The Coach House\",\n          \"The Coach House\"\n        ],\n        \"streetName\": \"221B\",\n        \"buildingNumber\": \"2C\",\n        \"postCode\": \"TR26 1EZ\",\n        \"townName\": \"Saint Ives\",\n        \"state\": \"Cornwall\",\n        \"district\": \"<string>\",\n        \"country\": \"GB\"\n      }\n    },\n    \"minimumIndividualAmount\": \"5.0\",\n    \"maximumOccurrences\": 3,\n    \"returnRefundAccount\": true,\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"PISP_PAYEE\",\n      \"paymentPurposeCode\": \"DVPM\",\n      \"merchantCategoryCode\": \"4812\",\n      \"beneficiaryAccountType\": \"BUSINESS\",\n      \"contractPresentIndicator\": true,\n      \"beneficiaryPrepopulatedIndicator\": true,\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"Flat 2, The Red Lodge, 1 High Street\"\n        ],\n        \"addressType\": \"BUSINESS\",\n        \"buildingNumber\": \"1\",\n        \"country\": \"GB\",\n        \"countrySubDivision\": [\n          \"North Yorkshire\"\n        ],\n        \"department\": \"1\",\n        \"postCode\": \"YO62 5JB\",\n        \"streetName\": \"High Street\",\n        \"subDepartment\": \"Flat 2\",\n        \"townName\": \"York\"\n      }\n    }\n  },\n  \"pispConsentAccepted\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91c27a95-d5e5-4878-9a16-5bdc61f484cc",
+              "name": "Permission to access this endpoint is denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vrp-consents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"callbackState\": \"6242e45e-3063-4c42-8376\",\n    \"callbackUrl\": \"https://tpp.com/callback\",\n    \"creditor\": \"<object>\",\n    \"currency\": \"EUR\",\n    \"localInstrument\": \"FASTER_PAYMENTS\",\n    \"maximumIndividualAmount\": \"10000.0\",\n    \"periodicLimits\": [\n      {\n        \"maximumAmount\": \"100.00\",\n        \"periodType\": \"DAY\",\n        \"periodAlignment\": \"CALENDAR\"\n      },\n      {\n        \"maximumAmount\": \"100.00\",\n        \"periodType\": \"DAY\",\n        \"periodAlignment\": \"CALENDAR\"\n      }\n    ],\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"remittanceInformationPrimary\": \"Sweepco\",\n    \"scheme\": \"OBL_SWEEPING\",\n    \"bankId\": \"ob-modelo\",\n    \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n    \"startDateTime\": \"2017-04-05T10:43:07.123+01:00\",\n    \"endDateTime\": \"2017-04-05T10:43:07.132+01:00\",\n    \"onBehalfOfId\": \"6f34h397-b29h-23b0-s30g-hkd0d2dk4k1s\",\n    \"debtor\": {\n      \"accountNumber\": \"12345678\",\n      \"sortCode\": \"123456\",\n      \"name\": \"John Smith\",\n      \"ultimateDebtorName\": \"John Smith\",\n      \"address\": {\n        \"addressLine\": [\n          \"The Coach House\",\n          \"The Coach House\"\n        ],\n        \"streetName\": \"221B\",\n        \"buildingNumber\": \"2C\",\n        \"postCode\": \"TR26 1EZ\",\n        \"townName\": \"Saint Ives\",\n        \"state\": \"Cornwall\",\n        \"district\": \"<string>\",\n        \"country\": \"GB\"\n      }\n    },\n    \"minimumIndividualAmount\": \"5.0\",\n    \"maximumOccurrences\": 3,\n    \"returnRefundAccount\": true,\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"PISP_PAYEE\",\n      \"paymentPurposeCode\": \"DVPM\",\n      \"merchantCategoryCode\": \"4812\",\n      \"beneficiaryAccountType\": \"BUSINESS\",\n      \"contractPresentIndicator\": true,\n      \"beneficiaryPrepopulatedIndicator\": true,\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"Flat 2, The Red Lodge, 1 High Street\"\n        ],\n        \"addressType\": \"BUSINESS\",\n        \"buildingNumber\": \"1\",\n        \"country\": \"GB\",\n        \"countrySubDivision\": [\n          \"North Yorkshire\"\n        ],\n        \"department\": \"1\",\n        \"postCode\": \"YO62 5JB\",\n        \"streetName\": \"High Street\",\n        \"subDepartment\": \"Flat 2\",\n        \"townName\": \"York\"\n      }\n    }\n  },\n  \"pispConsentAccepted\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "94e702ea-26f8-4d64-8269-62b340f2e8a1",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vrp-consents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initiation\": {\n    \"callbackState\": \"6242e45e-3063-4c42-8376\",\n    \"callbackUrl\": \"https://tpp.com/callback\",\n    \"creditor\": \"<object>\",\n    \"currency\": \"EUR\",\n    \"localInstrument\": \"FASTER_PAYMENTS\",\n    \"maximumIndividualAmount\": \"10000.0\",\n    \"periodicLimits\": [\n      {\n        \"maximumAmount\": \"100.00\",\n        \"periodType\": \"DAY\",\n        \"periodAlignment\": \"CALENDAR\"\n      },\n      {\n        \"maximumAmount\": \"100.00\",\n        \"periodType\": \"DAY\",\n        \"periodAlignment\": \"CALENDAR\"\n      }\n    ],\n    \"refId\": \"9htio4a1sp2akdr1aa\",\n    \"remittanceInformationPrimary\": \"Sweepco\",\n    \"scheme\": \"OBL_SWEEPING\",\n    \"bankId\": \"ob-modelo\",\n    \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n    \"startDateTime\": \"2017-04-05T10:43:07.123+01:00\",\n    \"endDateTime\": \"2017-04-05T10:43:07.132+01:00\",\n    \"onBehalfOfId\": \"6f34h397-b29h-23b0-s30g-hkd0d2dk4k1s\",\n    \"debtor\": {\n      \"accountNumber\": \"12345678\",\n      \"sortCode\": \"123456\",\n      \"name\": \"John Smith\",\n      \"ultimateDebtorName\": \"John Smith\",\n      \"address\": {\n        \"addressLine\": [\n          \"The Coach House\",\n          \"The Coach House\"\n        ],\n        \"streetName\": \"221B\",\n        \"buildingNumber\": \"2C\",\n        \"postCode\": \"TR26 1EZ\",\n        \"townName\": \"Saint Ives\",\n        \"state\": \"Cornwall\",\n        \"district\": \"<string>\",\n        \"country\": \"GB\"\n      }\n    },\n    \"minimumIndividualAmount\": \"5.0\",\n    \"maximumOccurrences\": 3,\n    \"returnRefundAccount\": true,\n    \"risk\": {\n      \"psuId\": \"<string>\",\n      \"paymentContextCode\": \"PISP_PAYEE\",\n      \"paymentPurposeCode\": \"DVPM\",\n      \"merchantCategoryCode\": \"4812\",\n      \"beneficiaryAccountType\": \"BUSINESS\",\n      \"contractPresentIndicator\": true,\n      \"beneficiaryPrepopulatedIndicator\": true,\n      \"deliveryAddress\": {\n        \"addressLine\": [\n          \"Flat 2, The Red Lodge, 1 High Street\"\n        ],\n        \"addressType\": \"BUSINESS\",\n        \"buildingNumber\": \"1\",\n        \"country\": \"GB\",\n        \"countrySubDivision\": [\n          \"North Yorkshire\"\n        ],\n        \"department\": \"1\",\n        \"postCode\": \"YO62 5JB\",\n        \"streetName\": \"High Street\",\n        \"subDepartment\": \"Flat 2\",\n        \"townName\": \"York\"\n      }\n    }\n  },\n  \"pispConsentAccepted\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7c78b8fe-c89c-4ca7-807b-e62e26b59bfb",
+          "name": "Get VRP consents",
+          "request": {
+            "name": "Get VRP consents",
+            "description": {
+              "content": "The `GET /vrp-consents` endpoint retrieves all VRP consents created by the calling member.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vrp-consents"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "(Required) The maximum number of records to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<string>",
+                  "description": "The offset from the previous page."
+                },
+                {
+                  "disabled": false,
+                  "key": "createdAfter",
+                  "value": "<string>",
+                  "description": "Returns only Vrp consents created after this time (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)."
+                },
+                {
+                  "disabled": false,
+                  "key": "createdBefore",
+                  "value": "<string>",
+                  "description": "Returns only Vrp consents created before this time (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)."
+                },
+                {
+                  "disabled": false,
+                  "key": "statuses",
+                  "value": "PENDING",
+                  "description": "Filters Vrp consents by statuses"
+                },
+                {
+                  "disabled": false,
+                  "key": "statuses",
+                  "value": "PENDING",
+                  "description": "Filters Vrp consents by statuses"
+                },
+                {
+                  "disabled": false,
+                  "key": "scheme",
+                  "value": "OBL_SWEEPING",
+                  "description": "Filters Vrp consents by Vrp scheme (only OBL_SWEEPING is currently supported)"
+                },
+                {
+                  "disabled": false,
+                  "key": "onBehalfOfId",
+                  "value": "<string>",
+                  "description": "Filters Vrp consents by their `onBehalfOfId` value."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0588082c-420a-479a-b67b-76f1b87db8af",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vrp-consents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "createdAfter",
+                      "value": "2022-04-05T17:00:00.000Z"
+                    },
+                    {
+                      "key": "createdBefore",
+                      "value": "2023-04-05T17:00:00.000Z"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "PENDING"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "AUTHORIZED"
+                    },
+                    {
+                      "key": "scheme",
+                      "value": "OBL_SWEEPING"
+                    },
+                    {
+                      "key": "onBehalfOfId",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pageInfo\": {\n    \"limit\": 20,\n    \"offset\": \"LerV6Jmex\",\n    \"nextOffset\": \"KgwG8Qkat\",\n    \"haveMore\": false\n  },\n  \"vrpConsents\": [\n    {\n      \"createdDateTime\": \"2017-04-05T10:43:07.123Z\",\n      \"id\": \"vc:12345abcd:abcde\",\n      \"initiation\": {\n        \"callbackState\": \"6242e45e-3063-4c42-8376\",\n        \"callbackUrl\": \"https://tpp.com/callback\",\n        \"creditor\": \"<object>\",\n        \"currency\": \"EUR\",\n        \"localInstrument\": \"FASTER_PAYMENTS\",\n        \"maximumIndividualAmount\": \"10000.0\",\n        \"periodicLimits\": [\n          {\n            \"maximumAmount\": \"100.00\",\n            \"periodType\": \"DAY\",\n            \"periodAlignment\": \"CALENDAR\"\n          },\n          {\n            \"maximumAmount\": \"100.00\",\n            \"periodType\": \"DAY\",\n            \"periodAlignment\": \"CALENDAR\"\n          }\n        ],\n        \"refId\": \"9htio4a1sp2akdr1aa\",\n        \"remittanceInformationPrimary\": \"Sweepco\",\n        \"scheme\": \"OBL_SWEEPING\",\n        \"bankId\": \"ob-modelo\",\n        \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n        \"startDateTime\": \"2017-04-05T10:43:07.123+01:00\",\n        \"endDateTime\": \"2017-04-05T10:43:07.132+01:00\",\n        \"onBehalfOfId\": \"6f34h397-b29h-23b0-s30g-hkd0d2dk4k1s\",\n        \"debtor\": {\n          \"name\": \"John Smith\",\n          \"ultimateDebtorName\": \"John Smith\",\n          \"address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"minimumIndividualAmount\": \"5.0\",\n        \"maximumOccurrences\": 3,\n        \"returnRefundAccount\": true,\n        \"risk\": {\n          \"psuId\": \"<string>\",\n          \"paymentContextCode\": \"PISP_PAYEE\",\n          \"paymentPurposeCode\": \"DVPM\",\n          \"merchantCategoryCode\": \"4812\",\n          \"beneficiaryAccountType\": \"BUSINESS\",\n          \"contractPresentIndicator\": true,\n          \"beneficiaryPrepopulatedIndicator\": true,\n          \"deliveryAddress\": {\n            \"addressLine\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"addressType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"buildingNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"country\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"countrySubDivision\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"department\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"postCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"streetName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"subDepartment\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"townName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      },\n      \"memberId\": \"m:123456abcd:abcd\",\n      \"status\": \"AUTHORIZED\",\n      \"updatedDateTime\": \"2017-04-05T10:45:07.123Z\",\n      \"bankVrpConsentId\": \"4jq34dwjgi9MCK2MXB9f7v\",\n      \"bankVrpConsentStatus\": \"AwaitingAuthorization\",\n      \"statusReasonInformation\": \"The consent resource is awaiting user authorization.\",\n      \"authentication\": {\n        \"redirectUrl\": \"http://psu-redirect.com\"\n      }\n    },\n    {\n      \"createdDateTime\": \"2017-04-05T10:43:07.123Z\",\n      \"id\": \"vc:12345abcd:abcde\",\n      \"initiation\": {\n        \"callbackState\": \"6242e45e-3063-4c42-8376\",\n        \"callbackUrl\": \"https://tpp.com/callback\",\n        \"creditor\": \"<object>\",\n        \"currency\": \"EUR\",\n        \"localInstrument\": \"FASTER_PAYMENTS\",\n        \"maximumIndividualAmount\": \"10000.0\",\n        \"periodicLimits\": [\n          {\n            \"maximumAmount\": \"100.00\",\n            \"periodType\": \"DAY\",\n            \"periodAlignment\": \"CALENDAR\"\n          },\n          {\n            \"maximumAmount\": \"100.00\",\n            \"periodType\": \"DAY\",\n            \"periodAlignment\": \"CALENDAR\"\n          }\n        ],\n        \"refId\": \"9htio4a1sp2akdr1aa\",\n        \"remittanceInformationPrimary\": \"Sweepco\",\n        \"scheme\": \"OBL_SWEEPING\",\n        \"bankId\": \"ob-modelo\",\n        \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n        \"startDateTime\": \"2017-04-05T10:43:07.123+01:00\",\n        \"endDateTime\": \"2017-04-05T10:43:07.132+01:00\",\n        \"onBehalfOfId\": \"6f34h397-b29h-23b0-s30g-hkd0d2dk4k1s\",\n        \"debtor\": {\n          \"name\": \"John Smith\",\n          \"ultimateDebtorName\": \"John Smith\",\n          \"address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"minimumIndividualAmount\": \"5.0\",\n        \"maximumOccurrences\": 3,\n        \"returnRefundAccount\": true,\n        \"risk\": {\n          \"psuId\": \"<string>\",\n          \"paymentContextCode\": \"PISP_PAYEE\",\n          \"paymentPurposeCode\": \"DVPM\",\n          \"merchantCategoryCode\": \"4812\",\n          \"beneficiaryAccountType\": \"BUSINESS\",\n          \"contractPresentIndicator\": true,\n          \"beneficiaryPrepopulatedIndicator\": true,\n          \"deliveryAddress\": {\n            \"addressLine\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"addressType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"buildingNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"country\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"countrySubDivision\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"department\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"postCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"streetName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"subDepartment\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"townName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      },\n      \"memberId\": \"m:123456abcd:abcd\",\n      \"status\": \"AUTHORIZED\",\n      \"updatedDateTime\": \"2017-04-05T10:45:07.123Z\",\n      \"bankVrpConsentId\": \"4jq34dwjgi9MCK2MXB9f7v\",\n      \"bankVrpConsentStatus\": \"AwaitingAuthorization\",\n      \"statusReasonInformation\": \"The consent resource is awaiting user authorization.\",\n      \"authentication\": {\n        \"redirectUrl\": \"http://psu-redirect.com\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4771b7c7-2763-4901-a74c-abe025591f68",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vrp-consents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "createdAfter",
+                      "value": "2022-04-05T17:00:00.000Z"
+                    },
+                    {
+                      "key": "createdBefore",
+                      "value": "2023-04-05T17:00:00.000Z"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "PENDING"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "AUTHORIZED"
+                    },
+                    {
+                      "key": "scheme",
+                      "value": "OBL_SWEEPING"
+                    },
+                    {
+                      "key": "onBehalfOfId",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"`RefId` should not be longer than 35 symbols.\",\n    \"paths\": [\n      \"initiation.refId\",\n      \"initiation.refId\"\n    ],\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5789acb7-f94b-497f-820b-bbd34da50f53",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vrp-consents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "createdAfter",
+                      "value": "2022-04-05T17:00:00.000Z"
+                    },
+                    {
+                      "key": "createdBefore",
+                      "value": "2023-04-05T17:00:00.000Z"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "PENDING"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "AUTHORIZED"
+                    },
+                    {
+                      "key": "scheme",
+                      "value": "OBL_SWEEPING"
+                    },
+                    {
+                      "key": "onBehalfOfId",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e41394b-503c-4feb-a8fd-157a20ebbae5",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vrp-consents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    },
+                    {
+                      "key": "createdAfter",
+                      "value": "2022-04-05T17:00:00.000Z"
+                    },
+                    {
+                      "key": "createdBefore",
+                      "value": "2023-04-05T17:00:00.000Z"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "PENDING"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "AUTHORIZED"
+                    },
+                    {
+                      "key": "scheme",
+                      "value": "OBL_SWEEPING"
+                    },
+                    {
+                      "key": "onBehalfOfId",
+                      "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7238dd56-e763-48f3-b333-619a3bcfc66e",
+          "name": "Get a VRP consent",
+          "request": {
+            "name": "Get a VRP consent",
+            "description": {
+              "content": "The `GET /vrp-consents/{id}` endpoint retrieves the details for an individual VRP consent.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vrp-consents",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "23a1dedf-04c8-4410-b660-c53af1225487",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vrp-consents",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"vrpConsent\": {\n    \"createdDateTime\": \"2017-04-05T10:43:07.123Z\",\n    \"id\": \"vc:12345abcd:abcde\",\n    \"initiation\": {\n      \"callbackState\": \"6242e45e-3063-4c42-8376\",\n      \"callbackUrl\": \"https://tpp.com/callback\",\n      \"creditor\": \"<object>\",\n      \"currency\": \"EUR\",\n      \"localInstrument\": \"FASTER_PAYMENTS\",\n      \"maximumIndividualAmount\": \"10000.0\",\n      \"periodicLimits\": [\n        {\n          \"maximumAmount\": \"100.00\",\n          \"periodType\": \"DAY\",\n          \"periodAlignment\": \"CALENDAR\"\n        },\n        {\n          \"maximumAmount\": \"100.00\",\n          \"periodType\": \"DAY\",\n          \"periodAlignment\": \"CALENDAR\"\n        }\n      ],\n      \"refId\": \"9htio4a1sp2akdr1aa\",\n      \"remittanceInformationPrimary\": \"Sweepco\",\n      \"scheme\": \"OBL_SWEEPING\",\n      \"bankId\": \"ob-modelo\",\n      \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n      \"startDateTime\": \"2017-04-05T10:43:07.123+01:00\",\n      \"endDateTime\": \"2017-04-05T10:43:07.132+01:00\",\n      \"onBehalfOfId\": \"6f34h397-b29h-23b0-s30g-hkd0d2dk4k1s\",\n      \"debtor\": {\n        \"accountNumber\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"sortCode\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": \"John Smith\",\n        \"ultimateDebtorName\": \"John Smith\",\n        \"address\": {\n          \"addressLine\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"streetName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"buildingNumber\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"postCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"townName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"state\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"district\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"country\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"minimumIndividualAmount\": \"5.0\",\n      \"maximumOccurrences\": 3,\n      \"returnRefundAccount\": true,\n      \"risk\": {\n        \"psuId\": \"<string>\",\n        \"paymentContextCode\": \"PISP_PAYEE\",\n        \"paymentPurposeCode\": \"DVPM\",\n        \"merchantCategoryCode\": \"4812\",\n        \"beneficiaryAccountType\": \"BUSINESS\",\n        \"contractPresentIndicator\": true,\n        \"beneficiaryPrepopulatedIndicator\": true,\n        \"deliveryAddress\": {\n          \"addressLine\": [\n            \"Flat 2, The Red Lodge, 1 High Street\"\n          ],\n          \"addressType\": \"BUSINESS\",\n          \"buildingNumber\": \"1\",\n          \"country\": \"GB\",\n          \"countrySubDivision\": [\n            \"North Yorkshire\"\n          ],\n          \"department\": \"1\",\n          \"postCode\": \"YO62 5JB\",\n          \"streetName\": \"High Street\",\n          \"subDepartment\": \"Flat 2\",\n          \"townName\": \"York\"\n        }\n      }\n    },\n    \"memberId\": \"m:123456abcd:abcd\",\n    \"status\": \"AUTHORIZED\",\n    \"updatedDateTime\": \"2017-04-05T10:45:07.123Z\",\n    \"bankVrpConsentId\": \"4jq34dwjgi9MCK2MXB9f7v\",\n    \"bankVrpConsentStatus\": \"AwaitingAuthorization\",\n    \"statusReasonInformation\": \"The consent resource is awaiting user authorization.\",\n    \"authentication\": {\n      \"redirectUrl\": \"http://psu-redirect.com\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bf62dbb0-b3ec-43cd-ad08-67bda9c3640a",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vrp-consents",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d7c55cad-1198-43d6-8c89-b5f17bd370ee",
+              "name": "VRP consent not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vrp-consents",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9687e22f-97af-4dc1-84f6-48c3929b9f43",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vrp-consents",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "738935fc-e761-4835-8f3b-94acae9b0740",
+          "name": "Revoke a VRP consent",
+          "request": {
+            "name": "Revoke a VRP consent",
+            "description": {
+              "content": "The `DELETE /vrp-consents/{id}` endpoint revokes an individual VRP consent.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vrp-consents",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8d7024b1-2003-4d16-a403-6601e6f29a09",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vrp-consents",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"vrpConsent\": {\n    \"createdDateTime\": \"2017-04-05T10:43:07.123Z\",\n    \"id\": \"vc:12345abcd:abcde\",\n    \"initiation\": {\n      \"callbackState\": \"6242e45e-3063-4c42-8376\",\n      \"callbackUrl\": \"https://tpp.com/callback\",\n      \"creditor\": \"<object>\",\n      \"currency\": \"EUR\",\n      \"localInstrument\": \"FASTER_PAYMENTS\",\n      \"maximumIndividualAmount\": \"10000.0\",\n      \"periodicLimits\": [\n        {\n          \"maximumAmount\": \"100.00\",\n          \"periodType\": \"DAY\",\n          \"periodAlignment\": \"CALENDAR\"\n        },\n        {\n          \"maximumAmount\": \"100.00\",\n          \"periodType\": \"DAY\",\n          \"periodAlignment\": \"CALENDAR\"\n        }\n      ],\n      \"refId\": \"9htio4a1sp2akdr1aa\",\n      \"remittanceInformationPrimary\": \"Sweepco\",\n      \"scheme\": \"OBL_SWEEPING\",\n      \"bankId\": \"ob-modelo\",\n      \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n      \"startDateTime\": \"2017-04-05T10:43:07.123+01:00\",\n      \"endDateTime\": \"2017-04-05T10:43:07.132+01:00\",\n      \"onBehalfOfId\": \"6f34h397-b29h-23b0-s30g-hkd0d2dk4k1s\",\n      \"debtor\": {\n        \"accountNumber\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"sortCode\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": \"John Smith\",\n        \"ultimateDebtorName\": \"John Smith\",\n        \"address\": {\n          \"addressLine\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"streetName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"buildingNumber\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"postCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"townName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"state\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"district\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"country\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"minimumIndividualAmount\": \"5.0\",\n      \"maximumOccurrences\": 3,\n      \"returnRefundAccount\": true,\n      \"risk\": {\n        \"psuId\": \"<string>\",\n        \"paymentContextCode\": \"PISP_PAYEE\",\n        \"paymentPurposeCode\": \"DVPM\",\n        \"merchantCategoryCode\": \"4812\",\n        \"beneficiaryAccountType\": \"BUSINESS\",\n        \"contractPresentIndicator\": true,\n        \"beneficiaryPrepopulatedIndicator\": true,\n        \"deliveryAddress\": {\n          \"addressLine\": [\n            \"Flat 2, The Red Lodge, 1 High Street\"\n          ],\n          \"addressType\": \"BUSINESS\",\n          \"buildingNumber\": \"1\",\n          \"country\": \"GB\",\n          \"countrySubDivision\": [\n            \"North Yorkshire\"\n          ],\n          \"department\": \"1\",\n          \"postCode\": \"YO62 5JB\",\n          \"streetName\": \"High Street\",\n          \"subDepartment\": \"Flat 2\",\n          \"townName\": \"York\"\n        }\n      }\n    },\n    \"memberId\": \"m:123456abcd:abcd\",\n    \"status\": \"AUTHORIZED\",\n    \"updatedDateTime\": \"2017-04-05T10:45:07.123Z\",\n    \"bankVrpConsentId\": \"4jq34dwjgi9MCK2MXB9f7v\",\n    \"bankVrpConsentStatus\": \"AwaitingAuthorization\",\n    \"statusReasonInformation\": \"The consent resource is awaiting user authorization.\",\n    \"authentication\": {\n      \"redirectUrl\": \"http://psu-redirect.com\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1543aad3-bf0d-44f0-90bc-2736fa8a2b93",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vrp-consents",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d041e291-a6f6-4d6f-898f-37ea1dcf9218",
+              "name": "VRP consent not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vrp-consents",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a223c0ff-3591-4de8-8e4e-b3a7f5c97127",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vrp-consents",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a9ae8def-9e03-47b2-acc7-7029003e9d4b",
+          "name": "Get payments under a VRP consent",
+          "request": {
+            "name": "Get payments under a VRP consent",
+            "description": {
+              "content": "The `GET /vrp-consents/{id}/payments` endpoint retrieves the payments under a given VRP consent.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vrp-consents",
+                ":id",
+                "payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "(Required) The maximum number of records to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<string>",
+                  "description": "The offset from the previous page."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) VRP consent id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "cd6cd248-3a16-4cc1-a846-b65e8878dc71",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vrp-consents",
+                    ":id",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) VRP consent id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pageInfo\": {\n    \"limit\": 20,\n    \"offset\": \"LerV6Jmex\",\n    \"nextOffset\": \"KgwG8Qkat\",\n    \"haveMore\": false\n  },\n  \"vrps\": [\n    {\n      \"createdDateTime\": \"2017-04-05T10:43:07.123Z\",\n      \"id\": \"vrp:12345abcd:abcd\",\n      \"initiation\": {\n        \"amount\": {\n          \"currency\": \"EUR\",\n          \"value\": \"10.23\"\n        },\n        \"consentId\": \"vc:12345abcd:abcd\",\n        \"refId\": \"9htio4a1sp2akdr1aa\",\n        \"remittanceInformationPrimary\": \"Sweepco\",\n        \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n        \"confirmFunds\": false,\n        \"risk\": {\n          \"psuId\": \"<string>\",\n          \"paymentContextCode\": \"PISP_PAYEE\",\n          \"paymentPurposeCode\": \"DVPM\",\n          \"merchantCategoryCode\": \"4812\",\n          \"beneficiaryAccountType\": \"BUSINESS\",\n          \"contractPresentIndicator\": true,\n          \"beneficiaryPrepopulatedIndicator\": true,\n          \"deliveryAddress\": {\n            \"addressLine\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"addressType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"buildingNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"country\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"countrySubDivision\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"department\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"postCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"streetName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"subDepartment\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"townName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      },\n      \"memberId\": \"m:123456abcd:abcd\",\n      \"status\": \"INITIATION_COMPLETED\",\n      \"updatedDateTime\": \"2017-04-05T10:45:07.123Z\",\n      \"bankVrpId\": \"4vn6aDyMiwBYbPDN\",\n      \"bankVrpStatus\": \"AcceptedCreditSettlementCompleted\",\n      \"statusReasonInformation\": \"The payment is settled on the debtor's side.\",\n      \"refundDetails\": {\n        \"refundAccount\": {\n          \"name\": \"John Smith\"\n        },\n        \"paymentRefundStatus\": \"NONE\",\n        \"settledRefundAmount\": {\n          \"currency\": \"EUR\",\n          \"value\": \"10.23\"\n        },\n        \"remainingRefundAmount\": {\n          \"currency\": \"EUR\",\n          \"value\": \"10.23\"\n        }\n      }\n    },\n    {\n      \"createdDateTime\": \"2017-04-05T10:43:07.123Z\",\n      \"id\": \"vrp:12345abcd:abcd\",\n      \"initiation\": {\n        \"amount\": {\n          \"currency\": \"EUR\",\n          \"value\": \"10.23\"\n        },\n        \"consentId\": \"vc:12345abcd:abcd\",\n        \"refId\": \"9htio4a1sp2akdr1aa\",\n        \"remittanceInformationPrimary\": \"Sweepco\",\n        \"remittanceInformationSecondary\": \"Secondary remittance information.\",\n        \"confirmFunds\": false,\n        \"risk\": {\n          \"psuId\": \"<string>\",\n          \"paymentContextCode\": \"PISP_PAYEE\",\n          \"paymentPurposeCode\": \"DVPM\",\n          \"merchantCategoryCode\": \"4812\",\n          \"beneficiaryAccountType\": \"BUSINESS\",\n          \"contractPresentIndicator\": true,\n          \"beneficiaryPrepopulatedIndicator\": true,\n          \"deliveryAddress\": {\n            \"addressLine\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"addressType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"buildingNumber\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"country\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"countrySubDivision\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"department\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"postCode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"streetName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"subDepartment\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"townName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      },\n      \"memberId\": \"m:123456abcd:abcd\",\n      \"status\": \"INITIATION_COMPLETED\",\n      \"updatedDateTime\": \"2017-04-05T10:45:07.123Z\",\n      \"bankVrpId\": \"4vn6aDyMiwBYbPDN\",\n      \"bankVrpStatus\": \"AcceptedCreditSettlementCompleted\",\n      \"statusReasonInformation\": \"The payment is settled on the debtor's side.\",\n      \"refundDetails\": {\n        \"refundAccount\": {\n          \"name\": \"John Smith\"\n        },\n        \"paymentRefundStatus\": \"NONE\",\n        \"settledRefundAmount\": {\n          \"currency\": \"EUR\",\n          \"value\": \"10.23\"\n        },\n        \"remainingRefundAmount\": {\n          \"currency\": \"EUR\",\n          \"value\": \"10.23\"\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c76ecbb-6c19-4f38-ac0b-0faf412c83b0",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vrp-consents",
+                    ":id",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) VRP consent id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"`RefId` should not be longer than 35 symbols.\",\n    \"paths\": [\n      \"initiation.refId\",\n      \"initiation.refId\"\n    ],\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7244fc11-6131-4c00-9cc2-b738b1638c70",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vrp-consents",
+                    ":id",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) VRP consent id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb8d197e-2671-4452-b0a9-c7ac84b24f86",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vrp-consents",
+                    ":id",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "LerV6Jmex"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) VRP consent id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c6fd0730-cdd8-4453-ac9e-add27b7a3814",
+          "name": "Verify if funds are available or not",
+          "request": {
+            "name": "Verify if funds are available or not",
+            "description": {
+              "content": "The `GET /vrps/{id}/confirm-funds` endpoint confirms whether the funds are available to initiate VRP.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vrps",
+                ":id",
+                "confirm-funds"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "amount",
+                  "value": "<string>",
+                  "description": "(Required) The amount to confirm availability for."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The VRP consent id."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5f53a431-08af-4d3f-8474-405a9251166c",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vrps",
+                    ":id",
+                    "confirm-funds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "amount",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The VRP consent id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"fundsAvailable\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f32b9357-ea3c-47cb-9748-22ee8af60d15",
+              "name": "The authorization information is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vrps",
+                    ":id",
+                    "confirm-funds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "amount",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The VRP consent id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6b59e32-d46e-4d21-b672-cd0fd36cdec0",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vrps",
+                    ":id",
+                    "confirm-funds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "amount",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The VRP consent id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fc66fb66-a98a-4241-b43b-484f83ceaa11",
+              "name": "An unexpected or internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vrps",
+                    ":id",
+                    "confirm-funds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "amount",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The VRP consent id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorCode\": \"InternalServerError\",\n    \"message\": \"This is a description of the error.\",\n    \"tokenTraceId\": \"5678912345\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.token.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "0e3d8580-24a4-4e3f-9f5d-c03f3a02cab1",
+    "name": "Token.io's Open Banking API for TPPs Account on File Variable Recurring Payments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "<b>Token.io's Open Banking API</b><br/><br/>Token.io Support: <a href=\"https://support.token.io\" target=\"_blank\">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user's account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href=\"https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm\" target=\"_blank\">developer documentation</a>.",
+      "type": "text/plain"
+    }
+  }
+}

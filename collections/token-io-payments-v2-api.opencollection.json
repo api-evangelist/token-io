@@ -1,0 +1,234 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Token.io's Open Banking API for TPPs Account on File Payments v2 API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payments v2",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get payments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/v2/payments",
+            "params": [
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "The maximum number of records to return."
+              },
+              {
+                "name": "offset",
+                "value": "LerV6Jmex",
+                "type": "query",
+                "description": "The offset from the previous page."
+              },
+              {
+                "name": "ids",
+                "value": "pm2:4QExXrhKTxfShBdcTeqFabqJJhUF:2gFUX1NDgpN,pm2:N5cJDFsQzVca3Qvr8kQocgEnjgX:2gFUX1NEdYA",
+                "type": "query",
+                "description": "Filters payments by their ids - returns only payments with ids listed in this parameter."
+              },
+              {
+                "name": "invertIds",
+                "value": "false",
+                "type": "query",
+                "description": "Invert ids query - returns only payments with ids not listed in the ids parameter."
+              },
+              {
+                "name": "statuses",
+                "value": "INITIATION_COMPLETED,INITIATION_REJECTED",
+                "type": "query",
+                "description": "Filters payments by their statuses - returns only payments with statuses listed in this parameter. For VRP payments (when type=VARIABLE_RECURRING_PAYMENT), only the following PaymentStatus values are supported:<br/>• INITIATION_PENDING<br/>• INITIATION_PROCESSING<br/>• INITIATION_COMPLETED<br/>• INITIATION_REJECTED<br/>• INITIATION_REJECTED_INSUFFICIENT_FUNDS<br/>• INITIATION_FAILED<br/>• INITIATION_NO_FINAL_STATUS_AVAILABLE<br/>Using unsupported statuses for VRP payments will result in an error.<br/><br/>For single immediate payments, all PaymentStatus values are supported."
+              },
+              {
+                "name": "invertStatuses",
+                "value": "true",
+                "type": "query",
+                "description": "Invert statuses query - returns only payments with statuses not listed in the statuses parameter."
+              },
+              {
+                "name": "createdAfter",
+                "value": "2022-04-05T17:00:00.000Z",
+                "type": "query",
+                "description": "Returns only payments created after this time (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)."
+              },
+              {
+                "name": "createdBefore",
+                "value": "2022-04-05T17:00:00.000Z",
+                "type": "query",
+                "description": "Returns only payments created before this time (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)."
+              },
+              {
+                "name": "refIds",
+                "value": "ShBdcTeqFabqJJhUF,N5cJDFsQzVca3Q",
+                "type": "query",
+                "description": "Filters payments by their `refId` values - returns only payments with `refIds` listed in this parameter."
+              },
+              {
+                "name": "onBehalfOfId",
+                "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7",
+                "type": "query",
+                "description": "Filters payments by the `onBehalfOfId` value - returns only payments with the `onBehalfOfId` value specified in this parameter. This field is mandatory for unregulated TPPs."
+              },
+              {
+                "name": "refundStatuses",
+                "value": "PARTIAL,NONE",
+                "type": "query",
+                "description": "Filters payments by their refund status values - returns only payments with refund statuses listed in this parameter. Not supported for Vrp."
+              },
+              {
+                "name": "partial",
+                "value": "true",
+                "type": "query",
+                "description": "Returns payments in a partial format - with only id and status fields populated."
+              },
+              {
+                "name": "externalPsuReference",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by payment type - single immediate or variable recurring payment. Defaults to SINGLE_IMMEDIATE_PAYMENT if not specified."
+              },
+              {
+                "name": "vrpConsentId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by Vrp consent id value. Only applied if type is VARIABLE_RECURRING_PAYMENT."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /v2/payments` endpoint provides you with a list of payments and their details."
+        },
+        {
+          "info": {
+            "name": "Initiate a payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/v2/payments",
+            "headers": [
+              {
+                "name": "request-timeout",
+                "value": "10"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `POST /v2/payments` endpoint enables you to initiate a payment with a bank.<br/><br/>Once the payment has been initiated, the end user needs to authenticate themselves with their bank.<br/><br/><b>Check payment status:</b><br/><ol><li>If the status in the initiation response is `INITIATION_PENDING_REDIRECT_AUTH` or `INITIATION_PENDING_REDIRECT_HP`, redirect the user to the redirect url found in the authentication payload of the payment, to authenticate at the bank or at Token.io's Hosted Pag"
+        },
+        {
+          "info": {
+            "name": "Get a payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/v2/payments/:paymentId",
+            "headers": [
+              {
+                "name": "request-timeout",
+                "value": "10"
+              }
+            ],
+            "params": [
+              {
+                "name": "paymentId",
+                "value": "",
+                "type": "path",
+                "description": "The payment id."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /v2/payments/{paymentId}` endpoint provides you with details of an individual payment and checks the payment status for the next step, if any."
+        },
+        {
+          "info": {
+            "name": "Provide information for embedded authentication",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/v2/payments/:paymentId/embedded-auth",
+            "headers": [
+              {
+                "name": "request-timeout",
+                "value": "10"
+              }
+            ],
+            "params": [
+              {
+                "name": "paymentId",
+                "value": "",
+                "type": "path",
+                "description": "The payment id."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `POST /v2/payments/{paymentId}/embedded-auth` endpoint provides you with the requested information when the payment status is `INITIATION_PENDING_EMBEDDED_AUTH`. The requested information can be found in the authentication field of the payment. <br/> <br/> It's possible that some banks might request the user's input multiple times. In this case you might need to call this endpoint again for a new field set."
+        },
+        {
+          "info": {
+            "name": "Generate QR code",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/qr-code",
+            "params": [
+              {
+                "name": "data",
+                "value": "",
+                "type": "query",
+                "description": "The encoded URL to use while generating the QR code. The link must be URL encoded."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /qr-code` endpoint generates a QR code in fixed SVG format (240x240 px). This allows TPPs to programmatically obtain a scannable QR code ."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

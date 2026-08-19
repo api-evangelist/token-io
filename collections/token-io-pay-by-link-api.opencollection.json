@@ -1,0 +1,160 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Token.io's Open Banking API for TPPs Account on File Pay by Link API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pay by Link",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List payment links",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/v2/payment-links",
+            "params": [
+              {
+                "name": "ids",
+                "value": "pl-019c8a02-a30e-7307-83da-7428239da59d,pl-019f0d3a-9c4b-7a1e-8c2f-0b7d9a4e3c12",
+                "type": "query",
+                "description": "Filter by payment link ID list"
+              },
+              {
+                "name": "statuses",
+                "value": "LINK_ACTIVE,LINK_EXPIRED",
+                "type": "query",
+                "description": "Filter by link statuses"
+              },
+              {
+                "name": "onBehalfOfId",
+                "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7",
+                "type": "query",
+                "description": "Filter by on behalf of ID"
+              },
+              {
+                "name": "externalPsuReference",
+                "value": "customer_456789_coffee_order",
+                "type": "query",
+                "description": "Filter by external PSU Reference"
+              },
+              {
+                "name": "createdAfter",
+                "value": "2026-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Filter links created after this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)"
+              },
+              {
+                "name": "createdBefore",
+                "value": "2026-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Filter links created before this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)"
+              },
+              {
+                "name": "expiresAfter",
+                "value": "2026-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Filter links expiring after this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)"
+              },
+              {
+                "name": "expiresBefore",
+                "value": "2026-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Filter links expiring before this timestamp (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return"
+              },
+              {
+                "name": "offset",
+                "value": "019f0d6b-3e21-7c9a-9f04-6a2b8d1c7e53",
+                "type": "query",
+                "description": "The offset for the current page. The offset is not required to fetch the first page. To fetch subsequent pages, use the 'nextOffset' value from the previous page response."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /v2/payment-links` endpoint returns a list of payment links. At least one filter parameter must be provided. Results can be filtered by IDs, statuses, creation date range (createdAfter, createdBefore), expiration date range (expiresAfter, expiresBefore), external PSU reference, and on-behalf-of ID."
+        },
+        {
+          "info": {
+            "name": "Create a payment link",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/v2/payment-links",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `POST /v2/payment-links` endpoint creates a new payment link with payment template and link configuration. Payment links allow you to create reusable or single-use payment URLs that can be shared with customers. The link can have fixed or variable amounts, usage limits, and expiration dates."
+        },
+        {
+          "info": {
+            "name": "Get payment link details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/v2/payment-links/:paymentLinkId",
+            "params": [
+              {
+                "name": "paymentLinkId",
+                "value": "pl-019c8a02-a30e-7307-83da-7428239da59d",
+                "type": "path",
+                "description": "Payment link ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /v2/payment-links/{paymentLinkId}` endpoint retrieves detailed information about a specific payment link including current usage statistics."
+        },
+        {
+          "info": {
+            "name": "Deactivate payment link",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.token.io/v2/payment-links/:paymentLinkId",
+            "params": [
+              {
+                "name": "paymentLinkId",
+                "value": "pl-019c8a02-a30e-7307-83da-7428239da59d",
+                "type": "path",
+                "description": "Payment link ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `DELETE /v2/payment-links/{paymentLinkId}` endpoint deactivates a payment link, preventing further usage. Only active payment links can be deactivated."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

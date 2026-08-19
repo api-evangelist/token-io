@@ -1,0 +1,136 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Token.io's Open Banking API for TPPs Account on File Payouts API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payouts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get payouts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/payouts",
+            "params": [
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "The maximum number of records to return."
+              },
+              {
+                "name": "offset",
+                "value": "LerV6Jmex",
+                "type": "query",
+                "description": "The offset from the previous page."
+              },
+              {
+                "name": "startDate",
+                "value": "2010-01-01",
+                "type": "query",
+                "description": "Lower bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or after the given date will be returned."
+              },
+              {
+                "name": "endDate",
+                "value": "2010-01-01",
+                "type": "query",
+                "description": "Upper bound for a payout creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only payouts created at or before the given date will be returned."
+              },
+              {
+                "name": "ids",
+                "value": "po:28oivvd3iFhBrcbNj4tmtLEhxRTk:2gFUX1NE1T6,po:3ZfdHxbpXmRZ1TVmiYNPgcwEocBy:2gFUX1NDdqr",
+                "type": "query",
+                "description": "Filters payouts by their ids - returns only payouts with ids listed in this parameter."
+              },
+              {
+                "name": "invertIds",
+                "value": "false",
+                "type": "query",
+                "description": "Invert ids query - returns only payouts with ids not listed in the ids parameter."
+              },
+              {
+                "name": "statuses",
+                "value": "INITIATION_COMPLETED,INITIATION_REJECTED",
+                "type": "query",
+                "description": "Filters payouts by their statuses - returns only payouts with statuses listed in this parameter."
+              },
+              {
+                "name": "invertStatuses",
+                "value": "true",
+                "type": "query",
+                "description": "Invert statuses query - returns only payouts with statuses not listed in the statuses parameter."
+              },
+              {
+                "name": "refIds",
+                "value": "ShBdcTeqFabqJJhUF,N5cJDFsQzVca3Q",
+                "type": "query",
+                "description": "Filters payouts by their `refId` values - returns only payouts with `refIds` listed in this parameter."
+              },
+              {
+                "name": "onBehalfOfId",
+                "value": "c5a863bc-86f2-4418-a26f-25b24c7983c7",
+                "type": "query",
+                "description": "Filters payouts by their `onBehalfOfId` value - returns only payouts with the `onBehalfOfId` value specified in this parameter. This field is mandatory for unregulated TPPs."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /payouts` endpoint retrieves a complete or filtered list of payouts."
+        },
+        {
+          "info": {
+            "name": "Initiate a payout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/payouts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `POST /payouts` endpoint initiates a payout."
+        },
+        {
+          "info": {
+            "name": "Get a payout",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/payouts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The `GET /payouts/{id}` endpoint retrieves a given payout."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

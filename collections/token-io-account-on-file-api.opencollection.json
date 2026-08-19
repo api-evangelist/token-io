@@ -1,0 +1,83 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Token.io's Open Banking API for TPPs Account on File API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Account on File",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create an Account on File",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.token.io/tokenized-accounts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates an Account on File from the provided bank account details. This can be used by Third Party Providers (TPPs) in future API requests to reference the account without resending the full account information."
+        },
+        {
+          "info": {
+            "name": "Retrieve an Account on File",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.token.io/tokenized-accounts/:tokenizedAccountId",
+            "params": [
+              {
+                "name": "tokenizedAccountId",
+                "value": "",
+                "type": "path",
+                "description": "The tokenized account id."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves an Account on File using its tokenizedAccountId."
+        },
+        {
+          "info": {
+            "name": "Delete an Account on File",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.token.io/tokenized-accounts/:tokenizedAccountId",
+            "params": [
+              {
+                "name": "tokenizedAccountId",
+                "value": "",
+                "type": "path",
+                "description": "The tokenized account id."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an Account on File. After deletion, the tokenizedAccountId can no longer be used to reference the associated account details in API requests."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
