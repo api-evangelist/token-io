@@ -126,6 +126,10 @@ apis:
   tags:
   - Sample
   - Java
+  - Merchants
+  tags_raw:
+  - Sample
+  - Java
   - Merchant
   humanURL: https://github.com/tokenio/merchant-sample-java
   properties:
@@ -135,6 +139,10 @@ apis:
 - aid: token-io:merchant-sample-js
   name: Merchant Sample (JavaScript)
   tags:
+  - Sample
+  - JavaScript
+  - Merchants
+  tags_raw:
   - Sample
   - JavaScript
   - Merchant
@@ -169,6 +177,10 @@ apis:
 - aid: token-io:merchant-integration-workshop
   name: Merchant Integration Workshop
   tags:
+  - Tutorial
+  - Workshops
+  - Merchants
+  tags_raw:
   - Tutorial
   - Workshop
   - Merchant
@@ -667,6 +679,80 @@ apis:
     url: json-schema/token-io-account-schema.json
   - type: JSONLD
     url: json-ld/token-io-context.jsonld
+- aid: token-io:token-io-rest-api
+  name: Token.io REST API (full platform)
+  tags:
+  - Payments
+  - Open Banking
+  - Account
+  - VRP
+  - Refunds
+  - eIDAS
+  tags_raw:
+  - Payments
+  - Open Banking
+  - Accounts
+  - VRP
+  - Refunds
+  - eIDAS
+  humanURL: https://docs.token.io/products/tpp/api/reference
+  baseURL: https://api.token.io
+  properties:
+  - type: OpenAPI
+    url: openapi/token-io-rest-api-swagger.json
+    name: Token API (Swagger 2.0, provider-served)
+  - type: OpenAPISource
+    url: https://api.token.io/swagger.json
+    name: OpenAPI (provider-hosted)
+  - type: Documentation
+    url: https://docs.token.io/products/tpp/api/reference
+  - type: Reference
+    url: https://reference.token.io/
+  description: The complete Token.io REST platform contract, served by Token.io at
+    https://api.token.io/swagger.json (HTTP 200, Swagger 2.0, basePath /v1, host api.token.io) and
+    harvested 2026-09-17. 100 paths and 127 operations — it covers the whole platform including the
+    eIDAS certificate, member key, sub-TPP, product restriction, bank config and tokenized account
+    surfaces that the documentation bundle omits.
+- aid: token-io:token-io-refunds-bnpp-api
+  name: Token.io Refunds API (Payments REST 2.0)
+  tags:
+  - Refunds
+  - Payments
+  - Open Banking
+  humanURL: https://docs.token.io/api-definitions/openapi/external/bnpp-refunds
+  baseURL: https://api.token.io/v2
+  properties:
+  - type: OpenAPI
+    url: openapi/token-io-refunds-bnpp-openapi.json
+  - type: Documentation
+    url: https://docs.token.io/api-definitions/openapi/external/bnpp-refunds
+  description: A separate first-party Token.io OpenAPI 3.0.0 document (version 1.0.2) covering
+    refund registration, initiation, retrieval and signing, plus certificate upload. Retrieved
+    2026-09-17 through Token.io's own MCP server at https://docs.token.io/mcp; it names
+    https://api.token.io/v2 as the Token.io API server and support@token.io as its contact.
+- aid: token-io:token-io-bank-integration-api
+  name: Token Bank Integration API
+  tags:
+  - Banking
+  - Open Banking
+  - Account
+  - Transfers
+  tags_raw:
+  - Banking
+  - Open Banking
+  - Accounts
+  - Transfers
+  humanURL: https://docs.token.io/api-definitions/openapi/external/token-bank-integration
+  properties:
+  - type: OpenAPI
+    url: openapi/token-io-bank-integration-openapi.json
+  - type: Documentation
+    url: https://docs.token.io/api-definitions/openapi/external/token-bank-integration
+  description: The bank-facing side of the Token.io platform (OpenAPI 3.0.0, version 1.0.6,
+    contact service@token.io) — the contract a bank implements to integrate with Token, covering
+    accounts, balances, transactions, transfers and health. Its servers[] is the relative "/"
+    because each integrating bank hosts its own instance, so no baseURL is recorded. Retrieved
+    2026-09-17 through https://docs.token.io/mcp.
 common:
 - type: Website
   url: https://token.io
@@ -695,8 +781,6 @@ common:
   type: GitHubOrganization
 - url: https://token.io/contact/pricing
   type: Pricing
-- url: https://token.io/news
-  type: News
 - url: https://token.io/blog
   type: Blog
 - url: https://token.io/faq
@@ -710,6 +794,61 @@ common:
   type: RateLimits
 - url: finops/token-io-finops.yml
   type: FinOps
+- url: packages/token-io-packages.yml
+  type: Packages
+- url: packages/token-io-packages.yml
+  type: SDKs
+- url: mcp/token-io-mcp.yml
+  type: MCPServer
+  name: Token.io Documentation MCP Server (https://docs.token.io/mcp)
+- url: mcp/token-io-tool-crosswalk.yml
+  type: ToolCrosswalk
+- url: llms/token-io-llms.txt
+  type: LLMsTxt
+- url: overlays/token-io-openapi-overlay.yaml
+  type: Overlay
+- url: grpc/token-io-token.proto
+  type: Protobuf
+  name: Token.io platform protobuf definitions (21 .proto files in grpc/)
+- url: conformance/token-io-conformance.yml
+  type: Conformance
+- url: conformance/token-io-conformance.yml
+  type: Compliance
+  name: ISO 27001:2022, PCI DSS Level 1, PSD2, FCA 795904
+- url: errors/token-io-problem-types.yml
+  type: ErrorCatalog
+- url: errors/token-io-decline-codes.yml
+  type: DeclineCodes
+- url: lifecycle/token-io-lifecycle.yml
+  type: Lifecycle
+- url: lifecycle/token-io-lifecycle.yml
+  type: Deprecation
+  name: Backward-compatibility policy and Technical Bulletin advance notice
+- url: changelog/token-io-changelog.yml
+  type: ChangeLog
+- url: https://docs.token.io/products/tpp/tech-bulletins/tb-1638
+  type: ReleaseNotes
+  name: Technical Bulletins (latest TB-1638, 2026-09-08)
+- url: conventions/token-io-conventions.yml
+  type: Conventions
+- url: sandbox/token-io-sandbox.yml
+  type: Sandbox
+  name: Sandbox environment, mock bank and test values
+- url: components/token-io-components.yml
+  type: Components
+- url: data-model/token-io-data-model.yml
+  type: DataModel
+- url: asyncapi/token-io-webhooks.yml
+  type: Webhooks
+- url: skills/_index.yml
+  type: AgentSkill
+- url: https://token.io/terms
+  type: TermsOfService
+- url: https://token.io/privacy-policy
+  type: PrivacyPolicy
+- url: https://dashboard.token.io
+  type: Login
+  name: Token Dashboard (production)
 - type: Features
   data:
   - Single Immediate Payments (SIP) via Payments v2
@@ -761,8 +900,30 @@ common:
   - https://token.io
   - https://docs.token.io/products/tpp
   updated: '2026-05-25'
+tags:
+- Payments
+- Open Banking
+- Banking
+- Financial-Services
+- Account-to-Account
+- PSD2
+- Variable Recurring Payments
+- Account Information Services
+- Payment Initiation
+- Fintech
+tags_raw:
+- Payments
+- Open Banking
+- Banking
+- Financial Services
+- Account to Account
+- PSD2
+- Variable Recurring Payments
+- Account Information Services
+- Payment Initiation
+- Fintech
 created: '2026-05-25T00:00:00.000Z'
-modified: '2026-09-16'
+modified: '2026-09-17'
 position: Consuming
 description: Token.io is an Open Banking infrastructure provider offering A2A (Account-to-Account) payments
   and account information services across Europe. Founded in 2016 and FCA-authorised since 2018, Token.io
@@ -778,3 +939,8 @@ maintainers:
   X: apievangelist
   url: https://apievangelist.com
 specificationVersion: '0.23'
+x-enrichment:
+  date: '2026-09-17'
+  status: enriched
+  artifacts_added: 47
+  pass: local-v3
