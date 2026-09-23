@@ -1,6 +1,11 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/token-io-openapi.yml
+generated: '2026-09-17'
+method: searched
+source: openapi/token-io-account-on-file-api-openapi.yml, openapi/token-io-accounts-api-openapi.yml,
+  openapi/token-io-authentication-keys-api-openapi.yml, openapi/token-io-banks-v1-api-openapi.yml,
+  openapi/token-io-banks-v2-api-openapi.yml, openapi/token-io-pay-by-link-api-openapi.yml, openapi/token-io-payments-v2-api-openapi.yml,
+  openapi/token-io-payouts-api-openapi.yml, openapi/token-io-refunds-api-openapi.yml, openapi/token-io-reports-api-openapi.yml,
+  openapi/token-io-requests-for-payments-v1-or-ais-api-openapi.yml, openapi/token-io-settlement-accounts-api-openapi.yml
+  ...
 summary:
   types:
   - apiKey
@@ -14,15 +19,82 @@ schemes:
   bearerFormat: JWT
   description: '**For Production and Sandbox environments.**<br />When using curl samples the
     authorization header is given as -H `''Authorization: Bearer + JWT''`<br/>Please substitute
-    your Bearer key here.<br/>For example:<br/> -H `''Authorization: Bearer [example key]'
+    your Bearer key here.<br/>For example:<br/> -H `''Authorization: Bearer eyJhbGciOiJFZERTQSIsImtpZCI6IjF4N2RmNHZ1RlVIWVFDYTciLCJtaWQiOiJtOlhUalhlMkFQZTRvdmVaalE4cHoyNGdEbUZEcTo1ekt0WEVBcSIsImhvc3QiOiJsb2NhbGhvc3Q6ODAwMCIsIm1ldGhvZCI6I'
   sources:
-  - openapi/token-io-openapi.yml
+  - openapi/token-io-account-on-file-api-openapi.yml
+  - openapi/token-io-accounts-api-openapi.yml
+  - openapi/token-io-authentication-keys-api-openapi.yml
+  - openapi/token-io-banks-v1-api-openapi.yml
+  - openapi/token-io-banks-v2-api-openapi.yml
+  - openapi/token-io-pay-by-link-api-openapi.yml
+  - openapi/token-io-payments-v2-api-openapi.yml
+  - openapi/token-io-payouts-api-openapi.yml
+  - openapi/token-io-refunds-api-openapi.yml
+  - openapi/token-io-reports-api-openapi.yml
+  - openapi/token-io-requests-for-payments-v1-or-ais-api-openapi.yml
+  - openapi/token-io-settlement-accounts-api-openapi.yml
+  - openapi/token-io-sub-tpps-api-openapi.yml
+  - openapi/token-io-tokens-api-openapi.yml
+  - openapi/token-io-transfers-for-payments-v1-api-openapi.yml
+  - openapi/token-io-variable-recurring-payments-api-openapi.yml
+  - openapi/token-io-verification-api-openapi.yml
+  - openapi/token-io-webhooks-api-openapi.yml
 - name: BasicAuth
   type: apiKey
   in: header
   parameter: Authorization
   description: '**For Sandbox environment only.**<br />When using curl samples the authorization
     header is given as -H `''Authorization: YOUR_API_KEY_HERE''`<br/>Please substitute your
-    Basic key here.<br/>For example:<br/> -H `''Authorization: Basic [example key]''`'
+    Basic key here.<br/>For example:<br/> -H `''Authorization: Basic bS0zanhoS3pqRjRSWFQ1dHZLTlhMQU14cm80d0E1LTV6S3RYRUFxOmU1MWZjZDQ0LTM5MGQtNDYxZi04YjA0LTEyMjcxOTg4YWYwNg==''`'
   sources:
-  - openapi/token-io-openapi.yml
+  - openapi/token-io-account-on-file-api-openapi.yml
+  - openapi/token-io-accounts-api-openapi.yml
+  - openapi/token-io-authentication-keys-api-openapi.yml
+  - openapi/token-io-banks-v1-api-openapi.yml
+  - openapi/token-io-banks-v2-api-openapi.yml
+  - openapi/token-io-pay-by-link-api-openapi.yml
+  - openapi/token-io-payments-v2-api-openapi.yml
+  - openapi/token-io-payouts-api-openapi.yml
+  - openapi/token-io-refunds-api-openapi.yml
+  - openapi/token-io-reports-api-openapi.yml
+  - openapi/token-io-requests-for-payments-v1-or-ais-api-openapi.yml
+  - openapi/token-io-settlement-accounts-api-openapi.yml
+  - openapi/token-io-sub-tpps-api-openapi.yml
+  - openapi/token-io-tokens-api-openapi.yml
+  - openapi/token-io-transfers-for-payments-v1-api-openapi.yml
+  - openapi/token-io-variable-recurring-payments-api-openapi.yml
+  - openapi/token-io-verification-api-openapi.yml
+  - openapi/token-io-webhooks-api-openapi.yml
+
+docs:
+  auth_overview: https://docs.token.io/products/tpp/integration-considerations/authentication-models
+  signing_guide: https://docs.token.io/products/tpp/integration-considerations/authentication-keys-api-signing
+  certificates: https://docs.token.io/products/tpp/integration-considerations/managing-certificates
+  api_basics: https://docs.token.io/products/tpp/integration-considerations/api-basics
+searched:
+  generated: '2026-09-17'
+  detail: >-
+    Upgraded from the derived securityScheme list by reading Token.io's own authentication pages.
+    The material facts the spec alone does not carry:
+  facts:
+    - >-
+      There is NO token endpoint and no OAuth flow on Token.io's own interface. The caller MINTS its
+      own credential: a detached JWT signed with a key enrolled against the member id, covering the
+      request method, path and body. Token.io recommends an `exp` under 10 minutes from the request.
+    - >-
+      HTTP Basic (the "BasicAuth" apiKey scheme in the spec) is accepted in the SANDBOX ONLY. The
+      spec's own description says so; production accepts the JWT bearer only.
+    - >-
+      Keys are managed as first-class resources — POST/GET/DELETE /members/{memberId}/keys — and a
+      key may carry an expiry. Key rotation is an API operation, not a support ticket.
+    - >-
+      A second, regulatory credential sits alongside the JWT: an eIDAS qualified certificate (QWAC /
+      QSEAL), registered and verified through /eidas/register, /eidas/status and
+      /eidas/verifications. Requests to banks are signed with it so the bank can check validity.
+    - >-
+      OAuth 2.0 does appear in the wider flow, but at the layer below — the payer authorises at
+      their own bank and Token.io brokers that redirect. It is not how a TPP authenticates to
+      Token.io.
+  scopes: >-
+    None. No oauth2 securityScheme exists in any harvested spec and no scope/permission reference is
+    published, so no scopes/ artifact is claimed for this provider.

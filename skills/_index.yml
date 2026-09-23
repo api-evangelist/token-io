@@ -1,0 +1,56 @@
+generated: '2026-09-17'
+method: generated
+source: >-
+  openapi/token-io-*-api-openapi.yml (every operationId below was grepped from a harvested spec),
+  conventions/token-io-conventions.yml, errors/token-io-decline-codes.yml,
+  sandbox/token-io-sandbox.yml, asyncapi/token-io-webhooks.yml
+provider: Token.io
+providerId: token-io
+description: >-
+  Packaged Agent Skills for the four marquee Token.io flows. Each is grounded in operationIds that
+  exist in a harvested spec, and each carries the two facts an agent most needs and the API does not
+  enforce: that there is no idempotency key on any write, and that the payer's presence
+  (customer-initiated / token-customer-ip-address) changes what the bank will permit. Token.io
+  publishes no AGENTS.md or skills of its own — searched and absent — so these are generated, not
+  harvested.
+provider_published_skills: false
+skills:
+  - name: token-io-initiate-single-payment
+    file: token-io-initiate-single-payment.md
+    api: Payments v2
+    operations:
+      - GetBanksv2
+      - InitiatePayment
+      - GetPayment
+      - ProvideEmbeddedFields
+      - GatewayService.SetWebhookConfig
+  - name: token-io-refund-a-payment
+    file: token-io-refund-a-payment.md
+    api: Refunds
+    operations:
+      - InitiateRefund
+      - GetRefund
+      - GetRefunds
+      - GetTransferRefunds
+  - name: token-io-set-up-vrp-consent
+    file: token-io-set-up-vrp-consent.md
+    api: Variable Recurring Payments
+    operations:
+      - GetBanksv2
+      - CreateVrpConsent
+      - GetVrpConsent
+      - GetVrpConsentPayments
+      - ConfirmFunds
+      - RevokeVrpConsent
+  - name: token-io-fetch-account-data
+    file: token-io-fetch-account-data.md
+    api: Accounts / AIS
+    operations:
+      - GatewayService.StoreTokenRequest
+      - GatewayService.GetTokenRequestResultWithStatus
+      - GatewayService.GetAccounts
+      - GatewayService.GetAccount
+      - GatewayService.GetBalance
+      - GatewayService.GetTransactions
+      - GatewayService.GetStandingOrders
+count: 4

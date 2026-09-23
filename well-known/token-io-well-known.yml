@@ -1,0 +1,174 @@
+generated: '2026-09-17'
+method: probed
+source: live GET probes of the named /.well-known/ path list on every host this record knows
+provider: Token.io
+providerId: token-io
+description: >-
+  Probe of the named discovery documents across every Token.io host in this record — the
+  registrable domain and www, the production and sandbox API hosts, both hosted-pages hosts, the
+  dashboard, and the documentation and reference hosts. Token.io publishes NO first-party
+  well-known document. Two results need reading carefully and neither one is a Token.io surface:
+  docs.token.io serves an /.well-known/oauth-authorization-server whose issuer is
+  auth.cloud.redocly.com — it describes the Redocly documentation platform's own authorization
+  server, not Token.io's; and web-app.token.io answers 200 with the same 3,531-byte HTML
+  single-page-app shell for every path probed, including paths that cannot exist. Neither is a
+  document, so no WellKnown or SecurityTxt pointer is wired from this file. api.token.io and
+  api.sandbox.token.io return 403 with an empty body for every /.well-known/ path (the edge
+  refuses the path class outright) while serving /swagger.json normally, so absence there is
+  unproven rather than measured.
+hosts:
+  - host: token.io
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: www.token.io
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+  - host: api.token.io
+    documents:
+      - path: /.well-known/security.txt
+        status: 403
+        note: Empty body. The edge rejects every /.well-known/ path on this host; /swagger.json on the same host returns 200.
+      - path: /.well-known/openid-configuration
+        status: 403
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+      - path: /.well-known/api-catalog
+        status: 403
+      - path: /.well-known/ai-plugin.json
+        status: 403
+      - path: /.well-known/agent-card.json
+        status: 403
+      - path: /.well-known/agent.json
+        status: 403
+  - host: api.sandbox.token.io
+    documents:
+      - path: /.well-known/security.txt
+        status: 403
+      - path: /.well-known/openid-configuration
+        status: 403
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+      - path: /.well-known/api-catalog
+        status: 403
+      - path: /.well-known/agent-card.json
+        status: 403
+      - path: /.well-known/agent.json
+        status: 403
+  - host: docs.token.io
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        file: token-io-docs-oauth-authorization-server.json
+        note: >-
+          A real OAuth 2.0 authorization-server metadata document, but NOT authored by Token.io.
+          issuer is https://auth.cloud.redocly.com (the Redocly Cloud documentation platform, which
+          hosts docs.token.io); the endpoints it advertises are the docs host's MCP auth endpoints
+          — /_mcp/oauth2/auth, /_mcp/oauth2/token-portal, /_mcp/register — i.e. it exists to
+          authenticate clients of the MCP server at https://docs.token.io/mcp, whose anonymous
+          tools/list already answers 200. Saved verbatim as evidence and cross-referenced from
+          mcp/token-io-mcp.yml, and deliberately NOT counted as a Token.io well-known surface.
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: reference.token.io
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: app.token.io
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: web-app.token.io
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        note: >-
+          FALSE POSITIVE, treated as a miss. This host answers 200 with the identical 3,531-byte
+          HTML single-page-app shell for every path tried, including /.well-known/api-catalog and
+          /llms.txt. No document is served here.
+      - path: /.well-known/openid-configuration
+        status: 200
+        note: Same SPA catch-all shell. Not a document.
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        note: Same SPA catch-all shell. Not a document.
+      - path: /.well-known/api-catalog
+        status: 200
+        note: Same SPA catch-all shell. Not a document.
+      - path: /.well-known/agent-card.json
+        status: 200
+        note: Same SPA catch-all shell. Not an AgentCard.
+      - path: /.well-known/agent.json
+        status: 200
+        note: Same SPA catch-all shell. Not an AgentCard.
+  - host: dashboard.sandbox.token.io
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+summary:
+  hosts_probed: 9
+  documents_served: 0
+  first_party_documents: 0
+  pointer_emitted: false
+  pointer_withheld_because: >-
+    The only 200s were a Redocly platform document on the docs host and an SPA catch-all on
+    web-app.token.io. Neither is a Token.io-authored well-known document, so no WellKnown or
+    SecurityTxt pointer is claimed on Token.io's behalf.
+  provider_opportunity: >-
+    token.io publishes a security contact in DNS (CAA iodef mailto:security@token.io) but serves no
+    /.well-known/security.txt on any host. Publishing RFC 9116 at token.io would be a one-file fix.

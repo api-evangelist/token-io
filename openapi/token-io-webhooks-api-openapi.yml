@@ -1,13 +1,19 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  version: "1.0"
-  title: Token.io's Open Banking API for TPPs Account on File Webhooks API
-  description: '<b>Token.io''s Open Banking API</b><br/><br/>Token.io Support: <a href="https://support.token.io" target="_blank">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user''s account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users'' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href="https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm" target="_blank">developer documentation</a>.'
+  title: Token.io's Open Banking API for TPPs Webhooks API
+  description: 'Token.io''s Open Banking API
+
+
+    Token.io Support: support.token.io
+
+
+    The Token.io Open Banking API enables you to connect securely with banks for a range of services.'
+  version: ''
 servers:
 - url: https://api.token.io
 tags:
 - name: Webhooks
-  description: These endpoints configure, retrieve and remove webhooks. See <a href="https://developer.token.io/token_rest_api_doc/content/e-rest/api-basics.htm#Webhook" target="_blank">Webhooks</a> for more details.
+  description: These endpoints configure, retrieve and remove webhooks. See Webhooks for more details.
 paths:
   /webhook/config:
     put:
@@ -234,6 +240,20 @@ paths:
       x-hideTryItPanel: true
 components:
   schemas:
+    NotImplementedError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: UNIMPLEMENTED
+        paymentId:
+          type: string
+          description: The operation was not implemented,supported or enabled by the bank.
+          example: Not implemented.
+      description: The operation was not implemented, supported or enabled by the bank.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
     PaymentNotFoundError:
       required:
       - paymentId
@@ -248,103 +268,6 @@ components:
       description: 'The error object returned when given payment cannot be found: ResourceNotFound.'
       allOf:
       - $ref: '#/components/schemas/ErrorWithCode'
-    inline_response_500:
-      properties:
-        error:
-          allOf:
-          - type: object
-            properties:
-              errorCode:
-                type: string
-                description: This is a textual error code categorising the error.
-                example: InternalServerError
-          - $ref: '#/components/schemas/ServerError'
-    SetWebhookConfigResponse:
-      type: object
-      description: No data included or required in the response.
-    inline_response_504:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/GatewayTimeoutError'
-    inline_response_400:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-    ServerError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A description of the error.
-          example: This is a description of the error.
-        tokenTraceId:
-          type: string
-          description: The trace identifier for the given call.
-          example: '5678912345'
-      description: 'This could refer to either an error by the payment service provider or the bank. When the bank reports a 5xx error, `"token-external-error": "true"` is set as a header in the HTTP response, indicating that the "internal" error originates from the bank. When one of the payment service providers internal services fails or when the bank reports a 4xx error, this header is not populated. The absence of this response header should be interpreted as `"token-external-error": "false"`.'
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    inline_response_501:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/NotImplementedError'
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A description of the error.
-          example: This is a description of the error.
-        tokenTraceId:
-          type: string
-          description: The trace identifier for the given call.
-          example: '5678912345'
-      description: The request does not have valid authentication credentials needed to perform the operation.
-    ResourceExhaustedError:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: RESOURCE_EXHAUSTED
-        paymentId:
-          type: string
-          description: The maximum number of requests has been reached.
-          example: Resource exhausted. Check quota.
-      description: Resource exhausted. Too many requests.
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    EventType:
-      type: string
-      description: Specifies the types of webhook currently configured.
-      example: PAYMENT_STATUS_CHANGED
-      enum:
-      - INVALID
-      - TRANSFER_STATUS_CHANGED
-      - STANDING_ORDER_STATUS_CHANGED
-      - REFUND_STATUS_CHANGED
-      - PAYMENT_STATUS_CHANGED
-      - VRP_STATUS_CHANGED
-      - VRP_CONSENT_STATUS_CHANGED
-      - VIRTUAL_ACCOUNT_CREDIT_RECEIVED
-      - PAYOUT_STATUS_CHANGED
-      - SETTLEMENT_RULE_PAYOUT_EXECUTION_FAILED
-      - BANK_AIS_OUTAGE_STATUS_CHANGED
-      - BANK_SIP_OUTAGE_STATUS_CHANGED
-    inline_response_404:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/PaymentNotFoundError'
     ErrorWithCode:
       required:
       - errorCode
@@ -362,6 +285,166 @@ components:
       description: Error object providing details about the error.
       allOf:
       - $ref: '#/components/schemas/Error'
+    inline_response_400:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    ResourceExhaustedError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: RESOURCE_EXHAUSTED
+        paymentId:
+          type: string
+          description: The maximum number of requests has been reached.
+          example: Resource exhausted. Check quota.
+      description: Resource exhausted. Too many requests.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    inline_response_401:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    SetWebhookConfigRequest:
+      type: object
+      properties:
+        config:
+          $ref: '#/components/schemas/Config'
+    PermissionDeniedError:
+      type: object
+      properties:
+        errorCode:
+          example: PermissionDenied
+      description: 'The error returned when the member is not authorized to perform the given operation: PermissionDenied. <br/>This error message will be accompanied by the reason from the bank. Typically this means the access token has expired and the user must re-authenticate with the bank.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: The request does not have valid authentication credentials needed to perform the operation.
+    inline_response_403:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/PermissionDeniedError'
+    ServiceUnavailableError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: UNAVAILABLE
+        paymentId:
+          type: string
+          description: The service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+          example: Unavailable
+      description: Service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    DeleteWebhookConfigResponse:
+      type: object
+      description: No data returned in the successful response.
+    inline_response_404:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/PaymentNotFoundError'
+    SetWebhookConfigResponse:
+      type: object
+      description: No data included or required in the response.
+    inline_response_500:
+      properties:
+        error:
+          allOf:
+          - type: object
+            properties:
+              errorCode:
+                type: string
+                description: This is a textual error code categorising the error.
+                example: InternalServerError
+          - $ref: '#/components/schemas/ServerError'
+    inline_response_501:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/NotImplementedError'
+    inline_response_503:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ServiceUnavailableError'
+    GatewayTimeoutError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: DEADLINE_EXCEEDED
+        paymentId:
+          type: string
+          description: The deadline expired before the operation could complete.
+          example: Deadline exceeded.
+      description: The deadline expired before the operation could complete.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    inline_response_429:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ResourceExhaustedError'
+    EventType:
+      type: string
+      description: Specifies the types of webhook currently configured.
+      example: PAYMENT_STATUS_CHANGED
+      enum:
+      - INVALID
+      - TRANSFER_STATUS_CHANGED
+      - STANDING_ORDER_STATUS_CHANGED
+      - REFUND_STATUS_CHANGED
+      - PAYMENT_STATUS_CHANGED
+      - VRP_STATUS_CHANGED
+      - VRP_CONSENT_STATUS_CHANGED
+      - VIRTUAL_ACCOUNT_CREDIT_RECEIVED
+      - PAYOUT_STATUS_CHANGED
+      - SETTLEMENT_RULE_PAYOUT_EXECUTION_FAILED
+      - BANK_AIS_OUTAGE_STATUS_CHANGED
+      - BANK_SIP_OUTAGE_STATUS_CHANGED
+    ServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: 'This could refer to either an error by the payment service provider or the bank. When the bank reports a 5xx error, `"token-external-error": "true"` is set as a header in the HTTP response, indicating that the "internal" error originates from the bank. When one of the payment service providers internal services fails or when the bank reports a 4xx error, this header is not populated. The absence of this response header should be interpreted as `"token-external-error": "false"`.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
     Config:
       required:
       - type
@@ -377,96 +460,19 @@ components:
           description: Specifies the webhook URL that receives the status updates.
           example: your-webhook-url.com
       description: Specifies the types of webhook currently configured.
-    DeleteWebhookConfigResponse:
-      type: object
-      description: No data returned in the successful response.
-    inline_response_403:
+    inline_response_504:
       required:
       - error
       type: object
       properties:
         error:
-          $ref: '#/components/schemas/PermissionDeniedError'
-    SetWebhookConfigRequest:
-      type: object
-      properties:
-        config:
-          $ref: '#/components/schemas/Config'
-    ServiceUnavailableError:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: UNAVAILABLE
-        paymentId:
-          type: string
-          description: The service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
-          example: Unavailable
-      description: Service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    inline_response_401:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-    inline_response_429:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/ResourceExhaustedError'
-    PermissionDeniedError:
-      type: object
-      properties:
-        errorCode:
-          example: PermissionDenied
-      description: 'The error returned when the member is not authorized to perform the given operation: PermissionDenied. <br/>This error message will be accompanied by the reason from the bank. Typically this means the access token has expired and the user must re-authenticate with the bank.'
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    GatewayTimeoutError:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: DEADLINE_EXCEEDED
-        paymentId:
-          type: string
-          description: The deadline expired before the operation could complete.
-          example: Deadline exceeded.
-      description: The deadline expired before the operation could complete.
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
+          $ref: '#/components/schemas/GatewayTimeoutError'
     GetWebhookConfigResponse:
       type: object
       properties:
         config:
           $ref: '#/components/schemas/Config'
       description: Specifies details of the webhook.
-    NotImplementedError:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: UNIMPLEMENTED
-        paymentId:
-          type: string
-          description: The operation was not implemented,supported or enabled by the bank.
-          example: Not implemented.
-      description: The operation was not implemented, supported or enabled by the bank.
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    inline_response_503:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/ServiceUnavailableError'
   securitySchemes:
     Bearer:
       type: http

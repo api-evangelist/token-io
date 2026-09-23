@@ -1,0 +1,158 @@
+syntax = "proto3";
+
+package io.token.proto.common.account;
+option java_outer_classname = "AccountProtos";
+option csharp_namespace = "Tokenio.Proto.Common.AccountProtos";
+
+import "banklink.proto";
+import "extensions/field.proto";
+import "extensions/message.proto";
+import "providerspecific.proto";
+
+// The payload of the bank authorization request.
+// The value of the payload is encrypted as a serialized JSON object
+// in a BankAuthorization.
+// as described at https://developer.token.io/bank-integration/
+message PlaintextBankAuthorization {
+  string member_id = 1;    // Token member id
+  string account_name = 2 [(io.token.proto.extensions.field.redact) = true]; // e.g., "Checking account with # ending 5678"
+  BankAccount account = 3 [(io.token.proto.extensions.field.redact) = true]; // Account info by some method, e.g., SEPA
+  int64 expiration_ms = 4; // Expiration timestamp in ms
+}
+
+// Not all accounts support all Token features.
+message AccountFeatures {
+  bool supports_payment = 1;            // **DEPRECATED** can both send and receive payments
+  bool supports_information = 2;        // can get info, e.g., get balance
+  bool requires_external_auth = 3;
+  bool supports_send_payment = 4;       // can send payments from account
+  bool supports_receive_payment = 5;    // can receive payments to account
+}
+
+// Optional account details. Structure of the data is dependent on the underlying bank and is
+// subject to change.
+message AccountDetails {
+  enum AccountType {
+    INVALID = 0;
+    OTHER = 1;
+    CHECKING = 2;
+    SAVINGS = 3;
+    LOAN = 4;
+    CARD = 5;
+  }
+
+  string identifier = 1;                // Bank account identifier
+  AccountType type = 2;                 // Type of account
+  string status = 3;                    // Status of account. E.g., "Active/Inactive/Frozen/Dormant"
+  map<string, string> metadata = 4 [(io.token.proto.extensions.field.redact) = true]; // Additional account metadata
+  io.token.proto.common.providerspecific.ProviderAccountDetails provider_account_details = 5;
+}
+
+// Token linked account.
+message Account {
+  string id = 1;                        // account ID
+  string name = 2 [(io.token.proto.extensions.field.redact) = true]; // human-friendly name. E.g., "Checking account with number ...1234"
+  string bank_id = 3;                   // bank ID
+  bool is_locked = 5;                   // indicates whether account requires re-linking (perhaps after member recovery)
+  AccountFeatures account_features = 6; // features account supports
+  int64 last_cache_update_ms = 7;       // timestamp of the last time the balance/transaction cache was updated for that account
+  int64 next_cache_update_ms = 8;       // timestamp of the next scheduled time to update the balance/transaction cache for that account
+  AccountDetails account_details = 9;   // optional additional account details
+}
+
+// Account information. This is what the end user links with
+// the bank and what Token uses when it talks to the bank.
+// It's also part of the source or destination for a transfer.
+message BankAccount {
+  // Token account Destination. Useful as source or destination
+  // for a transfer; doesn't make sense for a bank to "link" this.
+  message Token {
+    string member_id = 1;
+    string account_id = 2;
+  }
+
+  message Swift {
+    option (io.token.proto.extensions.message.redact) = true;
+    string bic = 1;     // BIC code AAAABBCCDD
+    string account = 2;
+  }
+
+  message Iban {
+    option (io.token.proto.extensions.message.redact) = true;
+    string bic = 1;   // Optional
+    string iban = 2;
+  }
+
+  message Domestic {
+    option (io.token.proto.extensions.message.redact) = true;
+    string bank_code = 1;
+    string account_number = 2;
+    string country = 3; // 2-letter ISO 3166-1 alpha-2 country code
+  }
+
+  // Custom authorization
+  message Custom {
+    option (io.token.proto.extensions.message.redact) = true;
+    string bank_id = 1;
+    string payload = 2;
+  }
+
+  // Source account for guest checkout flow
+  message Guest {
+    string bank_id = 1;
+    string nonce = 2;   // optional
+  }
+
+  // DEPRECATED ACCOUNT TYPES
+
+  // Source account managed by a co-opt bank
+  message Bank {
+    option deprecated = true; // Use Guest instead
+    string bank_id = 1;
+  }
+
+  // Deprecated; unused
+  message TokenAuthorization {
+    option deprecated = true;
+    io.token.proto.banklink.BankAuthorization authorization = 1;
+  }
+
+  message Sepa {
+    option deprecated = true; // Use Iban
+    option (io.token.proto.extensions.message.redact) = true;
+    string iban = 1;    // International Bank Account Number
+    string bic = 2;     // Bic code. Optional, except for non EEA countries
+  }
+
+  message Ach {
+    option deprecated = true; // Use Domestic (US)
+    option (io.token.proto.extensions.message.redact) = true;
+    string routing = 1; // Routing number
+    string account = 2;
+  }
+
+  message FasterPayments {
+    option deprecated = true; // Use Domestic (UK)
+    option (io.token.proto.extensions.message.redact) = true;
+    string sort_code = 1;
+    string account_number = 2;
+  }
+
+  oneof account {
+    Token token = 1;
+    TokenAuthorization token_authorization = 2 [deprecated = true];
+    Swift swift = 3 [deprecated = true];
+    Sepa sepa = 4 [deprecated = true];
+    Ach ach = 5 [deprecated = true];
+    Bank bank = 6 [deprecated = true];
+    FasterPayments faster_payments = 9 [deprecated = true];
+    Custom custom = 10;
+    Guest guest = 11;
+    Iban iban = 12;
+    Domestic domestic = 13;
+  }
+
+  map<string, string> metadata = 7 [(io.token.proto.extensions.field.redact) = true];
+  AccountFeatures account_features = 8;
+}
+

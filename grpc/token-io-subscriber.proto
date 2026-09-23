@@ -1,0 +1,14 @@
+syntax = "proto3";
+package io.token.proto.common.subscriber;
+option java_outer_classname = "SubscriberProtos";
+option csharp_namespace = "Tokenio.Proto.Common.SubscriberProtos";
+
+// Subscriber object. Represent a subscription to notifications for a member.
+message Subscriber {
+    string id = 1;      // Subscription ID
+
+    string handler = 2; // Determines who is handling/sending the notification (e.g. token)
+
+    // contains information on how to send the notifications
+    map<string, string> handler_instructions = 3;
+}

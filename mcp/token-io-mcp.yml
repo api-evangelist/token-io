@@ -1,0 +1,103 @@
+generated: '2026-09-17'
+method: probed
+source: >-
+  POST https://docs.token.io/mcp {"jsonrpc":"2.0","id":1,"method":"tools/list"} — HTTP 200,
+  content-type text/event-stream, 6 tools returned with full inputSchema, no credentials sent
+provider: Token.io
+providerId: token-io
+name: Token.io Documentation MCP Server
+description: >-
+  Token.io serves a live, anonymous, remote MCP server on its own documentation host. It is a
+  DOCUMENTATION server, not a payments server: the six tools read the API descriptions Token.io
+  publishes (list the APIs, list an API's endpoints, describe one endpoint, fetch security schemes,
+  fetch the complete OpenAPI, search the docs). No tool initiates a payment, reads an account, or
+  touches api.token.io. It is nonetheless a real agent surface Token.io operates on token.io — an
+  agent can discover and read the entire Token.io contract set through it without a key — and it
+  was the discovery path for two first-party OpenAPI documents this repo did not previously hold
+  (the BNPP Refunds API and the Token Bank Integration API).
+deployment:
+  mode: remote
+  endpoint: https://docs.token.io/mcp
+  auth: none
+  verified: probed
+  note: >-
+    No install and no package — there is no npx or stdio distribution. Anonymous tools/list and
+    tools/call both return 200. An OAuth path exists for authenticated clients (the docs host
+    serves /.well-known/oauth-authorization-server advertising /_mcp/oauth2/auth and /_mcp/register,
+    issuer auth.cloud.redocly.com) but it is not required for any tool listed below.
+server_info:
+  name: MCP server
+  version: '2026-09-17'
+  protocol_version: '2025-06-18'
+  transport: streamable-http (text/event-stream)
+  platform: >-
+    Redocly Cloud. The server is a capability of the documentation platform Token.io runs on, served
+    from Token.io's own host under Token.io's configuration and exposing only Token.io content.
+  capabilities:
+    - logging
+    - tools (listChanged)
+tools:
+  - name: list-apis
+    description: Lists available APIs with their context and purpose.
+    inputs:
+      - filter
+      - page
+      - limit
+    required: []
+  - name: get-endpoints
+    description: Get all endpoints for a specific API.
+    inputs:
+      - name
+    required:
+      - name
+  - name: get-endpoint-info
+    description: >-
+      Get comprehensive information about a specific endpoint including parameters, security and
+      examples.
+    inputs:
+      - name
+      - path
+      - method
+    required:
+      - name
+      - path
+      - method
+  - name: get-security-schemes
+    description: Get the security schemes for a specific API.
+    inputs:
+      - name
+    required:
+      - name
+  - name: get-full-api-description
+    description: Get the complete OpenAPI description.
+    inputs:
+      - name
+    required:
+      - name
+  - name: search
+    description: Search across the documentation to fetch relevant content for a given query.
+    inputs:
+      - query
+      - product
+    required:
+      - query
+apis_exposed:
+  - name: Token.io's Open Banking API for TPPs
+    servers:
+      - https://api.token.io
+    local: openapi/_original/token-io-openapi.yml
+  - name: Token.io Refunds API
+    version: 1.0.2
+    servers:
+      - https://api.token.io/v2
+      - https://virtserver.swaggerhub.com/token/token-refund-rest-api-bnpp/1.0.2
+    local: openapi/token-io-refunds-bnpp-openapi.json
+    note: Retrieved through this server on 2026-09-17; not previously held in this repo.
+  - name: Token Bank Integration API
+    version: 1.0.6
+    local: openapi/token-io-bank-integration-openapi.json
+    note: >-
+      Retrieved through this server on 2026-09-17. The bank-facing side of the platform (contact
+      service@token.io); its servers[] is the relative "/" because each integrating bank hosts it.
+raw: mcp/token-io-mcp-tools.json
+status: live

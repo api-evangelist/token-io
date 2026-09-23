@@ -1,0 +1,152 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  https://docs.token.io/products/tpp/integration-considerations/webhooks, cross-checked against the
+  /webhook/config operations in openapi/token-io-webhooks-api-openapi.yml and
+  openapi/token-io-rest-api-swagger.json
+provider: Token.io
+providerId: token-io
+type: Webhooks
+asyncapi_published: false
+asyncapi_note: >-
+  Token.io publishes NO AsyncAPI document. Every probe for one missed, and nothing here is
+  generated into AsyncAPI shape — this file is the webhook catalog the docs publish, recorded as
+  data. The event surface is rich enough to warrant a real AsyncAPI, which is the recommendation to
+  pass back to the provider.
+description: >-
+  Token.io's asynchronous surface is a single subscriber-managed webhook configuration covering ten
+  event types. The unusual shape is that there is exactly ONE configuration per member — PUT
+  /webhook/config replaces it, GET reads it, DELETE removes it, and the type field is an array of
+  the events that one URL will receive. There is no per-event endpoint, no event replay API and no
+  event archive; a missed event is recovered by polling the resource.
+configuration:
+  operations:
+    - operationId: GatewayService.SetWebhookConfig
+      method: PUT
+      path: /webhook/config
+      body: '{ "config": { "type": [...], "url": "..." } }'
+      response: empty 200
+    - operationId: GatewayService.GetWebhookConfig
+      method: GET
+      path: /webhook/config
+      note: No request parameters — a member has at most one configuration.
+    - operationId: GatewayService.DeleteWebhookConfig
+      method: DELETE
+      path: /webhook/config
+      response: empty 200
+  cardinality: one configuration per member, one URL for all subscribed types
+security:
+  signature_header: token-signature
+  event_header: token-event
+  note: >-
+    Every notification carries token-signature and token-event headers. The docs show the headers on
+    each payload example but do NOT publish the signature algorithm, the signing key source or a
+    verification procedure — a gap worth raising with the provider, since it is what a subscriber
+    needs to trust the payload.
+delivery:
+  method: HTTP POST
+  ack: The subscriber must return 200.
+  retry:
+    strategy: exponential backoff
+    schedule_example: ~10, 30, 70, 150 minutes after the initial delivery
+    max_duration: 72 hours from initial delivery
+    approximate_attempts: 10
+    caveat: The retry period may vary with the load of events to retry and the duration of the retry job.
+  ordering: not documented
+  replay_api: none
+  fallback: >-
+    Poll the resource — for example GET /v2/payments/{paymentId} or GET /refunds/{id} (the refunds
+    guide recommends every 120 minutes while INITIATION_PROCESSING).
+events:
+  - type: PAYMENT_STATUS_CHANGED
+    surface: Payments v2
+    payload_root: payment
+    key_fields:
+      - id
+      - memberId
+      - initiation
+      - bankPaymentId
+      - status
+      - bankPaymentStatus
+      - statusReasonInformation
+      - refundDetails
+    note: >-
+      Used for both payment creation and status updates — the only eventType offered on Payments v2.
+      bankPaymentStatus carries the raw ISO 20022 code.
+  - type: TRANSFER_STATUS_CHANGED
+    surface: Payments v1 (Transfers)
+    payload_root: transferStatusChanged
+    key_fields:
+      - refId
+      - bankPaymentStatus
+      - status
+      - statusReasonInformation
+      - tokenRequestId
+      - transferId
+      - transactionId
+  - type: REFUND_STATUS_CHANGED
+    surface: Refunds
+    payload_root: refundStatusChanged
+    key_fields:
+      - refundId
+      - memberId
+      - status
+      - bankTransactionID
+      - bankPaymentStatus
+      - refId
+  - type: VRP_STATUS_CHANGED
+    surface: Variable Recurring Payments
+    payload_root: vrpStatusChanged
+    key_fields:
+      - vrpId
+      - bankVrpId
+      - consentId
+      - status
+      - bankVrpStatus
+      - statusReasonInformation
+  - type: VRP_CONSENT_STATUS_CHANGED
+    surface: VRP consent setup
+    payload_root: vrpConsentStatusChanged
+    key_fields:
+      - vrpConsentId
+      - bankVrpConsentId
+      - status
+      - bankVrpConsentStatus
+  - type: VIRTUAL_ACCOUNT_CREDIT_RECEIVED
+    surface: Payins / settlement accounts
+    payload_root: virtualAccountCreditReceived
+    key_fields:
+      - providerPaymentId
+      - amount
+      - currency
+      - paymentCreatedTime
+      - description
+      - providerAccountId
+      - locaInstrument
+      - debtorInformation
+      - creditorInformation
+      - memberId
+  - type: PAYOUT_STATUS_CHANGED
+    surface: Payouts
+  - type: SETTLEMENT_RULE_PAYOUT_EXECUTION_FAILED
+    surface: Settlement rules
+  - type: BANK_AIS_OUTAGE_STATUS_CHANGED
+    surface: Bank monitoring
+    note: >-
+      Bank availability delivered as an event. With the Reports API this is Token.io's substitute
+      for a status page.
+  - type: BANK_SIP_OUTAGE_STATUS_CHANGED
+    surface: Bank monitoring
+envelope:
+  common_fields:
+    - createdAtMs
+    - id
+    - eventType (Payments v2 only; other events key off the payload root and the token-event header)
+summary:
+  event_types: 10
+  asyncapi: false
+  signature_verification_documented: false
+  replay: false
+  alternative_to_webhooks: >-
+    Token.io documents a polling alternative explicitly (sip-v1-alternative-to-webhooks) for
+    subscribers who cannot expose a public endpoint.

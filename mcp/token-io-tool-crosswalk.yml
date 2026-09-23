@@ -1,0 +1,100 @@
+generated: '2026-09-17'
+method: derived
+source: >-
+  mcp/token-io-mcp-tools.json (live tools/list from https://docs.token.io/mcp) bound against the
+  operationIds in openapi/*.yml and openapi/token-io-rest-api-swagger.json
+provider: Token.io
+providerId: token-io
+description: >-
+  Crosswalk between Token.io's live MCP tools and its REST operations. The finding is a clean
+  separation rather than an overlap: every one of the six MCP tools operates on the API
+  DESCRIPTIONS, and not one of them binds to a Token.io REST operation. An agent connected to
+  https://docs.token.io/mcp can read the whole contract set but cannot initiate a payment, set up a
+  VRP consent, fetch an account or issue a refund — all 127 of those operations remain reachable
+  only over HTTP against api.token.io with a JWT. So coverage is 0%, and that is a description of
+  the surface rather than a defect in the mapping.
+surfaces:
+  openapi:
+    - file: openapi/token-io-rest-api-swagger.json
+      title: Token API (Swagger 2.0)
+      host: https://api.token.io
+      base_path: /v1
+      operations: 127
+      gated: false
+      note: Served anonymously at https://api.token.io/swagger.json.
+    - files: openapi/token-io-*-api-openapi.yml
+      title: Token.io's Open Banking API for TPPs (refined, one per tag)
+      host: https://api.token.io
+      operations: 71
+      gated: false
+  graphql: none
+  mcp:
+    url: https://docs.token.io/mcp
+    gated: false
+    auth: none
+    tools: 6
+crosswalk: []
+mcp_only:
+  - tool: list-apis
+    reason: >-
+      Catalog operation over the documentation platform's API registry. No Token.io REST operation
+      enumerates Token.io's own API list.
+  - tool: get-endpoints
+    reason: Reads an OpenAPI document's paths. No REST equivalent on api.token.io.
+  - tool: get-endpoint-info
+    reason: >-
+      Reads one operation's parameters, security and examples out of the OpenAPI. Descriptive only;
+      it does not call the operation it describes.
+  - tool: get-security-schemes
+    reason: >-
+      Reads components.securitySchemes from the OpenAPI. Related to authentication/token-io-authentication.yml,
+      not to any runtime auth endpoint — Token.io has no token-issuance REST operation (the client
+      signs its own JWT with an enrolled key).
+  - tool: get-full-api-description
+    reason: >-
+      Returns a complete OpenAPI document. This is the tool that surfaced the BNPP Refunds API and
+      the Token Bank Integration API into this repo.
+  - tool: search
+    reason: Full-text search over docs.token.io. No REST equivalent.
+rest_only_summary:
+  count: 127
+  note: >-
+    Every Token.io REST operation is rest_only. Listed below are the marquee flows an agent cannot
+    reach through the MCP server today; the full list is the paths[] of the two OpenAPI documents
+    named in surfaces.
+  examples:
+    - operationId: GatewayService.CreatePaymentV2
+      path: /v2/payments
+      method: post
+      why: Payment initiation — the product's core write.
+    - operationId: GatewayService.GetPaymentV2
+      path: /v2/payments/{paymentId}
+      method: get
+    - operationId: GatewayService.CancelPayment
+      path: /v2/payments/{paymentId}
+      method: delete
+    - operationId: GatewayService.InitiateRefund
+      path: /refunds
+      method: post
+    - operationId: GatewayService.GetAccounts
+      path: /accounts
+      method: get
+    - operationId: GatewayService.GetBanks
+      path: /banks
+      method: get
+    - operationId: ConsentGatewayService.RequestConsent
+      path: /v2/consents
+      method: post
+    - operationId: GatewayService.SetWebhookConfig
+      path: /webhook/config
+      method: put
+coverage:
+  mcp_tools: 6
+  tools_bound_to_rest: 0
+  rest_operations: 127
+  rest_operations_exposed_as_tools: 0
+  percent_rest_covered: 0.0
+  confidence: high
+  basis: >-
+    Both sides were read live — tools/list returned full inputSchemas anonymously, and the Swagger
+    document was fetched from the API host — so nothing here is inferred from prose.

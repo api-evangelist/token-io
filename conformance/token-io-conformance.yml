@@ -1,0 +1,159 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  https://token.io/faq, https://www.openbanking.org.uk/regulated-providers/token/,
+  https://docs.token.io/products/tpp/sip/sip-v2/iso-20022,
+  https://docs.token.io/products/tpp/integration-considerations/authentication-keys-api-signing,
+  https://docs.token.io/products/tpp/integration-considerations/licensing-and-integration-models,
+  and the securitySchemes / status fields of openapi/token-io-rest-api-swagger.json
+provider: Token.io
+providerId: token-io
+description: >-
+  Standards and compliance posture for Token.io, a regulated UK and German third party provider.
+  The entries split into three groups: regulatory regimes Token.io is authorised under, security
+  and privacy certifications it claims publicly, and technical standards its CONTRACT actually
+  speaks. The last group is the one that matters to an integrator, and Token.io's strongest
+  signature there is ISO 20022 — the contract carries raw ISO 20022 payment status codes in a
+  named response field and the docs publish the code table, which is a domain-standard declaration
+  inside the contract rather than a marketing claim.
+conformance:
+  - id: iso-20022
+    name: ISO 20022 payment status codes
+    domain_standard: true
+    conforms: true
+    evidence: >-
+      The contract carries the raw bank ISO 20022 status in named fields —
+      payment.bankPaymentStatus (Payments v2, openapi/token-io-payments-v2-api-openapi.yml) and
+      transfer.providerDetails.status (Payments v1) — and the same value is delivered in the
+      PAYMENT_STATUS_CHANGED webhook payload. Token.io publishes the full code table (ACSC, ACCC,
+      ACCP, ACSP, ACTC, ACWC, ACWP, ACFC, RCVD, PART, PATC, PDNG, RJCT, CANC) at
+      https://docs.token.io/products/tpp/sip/sip-v2/iso-20022 and captures it in
+      errors/token-io-decline-codes.yml.
+    caveat: >-
+      Pass-through, not translation. Token.io states the mapping from bank status to its own status
+      is bank-dependent and not standardised across banks, so a consumer who already speaks ISO
+      20022 gets the code natively but must still handle per-bank variance.
+  - id: psd2
+    name: PSD2 / Payment Services Regulations 2017
+    conforms: true
+    evidence: >-
+      "We are also PCI-DSS Level 1 compliant and PSD2 compliant" (https://token.io/faq). Token.io
+      Limited is authorised by the Financial Conduct Authority under PSR 2017, FCA reference number
+      795904, and operates as an AISP and PISP. The API carries the PSD2 operating model directly:
+      the customer-initiated and token-customer-ip-address headers exist to distinguish
+      user-initiated from TPP-initiated access under the RTS four-per-24-hours AIS rule.
+  - id: uk-open-banking
+    name: UK Open Banking Standard (OBL / CMA9)
+    conforms: true
+    evidence: >-
+      Registered on the Open Banking Directory as a regulated provider
+      (https://www.openbanking.org.uk/regulated-providers/token/, HTTP 200). The Technical Bulletin
+      series tracks the CMA9 migration from OBL v3.1.11 to v4 bank by bank (TB-1620, TB-1621,
+      TB-1630 through TB-1637), i.e. Token.io implements both versions of the standard concurrently.
+  - id: eidas
+    name: eIDAS qualified certificates (QWAC / QSEAL)
+    conforms: true
+    evidence: >-
+      A first-class part of the contract, not a policy page: /eidas/register, /eidas/status,
+      /eidas/verifications and /eidas/verifications/{verificationId} in
+      openapi/token-io-rest-api-swagger.json, plus the certificate management guide at
+      https://docs.token.io/products/tpp/integration-considerations/managing-certificates. Requests
+      are signed with a qualified certificate so the bank can check validity.
+  - id: iso-27001
+    name: ISO/IEC 27001:2022
+    conforms: true
+    certification: true
+    evidence: '"We are an ISO 27001:2022 certified company" — https://token.io/faq'
+    caveat: No certificate number, auditor or scope statement is published.
+  - id: pci-dss
+    name: PCI DSS Level 1
+    conforms: true
+    certification: true
+    evidence: '"We are also PCI-DSS Level 1 compliant" — https://token.io/faq'
+    caveat: >-
+      No AOC or attestation is published. Notably, the API actively REFUSES card data: a PAN in a
+      payment initiation payload is rejected with PanDetectedError.
+  - id: gdpr
+    name: UK GDPR / EU GDPR
+    conforms: true
+    evidence: https://token.io/privacy-policy (HTTP 200)
+  - id: oauth2
+    name: OAuth 2.0
+    conforms: false
+    evidence: >-
+      Deliberately absent. Token.io's own API uses a self-signed detached JWT bearer (production
+      and sandbox) and HTTP Basic (sandbox only) — no securityScheme of type oauth2 appears in any
+      harvested spec and there is no token endpoint. OAuth 2.0 does run at the layer BELOW: the
+      user authorises at the bank, and Token.io brokers that redirect. Recorded as non-conforming
+      for Token.io's own interface so no scopes/ artifact is claimed.
+  - id: openid-connect
+    name: OpenID Connect
+    conforms: false
+    evidence: No /.well-known/openid-configuration on any Token.io host (see well-known/token-io-well-known.yml).
+  - id: fapi
+    name: FAPI (Financial-grade API)
+    conforms: unknown
+    evidence: >-
+      Not claimed anywhere on token.io or docs.token.io. The connected UK banks implement FAPI as
+      part of the OBL standard, but Token.io makes no FAPI conformance statement about its own
+      interface and none is asserted here.
+  - id: rfc9457
+    name: RFC 9457 Problem Details
+    conforms: false
+    evidence: >-
+      The error envelope is proprietary ({error:{code,message,token_trace_id,error_origin}}), opt-in
+      via the token-json-error header, and is not served as application/problem+json. See
+      errors/token-io-problem-types.yml.
+  - id: rfc8594
+    name: RFC 8594 Sunset header
+    conforms: false
+    evidence: >-
+      Deprecation is announced by Technical Bulletin, not by Sunset/Deprecation response headers.
+      See lifecycle/token-io-lifecycle.yml.
+  - id: idempotency
+    name: Idempotent writes
+    conforms: false
+    evidence: >-
+      No idempotency key, header or de-duplication guarantee is documented on any write. See
+      conventions/token-io-conventions.yml (idempotency.coverage = none).
+  - id: openapi
+    name: OpenAPI
+    conforms: true
+    evidence: >-
+      Token.io publishes machine-readable contracts at three locations — Swagger 2.0 at
+      https://api.token.io/swagger.json (100 paths, 127 operations), OpenAPI 3.0.1 at
+      https://docs.token.io/_bundle/products/tpp/api/reference/index.yaml (57 paths), and two
+      further OpenAPI 3.0.0 documents retrievable through its MCP server.
+  - id: grpc
+    name: gRPC / Protocol Buffers
+    conforms: true
+    evidence: >-
+      The platform is gRPC-native — its error space is the gRPC status enum, and 21 .proto
+      definitions are published in the tokenio GitHub organization (captured in grpc/).
+regulatory:
+  regime: open-banking
+  authorisations:
+    - jurisdiction: United Kingdom
+      regulator: Financial Conduct Authority
+      reference: '795904'
+      roles:
+        - AISP
+        - PISP
+      basis: Payment Services Regulations 2017
+      evidence: https://token.io/faq
+    - jurisdiction: Germany
+      regulator: BaFin
+      roles:
+        - TPP
+      evidence: '"Token.io is regulated as a TPP in both the UK and Germany" — https://token.io/faq'
+  model_note: >-
+    Token.io also serves unregulated customers under its own licence (the sub-TPP model) and acts as
+    a technical service provider (TSP) to parties that hold their own licence. TB-1549 made the
+    sub-TPP id mandatory on payment initiation for licence-sharing customers.
+  entity: Token.io Limited
+certifications:
+  - ISO/IEC 27001:2022
+  - PCI DSS Level 1
+compliance_published: true
+compliance_source: https://token.io/faq
+trust_center_published: false

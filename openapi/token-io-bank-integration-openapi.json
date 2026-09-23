@@ -1,0 +1,1347 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Token Bank Integration API",
+    "description": "This API is for banks integrating with Token",
+    "contact": {
+      "email": "service@token.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.6"
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "accounts",
+      "description": "Accounts Service - Implemented by bank to support access to account information."
+    },
+    {
+      "name": "transfers",
+      "description": "Transfers Service - Implemented by bank to support payment initiation."
+    },
+    {
+      "name": "health",
+      "description": "Health Check Endpoints."
+    }
+  ],
+  "paths": {
+    "/accounts/{bankAccountId}/balance": {
+      "get": {
+        "tags": [
+          "accounts"
+        ],
+        "summary": "Get account balance",
+        "description": "Returns the current balance of the given account.",
+        "operationId": "getAccountBalance",
+        "parameters": [
+          {
+            "name": "token-consent-id",
+            "in": "header",
+            "description": "The Consent/Token indentifier",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token-tpp-id",
+            "in": "header",
+            "description": "The TPP indentifier",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token-account-holder-id",
+            "in": "header",
+            "description": "The account holder indentifier",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "bankAccountId",
+            "in": "path",
+            "description": "The bank account identifier.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The bank acccount balance.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Balance"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The specified account was not found."
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ],
+        "x-hideTryItPanel": true
+      }
+    },
+    "/accounts/{bankAccountId}/transactions": {
+      "get": {
+        "tags": [
+          "accounts"
+        ],
+        "summary": "Get account transactions",
+        "description": "Returns the transactions that occurred in the given bank account.",
+        "operationId": "getAccountTransactions",
+        "parameters": [
+          {
+            "name": "token-consent-id",
+            "in": "header",
+            "description": "The Consent/Token indentifier",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "bankAccountId",
+            "in": "path",
+            "description": "The bank account identifier.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The number of results per page.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "The result offset for pagination.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "A filter for start booking date of transactions",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "A filter for end booking date of transactions",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The transaction.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionsPage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Access token is missing or invalid"
+          },
+          "404": {
+            "description": "The specified account was not found."
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ],
+        "x-hideTryItPanel": true
+      }
+    },
+    "/accounts/{bankAccountId}/transactions/{transactionId}": {
+      "get": {
+        "tags": [
+          "accounts"
+        ],
+        "summary": "Get account transactions for given bank",
+        "description": "Returns the transactions that occurred in the given bank account by their unique IDs.",
+        "operationId": "getAccountTransactionForId",
+        "parameters": [
+          {
+            "name": "token-consent-id",
+            "in": "header",
+            "description": "The consent/Token indentifier",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token-tpp-id",
+            "in": "header",
+            "description": "The TPP indentifier",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token-account-holder-id",
+            "in": "header",
+            "description": "The account holder indentifier",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "bankAccountId",
+            "in": "path",
+            "description": "The bank account identifier.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "transactionId",
+            "in": "path",
+            "description": "The transaction identifier.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The transaction.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Transaction"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Access token is missing or invalid"
+          },
+          "404": {
+            "description": "The specified account or transaction was not found."
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ],
+        "x-hideTryItPanel": true
+      }
+    },
+    "/accounts/{bankAccountId}": {
+      "get": {
+        "tags": [
+          "accounts"
+        ],
+        "summary": "Get account",
+        "description": "Retrieves the given bank account.",
+        "operationId": "getAccount",
+        "parameters": [
+          {
+            "name": "token-consent-id",
+            "in": "header",
+            "description": "The Consent/Token indentifier",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token-tpp-id",
+            "in": "header",
+            "description": "The TPP indentifier",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token-account-holder-id",
+            "in": "header",
+            "description": "The account holder indentifier",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "bankAccountId",
+            "in": "path",
+            "description": "The bank account identifier.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Account"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Access token is missing or invalid"
+          },
+          "404": {
+            "description": "The specified account was not found."
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ],
+        "x-hideTryItPanel": true
+      },
+      "delete": {
+        "tags": [
+          "accounts"
+        ],
+        "summary": "Delete account",
+        "description": "Used when a PSU at a TPP unlinks their account.",
+        "operationId": "deleteAccount",
+        "parameters": [
+          {
+            "name": "bankAccountId",
+            "in": "path",
+            "description": "The bank account identifier.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "401": {
+            "description": "Access token is missing or invalid"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ],
+        "x-hideTryItPanel": true
+      }
+    },
+    "/transfers": {
+      "post": {
+        "tags": [
+          "transfers"
+        ],
+        "summary": "Create transfer",
+        "description": "Creates a transaction for a given transfer request.",
+        "operationId": "createTransfer",
+        "parameters": [
+          {
+            "name": "token-consent-id",
+            "in": "header",
+            "description": "The Consent/Token indentifier",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token-tpp-id",
+            "in": "header",
+            "description": "The TPP indentifier",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token-account-holder-id",
+            "in": "header",
+            "description": "The account holder indentifier",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The transfer request.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransferRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "The transaction.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransferResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Access token is missing or invalid"
+          },
+          "404": {
+            "description": "The specified account was not found."
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ],
+        "x-hideTryItPanel": true
+      }
+    },
+    "/transfers/{transferId}/status": {
+      "get": {
+        "tags": [
+          "transfers"
+        ],
+        "summary": "Get transfer status for given transfer",
+        "description": "Retrieves the status of a given transfer by its unique ID.",
+        "operationId": "getTransferStatusForId",
+        "parameters": [
+          {
+            "name": "token-consent-id",
+            "in": "header",
+            "description": "The Consent/Token indentifier",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "transferId",
+            "in": "path",
+            "description": "The transfer ID.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The transfer status.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionStatus"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Access token is missing or invalid"
+          },
+          "404": {
+            "description": "The specified transfer was not found."
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ],
+        "x-hideTryItPanel": true
+      }
+    },
+    "/health": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "summary": "Get health check",
+        "description": "Used to retrieve the current state of the bank connection.",
+        "operationId": "getHealthCheck",
+        "parameters": [
+          {
+            "name": "bankId",
+            "in": "query",
+            "description": "The token bank identifier.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Access token is missing or invalid"
+          },
+          "503": {
+            "description": "Service unavailable"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ],
+        "x-hideTryItPanel": true
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BankAccount": {
+        "required": [
+          "account"
+        ],
+        "type": "object",
+        "properties": {
+          "account": {
+            "description": "The bank account identifier.",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Custom"
+              },
+              {
+                "$ref": "#/components/schemas/Iban"
+              },
+              {
+                "$ref": "#/components/schemas/Domestic"
+              }
+            ]
+          }
+        },
+        "description": "Represents Token account identifier.",
+        "example": {
+          "account": {
+            "custom": {
+              "bankId": "test",
+              "payload": "0123456789"
+            }
+          }
+        }
+      },
+      "Custom": {
+        "required": [
+          "bankId",
+          "payload"
+        ],
+        "type": "object",
+        "properties": {
+          "bankId": {
+            "type": "string",
+            "description": "the Token bank identifier."
+          },
+          "payload": {
+            "type": "string",
+            "description": "the bank-custom account identifier."
+          }
+        },
+        "description": "Represents an account identifier in bank-custom format."
+      },
+      "Iban": {
+        "required": [
+          "iban"
+        ],
+        "type": "object",
+        "properties": {
+          "iban": {
+            "type": "string",
+            "description": "The IBAN account number."
+          },
+          "bic": {
+            "type": "string",
+            "description": "optional BIC number for this account."
+          }
+        },
+        "description": "Represents an account using IBAN format."
+      },
+      "Domestic": {
+        "required": [
+          "accountNumber",
+          "bankCode",
+          "country"
+        ],
+        "type": "object",
+        "properties": {
+          "bankCode": {
+            "type": "string",
+            "description": "The bank identifier."
+          },
+          "accountNumber": {
+            "type": "string",
+            "description": "The account identifier."
+          },
+          "country": {
+            "maxLength": 2,
+            "minLength": 2,
+            "type": "string",
+            "description": "2-letter ISO 3166-1 alpha-2 country code"
+          }
+        },
+        "description": "Represents an account in the regional format."
+      },
+      "Balance": {
+        "required": [
+          "available",
+          "current"
+        ],
+        "type": "object",
+        "properties": {
+          "current": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "available": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "The time of the balance",
+            "format": "date-time"
+          }
+        },
+        "description": "Represents account balance."
+      },
+      "AccountDetails": {
+        "required": [
+          "accountType",
+          "identifier"
+        ],
+        "properties": {
+          "identifier": {
+            "type": "string",
+            "description": "Bank account identifier.",
+            "example": "0532013000"
+          },
+          "accountType": {
+            "type": "string",
+            "description": "Type of the account.",
+            "enum": [
+              "CHECKING",
+              "SAVING",
+              "LOAN",
+              "CARD",
+              "OTHER"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "description": "Status of account. E.g., \"Active/Inactive/Frozen/Dormant\".",
+            "example": "Active"
+          },
+          "metadata": {
+            "type": "array",
+            "description": "Additional account metadata.",
+            "example": [
+              {
+                "key": "APY",
+                "value": "0.0239"
+              }
+            ],
+            "items": {
+              "$ref": "#/components/schemas/Entry"
+            }
+          }
+        },
+        "description": "Optional account details. Structure of the data is dependent on the underlying bank and is subject to change."
+      },
+      "Account": {
+        "required": [
+          "accountDetails",
+          "accountFeatures",
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Account name."
+          },
+          "accountFeatures": {
+            "$ref": "#/components/schemas/Account_accountFeatures"
+          },
+          "accountDetails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountDetails"
+            }
+          }
+        },
+        "description": "Optional account details. Structure of the data is dependent on the underlying bank and is subject to change.",
+        "example": [
+          {
+            "account": {
+              "name": "Example Account Name",
+              "accountFeatures": {
+                "supportsInformation": "true",
+                "supportsSendPayment": "true",
+                "supportsReceivePayment": "true"
+              },
+              "accountDetails": {
+                "accountHolderName": "John Doe",
+                "type": "CARD",
+                "status": "Active",
+                "accountIdentifiers": {
+                  "gbDomestic": {
+                    "sortCode": "123456",
+                    "accountNumber": "12345678"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "TransferRequest": {
+        "required": [
+          "destinatons",
+          "source",
+          "transactionAmount",
+          "transferId"
+        ],
+        "type": "object",
+        "properties": {
+          "transferId": {
+            "type": "string",
+            "description": "The Token transfer identifier."
+          },
+          "transactionAmount": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "source": {
+            "$ref": "#/components/schemas/BankAccount"
+          },
+          "destinations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransferDestinations"
+            }
+          },
+          "description": {
+            "type": "string",
+            "description": "Optional transfer description."
+          },
+          "tokenRefId": {
+            "type": "string",
+            "description": "Reference id of the token, set by the initiator."
+          },
+          "tokenInitiatorId": {
+            "type": "string",
+            "description": "Id of the member requesting token creation."
+          },
+          "transferRefId": {
+            "type": "string",
+            "description": "Transfer reference id."
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/TransferMetadata"
+          }
+        },
+        "description": "Transfer operation request."
+      },
+      "TransferResponse": {
+        "required": [
+          "status",
+          "statusDescription",
+          "transactionId"
+        ],
+        "type": "object",
+        "properties": {
+          "transactionId": {
+            "type": "string",
+            "description": "The transaction id as recorded by the bank."
+          },
+          "status": {
+            "$ref": "#/components/schemas/TransactionStatus"
+          },
+          "statusDescription": {
+            "type": "string",
+            "description": "Human-readable status description."
+          },
+          "source": {
+            "$ref": "#/components/schemas/TransferEndpoint"
+          }
+        },
+        "description": "Transfer operation response."
+      },
+      "TransferMetadata": {
+        "type": "object",
+        "properties": {
+          "purposeOfPayment": {
+            "type": "string",
+            "description": "Purpose of Payment for this transfer.",
+            "enum": [
+              "OTHER",
+              "PERSONAL_EXPENSES",
+              "PURCHASE_OF_SHARES",
+              "TRANSFER_TO_YOUR_OWN_ACCOUNT",
+              "PURCHASE_OF_PROPERTY",
+              "FAMILY_MAINTENANCE",
+              "SAVINGS"
+            ]
+          },
+          "paymentContext": {
+            "type": "string",
+            "description": "Optional payment context of this transfer.",
+            "enum": [
+              "OTHER_CONTEXT",
+              "BILL_PAYMENT",
+              "ECOMMERCE_GOODS",
+              "ECOMMERCE_SERVICES",
+              "PERSON_TO_PERSON"
+            ]
+          },
+          "merchantCategoryCode": {
+            "type": "string",
+            "description": "Optional ISO 18245 Merchant Category Code (MCC)."
+          },
+          "merchantCustomerId": {
+            "description": "Optional unique merchant customer identifier."
+          },
+          "deliveryAddress": {
+            "$ref": "#/components/schemas/Address"
+          }
+        },
+        "description": "Represents additional metadata related to a transfer."
+      },
+      "Transaction": {
+        "required": [
+          "amount",
+          "description",
+          "id",
+          "status",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The transaction identifier."
+          },
+          "type": {
+            "type": "string",
+            "description": "The transaction type.",
+            "enum": [
+              "DEBIT",
+              "CREDIT"
+            ]
+          },
+          "status": {
+            "$ref": "#/components/schemas/TransactionStatus"
+          },
+          "amount": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the transaction."
+          },
+          "tokenId": {
+            "type": "string",
+            "description": "The token consent identifier.Points to the token, only set for Token transactions."
+          },
+          "tokenTransferId": {
+            "type": "string",
+            "description": "The token transfer identifier. Points to the token transfer, only set for Token transactions."
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "The time of transaction.",
+            "format": "date-time"
+          }
+        },
+        "description": "Represents a transaction."
+      },
+      "TransactionStatus": {
+        "type": "string",
+        "description": "The transaction status.",
+        "enum": [
+          "PROCESSING",
+          "SUCCESS",
+          "FAILURE_INSUFFICIENT_FUNDS",
+          "FAILURE_INVALID_CURRENCY",
+          "FAILURE_PERMISSION_DENIED",
+          "FAILURE_INVALID_AMOUNT",
+          "FAILURE_EXPIRED",
+          "FAILURE_UNSUPPORTED_DESTINATION",
+          "FAILURE_GENERIC",
+          "INITIATED"
+        ]
+      },
+      "TransactionsPage": {
+        "required": [
+          "transactions"
+        ],
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "string",
+            "description": "The page offset."
+          },
+          "transactions": {
+            "type": "array",
+            "description": "A list of transactions.",
+            "items": {
+              "$ref": "#/components/schemas/Transaction"
+            }
+          }
+        },
+        "description": "Represents a page of transactions."
+      },
+      "TransferDestinations": {
+        "required": [
+          "customerData",
+          "destinations"
+        ],
+        "type": "object",
+        "properties": {
+          "destinations": {
+            "type": "array",
+            "description": "A list of transfer destinations.",
+            "items": {
+              "$ref": "#/components/schemas/TransferDestination"
+            }
+          },
+          "customerData": {
+            "$ref": "#/components/schemas/Customer"
+          }
+        },
+        "description": "A list of possible transfer destinations for a given customer."
+      },
+      "TransferDestination": {
+        "required": [
+          "destination"
+        ],
+        "type": "object",
+        "properties": {
+          "scheme": {
+            "description": "The transfer destination details.",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SEPA"
+              },
+              {
+                "$ref": "#/components/schemas/FPS"
+              },
+              {
+                "$ref": "#/components/schemas/SWIFT"
+              },
+              {
+                "$ref": "#/components/schemas/ACH"
+              }
+            ]
+          }
+        },
+        "description": "Represents payment scheme details for a given account."
+      },
+      "SEPA": {
+        "required": [
+          "iban"
+        ],
+        "type": "object",
+        "properties": {
+          "iban": {
+            "type": "string",
+            "description": "International Bank Account Number."
+          },
+          "bic": {
+            "type": "string",
+            "description": "Bank Identifier Code."
+          }
+        },
+        "description": "Single Euro Payments Area."
+      },
+      "FPS": {
+        "required": [
+          "accountNumber",
+          "sortCode"
+        ],
+        "type": "object",
+        "properties": {
+          "sortCode": {
+            "type": "string",
+            "description": "The sort code associated wth the account."
+          },
+          "accountNumber": {
+            "type": "string",
+            "description": "The account number."
+          }
+        },
+        "description": "Faster Payments Service."
+      },
+      "SWIFT": {
+        "required": [
+          "accountNumber",
+          "bic"
+        ],
+        "type": "object",
+        "properties": {
+          "accountNumber": {
+            "type": "string",
+            "description": "The account number."
+          },
+          "bic": {
+            "type": "string",
+            "description": "Bank Identifier Code."
+          }
+        },
+        "description": "Society for Worldwide Interbank Financial Telecommunication."
+      },
+      "ACH": {
+        "required": [
+          "accountNumber",
+          "routingNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "accountNumber": {
+            "type": "integer",
+            "description": "The account number."
+          },
+          "routingNumber": {
+            "type": "integer",
+            "description": "The routing number."
+          }
+        },
+        "description": "The Automated Clearing House Network."
+      },
+      "Customer": {
+        "required": [
+          "legalNames"
+        ],
+        "type": "object",
+        "properties": {
+          "legalNames": {
+            "type": "array",
+            "description": "A list of names of primary account holders.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          }
+        },
+        "description": "Represents account holder information."
+      },
+      "Money": {
+        "required": [
+          "currency",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "currency": {
+            "maxLength": 3,
+            "minLength": 3,
+            "type": "string",
+            "description": "ISO4217 - 3 letter currency code such as \"USD\" or \"EUR\"."
+          },
+          "value": {
+            "type": "string",
+            "description": "Double amount in the string format."
+          }
+        },
+        "description": "Represents a monetary value."
+      },
+      "Entry": {
+        "required": [
+          "key",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "The item key."
+          },
+          "value": {
+            "type": "string",
+            "description": "The item value."
+          }
+        },
+        "description": "Represents a key-value entry; used to define string metadata items."
+      },
+      "Address": {
+        "type": "object",
+        "properties": {
+          "houseNumber": {
+            "type": "string",
+            "description": "The house number (may contain letters, dashes or other characters). Addresses describe ways to tag a single building with multiple addresses."
+          },
+          "houseName": {
+            "type": "string",
+            "description": "The name of a house. This is sometimes used in some countries like England instead of (or in addition to) a house number."
+          },
+          "flats": {
+            "type": "string",
+            "description": "The house numbers (range or list) of flats behind a door."
+          },
+          "conscriptionNumber": {
+            "type": "string",
+            "description": "This special kind of house number relates to a settlement instead of a street. Conscription numbers were introduced in the Austrio-Hungarian Empire and are still in use in some parts of Europe, sometimes together with street-related house numbers which are also called orientation numbers."
+          },
+          "street": {
+            "type": "string",
+            "description": "The name of the respective street."
+          },
+          "place": {
+            "type": "string",
+            "description": "This is part of an address which refers to the name of some territorial zone (usually like island or square) instead of a street. Should not be used together with street."
+          },
+          "postCode": {
+            "type": "string",
+            "description": "The postal code of the building/area."
+          },
+          "city": {
+            "type": "string",
+            "description": "The name of the city as given in postal addresses of the building/area."
+          },
+          "country": {
+            "maxLength": 2,
+            "minLength": 2,
+            "type": "string",
+            "description": "The ISO 3166-1 alpha-2 two letter country code in upper case."
+          },
+          "full": {
+            "type": "string",
+            "description": "Use this for a full-text, often multi-line address if you find the structured address fields unsuitable for denoting the address of this particular location. Examples: 'Fifth house on the left after the village oak, Smalltown, Smallcountry' or '1200 West Sunset Boulevard Suite 110A'. Beware that these strings can hardly be parsed by software."
+          },
+          "hamlet": {
+            "type": "string",
+            "description": "The hamlet."
+          },
+          "suburb": {
+            "type": "string",
+            "description": "If an address exists several times in a city. You have to add the name of the settlement. See Australian definition of suburb."
+          },
+          "subdistrict": {
+            "type": "string",
+            "description": "The subdistrict."
+          },
+          "district": {
+            "type": "string",
+            "description": "The district."
+          },
+          "province": {
+            "type": "string",
+            "description": "The province. For Canada, uppercase two-letter postal abbreviations  (BC, AB, ON, QC, etc.) are used. In Russia a synonym region is widely used."
+          },
+          "state": {
+            "maxLength": 2,
+            "minLength": 2,
+            "type": "string",
+            "description": "The state. For the US, uppercase two-letter postal abbreviations (AK, CA, HI, NY, TX, WY, etc.) are used."
+          }
+        },
+        "description": "Represents a postal address."
+      },
+      "TransferEndpoint": {
+        "required": [
+          "account",
+          "customerData"
+        ],
+        "type": "object",
+        "properties": {
+          "account": {
+            "$ref": "#/components/schemas/BankAccount"
+          },
+          "customerData": {
+            "$ref": "#/components/schemas/Customer"
+          }
+        },
+        "description": "Money transfer source or destination account"
+      },
+      "Account_accountFeatures": {
+        "type": "object",
+        "properties": {
+          "supportsInformation": {
+            "type": "boolean"
+          },
+          "supportsSendPayment": {
+            "type": "boolean"
+          },
+          "supportsReceivePayment": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "responses": {
+      "UnauthorizedError": {
+        "description": "Access token is missing or invalid"
+      }
+    },
+    "securitySchemes": {
+      "BasicAuth": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      },
+      "Bearer": {
+        "type": "http",
+        "description": "Enter JWT Bearer token only (see <a href=\"https://developer.token.io/token_rest_api_doc/content/e-rest/jwt_auth.htm\" target=\"_blank\">Using JWT Authentication</a> for more information).",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

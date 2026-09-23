@@ -1,0 +1,136 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Token.io's Open Banking API for TPPs
+  version: 1.0.0
+extends: ../openapi/_original/token-io-openapi.yml
+x-provenance:
+  generated: '2026-09-17'
+  method: generated
+  source: >-
+    Derived from the gaps found in openapi/_original/token-io-openapi.yml (fetched 2026-09-17 from
+    https://docs.token.io/_bundle/products/tpp/api/reference/index.yaml) plus facts established in
+    this repo's searched artifacts. NOTHING here is invented: every value below either restates a
+    fact Token.io publishes elsewhere or points at an artifact in this repo. The original spec is
+    never mutated.
+  note: >-
+    The apis.io score parses the ORIGINAL spec, so this overlay improves our derived artifacts and
+    documents what a provider PR to Token.io would contain. The three gaps it closes are: an empty
+    info.version (flagged by the refine pass), no contact block on a spec whose description links
+    support in HTML, and no cross-reference to the platform conventions an integrator must know
+    before calling anything.
+actions:
+  - target: $.info
+    description: >-
+      Set a usable version. The upstream spec ships info.version as an empty string, which makes the
+      document unversionable by any client tooling. Token.io publishes no semantic release number
+      for the platform, so the honest value is the date the document was harvested.
+    update:
+      version: '2026-09-17'
+      x-version-note: >-
+        Token.io does not publish a semantic version for this API. Generations are expressed in the
+        URI path (v1 and v2 surfaces run concurrently). This value is the harvest date of the
+        upstream bundle, not a Token.io release number.
+  - target: $.info
+    description: >-
+      Lift the support and documentation contacts out of the HTML in info.description into the
+      structured contact and externalDocs fields, where a client can read them.
+    update:
+      contact:
+        name: Token.io Support
+        url: https://support.token.io
+        email: support@token.io
+      x-documentation-feedback: devdocs@token.io
+      x-terms-of-service: https://token.io/terms
+      x-privacy-policy: https://token.io/privacy-policy
+  - target: $.info
+    description: >-
+      Record the regulatory identity of the operator. Token.io is an authorised TPP and the
+      regulatory posture determines what a caller is permitted to do — it belongs in the contract,
+      not only in the FAQ.
+    update:
+      x-regulatory:
+        entity: Token.io Limited
+        uk:
+          regulator: Financial Conduct Authority
+          reference: '795904'
+          basis: Payment Services Regulations 2017
+          roles:
+            - AISP
+            - PISP
+        germany:
+          roles:
+            - TPP
+        open_banking_directory: https://www.openbanking.org.uk/regulated-providers/token/
+        certifications:
+          - ISO/IEC 27001:2022
+          - PCI DSS Level 1
+        source: https://token.io/faq
+        artifact: conformance/token-io-conformance.yml
+  - target: $.info
+    description: >-
+      Attach the cross-cutting runtime semantics an integrator has to know before the first call and
+      which appear in no individual operation — above all that there is no idempotency mechanism on
+      any write.
+    update:
+      x-conventions:
+        artifact: conventions/token-io-conventions.yml
+        idempotency:
+          coverage: none
+          note: >-
+            No idempotency key, header or documented de-duplication on any write. On a timeout, poll
+            the resource; do not resend a payment initiation.
+        tracing:
+          response_header: tokenTraceId
+          note: Propagate it; quote it on support tickets.
+        error_origin_header:
+          name: token-external-error
+          note: '"true" only when a 5xx originated at the bank. Absence must be read as false.'
+        json_errors:
+          request_header: token-json-error
+          note: Set true to receive the JSON error envelope instead of text.
+        presence_headers:
+          - name: customer-initiated
+            note: >-
+              Declares a user-initiated call. Absent, the request is treated as TPP-initiated, which
+              engages the PSD2 four-accesses-per-24-hours AIS limit at the bank.
+          - name: token-customer-ip-address
+            note: Recommended whenever the user is present.
+        backward_compatibility: >-
+          Seven classes of change are declared non-breaking and must be absorbed by the client (new
+          endpoints, new response properties, reordering, new optional parameters, id format
+          changes, error message changes, new webhook event types). Use a lenient JSON parser.
+          Breaking changes are announced in advance by Technical Bulletin.
+  - target: $.info
+    description: >-
+      Point at the asynchronous surface. The webhook catalogue is a first-class part of this API —
+      ten event types delivered to one configured URL — but the spec describes only the
+      configuration endpoints, not the events.
+    update:
+      x-event-surface:
+        artifact: asyncapi/token-io-webhooks.yml
+        asyncapi_published: false
+        configuration: PUT /webhook/config (one configuration per member)
+        event_types:
+          - PAYMENT_STATUS_CHANGED
+          - TRANSFER_STATUS_CHANGED
+          - REFUND_STATUS_CHANGED
+          - VRP_STATUS_CHANGED
+          - VRP_CONSENT_STATUS_CHANGED
+          - VIRTUAL_ACCOUNT_CREDIT_RECEIVED
+          - PAYOUT_STATUS_CHANGED
+          - SETTLEMENT_RULE_PAYOUT_EXECUTION_FAILED
+          - BANK_AIS_OUTAGE_STATUS_CHANGED
+          - BANK_SIP_OUTAGE_STATUS_CHANGED
+        signature_header: token-signature
+        retry: exponential backoff up to 72 hours, ~10 attempts
+  - target: $.servers
+    description: >-
+      The upstream spec declares only the production host. Name the sandbox so a client can switch
+      environments from the contract; the values are Token.io's own, published in api-basics.
+    update:
+      - url: https://api.token.io
+        description: Production
+      - url: https://api.sandbox.token.io
+        description: >-
+          Sandbox. HTTP Basic authentication is accepted here and only here; the mock-redirect bank
+          drives outcomes from the payment amount (see sandbox/token-io-sandbox.yml).

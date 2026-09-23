@@ -1356,12 +1356,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/inline_response_400'
-        '401':
-          description: The authorization information is missing or invalid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_401'
         '403':
           description: Permission to access this endpoint is denied
           content:
@@ -1405,9 +1399,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/inline_response_504'
       deprecated: false
-      security:
-        - Bearer: []
-        - BasicAuth: []
+      security: []
       x-hideTryItPanel: true
   /bank/countries:
     get:
@@ -1666,12 +1658,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/inline_response_400'
-        '401':
-          description: The authorization information is missing or invalid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_401'
         '403':
           description: Permission to access this endpoint is denied
           content:
@@ -1715,9 +1701,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/inline_response_504'
       deprecated: false
-      security:
-        - Bearer: []
-        - BasicAuth: []
+      security: []
       x-hideTryItPanel: true
   /member/sub-tpps:
     post:
@@ -4275,14 +4259,14 @@ paths:
         - name: scheme
           in: query
           description: >-
-            Filters Vrp consents by Vrp scheme (only OBL_SWEEPING is currently
+            Filters Vrp consents by Vrp scheme (only VRP_SWEEPING is currently
             supported)
           required: false
           style: form
           explode: true
           schema:
             $ref: '#/components/schemas/VrpScheme'
-          example: OBL_SWEEPING
+          example: VRP_SWEEPING
         - name: onBehalfOfId
           in: query
           description: Filters Vrp consents by their `onBehalfOfId` value.
@@ -5739,12 +5723,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/inline_response_400_2'
-        '401':
-          description: The authorization information is missing or invalid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_401'
         '403':
           description: Permission to access this endpoint is denied
           content:
@@ -5776,9 +5754,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/inline_response_504'
       deprecated: false
-      security:
-        - Bearer: []
-        - BasicAuth: []
+      security: []
       x-hideTryItPanel: true
   /v2/payments:
     post:
@@ -6071,12 +6047,10 @@ paths:
           schema:
             title: PaymentType
             type: string
-            items:
-              type: string
-              example: SINGLE_IMMEDIATE_PAYMENT
-              enum:
-                - SINGLE_IMMEDIATE_PAYMENT
-                - VARIABLE_RECURRING_PAYMENT
+            example: SINGLE_IMMEDIATE_PAYMENT
+            enum:
+              - SINGLE_IMMEDIATE_PAYMENT
+              - VARIABLE_RECURRING_PAYMENT
         - name: vrpConsentId
           in: query
           description: >-
@@ -7698,6 +7672,310 @@ paths:
       security:
         - Bearer: []
         - BasicAuth: []
+  /member/sub-tpps/{sub_tpp_id}/documents:
+    get:
+      tags:
+        - Sub-TPPs
+      summary: Get all SubTpp documents
+      description: >-
+        The `GET /member/sub-tpps/{sub_tpp_id}/documents` endpoint retrieves all
+        documents for a SubTpp with optional filtering by status.
+      operationId: GatewayService.GetDocuments
+      parameters:
+        - name: sub_tpp_id
+          in: path
+          description: >-
+            This id specifies the sub-TPP for which documents are to be
+            retrieved.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: 8d54f066-c14a-47c0-b58b-fec6b0ed6b4c
+        - name: statuses
+          in: query
+          description: >-
+            Optional list of document statuses to filter results. If not
+            provided, all documents are returned except those with WITHDRAWN and
+            INVALID_DOCUMENT_STATUS.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - PENDING_UPLOAD
+                - UPLOADED
+                - WITHDRAWN
+          example:
+            - UPLOADED
+            - PENDING_UPLOAD
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDocumentsResponse'
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '403':
+          description: Permission to access this endpoint is denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        '404':
+          description: The requested entity, such as a sub-tpp, was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_429'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        '501':
+          description: The operation was not implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_501'
+        '503':
+          description: Service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_503'
+        '504':
+          description: Gateway has timed out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_504'
+      deprecated: false
+      security:
+        - Bearer: []
+        - BasicAuth: []
+      x-hideTryItPanel: true
+  /member/sub-tpps/{sub_tpp_id}/upload-document/{document_id}:
+    post:
+      tags:
+        - Sub-TPPs
+      summary: Upload SubTpp document
+      description: >-
+        The `POST /member/sub-tpps/{sub_tpp_id}/upload-document/{document_id}`
+        endpoint upload the document for SubTpp.
+      operationId: GatewayService.UploadDocument
+      parameters:
+        - name: sub_tpp_id
+          in: path
+          description: This id specifies the sub-TPP for which the document will be loaded.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: 8d54f066-c14a-47c0-b58b-fec6b0ed6b4c
+        - name: document_id
+          in: path
+          description: This id specifies the document for uploading.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: 8d54f066-c14a-47c0-b58b-fec6b0ed6b4c
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadDocumentRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyResponse'
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '403':
+          description: Permission to access this endpoint is denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        '404':
+          description: The requested entity, such as a sub-tpp, was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_429'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        '501':
+          description: The operation was not implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_501'
+        '503':
+          description: Service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_503'
+        '504':
+          description: Gateway has timed out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_504'
+      deprecated: false
+      security:
+        - Bearer: []
+        - BasicAuth: []
+      x-hideTryItPanel: true
+  /member/sub-tpps/{sub_tpp_id}/documents/{document_id}/view:
+    get:
+      tags:
+        - Sub-TPPs
+      summary: Get pre-signed URL for document
+      description: >-
+        The `GET /member/sub-tpps/{sub_tpp_id}/documents/{document_id}/view`
+        endpoint returns a pre-signed URL that can be used to securely view or
+        download the document.
+      operationId: GatewayService.GetPreSignedUrl
+      parameters:
+        - name: sub_tpp_id
+          in: path
+          description: This id specifies the sub-TPP that owns the document.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: 8d54f066-c14a-47c0-b58b-fec6b0ed6b4c
+        - name: document_id
+          in: path
+          description: >-
+            This id specifies the document for which the pre-signed URL is
+            requested.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: 123e4567-e89b-12d3-a456-426614174000
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPreSignedUrlResponse'
+        '400':
+          description: The client specified an invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        '401':
+          description: The authorization information is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        '403':
+          description: Permission to access this endpoint is denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        '404':
+          description: The requested document or sub-TPP was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_429'
+        '500':
+          description: An unexpected or internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        '501':
+          description: The operation was not implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_501'
+        '503':
+          description: Service is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_503'
+        '504':
+          description: Gateway has timed out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_504'
+      deprecated: false
+      security:
+        - Bearer: []
+        - BasicAuth: []
+      x-hideTryItPanel: true
 components:
   schemas:
     Account:
@@ -15660,11 +15938,11 @@ components:
         - FAILED
     VrpScheme:
       type: string
-      description: Vrp scheme, only OBL_SWEEPING is supported currently.
-      example: OBL_SWEEPING
-      default: OBL_SWEEPING
+      description: Vrp scheme, only VRP_SWEEPING is supported currently.
+      example: VRP_SWEEPING
+      default: VRP_SWEEPING
       enum:
-        - OBL_SWEEPING
+        - VRP_SWEEPING
     VrpConsentInitiation:
       required:
         - callbackState
@@ -15675,7 +15953,6 @@ components:
         - maximumIndividualAmount
         - periodicLimits
         - refId
-        - remittanceInformationPrimary
         - scheme
       type: object
       properties:
@@ -15716,9 +15993,9 @@ components:
         scheme:
           type: string
           description: The types of payments that can be made under this VRP consent.
-          example: OBL_SWEEPING
+          example: VRP_SWEEPING
           enum:
-            - OBL_SWEEPING
+            - VRP_SWEEPING
         localInstrument:
           type: string
           description: >-
@@ -15781,6 +16058,23 @@ components:
           default: false
         risk:
           $ref: '#/components/schemas/Risk'
+        flowType:
+          title: Flow Type
+          type: string
+          description: >-
+            The integration option requested by the TPP. <ul><li><b>API_ONLY</b>
+            - The TPP owns the user experience including bank selection logic,
+            collection of mandatory fields, and embedded and decoupled
+            authentication methods. This option is only used for API-only
+            integrations.</li><li><b>FULL_HOSTED_PAGES</b> - The TPP uses
+            Token.io’s hosted pages to manage the full bank selection and
+            credential collection (if relevant) of the payment initiation
+            experience. This option is only used for Hosted Pages
+            integrations.</li></ul>
+          example: FULL_HOSTED_PAGES
+          enum:
+            - API_ONLY
+            - FULL_HOSTED_PAGES
       description: The initiation payload for the VRP consent.
     PageInfo:
       required:
@@ -15951,8 +16245,6 @@ components:
             bankName:
               type: string
               description: The creditor's bank name.
-            accountVerificationId:
-              $ref: '#/components/schemas/AccountVerificationId'
     VRPCreditorInformation:
       description: The creditor information. The account information (one of) is required.
       allOf:
@@ -17943,6 +18235,13 @@ components:
             field will contain the sub-TPP `referenceId`. This field is
             mandatory for unregulated TPPs.
           example: c5a863bc-86f2-4418-a26f-25b24c7983c7
+        providerAccountId:
+          type: string
+          description: >-
+            The id of this account at the underlying banking provider (e.g.
+            Modulr). Use this to correlate this account with the
+            `providerAccountId` on virtual account webhook events.
+          example: A21069WKVK
     CreateVirtualAccountSettlementRuleRequest:
       required:
         - accountId
@@ -17991,6 +18290,14 @@ components:
           description: The intraday interval minutes.
           format: int32
           example: 10
+        onBehalfOfId:
+          type: string
+          description: >-
+            The id of the ultimate client on whose behalf the account is
+            created. If the account is created on behalf of a sub-TPP, this
+            field will contain the sub-TPP `referenceId`. This field is
+            mandatory for unregulated TPPs.
+          example: c5a863bc-86f2-4418-a26f-25b24c7983c7
         description:
           type: string
           description: >
@@ -18000,9 +18307,23 @@ components:
             The maximum length is 18 characters and allowed characters are
             alphanumeric, space, hyphen (-), period (.), ampersand (&), and
             forward slash (/).
+
+            The minimum length is 6 characters.
+
+             **NOTE**: When enableDynamicRef is true the maximum length is 9 characters.
           maxLength: 18
           pattern: ^[a-zA-Z0-9-.&/ ]+$
           example: Auto Payout
+        enableDynamicRef:
+          type: boolean
+          description: >-
+            Controls how the reference is generated for a payout created as the
+            result of a triggered settlement rule. When set to true, the payment
+            reference is automatically generated by combining "description" with
+            the current date, separated by a hyphen, in the format
+            "{description}-{DDMMYYYY}," where DDMMYYYY is the zero-padded date
+            the payout was created (e.g. 01082026 for 1 August 2026)
+          example: true
       description: Contains the request payload to create a settlement rule.
     CreateVirtualAccountSettlementRuleResponse:
       type: object
@@ -18182,7 +18503,7 @@ components:
     SettlementRule:
       type: object
       properties:
-        settlementRuleId:
+        id:
           type: string
           format: uuid
           description: The id of the settlement rule.
@@ -18210,6 +18531,24 @@ components:
             `YYYY-MM-DDTHH:MM:SSZ`.
         timeInterval:
           $ref: '#/components/schemas/TimeInterval'
+        intradayIntervalHours:
+          type: integer
+          description: The intraday interval hours.
+          format: int32
+          example: 2
+        intradayIntervalMinutes:
+          type: integer
+          description: The intraday interval minutes.
+          format: int32
+          example: 10
+        onBehalfOfId:
+          type: string
+          description: >-
+            The id of the ultimate client on whose behalf the account is
+            created. If the account is created on behalf of a sub-TPP, this
+            field will contain the sub-TPP `referenceId`. This field is
+            mandatory for unregulated TPPs.
+          example: c5a863bc-86f2-4418-a26f-25b24c7983c7
         description:
           type: string
           description: >
@@ -18219,11 +18558,25 @@ components:
             The maximum length is 18 characters and allowed characters are
             alphanumeric, space, hyphen (-), period (.), ampersand (&), and
             forward slash (/).
+
+            The minimum length is 6 characters.
+
+             **NOTE**: When enableDynamicRef is true the maximum length is 9 characters.
           maxLength: 18
           pattern: ^[a-zA-Z0-9-.&/ ]+$
           example: Auto Payout
         status:
           $ref: '#/components/schemas/SettlementRuleStatus'
+        enableDynamicRef:
+          type: boolean
+          description: >-
+            Controls how the reference is generated for a payout created as the
+            result of a triggered settlement rule. When set to true, the payment
+            reference is automatically generated by combining "description" with
+            the current date, separated by a hyphen, in the format
+            "{description}-{DDMMYYYY}," where DDMMYYYY is the zero-padded date
+            the payout was created (e.g. 01082026 for 1 August 2026)
+          example: true
     Creditor:
       type: object
       properties:
@@ -18281,6 +18634,7 @@ components:
         - FIXED_VALUE
         - PERCENTAGE
         - BALANCE_TO_RETAIN
+        - PREVIOUS_DAY_TOTAL
     TimeInterval:
       description: The time interval.
       type: string
@@ -18833,10 +19187,121 @@ components:
       properties:
         accountDetails:
           $ref: '#/components/schemas/AccountInformation'
+        bankId:
+          type: string
+          description: Identifier of the bank where the account belongs.
+          example: ob-modelo
       description: Contains the response of the get tokenized account request.
     DeleteTokenizedAccountResponse:
       type: object
       description: No data returned in the successful response.
+    UploadDocumentRequest:
+      title: Upload SubTpp Document Request
+      type: object
+      required:
+        - file_type
+        - file
+      properties:
+        file_type:
+          type: string
+          description: >-
+            Type or format of the uploaded file. Typically corresponds to file
+            extension or MIME type.
+          example: application/pdf
+        file:
+          $ref: '#/components/schemas/Payload'
+    Payload:
+      title: Blob Payload
+      type: object
+      required:
+        - type
+        - name
+        - data
+      properties:
+        owner_id:
+          type: string
+          description: Identifier of the blob owner (member id).
+        type:
+          type: string
+          description: MIME type of the file.
+          example: image/png
+        name:
+          type: string
+          description: Original file name.
+          example: document.png
+        data:
+          type: string
+          format: byte
+          description: File content.
+        access_mode:
+          $ref: '#/components/schemas/AccessMode'
+    AccessMode:
+      type: string
+      description: |
+        Access mode for the blob.
+        - DEFAULT: Owner or token participants can read the blob.
+        - PUBLIC: Anyone can read the blob (for example profile pictures).
+      enum:
+        - DEFAULT
+        - PUBLIC
+    GetDocumentsResponse:
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Document'
+    Document:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 003b3342-3402-49b8-803d-4abe3f72b0a1
+        member_id:
+          type: string
+          example: m:MWJgHAQNz53EMTjyNLuVnkqkBYU:5zKtXEAq
+        sub_tpp_id:
+          type: string
+          example: df57627e-6c55-4f6e-b00a-0b0a234b098e
+        document_name:
+          type: string
+          example: KYC/KYB Onboarding Process
+        description:
+          type: string
+          example: >-
+            Documented KYC/KYB onboarding process (if not already included in
+            AML policy)
+        file_id:
+          type: string
+          example: 305de17e-f3f8-4a4f-84da-11059fbc838c
+        status:
+          type: string
+          enum:
+            - PENDING_UPLOAD
+            - UPLOADED
+            - WITHDRAWN
+        upload_optional:
+          type: boolean
+          example: false
+        created_at_ms:
+          type: integer
+          format: int64
+          example: 1710000000000
+        updated_at_ms:
+          type: integer
+          format: int64
+          example: 1710000000000
+    GetPreSignedUrlResponse:
+      type: object
+      properties:
+        url:
+          type: string
+          description: The pre-signed URL that can be used to access the document.
+          example: https://storage.example.com/document/abc123
+        expires_at:
+          type: string
+          description: The timestamp indicating when the URL will expire.
+          example: '2026-04-20T12:00:00Z'
   responses:
     BadResponse:
       description: The client specified an invalid argument

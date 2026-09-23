@@ -1,0 +1,83 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  https://docs.token.io/products/tpp/hosted-pages/hosted-pages-v2/hosted-pages-v2-modal-sdk,
+  https://docs.token.io/products/tpp/hosted-pages/hosted-pages-v2/hosted-pages-v2-iframe-integration,
+  https://docs.token.io/products/tpp/hosted-pages/hosted-pages-v2/hosted-pages-v2-webview-sdk,
+  https://docs.token.io/products/tpp/hosted-pages/hosted-pages-v2/hosted-pages-v2-redirect-integration,
+  https://docs.token.io/products/tpp/hosted-pages/hosted-pages-v1/hosted-pages-v1-intro
+provider: Token.io
+providerId: token-io
+description: >-
+  Token.io's client-side surface is Hosted Pages — the bank-selection and consent screens that
+  carry the user through bank authentication. It is distinct from the SDKs in packages/: those call
+  the API, these render the regulated user journey Token.io is licensed to operate. Two generations
+  exist (v1 and v2) and v2 ships in four delivery shapes from one loader.
+loaders:
+  - name: TokenApp (token.min.js)
+    url: https://app-sdk.token.io/2.0.8/token.min.js
+    global: window.TokenApp
+    init: "new window.TokenApp({ env: 'sandbox' | 'production' })"
+    controller: "appSdk.buildController({ onDone, onError })"
+    generation: Hosted Pages v2
+    note: >-
+      One pinned script serves both the modal and the iframe integration; the env flag is the only
+      switch between sandbox and production.
+families:
+  - name: Hosted Pages v2
+    status: current
+    components:
+      - name: Pay by Bank modal
+        type: modal / embedded
+        delivery: script tag (token.min.js) + a merchant-rendered button
+        prerequisite: A payment session / token request must exist before the button can render.
+        callbacks:
+          - onDone
+          - onError
+        docs: https://docs.token.io/products/tpp/hosted-pages/hosted-pages-v2/hosted-pages-v2-modal-sdk
+      - name: Hosted Pages iframe
+        type: iframe embed
+        delivery: script tag (token.min.js) + a container div (#tokenWebAppIframe)
+        prerequisite: >-
+          Token.io requires the TPP to submit its domains IN ADVANCE so they can be added to the CSP
+          allowlist — a stated InfoSec gate, not a configuration option.
+        docs: https://docs.token.io/products/tpp/hosted-pages/hosted-pages-v2/hosted-pages-v2-iframe-integration
+      - name: Hosted Pages redirect
+        type: full-page redirect
+        host: https://app.token.io (sandbox https://app.sandbox.token.io)
+        docs: https://docs.token.io/products/tpp/hosted-pages/hosted-pages-v2/hosted-pages-v2-redirect-integration
+      - name: WebView SDK (iOS)
+        type: native mobile webview
+        delivery: >-
+          Source files copied from github.com/tokenio/tokenio-ios-webview-sdk —
+          PaymentService.swift, PaymentWebView.swift, PaymentCompletionHandler.swift,
+          Configuration.swift. Not a dependency-manager package.
+        config: Custom URL scheme plus API keys in Info.plist.
+        docs: https://docs.token.io/products/tpp/hosted-pages/hosted-pages-v2/hosted-pages-v2-webview-sdk
+      - name: WebView SDK (Android)
+        type: native mobile webview
+        delivery: >-
+          Source files copied from github.com/tokenio/tokenio-android-webview-sdk —
+          PaymentWebViewActivity.kt, UnifiedWebViewClient.kt,
+          res/layout/activity_payment_webview.xml.
+        docs: https://docs.token.io/products/tpp/hosted-pages/hosted-pages-v2/hosted-pages-v2-webview-sdk
+      - name: Custom Hosted Pages
+        type: theming / white-label
+        detail: Merchant branding applied to the hosted consent journey.
+        docs: https://docs.token.io/products/tpp/hosted-pages/hosted-pages-v2/hosted-pages-v2-create-custom-hosted-pages
+  - name: Hosted Pages v1
+    status: maintained
+    host: https://web-app.token.io (sandbox https://web-app.sandbox.token.io)
+    components:
+      - name: Hosted Pages redirect (v1)
+        type: full-page redirect
+      - name: Custom Hosted Pages (v1)
+        type: theming / white-label
+    migration: https://docs.token.io/products/tpp/hosted-pages/hosted-pages-v2/hosted-pages-v2-migrating-to-hosted-pages-v2
+summary:
+  families: 2
+  components: 8
+  loaders: 1
+  distribution: >-
+    CDN script for web, source-file copy for mobile. None of the client-side components is
+    installable from npm, CocoaPods, SPM or Maven.

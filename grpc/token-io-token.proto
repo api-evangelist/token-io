@@ -1,0 +1,415 @@
+syntax = "proto3";
+package io.token.proto.common.token;
+
+option java_outer_classname = "TokenProtos";
+option csharp_namespace = "Tokenio.Proto.Common.TokenProtos";
+
+import "account.proto";
+import "blob.proto";
+import "money.proto";
+import "pricing.proto";
+import "security.proto";
+import "transferinstructions.proto";
+import "alias.proto";
+import "extensions/field.proto";
+import "extensions/message.proto";
+
+//
+// Generic token envelope definition.
+//
+message Token {
+  string id = 1;                                          // Computed as sha(token).
+  TokenPayload payload = 2;                               // Token payload, being signed.
+  repeated TokenSignature payload_signatures = 3;         // Payload signatures.
+  string replaced_by_token_id = 4;                        // ID of the latest token replacing it
+  string token_request_id = 5;                            // ID of the token request associated with the token (optional)
+}
+
+message TokenRequest {
+  string id = 1;                                // request id
+
+  // deprecated fields
+  TokenPayload payload = 2 [deprecated = true];
+  map<string, string> options = 3 [(io.token.proto.extensions.field.redact) = true, deprecated = true];
+  string user_ref_id = 4 [deprecated = true];
+  string customization_id = 5 [deprecated = true];
+
+  TokenRequestPayload request_payload = 6;      // immutable properties
+  TokenRequestOptions request_options = 7;      // mutable properties
+}
+
+message TokenRequestOptions {
+  string bank_id = 1;
+  TokenMember from = 2;
+  string source_account_id = 3 [deprecated = true]; // Set in TransferInstructions on TokenRequestPayload instead
+  bool receipt_requested = 4;
+}
+
+message TokenRequestPayload {
+  string user_ref_id = 1;
+  string customization_id = 2;
+  string redirect_url = 3;
+
+  TokenMember to = 4;
+  ActingAs acting_as = 5;
+
+  oneof request_body {
+    AccessBody access_body = 6;
+    TransferBody transfer_body = 7;
+    StandingOrderBody standing_order_body = 12;
+    BulkTransferBody bulk_transfer_body = 13;
+  }
+
+  string description = 8 [(io.token.proto.extensions.field.redact) = true];
+  string callback_state = 9;
+  string destination_country = 10;
+
+  string ref_id = 11; // ref ID that will be transferred to the token payload
+
+  message AccessBody {
+    enum ResourceType {
+      INVALID = 0;
+      ACCOUNTS = 1;
+      BALANCES = 2;
+      TRANSACTIONS = 3;
+      TRANSFER_DESTINATIONS = 4;
+      FUNDS_CONFIRMATIONS = 5 [deprecated = true];
+      STANDING_ORDERS = 6;
+    }
+
+    enum AccountResourceType {
+      ACCOUNT_INVALID = 0;
+      ACCOUNT_INFO = 1;
+      ACCOUNT_BALANCE = 2;
+      ACCOUNT_TRANSACTIONS = 3;
+      ACCOUNT_TRANSFER_DESTINATIONS = 4;
+      ACCOUNT_FUNDS_CONFIRMATION = 5;
+      ACCOUNT_STANDING_ORDERS = 6;
+    }
+
+    // Used if the TPP does not wish to specify accounts
+    message ResourceTypeList {
+      repeated ResourceType resources = 1;
+    }
+
+    // Used if the TPP wish to specify accounts
+    message AccountResourceList {
+      repeated AccountResource resources = 1;
+
+      message AccountResource {
+        AccountResourceType type = 1;
+        io.token.proto.common.account.BankAccount bank_account = 2;
+        io.token.proto.common.transferinstructions.CustomerData customer_data = 3;
+      }
+    }
+
+    repeated ResourceType type = 1 [deprecated = true];
+    //ToDo: Remove once the issue (https://github.com/protocolbuffers/protobuf/issues/6045) is resolved.
+    repeated string resource_types = 2 [deprecated = true]; //[Github issue #6045]: This field is provisionally used for PHP sdks only.
+
+    oneof resource_list {
+      ResourceTypeList resource_type_list  = 3;
+      AccountResourceList account_resource_list = 4;
+    }
+  }
+
+  message TransferBody {
+    string currency = 1;                                                                    // Optional: ISO4217, 3 letter currency code such as "USD" or "EUR".
+    string amount = 2;                                                                      // Optional: Single token charge request acceptable range. Double.
+    repeated io.token.proto.common.transferinstructions.TransferEndpoint destinations = 3 [deprecated = true];
+    string lifetime_amount = 4;                                                             // Optional: Token total lifetime amount. Double.
+    io.token.proto.common.transferinstructions.TransferInstructions instructions = 5;
+    string execution_date = 6;                                                              // Optional. ISO 8601: YYYY-MM-DD or YYYYMMDD.
+    bool confirm_funds = 7;
+    string set_transfer_destinations_url = 8;
+  }
+}
+
+// If a token is being created on behalf of another party, this
+// field contains a description of that entity.
+message ActingAs {
+  option (io.token.proto.extensions.message.redact) = true;
+  string display_name = 1;                            // Name of recipient, to be shown to user
+  string ref_id = 2;                                  // Optional reference ID of the recipient. Opaque to Token.
+  string logo_url = 3;                                // URL pointing to recipient's logo
+  string secondary_name = 4;                          // Optional domain or email of the recipient, to be shown to user along with display_name
+}
+
+message TokenSignature {
+  // List of valid actions that one can perform on the Token. We use lowercase string value
+  // of the action when computing a signature.
+  enum Action {
+    INVALID   = 0;
+    ENDORSED  = 1;                                        // Endorses token. Both payer and payer bank co-endorse the token.
+    CANCELLED = 2;                                        // Revoked by the payer or declined by the redeemer.
+  }
+
+  Action action = 1;
+  io.token.proto.common.security.Signature signature = 2;
+}
+
+// Refers to a Token member by ID and/or by alias.
+message TokenMember {
+  string id = 1;                               // optional member ID
+  string username = 2 [deprecated = true];
+  io.token.proto.common.alias.Alias alias = 3; // optional alias, such as an email address
+}
+
+message TokenPayload {
+  string version = 1;                                   // 1.0
+  string ref_id = 2;                                    // Random string used to de-dupe tokens; must be unique per initiator
+
+  TokenMember issuer = 3;                               // Token issuer, bank
+  TokenMember from = 4;                                 // Payer member
+  TokenMember to = 5;                                   // Payee member
+
+  int64 effective_at_ms = 6;                            // Optional
+
+  // Expiration time. Access tokens ignore this; all access tokens
+  // have a 90-day lifespan. For transfer tokens, this is an optional
+  // expiration time.
+  int64 expires_at_ms = 7;
+  string description = 8 [(io.token.proto.extensions.field.redact) = true]; // Optional
+
+  oneof body {
+    TransferBody transfer = 9;
+    AccessBody access = 10;
+    StandingOrderBody standing_order = 16;
+    BulkTransferBody bulk_transfer = 17;
+  }
+
+  int64 endorse_until_ms = 11;                          // Optional, can be endorsed until this time
+  ActingAs acting_as = 12;
+  bool receipt_requested = 13;
+  string token_request_id = 14;                         // Optional; indicates token request flow
+  string initiator_id = 15;                             // ID of member who requested token creation
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Transfer Token
+//
+
+//
+// Describes token creation error codes.
+//
+enum TransferTokenStatus {
+  INVALID = 0;
+  SUCCESS = 1;
+  FAILURE_REJECTED = 2;                          // the request has been rejected
+  FAILURE_INSUFFICIENT_FUNDS = 3;                // the request has failed due to insufficient funds
+  FAILURE_INVALID_CURRENCY = 4;                  // the request has failed, because currency is invalid/unsupported
+  FAILURE_SOURCE_ACCOUNT_NOT_FOUND = 5;          // the request has failed, source account not found
+  FAILURE_DESTINATION_ACCOUNT_NOT_FOUND = 6;     // the request has failed, destination account not found
+  FAILURE_INVALID_AMOUNT = 10;                   // the request has failed, because the amount is invalid
+  FAILURE_INVALID_QUOTE = 11;                    // the request has failed, because the pricing quote is invalid
+  FAILURE_EXTERNAL_AUTHORIZATION_REQUIRED = 12;  // the request has failed, because external authorization is needed
+  FAILURE_GENERIC = 9;                           // the request has failed due to other reasons
+}
+
+message ExternalAuthorizationDetails {
+  string url = 1;                // Deprecated. Display content from this URL to user to prompt for permission
+  string completion_pattern = 2; // Deprecated. If user navigates to URL matching this pattern, interaction is complete
+  string authorization_url = 3;  // Display content from this URL to user to prompt for permission; initiates OAuth payment flow
+}
+
+message TransferBody {
+  TokenMember redeemer = 1 [deprecated = true];                                      // Redeemer member (deprecated: use TokenPayload.to instead).
+  io.token.proto.common.transferinstructions.TransferInstructions instructions = 2;  // Transfer instructions.
+  string currency = 4;                                                               // Optional: ISO4217, 3 letter currency code such as "USD" or "EUR".
+  string lifetime_amount = 5;                                                        // Optional: Token total lifetime amount. Double.
+  string amount = 6;                                                                 // Optional: Single token charge request acceptable range. Double.
+  repeated io.token.proto.common.blob.Attachment attachments = 8;                    // Optional: file / data attachments
+  io.token.proto.common.pricing.Pricing pricing = 9 [deprecated = true];             // Deprecated; unused.
+  string execution_date = 10;                                                        // Optional. ISO 8601: YYYY-MM-DD or YYYYMMDD.
+  bool confirm_funds = 11;
+}
+
+// Schedule a series of payments from 'start_date' to 'end_date'
+// at the given frequency. Each payment will be for 'amount'.
+message StandingOrderBody {
+  transferinstructions.TransferInstructions instructions = 1;  // Transfer instructions.
+  string start_date = 2;                                                             // ISO 8601: YYYY-MM-DD or	YYYYMMDD
+  string end_date = 3;                                                               // Optional. ISO 8601: YYYY-MM-DD or	YYYYMMDD
+  string frequency = 4;                                                              // ISO 20022: DAIL, WEEK, TOWK, MNTH, TOMN, QUTR, SEMI, YEAR
+  string amount = 5;                                                                 // Amount of each individual payment
+  string currency = 6;                                                               // ISO 4217, 3 letter currency code such as "USD" or "EUR".
+}
+
+message BulkTransferBody {
+  repeated Transfer transfers = 1;
+  string total_amount = 2; // Total amount irrespective of currency. Used for redundancy check.
+  transferinstructions.TransferEndpoint source = 3;  // Optional. Set to bypass Token bank selection UI.
+
+  message Transfer {
+    string amount = 1;
+    string currency = 2;
+    string ref_id = 3;
+    string description = 4;
+    transferinstructions.TransferDestination destination = 5;
+    transferinstructions.TransferInstructions.Metadata metadata = 6;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Access Token
+//
+
+message AccessBody {
+  repeated Resource resources = 5; // List of resources
+
+  message Resource {
+    oneof resource {
+      // access to account data
+      Account account = 6;
+      AccountTransactions transactions = 7;
+      AccountStandingOrders standing_orders = 16;
+      AccountBalance balance = 8;
+      TransferDestinations transfer_destinations = 12;
+
+      // other permissions
+      FundsConfirmation funds_confirmation = 15;
+
+      // deprecated
+      Address address = 5 [deprecated = true];
+      AllAddresses all_addresses = 1 [deprecated = true];
+      AllAccounts all_accounts = 2 [deprecated = true];
+      AllAccountTransactions all_transactions = 3 [deprecated = true];
+      AllAccountBalances all_balances = 4 [deprecated = true];
+      AllTransferDestinations all_transfer_destinations = 13 [deprecated = true];
+      AllAccountsAtBank all_accounts_at_bank = 9 [deprecated = true];
+      AllTransactionsAtBank all_transactions_at_bank = 10 [deprecated = true];
+      AllBalancesAtBank all_balances_at_bank = 11 [deprecated = true];
+      AllTransferDestinationsAtBank all_transfer_destinations_at_bank = 14 [deprecated = true];
+    }
+
+    // Provides access to a specific member address
+    message Address {
+      string address_id = 1; // ID of address
+    }
+
+    // Provides access to basic info about a specific member account
+    // (can call getAccount() on this account).
+    message Account {
+      string account_id = 1; // ID of account
+    }
+
+    // Provides access to a specific account transactions
+    message AccountTransactions {
+      string account_id = 1; // ID of account
+    }
+
+    // Provides access to a specific account's standing orders
+    message AccountStandingOrders {
+      string account_id = 1; // ID of account
+    }
+
+    // Provides access to a specific account's balance
+    message AccountBalance {
+      string account_id = 1; // ID of account
+    }
+
+    // Provides access to the resolved transfer destinations of the specified account
+    message TransferDestinations {
+      string account_id = 1; // ID of account
+    }
+
+    // Provides ability to check whether the account has sufficient funds to cover a given charge
+    message FundsConfirmation {
+      string account_id = 1; // ID of account
+    }
+
+    // **DEPRECATED** Provides access to all member addresses
+    message AllAddresses {}
+
+    // **DEPRECATED** Provides access to all member accounts. Enables getAccounts()
+    // to get list of accounts (and also getAccount() on any account).
+    message AllAccounts {}
+
+    // **DEPRECATED** Provides access to all member accounts at a specific bank.
+    message AllAccountsAtBank {
+      string bank_id = 1;
+    }
+
+    // **DEPRECATED** Provides access to member transactions in all accounts
+    // Normally used with AllAccounts (to get list of accounts)
+    message AllAccountTransactions {}
+
+    // **DEPRECATED** Provides access to member transactions in all accounts at a specific bank.
+    // Normally used with AllAccountsAtBank (to get list of accounts)
+    message AllTransactionsAtBank {
+      string bank_id = 1;
+    }
+
+    // **DEPRECATED** Provides access to member balance on all accounts
+    // Normally used with AllAccounts (to get list of accounts)
+    message AllAccountBalances {}
+
+    // **DEPRECATED** Provides access to member balance on all accounts at a specific bank.
+    // Normally used with AllAccountsAtBank (to get list of accounts)
+    message AllBalancesAtBank {
+      string bank_id = 1;
+    }
+
+    // **DEPRECATED** Provides access to the resolved transfer destinations of all accounts
+    message AllTransferDestinations {}
+
+    // **DEPRECATED** Provides access to the resolved transfer destinations of all accounts at a specific bank
+    message AllTransferDestinationsAtBank {
+      string bank_id = 1;
+    }
+
+  }
+}
+
+//
+// Token operation status
+//
+message TokenOperationResult {
+  Token token = 1;   // Token, perhaps with new signatures
+  Status status = 2; // Success/failure status
+
+  enum Status {
+    INVALID = 0;
+    SUCCESS = 1;                // Operation succeeded.
+    // Token needs more signatures.
+    // If that's surprising: Perhaps used LOW or STANDARD key but needs PRIVILEGED?
+    MORE_SIGNATURES_NEEDED = 2;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Request signature
+//
+
+message TokenRequestStatePayload {
+  string token_id = 1;
+  string state = 2;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Token policy
+//
+
+message Policy {
+  oneof policy {
+    SingleSignature single_signature = 1;
+    AllSignatures all_signatures = 2;
+  }
+
+  // require member signature
+  message SingleSignature {
+    Signer signer = 1;
+  }
+
+  // require signatures of all listed members
+  message AllSignatures {
+    repeated Signer signers = 1;
+  }
+
+  // member whose signature is required for the token
+  message Signer {
+    string member_id = 1;
+    io.token.proto.common.security.Key.Level key_level = 2;
+    string authorization_url = 3;   // optional: authorization URL to obtain signature
+  }
+}

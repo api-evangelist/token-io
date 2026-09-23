@@ -1,0 +1,48 @@
+syntax = "proto3";
+package io.token.proto.common.alias;
+option java_outer_classname = "AliasProtos";
+option csharp_namespace = "Tokenio.Proto.Common.AliasProtos";
+
+import "extensions/field.proto";
+
+// An Alias refers to a member in a "human readable" way.
+// Normally, an alias must be verified before it's useful.
+// E.g., payments to { EMAIL, "sandy@example.com" } work only if
+// some member has verified receiving an email at that address.
+message Alias {
+  Type type = 1;                                                      // For example, EMAIL.
+  string value = 2 [(io.token.proto.extensions.field.redact) = true]; // For example, "sandy@example.com"
+  string realm  = 3  [deprecated = true];                             // For example, "token"
+  string realm_id = 4;                                                // member_id of existing Member
+
+  enum Type {
+    INVALID = 0;
+    // Unknown type. Useful for UI: For example, if user wants to pay "sandy@example.com",
+    // let server determine that's an EMAIL alias.
+    UNKNOWN = 1;
+    EMAIL = 2;    // Email address. For example, "sandy@example.com".
+    PHONE = 3;    // Phone number.
+    DOMAIN = 4;   // Business web domain. Please contact Token to verify.
+    USERNAME = 5; // deprecated
+    BANK = 6;     // for banks only
+    CUSTOM = 7;   // Custom type, for instance a bank specific customer ID.
+    EIDAS = 8;   // The unique PSD2 auth number of the company that provides eIDAS certificate
+  }
+}
+
+// When the user verifies an alias, e.g. by entering a code,
+// the verification may succeed or fail in one of several ways.
+enum VerificationStatus {
+  INVALID = 0;
+  UNKNOWN = 1;
+  SUCCESS = 2;
+  INCORRECT_CODE = 3;
+  EXPIRED_CODE = 4;
+  TOO_MANY_CODE_ATTEMPTS = 5;     // reached the limit of attempts to enter a specific code
+}
+
+// Payload containing a member ID and an alias, used in alias verification.
+message VerifyAliasPayload{
+  string member_id = 1;
+  Alias alias = 2;
+}

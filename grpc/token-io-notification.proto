@@ -1,0 +1,182 @@
+syntax = "proto3";
+package io.token.proto.common.notification;
+
+import "banklink.proto";
+import "security.proto";
+import "token.proto";
+import "member.proto";
+import "extensions/field.proto";
+
+option java_outer_classname = "NotificationProtos";
+option csharp_namespace = "Tokenio.Proto.Common.NotificationProtos";
+
+// Metadata for a notification
+message DeviceMetadata {
+  string application = 1;   // Name of the application to add keys to (e.g. Token, Chrome)
+  string application_version = 2; // Application version (e.g. 2.0)
+  string device = 3;  // Device the application resides on (e.g. Mac, iPhone X), to support multiple devices
+  double longitude = 4 [(io.token.proto.extensions.field.redact) = true]; // Longitude of the user's location to signal where the request is coming from
+  double latitude = 5 [(io.token.proto.extensions.field.redact) = true];  // Latitude of the user's location
+}
+
+// A notification to the payer that a transfer was successfully processed.
+message PayerTransferProcessed {
+  string transfer_id = 1; // transfer ID
+}
+
+// A notification to the payee that a transfer was successfully processed.
+message PayeeTransferProcessed {
+  string transfer_id = 1; // transfer ID
+}
+
+// A notification to the payer that a transfer failed.
+message PayerTransferFailed {
+  string transfer_id = 1; // transfer ID
+}
+
+// A generic notification that a transfer was successfully processed.
+message TransferProcessed {
+  string transfer_id = 1; // transfer ID
+}
+
+// A generic notification that a transfer failed.
+message TransferFailed {
+  string transfer_id = 1; // transfer ID
+}
+
+// A notification that a bank wants to be linked.
+message LinkAccounts {
+  io.token.proto.banklink.BankAuthorization bank_authorization = 1;
+}
+
+// A notification to step up / endorse a token.
+// E.g., perhaps user tried to endorse in browser with only LOW-privilege
+// key available but needs a HIGH-privilege key signature.
+message StepUp {
+  string token_id = 1; // ID of Token to endorse
+}
+
+// A notification to step up a get balance(s) request
+message BalanceStepUp {
+  repeated string account_id = 1; // Account IDs
+}
+
+// A notification to step up a transaction request
+message TransactionStepUp {
+  string account_id = 1;     // Account ID
+  string transaction_id = 2; // Transaction ID
+}
+
+// A notification to notify a member that a recovery process has completed
+message RecoveryCompleted {}
+
+// A notification that a key wants to be added to a member. Clients should timeout the notification
+// and screen, once the expires_ms has passed
+message AddKey {
+  int64 expires_ms = 3;                       // Expiration time
+  repeated io.token.proto.common.security.Key keys = 4; // List of new keys to add
+  DeviceMetadata device_metadata = 5;
+}
+
+// A notification that a bank wants to be linked, and keys want to be added.
+message LinkAccountsAndAddKey {
+  LinkAccounts link_accounts = 1;
+  AddKey add_key = 2;
+}
+
+// A notification to request a payment
+message PaymentRequest {
+  io.token.proto.common.token.TokenPayload payload = 1; // requested payment
+}
+
+// A notification that a token was cancelled
+message TokenCancelled {
+  string token_id = 1; // Token ID
+}
+
+message EndorseAndAddKey {
+  option deprecated = true;
+  io.token.proto.common.token.TokenPayload payload = 1;
+  AddKey add_key = 2;
+  string token_request_id = 3;    // Optional token request ID
+  string bank_id = 4;             // Optional bank ID
+  string state = 5;               // Optional token request state for signing
+  io.token.proto.common.member.ReceiptContact contact = 6;    //Optional receipt contact
+}
+
+// A notification that a token needs to be created/endorsed
+message CreateAndEndorseToken {
+  io.token.proto.common.token.TokenRequest token_request = 1;
+  AddKey add_key = 2;                                               // Optional key to add
+  io.token.proto.common.member.ReceiptContact contact = 3;          // Optional receipt contact
+}
+
+// A notification to indicate that a previously sent notification was invalidated
+message NotificationInvalidated {
+  string previous_notification_id = 1;
+}
+
+// A data that goes in a NotifyRequest
+message NotifyBody {
+  oneof body {
+    io.token.proto.common.notification.PayerTransferProcessed payer_transfer_processed = 1;
+    io.token.proto.common.notification.LinkAccounts link_accounts = 2;
+    io.token.proto.common.notification.StepUp step_up = 3;
+    io.token.proto.common.notification.AddKey add_key = 4;
+    io.token.proto.common.notification.LinkAccountsAndAddKey link_accounts_and_add_key = 5;
+    io.token.proto.common.notification.PayeeTransferProcessed payee_transfer_processed = 6;
+    io.token.proto.common.notification.PaymentRequest payment_request = 7;
+    io.token.proto.common.notification.PayerTransferFailed payer_transfer_failed = 8;
+    io.token.proto.common.notification.TransferProcessed transfer_processed = 9;
+    io.token.proto.common.notification.TransferFailed transfer_failed = 10;
+    io.token.proto.common.notification.TokenCancelled token_cancelled = 11;
+    io.token.proto.common.notification.BalanceStepUp balance_step_up = 12;
+    io.token.proto.common.notification.TransactionStepUp transaction_step_up = 13;
+    io.token.proto.common.notification.EndorseAndAddKey endorse_and_add_key = 14 [deprecated = true];
+    io.token.proto.common.notification.RecoveryCompleted recovery_completed = 15;
+    io.token.proto.common.notification.NotificationInvalidated notification_invalidated = 16;
+    io.token.proto.common.notification.CreateAndEndorseToken create_and_endorse_token = 17;
+  }
+}
+
+// The status returned when sending a notification. ACCEPTED means the notification was initiated, but
+// not necessarily successfully delivered
+enum NotifyStatus {
+  INVALID = 0;
+  ACCEPTED = 1;
+  NO_SUBSCRIBERS = 2;
+}
+
+// The record of a notification. Retrieved from notification service
+message Notification {
+  // A unique ID given to this notification
+  string id = 1;
+
+  // The subscriber that was or will be notified
+  string subscriber_id = 2;
+
+  // Contents of the notification
+  NotificationContent content = 3;
+
+  enum Status {
+    INVALID = 0;
+    PENDING = 1;                // Actions of the member are pending
+    DELIVERED = 2 [deprecated = true];
+    COMPLETED = 3;              // The member has completed the notification
+    INVALIDATED = 4;            // The notification has been invalidated
+    NO_ACTION_REQUIRED = 5;     // No action required for the member
+    DECLINED = 6;               // The member has declined the notification
+  }
+  Status status = 4;
+}
+
+// The contents of a notification that was sent or will be sent
+message NotificationContent {
+  string type = 1;                  // Notification type
+  string title = 2;                 // Optional notification message title
+  string body = 3;                  // Optional notification message body
+  string payload = 4;               // Notification payload
+  int64 created_at_ms = 5;          // Time of creation
+  string loc_key = 6;               // Notification message localization key
+  repeated string loc_args = 7;     // Notification message localization arguments
+}

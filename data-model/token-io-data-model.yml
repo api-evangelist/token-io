@@ -1,0 +1,272 @@
+generated: '2026-09-17'
+method: derived
+source: >-
+  openapi/token-io-rest-api-swagger.json (587 definitions, 100 paths) and the refined
+  openapi/token-io-*-api-openapi.yml set, enriched from
+  https://docs.token.io/products/tpp/glossary and the object descriptions in the API reference
+provider: Token.io
+providerId: token-io
+description: >-
+  Entity graph for the Token.io platform, derived from the $ref links and id-reference fields in
+  the published contracts. Two things shape it. First, the schema names are Protobuf package paths
+  (io.token.proto.common.*) because the REST API is a gateway over a gRPC platform — the same
+  messages are published as .proto files in grpc/. Second, the graph has two generations side by
+  side: the v1 model is Token-centric (a Token is the signed consent object, redeemed into a
+  Transfer) and the v2 model is Payment-centric (a Payment carries its own Initiation and status).
+  Both are live, and an integrator has to know which generation an id belongs to before they can
+  follow it.
+identity:
+  root: Member
+  detail: >-
+    Every object hangs off a member — the Token.io identity for a TPP, a sub-TPP or a bank user.
+    memberId is the most widely carried foreign key in the schema (it appears on Payment,
+    VrpConsent, Consent, refund events and webhook payloads) and it is what the enrolled signing
+    key is bound to.
+id_prefixes:
+  note: >-
+    Token.io ids are prefixed and self-describing, read from the examples published in the docs and
+    in the spec. Useful for routing an unknown id back to its resource.
+  observed:
+    - prefix: 'm:'
+      entity: Member
+      example: 'm:yEUkcSaH5G2AXo9dkHtNpHMvoGD:5zKtXEAq'
+    - prefix: 'pm2:'
+      entity: Payment (v2)
+      example: 'pm2:QNNbrYefZhzttPzqMd7nRe2augU:2gFUX1NEHkJ'
+    - prefix: 't:'
+      entity: Transfer (v1)
+      example: 't:GDK27TpvHk7AqjfUMKKqD6RXpusXEztxWbN49Acw43qx:5zKZFPab'
+    - prefix: 'rf:'
+      entity: Refund
+      example: 'rf:2L6yrx8cn2CMdVm6x5y6gtFZAG9J:2gFUX1NDcm'
+    - prefix: 'vrp:'
+      entity: VRP payment
+      example: 'vrp:4MJsqrrZ34wxDENP6CvNHS42uW7L:2gFUX1NEJsr'
+    - prefix: 'vc:'
+      entity: VRP consent
+      example: 'vc:zjiGVpY8Atvb3hZQmhH5pbiW4dv:2gFUX1NDeAA'
+    - prefix: 'rq:'
+      entity: Token request
+      example: 'rq:2a1M4FNGFceEUqe43zFJ1DcvFhfe:5zKtXEAq'
+entities:
+  - name: Member
+    schema: io.token.proto.common.member.*
+    description: The Token.io identity for a TPP, sub-TPP or bank user; the owner of keys and configuration.
+    relationships:
+      - type: has_many
+        target: MemberKey
+        via: /members/{memberId}/keys
+      - type: has_many
+        target: BankConfig
+        via: /members/{memberId}/bank-configs
+      - type: has_many
+        target: SubTpp
+        via: /member/sub-tpps
+      - type: has_many
+        target: Payment
+        via: memberId
+  - name: SubTpp
+    schema: io.token.proto.common.member.SubTpp
+    description: A party operating under Token.io's licence. Mandatory on payment initiation since TB-1549.
+    relationships:
+      - type: belongs_to
+        target: Member
+      - type: has_many
+        target: SubTpp
+        via: /member/sub-tpps/{subTppId}/children
+      - type: has_many
+        target: Document
+        via: /member/sub-tpps/{subTppId}/documents
+  - name: Bank
+    schema: io.token.proto.common.bank.Bank
+    description: >-
+      A connected financial institution. Carries ~40 capability booleans (supportsVariableRecurringPayment,
+      supportsFundsConfirmation, supportsStandingOrder, requiresOneStepPayment …), the
+      openBankingStandard it implements, its maintenance window and its SCA methods — the richest
+      single object in the schema and the one that decides which operations will work.
+    relationships:
+      - type: has_many
+        target: Consent
+        via: /banks/{bankId}/consents
+      - type: has_many
+        target: BankUser
+        via: /banks/{bankId}/users
+  - name: Payment
+    schema: io.token.proto.common.v2.openbanking.payment.Payment
+    generation: v2
+    fields:
+      - id
+      - memberId
+      - initiation
+      - status
+      - bankPaymentId
+      - bankPaymentStatus
+      - statusReasonInformation
+      - refundDetails
+      - paymentType
+      - paymentLinkStatus
+      - authentication
+      - expiresDateTime
+      - v1Fields
+    relationships:
+      - type: belongs_to
+        target: Member
+        via: memberId
+      - type: has_one
+        target: Initiation
+        via: initiation
+      - type: has_many
+        target: Refund
+        via: /transfers/{paymentId}/refunds
+      - type: has_one
+        target: PaymentLink
+        via: paymentLinkStatus
+    note: v1Fields is the compatibility bridge back to the Transfer model.
+  - name: Transfer
+    schema: io.token.proto.common.transfer.Transfer
+    generation: v1
+    relationships:
+      - type: belongs_to
+        target: Token
+        via: payload
+      - type: has_many
+        target: Refund
+        via: refundDetails / /transfers/{id}/refunds
+      - type: has_one
+        target: Transaction
+        via: transactionId
+  - name: Token
+    schema: io.token.proto.common.token.Token
+    generation: v1
+    description: >-
+      The signed consent object of the v1 model — a payload plus its signatures, redeemed into a
+      Transfer. Carries replacedByTokenId, requiresConfirmationAfter and requiresReconsentByMs.
+    relationships:
+      - type: belongs_to
+        target: TokenRequest
+        via: tokenRequestId
+      - type: has_one
+        target: Token
+        via: replacedByTokenId
+  - name: TokenRequest
+    schema: io.token.proto.common.token.TokenRequestPayload
+    relationships:
+      - type: has_one
+        target: Token
+      - type: has_one
+        target: BankAuthorization
+        via: /token-requests/{tokenRequestId}/authorization
+  - name: Consent
+    schema: io.token.proto.common.consent.Consent
+    description: Bank-side consent covering informationAccess, payment, bulkPayment or standingOrder.
+    fields:
+      - id
+      - memberId
+      - initiatorId
+      - expiresAtMs
+    relationships:
+      - type: belongs_to
+        target: Bank
+      - type: belongs_to
+        target: Member
+        via: memberId
+  - name: VrpConsent
+    schema: io.token.proto.common.v2.openbanking.vrp.VrpConsent
+    relationships:
+      - type: belongs_to
+        target: Member
+        via: memberId
+      - type: has_many
+        target: Payment
+        via: /vrp-consents/{id}/payments
+      - type: has_one
+        target: Initiation
+        via: initiation
+  - name: Account
+    schema: io.token.proto.common.account.Account
+    fields:
+      - id
+      - bankId
+      - name
+      - accountDetails
+      - accountFeatures
+      - isLocked
+      - lastCacheUpdateMs
+    relationships:
+      - type: belongs_to
+        target: Bank
+        via: bankId
+      - type: has_many
+        target: Transaction
+        via: /accounts/{accountId}/transactions
+      - type: has_one
+        target: Balance
+        via: /accounts/{accountId}/balance
+      - type: has_many
+        target: StandingOrder
+        via: /accounts/{accountId}/standing-orders
+      - type: has_many
+        target: DirectDebit
+        via: /accounts/{accountId}/direct-debits
+      - type: has_many
+        target: ScheduledPayment
+        via: /accounts/{accountId}/scheduled-payments
+    note: >-
+      lastCacheUpdateMs / nextCacheUpdateMs are exposed on the object — account data is cached and
+      the contract says when it was last refreshed.
+  - name: Transaction
+    schema: io.token.proto.common.transaction.Transaction
+    relationships:
+      - type: belongs_to
+        target: Account
+  - name: Refund
+    schema: io.token.proto.common.v2.common.Refund
+    relationships:
+      - type: belongs_to
+        target: Payment
+      - type: belongs_to
+        target: SettlementAccount
+        via: accountId
+      - type: has_one
+        target: RefundRegistration
+        via: /refund/registrations
+  - name: SettlementAccount
+    description: >-
+      Token.io-held virtual accounts used for settlements, payouts and refunds
+      (/settlement-accounts, /virtual-accounts/{accountId}/credit).
+    relationships:
+      - type: has_many
+        target: Payout
+      - type: has_many
+        target: SettlementRule
+  - name: PaymentLink
+    schema: /v2/payment-links
+    relationships:
+      - type: has_many
+        target: Payment
+  - name: WebhookConfig
+    schema: /webhook/config
+    cardinality: exactly one per member
+    relationships:
+      - type: belongs_to
+        target: Member
+  - name: MemberKey
+    schema: /members/{memberId}/keys
+    description: Enrolled signing keys — the root of JWT authentication.
+    relationships:
+      - type: belongs_to
+        target: Member
+  - name: EidasRegistration
+    schema: /eidas/register, /eidas/verifications
+    description: eIDAS qualified certificate registration and verification state.
+    relationships:
+      - type: belongs_to
+        target: Member
+summary:
+  entities: 18
+  definitions_in_spec: 587
+  naming: Protobuf package paths (io.token.proto.*) — the REST API is a gateway over gRPC.
+  generations:
+    - v1 — Token/Transfer centric
+    - v2 — Payment/Consent centric
+  render: none

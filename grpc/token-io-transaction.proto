@@ -1,0 +1,89 @@
+syntax = "proto3";
+package io.token.proto.common.transaction;
+
+option java_outer_classname = "TransactionProtos";
+option csharp_namespace = "Tokenio.Proto.Common.TransactionProtos";
+
+import "extensions/field.proto";
+import "member.proto";
+import "money.proto";
+import "providerspecific.proto";
+import "security.proto";
+
+enum TransactionType {
+  INVALID_TYPE = 0;
+  DEBIT = 1;
+  CREDIT = 2;
+}
+
+enum TransactionStatus {
+  INVALID_STATUS = 0;                   // invalid status
+  PENDING = 1;                          // the transaction is pending submission
+  PROCESSING = 7;                       // the transaction is being processed
+  SUCCESS = 2;                          // the transaction has been successful
+  PENDING_EXTERNAL_AUTHORIZATION = 15;  // the transaction requires authorization by the user to complete
+  FAILURE_CANCELED = 10;                // the transaction has been canceled, rolled back
+  FAILURE_INSUFFICIENT_FUNDS = 3;       // the transaction has failed due to insufficient funds
+  FAILURE_INVALID_CURRENCY = 4;         // the transaction has failed due to currency mismatch
+  FAILURE_PERMISSION_DENIED = 6;        // the transaction has failed due to access violation
+  FAILURE_QUOTE_EXPIRED = 11;           // the transaction has failed because the quote has expired
+  FAILURE_INVALID_AMOUNT = 12;          // the transaction has failed due to invalid amount
+  FAILURE_INVALID_QUOTE = 13;           // the transaction has failed due to invalid quote (wrong fx rate)
+  FAILURE_EXPIRED = 14;                 // the transaction has failed to complete within allotted time
+  FAILURE_GENERIC = 5;                  // the transaction has failed due to other reasons
+  SENT = 16;                            // legacy transfers only: the transaction has been sent but has not been acknowledged by the bank
+  INITIATED = 17;                       // the transaction has been initiated but the result is unknown, this may be the final status and may not get updated later
+}
+
+message Transaction {
+  string id = 1;                                // Transaction ID.
+  TransactionType type = 2;                     // Debit or credit
+  TransactionStatus status = 3;                 // Status. For example, SUCCESS or FAILURE_CANCELED
+  io.token.proto.common.money.Money amount = 4; // Transaction amount.
+  string description = 5 [(io.token.proto.extensions.field.redact) = true]; // Optional description
+
+  string token_id = 6;                          // Points to the token, only set for Token transactions.
+  string token_transfer_id = 7;                 // Points to the token transfer, only set for Token transactions.
+  int64 created_at_ms = 8;                      // Creation time
+
+  map<string, string> metadata = 9 [(io.token.proto.extensions.field.redact) = true]; // Additional fields. Optional.
+  providerspecific.ProviderTransactionDetails provider_transaction_details = 10;
+}
+
+message Balance {
+  string account_id = 1;
+  io.token.proto.common.money.Money current = 2;
+  io.token.proto.common.money.Money available = 3;
+  int64 updated_at_ms = 4;
+  repeated TypedBalance other_balances = 5; // optional
+
+  message TypedBalance {
+    string type = 1;
+    io.token.proto.common.money.Money amount = 2;
+    int64 updated_at_ms = 3;
+  }
+}
+
+enum RequestStatus {
+  INVALID_REQUEST = 0;
+  SUCCESSFUL_REQUEST = 1;     // success
+  MORE_SIGNATURES_NEEDED = 2; // failed, needed to use a PRIVILEGED key
+}
+
+// Represents a standing order as defined by the bank.
+message StandingOrder {
+  string id = 1;                                // Standing order ID defined by the bank
+  Status status = 2;
+  string token_id = 3;                          // Points to the token, only set for Token standing orders.
+  string token_submission_id = 4;               // Points to the token submission, only set for Token standing orders.
+  int64 created_at_ms = 5;                      // CreationTime
+  providerspecific.ProviderStandingOrderDetails provider_standing_order_details = 6;
+
+  enum Status {
+    INVALID = 0;
+    ACTIVE = 1;
+    INACTIVE = 2;
+    PROCESSING = 3;
+    FAILED = 4;
+  }
+}

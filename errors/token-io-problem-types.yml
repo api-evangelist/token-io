@@ -1,0 +1,154 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  https://docs.token.io/products/tpp/integration-considerations/api-basics (Error codes section),
+  enriched from the 4xx/5xx responses declared in openapi/token-io-rest-api-swagger.json and
+  openapi/token-io-*-api-openapi.yml
+provider: Token.io
+providerId: token-io
+format: proprietary
+rfc9457: false
+description: >-
+  Token.io's error surface is a gRPC status space projected onto HTTP. The platform is
+  gRPC-internally and the REST API is its gateway, so the canonical error identity is the gRPC
+  enum and the HTTP status is the projection. Errors are returned as text by default; adding
+  `token-json-error: true` to the request switches the body to the JSON envelope below. It is not
+  RFC 9457 — there is no `type` URI, no `title`/`detail` split and no application/problem+json
+  content type.
+envelope:
+  opt_in_header: 'token-json-error: true'
+  content_type: application/json
+  example:
+    error:
+      code: 504
+      message: Deadline exceeded
+      token_trace_id: 123456asdf
+      error_origin: bank
+  fields:
+    - name: code
+      description: The server error code.
+    - name: message
+      description: String form of the gRPC error enum.
+    - name: token_trace_id
+      description: >-
+        Unique per request/response flow, propagated to the bank and retained across the payment's
+        lifecycle. Quote it on support tickets.
+    - name: error_origin
+      description: Where the failure originated — bank or Token.io.
+  companion_header:
+    name: token-external-error
+    description: >-
+      Set to "true" only when a 5xx originated at the bank. Not populated when a Token.io internal
+      service fails or when the bank returns a 4xx, so absence must be read as "false". Token.io
+      recommends relying on it for 5xx only.
+http_statuses:
+  - status: 400
+    title: Bad request
+    detail: >-
+      Likely client error. Possible error objects: FieldError (an error relating to the debtor
+      bank), PanDetectedError (a PAN was detected in the submitted initiation payload —
+      PanDetected), TokenBankError (an error relating to the debtor bank).
+    remediation: Fix the payload. Do not retry unchanged.
+  - status: 401
+    title: Unauthorized
+    detail: The request does not carry valid authentication credentials for the operation.
+    remediation: Re-sign the JWT; check `exp` (under 10 minutes is recommended) and that the key is enrolled.
+  - status: 403
+    title: Forbidden / PermissionDenied
+    detail: >-
+      The member is not authorized for the operation. Accompanied by the bank's reason. Typically
+      the user's bank access token has expired.
+    remediation: Send the user back through bank authentication to obtain fresh consent.
+  - status: 404
+    title: Resource.NotFound
+    detail: The requested resource — for example the given payment — cannot be found.
+  - status: 429
+    title: Too many requests
+    detail: Resource exhausted.
+    remediation: Back off and retry. No RateLimit-* headers are returned; see rate-limits/.
+  - status: 500
+    title: Internal server error
+    detail: >-
+      Ambiguous by design: either Token.io or the bank. Read the token-external-error response
+      header to tell them apart.
+    remediation: Retry when token-external-error is true; escalate with the tokenTraceId otherwise.
+  - status: 501
+    title: Not implemented
+    detail: The operation is not implemented, supported or enabled BY THE BANK.
+    remediation: >-
+      Filter bank selection on bankfeatures via GET /v2/banks (GatewayService.GetBanksv2) so the
+      operation is never attempted against a bank that does not support it.
+  - status: 503
+    title: Service unavailable
+    detail: Likely transient.
+    remediation: Retry.
+  - status: 504
+    title: Gateway timeout
+    detail: The deadline expired before the operation could complete.
+    remediation: >-
+      Poll the resource rather than resending the write — Token.io publishes no idempotency key,
+      so a blind retry of a payment initiation is not protected against duplication.
+grpc_statuses:
+  - name: OK
+    code: 0
+    meaning: Operation completed successfully.
+  - name: CANCELED
+    code: 1
+    meaning: Operation was canceled, typically by the caller.
+  - name: UNKNOWN
+    code: 2
+    meaning: >-
+      Unknown error. The notable special case: an `access_denied` returned by the bank lands here,
+      which is what a user cancelling, rejecting or failing to give consent looks like.
+  - name: INVALID_ARGUMENTS
+    code: 3
+    meaning: Client specified an incomplete argument.
+  - name: DEADLINE_EXCEEDED
+    code: 4
+    meaning: Deadline expired before the operation could complete (see the request-timeout header).
+  - name: NOT_FOUND
+    code: 5
+    meaning: Requested entity was not found.
+  - name: ALREADY_EXISTS
+    code: 6
+    meaning: Attempt to create an entity that already exists.
+  - name: PERMISSION_DENIED
+    code: 7
+    meaning: >-
+      Caller lacks permission. Accompanied by the bank's reason; typically the access token expired
+      and the user must re-authenticate with the bank.
+  - name: RESOURCE_EXHAUSTED
+    code: 8
+    meaning: A quota is exhausted. This is the 429 case.
+  - name: FAILED_PRECONDITION
+    code: 9
+    meaning: Rejected because the current system state cannot support execution.
+  - name: ABORTED
+    code: 10
+    meaning: Aborted, typically a concurrency issue.
+  - name: OUT_OF_RANGE
+    code: 11
+    meaning: The operation exceeds the valid range.
+  - name: UNIMPLEMENTED
+    code: 12
+    meaning: >-
+      Not implemented/supported/enabled. This is the "bank error" code — the bank does not support
+      the payment or account-information operation requested.
+  - name: INTERNAL
+    code: 13
+    meaning: Internal error, at Token.io or at the bank. Disambiguate with token-external-error.
+  - name: UNAVAILABLE
+    code: 14
+    meaning: Service unavailable, likely transient; usually corrected with a retry.
+  - name: DATA_LOSS
+    code: 15
+    meaning: Unrecoverable data loss or corruption.
+  - name: UNAUTHENTICATED
+    code: 16
+    meaning: The request lacks valid authentication credentials.
+summary:
+  http_statuses: 8
+  grpc_statuses: 17
+  rfc9457: false
+  machine_readable_envelope: true
+  envelope_is_opt_in: true

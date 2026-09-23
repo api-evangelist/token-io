@@ -1,8 +1,14 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  version: "1.0"
-  title: Token.io's Open Banking API for TPPs Account on File Verification API
-  description: '<b>Token.io''s Open Banking API</b><br/><br/>Token.io Support: <a href="https://support.token.io" target="_blank">support.token.io</a><br/><br/>The Token.io Open Banking API enables you to connect securely with banks for a range of services.<br/><br/> Using our API you can: <ul><li>provide authorized access to an authenticated user''s account information</li><li>get information on specific banks</li><li>initiate authorization with a user-selected bank</li><li>initate and track single immediate payments and future dated payments</li><li>use variable recurring payments (VRP) to grant long-held consents to Payment Initiation Service Providers (PISPs) to initiate series of payments from users'' bank accounts</li><li>carry out settlements, payments and refunds using our settlement accounts</li></ul><br/>For more information see our <a href="https://developer.token.io/token_rest_api_doc/content/e-rest/dashboard-intro.htm" target="_blank">developer documentation</a>.'
+  title: Token.io's Open Banking API for TPPs Verification API
+  description: 'Token.io''s Open Banking API
+
+
+    Token.io Support: support.token.io
+
+
+    The Token.io Open Banking API enables you to connect securely with banks for a range of services.'
+  version: ''
 servers:
 - url: https://api.token.io
 tags:
@@ -91,18 +97,6 @@ paths:
       - BasicAuth: []
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A description of the error.
-          example: This is a description of the error.
-        tokenTraceId:
-          type: string
-          description: The trace identifier for the given call.
-          example: '5678912345'
-      description: The request does not have valid authentication credentials needed to perform the operation.
     inline_response_400:
       type: object
       properties:
@@ -141,6 +135,18 @@ components:
             > **Conditional** - If this verification check is independent of a Token provided settlement account, this should **NOT** be provided.
 
             '
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: The request does not have valid authentication credentials needed to perform the operation.
     AccountVerificationResponse:
       type: object
       required:

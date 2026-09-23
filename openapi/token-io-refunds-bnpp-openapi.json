@@ -1,0 +1,2473 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Token.io Refunds API",
+    "description": "Token.io Payments REST API 2.0 <br/><br/>Token.io Support: <a href=\"mailto:support@token.io\">support@token.io</a><br/><br/>The Token.io Payments API enables you to connect securely with banks. Using our API you can handle registration, posting, and retrieval of refunds associated with original transaction account information.<br/>For more information see our <a href=\"https://developer.token.io/bnpp_rest_api_doc/content/e-rest/pis/reverse-payment-bnpp.htm\" target=\"_blank\">developer documentation</a>.",
+    "version": "1.0.2"
+  },
+  "servers": [
+    {
+      "url": "https://virtserver.swaggerhub.com/token/token-refund-rest-api-bnpp/1.0.2",
+      "description": "SwaggerHub API Auto Mocking"
+    },
+    {
+      "url": "https://api.token.io/v2",
+      "description": "Token.io API server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Refunds",
+      "description": "Using these endpoints you can handle registration, posting, and retrieval of refunds associated with original transaction account information."
+    }
+  ],
+  "paths": {
+    "/refund/registrations": {
+      "post": {
+        "tags": [
+          "Refunds"
+        ],
+        "summary": "Register a debtor account for refund",
+        "description": "Registers a debtor account for refund processing. </br> If the bank or provider returns any additional credentials for further refund payments, Token.io will store them in the Hardware Security Module (HSM).",
+        "operationId": "RefundRegister",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/refund_registrations_body"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PayoutRegisterResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The client specified an invalid argument",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The authorisation information is missing or invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Permission to access this endpoint is denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested entity, such as a payment, was not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_404"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_429"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected or internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_500"
+                }
+              }
+            }
+          },
+          "501": {
+            "description": "The operation was not implemented",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_501"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service is unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_503"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway has timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_504"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ],
+        "x-hideTryItPanel": true
+      }
+    },
+    "/refund/registrations/{registrationId}": {
+      "get": {
+        "tags": [
+          "Refunds"
+        ],
+        "summary": "Retrieve refund registration information",
+        "description": "Retrieves the current refund registration information by registration id.",
+        "operationId": "GetRefundRegistration",
+        "parameters": [
+          {
+            "name": "registrationId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "description": "The registration id.",
+              "example": "your registration id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetPayoutRegistrationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The client specified an invalid argument",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The authorisation information is missing or invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Permission to access this endpoint is denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested entity, such as a payment, was not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_404"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_429"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected or internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_500"
+                }
+              }
+            }
+          },
+          "501": {
+            "description": "The operation was not implemented",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_501"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service is unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_503"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway has timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_504"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ],
+        "x-hideTryItPanel": true
+      },
+      "delete": {
+        "tags": [
+          "Refunds"
+        ],
+        "summary": "Delete refund registration information",
+        "description": "Deletes refund registration information by registration id.",
+        "operationId": "DeleteRefundRegistration",
+        "parameters": [
+          {
+            "name": "registrationId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "description": "The registration id.",
+              "example": "your registration id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmptyResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The client specified an invalid argument",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The authorisation information is missing or invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Permission to access this endpoint is denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested entity, such as a payment, was not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_404"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_429"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected or internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_500"
+                }
+              }
+            }
+          },
+          "501": {
+            "description": "The operation was not implemented",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_501"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service is unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_503"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway has timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_504"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ],
+        "x-hideTryItPanel": true
+      }
+    },
+    "/refunds": {
+      "get": {
+        "tags": [
+          "Refunds"
+        ],
+        "summary": "Retrieve refunds",
+        "description": "Retrieves a complete or filtered list of refunds.",
+        "operationId": "GetRefunds",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of records to return.",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 10
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "The offset from the previous page.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": ""
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "Lower bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or after the given date will be returned.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2010-01-01"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "Upper bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or before the given date will be returned.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2010-01-01"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The client specified an invalid argument",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The authorisation information is missing or invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Permission to access this endpoint is denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested entity, such as a payment, was not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_404"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_429"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected or internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_500"
+                }
+              }
+            }
+          },
+          "501": {
+            "description": "The operation was not implemented",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_501"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service is unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_503"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway has timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_504"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ],
+        "x-hideTryItPanel": true
+      },
+      "post": {
+        "tags": [
+          "Refunds"
+        ],
+        "summary": "Initiate a refund",
+        "description": "Initiates a refund. After the refund is settled, the refund status of the original transfer will be updated. <br/> The debtor field can be optional if you're using the debtor in registration. The creditor field can be optional if the information is available in the original payment.",
+        "operationId": "InitiateRefund",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/refunds_body"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The client specified an invalid argument",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The authorisation information is missing or invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Permission to access this endpoint is denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested entity, such as a payment, was not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_404"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_429"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected or internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_500"
+                }
+              }
+            }
+          },
+          "501": {
+            "description": "The operation was not implemented",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_501"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service is unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_503"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway has timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_504"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ],
+        "x-hideTryItPanel": true
+      }
+    },
+    "/refunds/signature": {
+      "post": {
+        "tags": [
+          "Refunds"
+        ],
+        "summary": "Build the payload a merchant has to sign for a refund",
+        "description": "Returns the provider payload the merchant has to sign before calling <code>POST /refunds</code>. Stateless: no refund is created and nothing is persisted by this call. </br> The merchant signs the returned <code>payloadToSign</code> and submits the signature back in the <code>signature</code> field of the <code>initiation</code> on the subsequent <code>POST /refunds</code> call.",
+        "operationId": "GenerateRefundSigningPayload",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/refunds_body"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenerateRefundSigningPayloadResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The client specified an invalid argument",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The authorisation information is missing or invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Permission to access this endpoint is denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested entity, such as a payment, was not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_404"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_429"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected or internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_500"
+                }
+              }
+            }
+          },
+          "501": {
+            "description": "The operation was not implemented",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_501"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service is unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_503"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway has timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_504"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ],
+        "x-hideTryItPanel": true
+      }
+    },
+    "/refunds/{id}": {
+      "get": {
+        "tags": [
+          "Refunds"
+        ],
+        "summary": "Retrieve a Refund",
+        "description": "Retrieves a refund by the id.",
+        "operationId": "GetRefund",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "description": "The refund id.",
+              "example": "your refund id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The client specified an invalid argument",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The authorisation information is missing or invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Permission to access this endpoint is denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested entity, such as a payment, was not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_404"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_429"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected or internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_500"
+                }
+              }
+            }
+          },
+          "501": {
+            "description": "The operation was not implemented",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_501"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service is unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_503"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway has timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_504"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/transfers/{id}/refunds": {
+      "get": {
+        "tags": [
+          "Refunds"
+        ],
+        "summary": "Retrieve all refunds by transfer",
+        "description": "Retrieves all the refunds associated with the given transfer.",
+        "operationId": "GetTransferRefunds",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of records to return.",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 10
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "The offset from the previous page.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": ""
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "description": "The transfer id.",
+              "example": "your transfer id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The client specified an invalid argument",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The authorisation information is missing or invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Permission to access this endpoint is denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested entity, such as a payment, was not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_404"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_429"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected or internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_500"
+                }
+              }
+            }
+          },
+          "501": {
+            "description": "The operation was not implemented",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_501"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service is unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_503"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway has timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_504"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ],
+        "x-hideTryItPanel": true
+      }
+    },
+    "/secrets/upload/key-and-certificate": {
+      "post": {
+        "tags": [
+          "Refunds"
+        ],
+        "summary": "Upload private key and certificate",
+        "description": "Uploads a private key and certificate.       ",
+        "operationId": "UploadKeyAndCertificate",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadKeyAndCertificate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadKeyAndCertificateResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The client specified an invalid argument",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The authorisation information is missing or invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Permission to access this endpoint is denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested entity, such as a payment, was not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_404"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_429"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected or internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_500"
+                }
+              }
+            }
+          },
+          "501": {
+            "description": "The operation was not implemented",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_501"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service is unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_503"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway has timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_504"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ],
+        "x-hideTryItPanel": true
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RefundResponse": {
+        "type": "object",
+        "properties": {
+          "refund": {
+            "$ref": "#/components/schemas/Refund"
+          }
+        }
+      },
+      "GenerateRefundSigningPayloadResponse": {
+        "type": "object",
+        "properties": {
+          "payloadToSign": {
+            "type": "string",
+            "description": "Base64 of the provider payload the merchant has to sign.",
+            "example": "eyJncm91cEhlYWRlciI6e319"
+          }
+        }
+      },
+      "RefundsResponse": {
+        "type": "object",
+        "properties": {
+          "refunds": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Refund"
+            }
+          },
+          "paging": {
+            "$ref": "#/components/schemas/Paging"
+          }
+        }
+      },
+      "UploadKeyAndCertificateResponse": {
+        "type": "object",
+        "properties": {
+          "keyId": {
+            "type": "string",
+            "description": "The unique identifier for the key.",
+            "example": "XXXXXXX"
+          }
+        }
+      },
+      "Paging": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "description": "The limit (maximum number of records to return) that was sent in the request. If the actual number of returned records is less then the limit, there are no more records left to fetch. <br>The maximum allowed limit is 200. If the passed limit is bigger than this, it will be set to 200.",
+            "format": "int32"
+          },
+          "offset": {
+            "type": "string",
+            "description": "The offset for the next page."
+          }
+        }
+      },
+      "Amount": {
+        "required": [
+          "currency",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": "The double amount in a string format.",
+            "example": "10.23"
+          },
+          "currency": {
+            "type": "string",
+            "description": "The <a href=\"https://www.iso.org/iso-4217-currency-codes.html\" target=\"_blank\">ISO 4217</a> three letter currency code.",
+            "example": "EUR"
+          }
+        }
+      },
+      "BnppDebtorInformation": {
+        "description": "The debtor information. Account information (one of) is required.",
+        "allOf": [
+          {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SepaAccount"
+              },
+              {
+                "$ref": "#/components/schemas/FasterPaymentsAccount"
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The owner name for the debtor account.",
+                "example": "John Smith"
+              },
+              "ultimateDebtorName": {
+                "type": "string",
+                "description": "The ultimate debtor name.",
+                "example": "John Smith"
+              }
+            }
+          }
+        ]
+      },
+      "Address": {
+        "type": "object",
+        "properties": {
+          "streetName": {
+            "type": "string",
+            "description": "Street number",
+            "example": "221B"
+          },
+          "buildingNumber": {
+            "type": "string",
+            "description": "Building number",
+            "example": "2C"
+          },
+          "postCode": {
+            "type": "string",
+            "description": "Post Code",
+            "example": "E1 6AN"
+          },
+          "townName": {
+            "type": "string",
+            "description": "Town name",
+            "example": "Saint Ives"
+          },
+          "country": {
+            "type": "string",
+            "description": "Country",
+            "example": "United Kingdom"
+          }
+        },
+        "description": "Address"
+      },
+      "CreditorInformation": {
+        "description": "The creditor information. Account account information (one of) is required.",
+        "allOf": [
+          {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SepaAccount"
+              },
+              {
+                "$ref": "#/components/schemas/FasterPaymentsAccount"
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The owner name for the creditor account.",
+                "example": "Customer Inc."
+              },
+              "ultimateCreditorName": {
+                "type": "string",
+                "description": "The ultimate creditor name.",
+                "example": "Customer Inc."
+              },
+              "address": {
+                "$ref": "#/components/schemas/Address"
+              }
+            }
+          }
+        ]
+      },
+      "SepaAccount": {
+        "title": "SepaAccount",
+        "required": [
+          "bic",
+          "iban"
+        ],
+        "type": "object",
+        "properties": {
+          "iban": {
+            "type": "string",
+            "example": "GB82WEST12345698765432"
+          },
+          "bic": {
+            "type": "string",
+            "description": "The bic for debtor bank.",
+            "example": "mybic"
+          }
+        }
+      },
+      "FasterPaymentsAccount": {
+        "title": "FasterPaymentsAcount",
+        "required": [
+          "accountNumber",
+          "sortCode"
+        ],
+        "type": "object",
+        "properties": {
+          "accountNumber": {
+            "type": "string",
+            "example": "12345678"
+          },
+          "sortCode": {
+            "type": "string",
+            "example": "123456"
+          }
+        }
+      },
+      "PayoutRegisterResponse": {
+        "type": "object",
+        "properties": {
+          "registration": {
+            "$ref": "#/components/schemas/Registration"
+          }
+        }
+      },
+      "BnppRegistrationPayload": {
+        "title": "BnppRegistrationPayload",
+        "type": "object",
+        "properties": {
+          "bnpp": {
+            "$ref": "#/components/schemas/BnppRegistrationPayload_bnpp"
+          }
+        }
+      },
+      "GetPayoutRegistrationResponse": {
+        "type": "object",
+        "properties": {
+          "registration": {
+            "$ref": "#/components/schemas/Registration"
+          }
+        }
+      },
+      "Registration": {
+        "required": [
+          "createdDateTime",
+          "id",
+          "product",
+          "registration"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "registration id is the id user gets from the post registration end point.",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdDateTime": {
+            "type": "string",
+            "description": "The time when this registraion object was created (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format).",
+            "example": "2017-04-05T10:43:07.000+00:00"
+          },
+          "product": {
+            "type": "string",
+            "description": "REFUND",
+            "example": "REFUND"
+          }
+        },
+        "allOf": [
+          {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/BnppRegistrationPayload"
+              }
+            ]
+          }
+        ]
+      },
+      "EmptyResponse": {
+        "type": "object",
+        "properties": {}
+      },
+      "RefundInitiation": {
+        "required": [
+          "amount",
+          "localInstrument",
+          "originalPaymentId",
+          "paymentType",
+          "refId",
+          "registrationId"
+        ],
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "Description for the refund.",
+            "example": "refund for some reason"
+          },
+          "refId": {
+            "type": "string",
+            "description": "The reference id from the customer.",
+            "example": "myRefId"
+          },
+          "amount": {
+            "$ref": "#/components/schemas/Amount"
+          },
+          "originalPaymentId": {
+            "type": "string",
+            "description": "The original payment id from Token.io payments/transfers. This is required to initiate a refund. Token.io will check the original payment for the refund validation.",
+            "example": "t:sdsds:sdsd"
+          },
+          "registrationId": {
+            "type": "string",
+            "description": "The registraion id.",
+            "example": "regId"
+          },
+          "localInstrument": {
+            "type": "string",
+            "description": "ASPSP's payment service to be used for making a payment.",
+            "example": "SEPA_INSTANT",
+            "enum": [
+              "SEPA",
+              "SEPA_INSTANT",
+              "FASTER_PAYMENT"
+            ]
+          },
+          "signature": {
+            "type": "string",
+            "description": "Base64 of the merchant signature over the payload returned by <code>POST /refunds/signature</code>. Token.io forwards it to the bank.",
+            "example": "MEUCIQDx..."
+          }
+        },
+        "description": "The Initiation payload for the refund."
+      },
+      "ResolvedRefundInitiation": {
+        "required": [
+          "amount",
+          "creditor",
+          "debtor",
+          "localInstrument",
+          "originalPaymentId",
+          "paymentType",
+          "refId",
+          "registrationId"
+        ],
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "Description for the refund.",
+            "example": "refund for some reason"
+          },
+          "refId": {
+            "type": "string",
+            "description": "The reference id from the customer.",
+            "example": "myRefId"
+          },
+          "amount": {
+            "$ref": "#/components/schemas/Amount"
+          },
+          "originalPaymentId": {
+            "type": "string",
+            "description": "The original payment id from Token.io payments/transfers. This is required to initiate a refund. Token.io will check the original payment for the refund validation.",
+            "example": "t:sdsds:sdsd"
+          },
+          "registrationId": {
+            "type": "string",
+            "description": "The registraion id.",
+            "example": "regId"
+          },
+          "localInstrument": {
+            "type": "string",
+            "description": "ASPSP's payment service to be used for making a payment.",
+            "example": "SEPA_INSTANT",
+            "enum": [
+              "SEPA",
+              "SEPA_INSTANT",
+              "FASTER_PAYMENT"
+            ]
+          },
+          "debtor": {
+            "$ref": "#/components/schemas/BnppDebtorInformation"
+          },
+          "creditor": {
+            "$ref": "#/components/schemas/CreditorInformation"
+          }
+        },
+        "description": "The Initiation payload for the refund."
+      },
+      "Refund": {
+        "required": [
+          "createdDateTime",
+          "id",
+          "memberId",
+          "status",
+          "updatedDateTime"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Token.io generated refund id.",
+            "example": "rf:12345abcd:abcd"
+          },
+          "bankTransactionId": {
+            "type": "string",
+            "description": "The transaction id from the bank side. Can be empty if it is not available from the bank side.",
+            "example": "1231423"
+          },
+          "memberId": {
+            "type": "string",
+            "description": "Token.io member id of the customer initiating this refund.",
+            "example": "m:123456abcd:abcd"
+          },
+          "createdDateTime": {
+            "type": "string",
+            "description": "The time when this refund object was created (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format).",
+            "example": "2017-04-05T10:43:07.000+00:00"
+          },
+          "updatedDateTime": {
+            "type": "string",
+            "description": "The last update time for the current status, sub status, status reason information and authentication (in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601</a> format).",
+            "example": "2017-04-05T10:45:07.000+00:00"
+          },
+          "status": {
+            "$ref": "#/components/schemas/RefundStatus"
+          },
+          "bankPaymentStatus": {
+            "type": "string",
+            "description": "The raw bank status. This field could be empty if no payment status is available on bank side.",
+            "example": "ACPC"
+          },
+          "statusReasonInformation": {
+            "type": "string",
+            "description": "A human-readable description of the reason behind the status.",
+            "example": "The payment is settled on debtor side."
+          },
+          "initiation": {
+            "$ref": "#/components/schemas/ResolvedRefundInitiation"
+          }
+        },
+        "description": "The refund object."
+      },
+      "RefundStatus": {
+        "type": "string",
+        "description": "The Token.io Refund Initiation Status. <br/><br/> <b>INITIATION_PENDING</b> - Token.io has received the refund initiation and the initiation passed Token.io validation. <br/><br/> <b>INITIATION_PROCESSING</b> - the refund is processing on the bank side. Status can be updated to one of INITIATION_COMPLETED, INITIATION_REJECTED or INITIATION_FAILED. If the status is never updated by the bank within certain period of time, the status will stay INITIATION_PROCESSING forever and the corresponding status reason information field will reflect this fact.<br/><br/> <b>INITIATION_COMPLETED</b> - the refund initiation is successful. This does not guarantee the refund is settled.<br/><br/> <b>INITIATION_REJECTED</b> - the refund is rejected by the bank. More details are shared in the corresponding status reason information.  <br/><br/> <b>INITIATION_FAILED</b> - Token.io failed to create the initiation due to failures on the bank side, <i>e.g.</i> the bank is not available at the moment. <br/><br/> <b>INITIATION_NO_FINAL_STATUS_AVAILABLE</b> - The payment status has not been updated for some time and Token.io has stopped polling it. The recommended maximum polling time is 30 days. The status will change to INITIATION_NO_FINAL_STATUS_AVAILABLE after 30 days if the bank does not update the status. This is a final status, but it does not indicate success or failure. Please contact the bank to check the actual status of the payment.",
+        "example": "INITIATION_COMPLETED",
+        "default": "INITIATION_PENDING",
+        "enum": [
+          "INITIATION_PENDING",
+          "INITIATION_PROCESSING",
+          "INITIATION_COMPLETED",
+          "INITIATION_REJECTED",
+          "INITIATION_FAILED",
+          "INITIATION_NO_FINAL_STATUS_AVAILABLE"
+        ]
+      },
+      "UploadKeyAndCertificate": {
+        "type": "object",
+        "properties": {
+          "upload": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/keyAndCertificate"
+              },
+              {
+                "$ref": "#/components/schemas/keys"
+              }
+            ]
+          }
+        },
+        "description": "Upload a key and certificate."
+      },
+      "keyAndCertificate": {
+        "type": "object",
+        "properties": {
+          "keyAndCertificate": {
+            "$ref": "#/components/schemas/keyAndCertificate_keyAndCertificate"
+          }
+        },
+        "description": "The private key and certificate."
+      },
+      "keys": {
+        "type": "object",
+        "properties": {
+          "keys": {
+            "$ref": "#/components/schemas/keys_keys"
+          }
+        },
+        "description": "The private and public keys to be uploaded."
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "A description of the error.",
+            "example": "This is a description of the error."
+          },
+          "tokenTraceId": {
+            "type": "string",
+            "description": "The Token.io trace id.",
+            "example": "5678912345"
+          }
+        },
+        "description": "The request does not have valid authentication credentials needed to perform the operation."
+      },
+      "ErrorWithCode": {
+        "required": [
+          "errorCode",
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "string",
+            "description": "A textual error code categorising the error.",
+            "example": "InternalServerError"
+          },
+          "message": {
+            "type": "string",
+            "description": "A description of the error that occurred and a possible way to fix it.",
+            "example": "RefId should not be longer than 35 symbols."
+          }
+        },
+        "description": "Error object providing details about the error.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Error"
+          }
+        ]
+      },
+      "FieldError": {
+        "title": "FieldError",
+        "type": "object",
+        "description": "An error object providing details about an error caused by a particular field or fields in the request. Possible error code values include: <br/><br/>\n    <b>Field.NotUnique</b> - The field value should be unique, but it isn't.<br/><br/>\n    <b>Field.Expected</b> - A field is expected/required but is missing altogether. <br/><br/>\n    <b>Field.InvalidFormat</b> - A field is present but has an invalid format. This includes invalid value type (<i>e.g.</i>, not a number where a number is expected) and an invalid format (<i>e.g.</i>, a value is too long). <br/><br/>\n    <b>Field.Invalid</b> - A field is present but has an invalid value. This covers all cases, where a field is present and invalid, that are not covered by `Field.InvalidFormat`.\"              ",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ErrorWithCode"
+          }
+        ]
+      },
+      "PaymentNotFoundError": {
+        "required": [
+          "paymentId"
+        ],
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "example": "NOT_FOUND"
+          },
+          "paymentId": {
+            "type": "string",
+            "description": "The requested entity, the `paymentID`, was not found.",
+            "example": "pm2:12345abcd:abcde"
+          }
+        },
+        "description": "The error object returned when given payment cannot be found: Resource.NotFound.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ErrorWithCode"
+          }
+        ]
+      },
+      "PemissionDeniedError": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "example": "PermissionDenied"
+          }
+        },
+        "description": "The error returned when the member is not authorised to perform the given operation: PermissionDenied. <br/>This error message will be accompanied by the reason from the bank. Typically this means the access token has expired and the TPP needs the user to re-authenticate with the bank.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ErrorWithCode"
+          }
+        ]
+      },
+      "ResourceExhaustedError": {
+        "required": [
+          "paymentId"
+        ],
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "example": "RESOURCE_EXHAUSTED"
+          },
+          "paymentId": {
+            "type": "string",
+            "description": "The maximum number of requests has been reached.",
+            "example": "Resource exhausted. Check quota."
+          }
+        },
+        "description": "Resource exhausted. Too many requests.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ErrorWithCode"
+          }
+        ]
+      },
+      "NotImplementedError": {
+        "required": [
+          "paymentId"
+        ],
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "example": "UNIMPLEMENTED"
+          },
+          "paymentId": {
+            "type": "string",
+            "description": "The operation was not implemented/supported/enabled by the bank.",
+            "example": "Not implemented."
+          }
+        },
+        "description": "The operation was not implemented/supported/enabled by the bank.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ErrorWithCode"
+          }
+        ]
+      },
+      "ServiceUnavailableError": {
+        "required": [
+          "paymentId"
+        ],
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "example": "UNAVAILABLE"
+          },
+          "paymentId": {
+            "type": "string",
+            "description": "The service is unavailable, likely due to a transient condition; this is usually corrected with a retry.",
+            "example": "Unavailable."
+          }
+        },
+        "description": "Service is unavailable, likely due to a transient condition; this is usually corrected with a retry.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ErrorWithCode"
+          }
+        ]
+      },
+      "GatewayTimeoutError": {
+        "required": [
+          "paymentId"
+        ],
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "example": "DEADLINE_EXCEEDED"
+          },
+          "paymentId": {
+            "type": "string",
+            "description": "The deadline expired before the operation could complete.",
+            "example": "Deadline exceeded."
+          }
+        },
+        "description": "The deadline expired before the operation could complete.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ErrorWithCode"
+          }
+        ]
+      },
+      "ServerError": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "A description of the error.",
+            "example": "This is a description of the error."
+          },
+          "tokenTraceId": {
+            "type": "string",
+            "description": "The Token.io trace id.",
+            "example": "5678912345"
+          }
+        },
+        "description": "This could refer to either an error on Token.io\u2019s end or an error on the bank side. When the bank reports a 5xx error, Token sets `token-external-error` = true as a header in the HTTP response, indicating that the \"internal\" error originates from the bank. When one of Token.io's internal services fails or when the bank reports a 4xx error, this header is not populated. The absence of this response header should be interpreted as `token-external-error` = false."
+      },
+      "refund_registrations_body": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/BnppRegistrationPayload"
+          }
+        ]
+      },
+      "inline_response_400": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      },
+      "inline_response_403": {
+        "required": [
+          "error"
+        ],
+        "type": "object",
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/PemissionDeniedError"
+          }
+        }
+      },
+      "inline_response_404": {
+        "required": [
+          "error"
+        ],
+        "type": "object",
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/PaymentNotFoundError"
+          }
+        }
+      },
+      "inline_response_429": {
+        "required": [
+          "error"
+        ],
+        "type": "object",
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ResourceExhaustedError"
+          }
+        }
+      },
+      "inline_response_500": {
+        "properties": {
+          "error": {
+            "allOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "errorCode": {
+                    "type": "string",
+                    "description": "This is a textual error code categorising the error.",
+                    "example": "InternalServerError"
+                  }
+                }
+              },
+              {
+                "$ref": "#/components/schemas/ServerError"
+              }
+            ]
+          }
+        }
+      },
+      "inline_response_501": {
+        "required": [
+          "error"
+        ],
+        "type": "object",
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/NotImplementedError"
+          }
+        }
+      },
+      "inline_response_503": {
+        "required": [
+          "error"
+        ],
+        "type": "object",
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ServiceUnavailableError"
+          }
+        }
+      },
+      "inline_response_504": {
+        "required": [
+          "error"
+        ],
+        "type": "object",
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/GatewayTimeoutError"
+          }
+        }
+      },
+      "refunds_body": {
+        "required": [
+          "initiation"
+        ],
+        "type": "object",
+        "properties": {
+          "initiation": {
+            "$ref": "#/components/schemas/RefundInitiation"
+          }
+        }
+      },
+      "BnppRegistrationPayload_bnpp": {
+        "required": [
+          "appId",
+          "appSecret",
+          "debtor"
+        ],
+        "type": "object",
+        "properties": {
+          "appId": {
+            "type": "string",
+            "description": "The app id from BNPP registration.",
+            "example": "myAppId"
+          },
+          "appSecret": {
+            "type": "string",
+            "description": "The app secret from BNPP registration.",
+            "example": "myAppSecret"
+          },
+          "signingKeyId": {
+            "type": "string",
+            "description": "The signing key id from BNPP registration. Not required at registration time, but must be set before initiating a merchant-signed refund: it identifies the key used to build the Signature header sent to BNPP.",
+            "example": "mySigningKeyId"
+          },
+          "tokenSigningKeyId": {
+            "type": "string",
+            "description": "An id that was generated by Token.io when the signing key was stored in Token.io system. Only required if this member is not using the merchant-signed refund path: Token.io uses it to self-sign refunds on the member's behalf via POST /secrets/upload/key-and-certificate.",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "debtor": {
+            "$ref": "#/components/schemas/BnppDebtorInformation"
+          }
+        }
+      },
+      "keyAndCertificate_keyAndCertificate": {
+        "type": "object",
+        "properties": {
+          "privateKey": {
+            "type": "string",
+            "description": "The key used for the refund.",
+            "example": "xxxxxxxx"
+          },
+          "certificate": {
+            "type": "string",
+            "description": "The certificate used for the refund.",
+            "example": "xxxxx"
+          },
+          "certificateName": {
+            "type": "string",
+            "description": "The name of the certificate used for the refund.",
+            "example": "QWAC_PSDGB-FCA-795904"
+          }
+        }
+      },
+      "keys_keys": {
+        "type": "object",
+        "properties": {
+          "privateKey": {
+            "type": "string",
+            "description": "The private key used for the refund.",
+            "example": "xxxxxxxx"
+          },
+          "publicKey": {
+            "type": "string",
+            "description": "The public key used for the refund.",
+            "example": "xxxxx"
+          }
+        }
+      }
+    },
+    "responses": {
+      "BadResponse": {
+        "description": "The client specified an invalid argument",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/inline_response_400"
+            }
+          }
+        }
+      },
+      "UnauthenticatedResponse": {
+        "description": "The authorisation information is missing or invalid",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/inline_response_400"
+            }
+          }
+        }
+      },
+      "UnexpectedErrorResponse": {
+        "description": "An unexpected or internal server error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/inline_response_500"
+            }
+          }
+        }
+      },
+      "PermissionDeniedResponse": {
+        "description": "Permission to access this endpoint is denied",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/inline_response_403"
+            }
+          }
+        }
+      },
+      "BadRequestResponse": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "required": [
+                "error"
+              ],
+              "type": "object",
+              "properties": {
+                "error": {
+                  "$ref": "#/components/schemas/FieldError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PaymentNotFoundResponse": {
+        "description": "The requested entity, such as a payment, was not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/inline_response_404"
+            }
+          }
+        }
+      },
+      "TooManyRequestsResponse": {
+        "description": "Too many requests",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/inline_response_429"
+            }
+          }
+        }
+      },
+      "NotImplementedResponse": {
+        "description": "The operation was not implemented",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/inline_response_501"
+            }
+          }
+        }
+      },
+      "ServiceUnavailableResponse": {
+        "description": "Service is unavailable",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/inline_response_503"
+            }
+          }
+        }
+      },
+      "GatewayTimeoutResponse": {
+        "description": "Gateway has timed out",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/inline_response_504"
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "Paging-Limit": {
+        "name": "limit",
+        "in": "query",
+        "description": "The maximum number of records to return.",
+        "required": true,
+        "style": "form",
+        "explode": true,
+        "schema": {
+          "maximum": 100,
+          "minimum": 1,
+          "type": "integer",
+          "format": "int32"
+        },
+        "example": 10
+      },
+      "Paging-Offset": {
+        "name": "offset",
+        "in": "query",
+        "description": "The offset from the previous page.",
+        "required": false,
+        "style": "form",
+        "explode": true,
+        "schema": {
+          "type": "string"
+        },
+        "example": ""
+      },
+      "FilterRefund-StartDate": {
+        "name": "startDate",
+        "in": "query",
+        "description": "Lower bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or after the given date will be returned.",
+        "required": false,
+        "style": "form",
+        "explode": true,
+        "schema": {
+          "type": "string"
+        },
+        "example": "2010-01-01"
+      },
+      "FilterRefund-EndDate": {
+        "name": "endDate",
+        "in": "query",
+        "description": "Upper bound for a refund creation date in the format 'YYYY-MM-DD' (UTC time zone). If specified, only refunds created at or before the given date will be returned.",
+        "required": false,
+        "style": "form",
+        "explode": true,
+        "schema": {
+          "type": "string"
+        },
+        "example": "2010-01-01"
+      },
+      "Consent-ID-Header": {
+        "name": "Consent-ID",
+        "in": "header",
+        "description": "The associated account info consent id.",
+        "required": true,
+        "style": "simple",
+        "explode": false,
+        "schema": {
+          "type": "string"
+        },
+        "example": "acount-info-consent-1234"
+      },
+      "PSU-IP-Address": {
+        "name": "PSU-IP-Address",
+        "in": "header",
+        "description": "The forwarded IP Address header field consists of the corresponding http request IP Address field between PSU and TPP. If not available, the TPP shall use the IP Address used by the TPP when submitting this request.",
+        "required": false,
+        "style": "simple",
+        "explode": false,
+        "schema": {
+          "type": "string",
+          "format": "ipv4"
+        },
+        "example": "192.168.8.78"
+      },
+      "PSU-User-Agent": {
+        "name": "PSU-User-Agent",
+        "in": "header",
+        "description": "The forwarded Agent header field of the HTTP request between PSU and TPP, if available.",
+        "required": false,
+        "style": "simple",
+        "explode": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "PSU-Device-ID": {
+        "name": "PSU-Device-ID",
+        "in": "header",
+        "description": "UUID (Universally Unique Identifier) for a device, which is used by the PSU, if available. UUID identifies either a device or a device dependant application installation. In case of an installation identification this ID needs to be unaltered until removal from device.",
+        "required": false,
+        "style": "simple",
+        "explode": false,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "example": "99435c7e-ad88-49ec-a2ad-99ddcb1f5555"
+      },
+      "PSU-Geo-Location": {
+        "name": "PSU-Geo-Location",
+        "in": "header",
+        "description": "The forwarded Geo Location of the corresponding http request between PSU and TPP if available.",
+        "required": false,
+        "style": "simple",
+        "explode": false,
+        "schema": {
+          "pattern": "GEO:-?[0-9]{1,2}\\.[0-9]{6};-?[0-9]{1,3}\\.[0-9]{6}",
+          "type": "string"
+        },
+        "example": "GEO:52.506931;13.144558"
+      },
+      "Account-ID": {
+        "name": "account_id",
+        "in": "path",
+        "description": "The account id. Available account ids can be found in the account info consent.",
+        "required": true,
+        "style": "simple",
+        "explode": false,
+        "schema": {
+          "type": "string"
+        },
+        "example": "1234567890"
+      },
+      "Transaction-ID": {
+        "name": "transaction_id",
+        "in": "path",
+        "description": "The account id. Available account ids can be found in the account info consent.",
+        "required": true,
+        "style": "simple",
+        "explode": false,
+        "schema": {
+          "type": "string"
+        },
+        "example": "1234567890"
+      },
+      "Payment-ID": {
+        "name": "payment_id",
+        "in": "path",
+        "description": "The payment id.",
+        "required": true,
+        "style": "simple",
+        "explode": false,
+        "schema": {
+          "type": "string"
+        },
+        "example": "1234567890"
+      },
+      "Standing-Order-ID": {
+        "name": "standing_order_id",
+        "in": "path",
+        "description": "The standing order id.",
+        "required": true,
+        "style": "simple",
+        "explode": false,
+        "schema": {
+          "type": "string"
+        },
+        "example": "1234567890"
+      },
+      "Consent-ID": {
+        "name": "consent_id",
+        "in": "path",
+        "description": "The consent id.",
+        "required": true,
+        "style": "simple",
+        "explode": false,
+        "schema": {
+          "type": "string"
+        },
+        "example": "1234567890"
+      },
+      "Start-Date": {
+        "name": "startDate",
+        "in": "query",
+        "description": "Optional lower bound for a transaction's booking date as returned by the bank, in the format 'YYYY-MM-DD' (<i>e.g.</i> '2016-01-01'). If specified, then only transactions whose bank booking date is equal to or later than the given date will be regarded.",
+        "required": false,
+        "style": "form",
+        "explode": true,
+        "schema": {
+          "type": "string",
+          "format": "date"
+        },
+        "example": "2020-12-12"
+      },
+      "End-Date": {
+        "name": "endDate",
+        "in": "query",
+        "description": "Optional upper bound for a transaction's booking date as returned by the bank (= original booking date), in the format 'YYYY-MM-DD' (<i>e.g.</i> '2016-01-01'). If specified, then only transactions whose bank booking date is equal to or earlier than the given date will be regarded.",
+        "required": false,
+        "style": "form",
+        "explode": true,
+        "schema": {
+          "type": "string",
+          "format": "date"
+        },
+        "example": "2020-12-24"
+      }
+    },
+    "securitySchemes": {
+      "BasicAuth": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      },
+      "Bearer": {
+        "type": "http",
+        "description": "Enter JWT Bearer token only (see <a href=\"https://developer.token.io/token_rest_api_doc/content/e-rest/integration_considerations.htm#JWT\" target=\"_blank\">Using JWT Authentication</a> for more information).",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

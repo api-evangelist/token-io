@@ -1,0 +1,181 @@
+syntax = "proto3";
+package io.token.proto.common.transferinstructions;
+
+option java_outer_classname = "TransferInstructionsProtos";
+option csharp_namespace = "Tokenio.Proto.Common.TransferInstructionsProtos";
+
+import "account.proto";
+import "address.proto";
+import "banklink.proto";
+import "security.proto";
+import "providerspecific.proto";
+import "extensions/message.proto";
+
+// A bank might require a context code for some transfers.
+enum PaymentContext {
+  INVALID_CONTEXT = 0;
+  OTHER_CONTEXT = 1;
+  BILL_PAYMENT = 2;
+  ECOMMERCE_GOODS = 3;
+  ECOMMERCE_SERVICES = 4;
+  PERSON_TO_PERSON = 5;
+}
+
+// A bank might require the bearer of the charges, if any, for international transfers.
+enum ChargeBearer {
+  INVALID_CHARGE_BEARER = 0;
+  CRED = 1;                                         // All transaction charges are to be borne by the creditor.
+  DEBT = 2;                                         // All transaction charges are to be borne by the debtor.
+  SHAR = 3;                                         // Both parties bear their own charges
+  SLEV = 4;                                         // Both parties bear their own charges. (recommended on SEPA payments)
+}
+
+message CustomerData {
+  option (io.token.proto.extensions.message.redact) = true;
+  repeated string legal_names = 1;                   // Repeated in case of joint account holders.
+  io.token.proto.common.address.Address address = 2; // Physical address
+}
+
+// Money transfer source or destination account.
+message TransferEndpoint {
+  io.token.proto.common.account.BankAccount account = 1; // Account identifier, e.g., SWIFT transfer info
+  CustomerData customer_data = 2;                        // Customer data: name and address
+}
+
+message TransferDestination {
+  // Token account Destination. Useful as source or destination
+  // for a transfer; doesn't make sense for a bank to "link" this.
+  message Token {
+    string member_id = 1;
+    string account_id = 2;
+  }
+
+  // Custom authorization
+  message Custom {
+    option (io.token.proto.extensions.message.redact) = true;
+    string bank_id = 1;
+    string payload = 2;
+  }
+
+  // SEPA transfer
+  message Sepa {
+    option (io.token.proto.extensions.message.redact) = true;
+    string bic = 1; // Optional
+    string iban = 2;
+  }
+
+  message SepaInstant {
+    option (io.token.proto.extensions.message.redact) = true;
+    string iban = 1;
+  }
+
+  // Faster Payments Service transfer (UK)
+  message FasterPayments {
+    option (io.token.proto.extensions.message.redact) = true;
+    string sort_code = 1;
+    string account_number = 2;
+  }
+
+  // Clearing House Automated Payment System (UK)
+  message Chaps {
+    option (io.token.proto.extensions.message.redact) = true;
+    string sort_code = 1;
+    string account_number = 2;
+  }
+
+  // Banker’s Automated Clearing Services (UK)
+  message Bacs {
+    option (io.token.proto.extensions.message.redact) = true;
+    string sort_code = 1;
+    string account_number = 2;
+  }
+
+  // ACH transfer
+  message Ach {
+    option (io.token.proto.extensions.message.redact) = true;
+    string routing = 1; // Routing number
+    string account = 2;
+  }
+
+  message Swift {
+    option (io.token.proto.extensions.message.redact) = true;
+    string bic = 1;     // BIC code AAAABBCCDD
+    string account = 2;
+  }
+
+  // Polish domestic
+  message Elixir {
+    option (io.token.proto.extensions.message.redact) = true;
+    string account_number = 1;
+  }
+
+  // Polish domestic
+  message ExpressElixir {
+    option (io.token.proto.extensions.message.redact) = true;
+    string account_number = 1;
+  }
+
+  // Polish domestic
+  message BlueCash {
+    option (io.token.proto.extensions.message.redact) = true;
+    string account_number = 1;
+  }
+
+  // Polish domestic
+  message Sorbnet {
+    option (io.token.proto.extensions.message.redact) = true;
+    string account_number = 1;
+  }
+
+  // Trans-European Automated Real-time Gross Settlement Express Transfer System
+  message Target2 {
+    option (io.token.proto.extensions.message.redact) = true;
+    string iban = 1;
+  }
+
+  // Croatian High Payments System
+  message Hsvp {
+    option (io.token.proto.extensions.message.redact) = true;
+    string iban = 1;
+  }
+
+  oneof destination {
+    Token token = 1;
+    Sepa sepa = 2;
+    SepaInstant sepa_instant = 3;
+    FasterPayments faster_payments = 4;
+    Ach ach = 5;
+    Swift swift = 6;
+    Elixir elixir = 7;
+    ExpressElixir express_elixir = 8;
+    BlueCash blue_cash = 9;
+    Sorbnet sorbnet = 10;
+    Custom custom = 12;
+    Chaps chaps = 13;
+    Bacs bacs = 14;
+    Target2 target2 = 15;
+    Hsvp hsvp = 16;
+  }
+
+  CustomerData customer_data = 11;
+}
+
+// Money transfer instructions.
+message TransferInstructions {
+  TransferEndpoint source = 1;                   // Transfer source.
+  repeated TransferEndpoint destinations = 2 [deprecated = true];    // Transfer destinations.
+  Metadata metadata = 3;
+  repeated TransferDestination transfer_destinations = 4;
+
+  message Metadata {
+    PaymentContext payment_context = 2;          // Optional payment context
+    string merchant_category_code = 3;           // Optional ISO 18245 Merchant Category Code (MCC)
+    string merchant_customer_id = 4;             // Optional Unique merchant customer identifier
+    io.token.proto.common.address.Address delivery_address = 5; // Optional delivery address
+    io.token.proto.common.providerspecific.ProviderTransferMetadata provider_transfer_metadata = 6;
+    ChargeBearer chargeBearer = 7;               // Optional Foreign Exchange charges bearer.
+    string ultimate_creditor = 8;                // Ultimate party to which an amount of money is due.
+    string ultimate_debtor = 9;                  // Ultimate party that owes an amount of money to the (ultimate) creditor.
+    string purpose_code = 10;                    // Optional purpose code, ISO 20022
+  }
+}

@@ -1,0 +1,236 @@
+syntax = "proto3";
+package io.token.proto.common.member;
+
+option java_outer_classname = "MemberProtos";
+option csharp_namespace = "Tokenio.Proto.Common.MemberProtos";
+
+import "address.proto";
+import "alias.proto";
+import "security.proto";
+import "extensions/field.proto";
+import "extensions/message.proto";
+
+// Adds member key to the directory.
+message MemberAddKeyOperation {
+  io.token.proto.common.security.Key key = 1; // Key to add
+}
+
+// Removes member key from the directory.
+message MemberRemoveKeyOperation {
+  string key_id = 1; // ID of key to remove
+}
+
+// Adds/removes member alias to/from the directory.
+message MemberAliasOperation {
+  // Hash of alias to add/remove
+  // https://developer.token.io/sdk/esdoc/class/src/Util.js~Util.html#static-method-hashAndSerializeAlias
+  string alias_hash = 1;
+  string realm = 2  [deprecated = true]; // Realm of alias to add/remove
+  string realm_id = 3;
+}
+
+// Sets recovery rules for member. Overrides all previously set rules.
+// https://developer.token.io/sdk/?java#recovery-rules
+message MemberRecoveryRulesOperation {
+  RecoveryRule recovery_rule = 1;
+}
+
+// Provides an agent signature authorizing the recovery operation. Multiple authorizations
+// might be required in order to initiate the recovery process.  The number of required signatures
+// is governed by Recovery Rules associated with the member.
+message MemberRecoveryOperation {
+  Authorization authorization = 1;
+  // Java SDK Member.authorizeRecovery can generate signature
+  // https://developer.token.io/sdk/javadoc/io/token/Member.html#authorizeRecovery-io.token.proto.common.member.MemberProtos.MemberRecoveryOperation.Authorization-
+  io.token.proto.common.security.Signature agent_signature = 2;
+
+  message Authorization {
+    string member_id = 1;
+    string prev_hash = 2;
+    io.token.proto.common.security.Key member_key = 3;
+  }
+}
+
+message MemberDeleteOperation {}
+
+message MemberPartnerOperation {}
+
+message MemberRealmPermissionOperation {
+  repeated RealmPermission permissions = 1;
+}
+
+message MemberOperation {
+   oneof operation {
+     MemberAddKeyOperation add_key = 1;
+     MemberRemoveKeyOperation remove_key = 2;
+     MemberAliasOperation remove_alias = 4;
+     MemberAliasOperation add_alias = 5;
+     MemberAliasOperation verify_alias = 6;
+     MemberRecoveryRulesOperation recovery_rules = 7;
+     MemberRecoveryOperation recover = 8;
+     MemberDeleteOperation delete = 9;
+     MemberPartnerOperation verify_partner = 10;
+     MemberPartnerOperation unverify_partner = 11;
+     MemberRealmPermissionOperation realm_permissions = 12;
+   }
+}
+
+// Updates member information in the directory. The directory is append only
+// log of operations.
+message MemberUpdate {
+  string prev_hash = 1;
+  string member_id = 2;
+  repeated MemberOperation operations = 3;
+}
+
+// Metadata associated with MemberUpdate.
+// It is outside of MemberUpdate because MemberUpdate is signed and passed to the Directory.
+message MemberOperationMetadata {
+  oneof type {
+    AddAliasMetadata add_alias_metadata = 1;
+    AddKeyMetadata add_key_metadata = 2;
+  }
+
+  message AddAliasMetadata {
+    string alias_hash = 1;
+    io.token.proto.common.alias.Alias alias = 2;
+  }
+
+  message AddKeyMetadata {
+    string keychain_id = 1;
+  }
+}
+
+// Metadata associated with MemberUpdateResponse.
+message MemberOperationResponseMetadata {
+  oneof type {
+    AddAliasResponseMetadata add_alias_response_metadata = 1;
+  }
+
+  message AddAliasResponseMetadata {
+    string alias_hash = 1;
+    string verification_id = 2;
+  }
+}
+
+// A recovery rule specifies which signatures are required for a member reset operation.
+message RecoveryRule {
+  string primary_agent = 1;             // the member id of the primary agent
+  repeated string secondary_agents = 2; // an optional list of member ids acting as secondary agents
+}
+
+// A member record that is computed by replaying all the member updates.
+message Member {
+  string id = 1;                                        // member ID
+  string last_hash = 2;                                 // last hash; used with UpdateMember
+  repeated string alias_hashes = 3;                     // hashes of verified aliases
+  repeated io.token.proto.common.security.Key keys = 4; // public keys
+  repeated string unverified_alias_hashes = 5;          // hashes of unverified aliases
+  RecoveryRule recovery_rule = 6;                       // recovery rule
+  int32 last_recovery_sequence = 7;                     // sequence number for member's last recovery entry
+  int32 last_operation_sequence = 8;                    // sequence number for member's last operation
+  MemberType type = 9;                                  // type of member
+  string partner_id = 10;                               // affiliated partner id
+  bool is_verified_partner = 11;                        // indicates if member is verified partner
+  string realm_id = 12;                                 // realm owner member id
+  repeated RealmPermission realm_permissions = 13;      // realm permissions assigned; Used to verify MemberOperations that this member can perform as realm owner.
+
+  enum MemberType {
+    INVALID_MEMBER_TYPE = 0;
+    PERSONAL = 1;
+    BUSINESS_UNVERIFIED = 2;
+    BUSINESS_VERIFIED = 3;
+    TRANSIENT = 4;
+  }
+}
+
+// A member address record
+message AddressRecord {
+  string id = 1; // Address id
+  string name = 2; // The display name of the address, e.g., "Office"
+  io.token.proto.common.address.Address address = 3; // Country specific JSON address
+  io.token.proto.common.security.Signature address_signature = 4; // member signature of the address
+}
+
+// Public profile
+message Profile {
+  option (io.token.proto.extensions.message.redact) = true;
+  string display_name_first = 1;    // first name
+  string display_name_last = 2;     // last name
+  string original_picture_id = 3;   // blob ID. Ignored in set profile request
+  string small_picture_id = 4;      // blob ID. Ignored in set profile request
+  string medium_picture_id = 5;     // blob ID. Ignored in set profile request
+  string large_picture_id = 6;      // blob ID. Ignored in set profile request
+}
+
+// Profile picture sizes
+enum ProfilePictureSize {
+  INVALID = 0;
+  ORIGINAL = 1; // same size as uploaded
+  SMALL = 2;    // 200x200
+  MEDIUM = 3;   // 600x600
+  LARGE = 4;
+}
+
+message ReceiptContact {
+  string value = 1 [(io.token.proto.extensions.field.redact) = true];
+  Type type = 2;
+
+  enum Type {
+    INVALID = 0;
+    EMAIL = 1;
+  }
+}
+
+message Device {
+  string name = 1;
+  io.token.proto.common.security.Key key = 2 [deprecated = true];
+  repeated io.token.proto.common.security.Key keys = 3;
+}
+
+enum CreateMemberType {
+  INVALID_MEMBER_TYPE = 0;
+  PERSONAL = 1;
+  BUSINESS = 2;
+  TRANSIENT = 3;
+}
+
+enum RealmPermission {
+  INVALID_REALM_PERMISSION = 0;
+  VERIFY_ALIAS = 1;
+  ADD_ALIAS = 2;
+  REMOVE_ALIAS = 3;
+  ADD_KEY = 4;
+  REMOVE_KEY = 5;
+}
+
+message TrustedBeneficiary {
+  Payload payload = 1;
+  io.token.proto.common.security.Signature signature = 2;
+
+  message Payload {
+    string member_id = 1;
+    string nonce = 2;
+  }
+}
+
+message Customization {
+  string customization_id = 1;
+  string name = 5;                    // display name
+  string logo_blob_id = 2;            // logo blob id
+  map<string, string> colors = 3;     // colors in hex string #AARRGGBB
+  string consent_text = 4;            // use '\n' for line breaks.
+  // TODO(RD-1985): re-evaluate app_name
+  string app_name = 6;                // the name of the corresponding app
+}
+
+message Keychain {
+  string keychain_id = 1;
+  string name = 2;
+  repeated io.token.proto.common.security.Key keys = 3;
+}
+
+message MemberInfo {
+  string id = 1;
+  repeated io.token.proto.common.alias.Alias aliases = 2;            // verified aliases
+}

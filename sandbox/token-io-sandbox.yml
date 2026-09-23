@@ -1,0 +1,125 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  https://docs.token.io/products/tpp/sip/sip-v2/sip-v2-mock-bank-v2,
+  https://docs.token.io/products/tpp/sip/sip-v1/sip-v1-mock-bank-v1,
+  https://docs.token.io/products/tpp/integration-considerations/api-basics (Base URLs),
+  https://docs.token.io/products/tpp/get-started,
+  https://docs.token.io/products/tpp/integration-considerations/authentication-keys-api-signing
+provider: Token.io
+providerId: token-io
+description: >-
+  Token.io runs a full sandbox environment with its own hostnames, its own auth mode and a mock
+  bank whose outcome is selected by the payment AMOUNT — the account-to-account equivalent of a
+  test card number. Access is not self-serve: the published onboarding path assigns an
+  implementation manager who grants sandbox access, and the sandbox dashboard's /signup route
+  answers with a page titled "404: Please contact us to sign up". Every value below is published by
+  Token.io; none is invented.
+environments:
+  - name: sandbox
+    api_base: https://api.sandbox.token.io
+    hosted_pages_v2: https://app.sandbox.token.io
+    hosted_pages_v1: https://web-app.sandbox.token.io
+    dashboard: https://dashboard.sandbox.token.io
+    auth:
+      - JWT bearer (same mechanism as production)
+      - HTTP Basic API key — SANDBOX ONLY, not available in production
+  - name: production
+    api_base: https://api.token.io
+    hosted_pages_v2: https://app.token.io
+    hosted_pages_v1: https://web-app.token.io
+    dashboard: https://dashboard.token.io
+    auth:
+      - JWT bearer
+key_modes:
+  test_vs_live: >-
+    Not a key prefix scheme. The environments are separated by HOSTNAME and by which auth modes are
+    accepted: HTTP Basic works only against api.sandbox.token.io, while a JWT signed with an
+    enrolled key works in both. There is no sk_test_/sk_live_-style marker on a credential, so a
+    misrouted call is caught by the host, not by the key.
+mock_bank:
+  name: Mock redirect
+  bank_id: mock-redirect
+  selection: Appears on the Bank selection page of Hosted Pages.
+  mechanism: >-
+    Scenarios are triggered by the value of amount.value in the payment request. Two-step (redirect)
+    payment initiation only; the docs state single-step bank support is "coming soon".
+  triggers:
+    - amount: '101'
+      status: INITIATION_COMPLETED
+      reason: success
+      description: Successful payment initiation.
+    - amount: '103'
+      status: INITIATION_REJECTED
+      reason: failure
+      description: Rejected by the bank.
+    - amount: '104'
+      status: INITIATION_DECLINED
+      reason: 'Error during payment redemption: PERMISSION_DENIED'
+      description: Declined, in most cases actively by the user.
+    - amount: '105'
+      status: INITIATION_PROCESSING
+      reason: processing
+      description: Acknowledged by the bank and processing.
+    - amount: '106'
+      status: INITIATION_DECLINED
+      reason: Payment initiation has been canceled.
+    - amount: '108'
+      status: INITIATION_REJECTED_INSUFFICIENT_FUNDS
+      reason: Insufficient funds
+    - amount: '110'
+      status: INITIATION_PROCESSING
+      reason: initiated
+    - amount: '112'
+      status: INITIATION_DECLINED
+      reason: Payment initiation has been declined.
+    - amount: '116'
+      status: INITIATION_REJECTED
+      reason: Insufficient funds
+    - amount: '117'
+      status: INITIATION_DECLINED
+      reason: Permission denied
+    - amount: '118'
+      status: INITIATION_DECLINED
+      reason: CUST
+    - amount: '119'
+      status: INITIATION_DECLINED
+      reason: Order not executed
+test_tooling:
+  - name: Launchpad
+    url: https://launchpad.token.io/
+    description: >-
+      Token.io's hosted request builder, referenced from the VRP and Refunds guides as the way to
+      exercise those endpoints without writing a client. A variant at https://launchpad-va.token.io/
+      is linked from the Refunds guide. Both sit behind a Cloudflare interstitial to an
+      unauthenticated crawler.
+  - name: Token Dashboard (sandbox)
+    url: https://dashboard.sandbox.token.io/signin
+    description: >-
+      Key enrolment, member configuration and webhook configuration for the sandbox environment.
+  - name: Cypress and Playwright demos
+    url: https://github.com/tokenio/cypress-demo
+    description: >-
+      End-to-end test harnesses published by Token.io (also github.com/tokenio/playwright-demo).
+      Both last pushed in early 2023.
+  - name: Sample applications
+    description: >-
+      Merchant, PFM, bank and CBPII samples in Java, JavaScript, C# and PHP in the tokenio GitHub
+      organization, wired into apis.yml as separate API entries.
+test_clocks: false
+fixtures:
+  note: >-
+    No fixture-generation or event-trigger API. The mock bank amount table is the whole simulation
+    surface, and it covers payment initiation only — refunds, payouts, settlement and VRP scenarios
+    have no published magic values.
+access:
+  self_serve: false
+  detail: >-
+    "Get in touch with your implementation manager to obtain guidance … gain access to a dedicated
+    Postman collection … receive an implementation checklist" (get-started). Production access is
+    granted only after the implementation manager signs off the sandbox implementation.
+  signup_probe:
+    url: https://dashboard.sandbox.token.io/signup
+    status: 200
+    body_title: '404: Please contact us to sign up'
+    note: A soft-404. There is no self-service sandbox registration form.

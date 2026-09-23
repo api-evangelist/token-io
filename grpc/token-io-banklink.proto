@@ -1,0 +1,29 @@
+syntax = "proto3";
+package io.token.proto.banklink;
+option csharp_namespace = "Tokenio.Proto.BankLink";
+
+import "security.proto";
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// This message represents a Token member's authority over a bank account.
+// Since they're sent over the network, normally the bank encrypts them.
+// How a member uses it: https://developer.token.io/sdk/#link-a-bank-account
+// How a bank creates it: https://developer.token.io/bank-integration/#bank-account-linking
+// Here, a SealedMessage "seals" a PlaintextBankAuthorization message.
+//
+message BankAuthorization {
+  string bank_id = 1;                                                 // Bank ID, e.g., "iron"
+  repeated io.token.proto.common.security.SealedMessage accounts = 2; // Encrypted link info
+}
+
+message OauthBankAuthorization {
+  string bank_id = 1;         // Bank ID, e.g., "iron"
+  string access_token = 2;    // OAuth access token obtained from a bank
+}
+
+enum AccountLinkingStatus {
+  INVALID = 0;
+  SUCCESS = 1;
+  FAILURE_BANK_AUTHORIZATION_REQUIRED = 2;  // indicates that a bank authorization payload
+                                            // is required in order to complete linking
+}

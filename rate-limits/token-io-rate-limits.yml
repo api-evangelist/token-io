@@ -6,6 +6,20 @@ providerId: token-io
 created: '2026-05-25'
 modified: '2026-05-25'
 reconciled: false
+generated: '2026-09-17'
+method: searched
+source: >-
+  https://docs.token.io/products/tpp/integration-considerations/api-basics (429 / RESOURCE_EXHAUSTED,
+  the customer-initiated and token-customer-ip-address headers),
+  https://support.token.io/hc/en-us/articles/22853099035673-Should-we-add-rate-limiting-to-our-Open-Banking-API,
+  and the UK Open Banking Standard defaults the connected banks enforce
+limit_count: 3
+headers_published: false
+headers_note: >-
+  Re-checked 2026-09-17: Token.io publishes NO RateLimit-* or X-RateLimit-* response headers and no
+  numeric limit of its own. Exhaustion surfaces as HTTP 429 / gRPC RESOURCE_EXHAUSTED (8) with no
+  quota metadata, so a client cannot see how close it is to a cap until it hits one. The binding
+  constraint is bank-side and per-consent.
 tags:
   - Open Banking
   - Rate Limiting

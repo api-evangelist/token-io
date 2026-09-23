@@ -1,0 +1,108 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  https://docs.token.io/products/tpp/integration-considerations/api-basics (Backward compatibility),
+  https://docs.token.io/products/tpp/tech-bulletins/tb-1638,
+  https://docs.token.io/products/tpp/sip/sip-v2/sip-v2-migrating-v1-to-v2,
+  probes of https://status.token.io and https://token.io/status
+provider: Token.io
+providerId: token-io
+description: >-
+  Token.io runs two live API generations side by side and manages change through a numbered
+  Technical Bulletin series rather than a changelog page. The bulletins are dated, individually
+  addressable and predominantly about the CONNECTED BANKS rather than about Token.io's own
+  contract — the Open Banking v3-to-v4 migration of the CMA9 is the dominant theme of the last two
+  years. There is no public status page.
+versioning:
+  scheme: URI path segment
+  detail: >-
+    /v2/payments, /v2/consents, /v2/accounts sit alongside the unversioned v1 surface
+    (/transfers, /tokens, /token-requests). No version header, no date-pinned version. Both
+    generations are live and documented concurrently.
+  current_versions:
+    - name: Payments v2
+      status: current
+    - name: Payments v1 (Transfers)
+      status: maintained
+      note: Still documented and still served; the v1-to-v2 migration guide is published.
+    - name: Banks v2
+      status: current
+    - name: Banks v1
+      status: maintained
+    - name: Hosted Pages v2
+      status: current
+    - name: Hosted Pages v1
+      status: maintained
+      note: A migration guide to Hosted Pages v2 is published.
+  migration_guides:
+    - https://docs.token.io/products/tpp/sip/sip-v2/sip-v2-migrating-v1-to-v2
+    - https://docs.token.io/products/tpp/hosted-pages/hosted-pages-v2/hosted-pages-v2-migrating-to-hosted-pages-v2
+deprecation:
+  policy_published: true
+  policy: >-
+    Token.io publishes an explicit backward-compatibility contract. Seven classes of change are
+    declared NON-breaking and the caller is required to absorb them — new endpoints, new response
+    properties, reordered response properties, new optional request parameters, changed id format
+    or length, changed validation/error message attributes, and webhooks for new event types.
+    Clients are told to use a lenient JSON parser. Anything outside that list is treated as
+    breaking, and Token.io commits to notifying customers IN ADVANCE by Technical Bulletin with
+    enough time to make changes.
+  notice_channel: Technical Bulletins (docs.token.io/products/tpp/tech-bulletins/)
+  notice_period: >-
+    Stated as "in advance … enough time to make changes" without a fixed number of days. Observed
+    bulletins give between roughly one and six months of notice.
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  docs: https://docs.token.io/products/tpp/integration-considerations/api-basics
+  deprecated_operations_in_spec: 0
+  note: >-
+    No operation in any harvested spec carries `deprecated: true`, so v1 is maintained rather than
+    formally deprecated even where a v2 replacement exists.
+  recent_deprecation_notices:
+    - id: TB-1620
+      date: '2025-06-04'
+      subject: >-
+        CMA9 banks begin migrating from OBL v3 APIs to OBL v4; HSBC first from 2025-06-13, with
+        OBL v3 deprecated as each bank goes live.
+    - id: TB-1621
+      date: '2025-08-21'
+      subject: NatWest Group migration to CMA9 v4.
+    - id: TB-1637
+      date: '2026-05-15'
+      subject: Lloyds Banking Group CMA9 v4 API migration.
+status_page:
+  published: false
+  probes:
+    - url: https://status.token.io/
+      status: 0
+      note: Host does not resolve (NXDOMAIN).
+    - url: https://token.io/status
+      status: 404
+    - url: https://tokenio.statuspage.io
+      status: 200
+      note: >-
+        NOT a Token.io status page. The subdomain is unclaimed and redirects to Atlassian's own
+        Statuspage marketing site (title "Real-Time Incident Communication with Statuspage"). A 200
+        here is a soft-404 and is explicitly rejected — no StatusPage pointer is wired.
+  substitute: >-
+    Token.io publishes BANK availability instead of platform availability, as a first-class API
+    feature rather than a web page: GET /reports/banks/status and GET /banks/{bankId}/reports/availability
+    (Reports API), plus BANK_AIS_OUTAGE_STATUS_CHANGED and BANK_SIP_OUTAGE_STATUS_CHANGED webhook
+    events. For a bank-connectivity platform this is arguably the more useful signal, but it does
+    not tell a customer whether api.token.io itself is up.
+sla:
+  published: false
+  note: >-
+    No public SLA or uptime commitment. Commercial terms including availability are negotiated per
+    contract; https://token.io/terms is the published legal surface.
+support:
+  channels:
+    - https://support.token.io
+    - mailto:support@token.io
+    - mailto:devdocs@token.io (documentation feedback, footer of every docs page)
+  implementation_manager: >-
+    Onboarding is managed — the get-started page assigns an implementation manager who grants
+    sandbox access and signs off before production.
+changelog:
+  artifact: changelog/token-io-changelog.yml

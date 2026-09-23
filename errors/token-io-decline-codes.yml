@@ -1,0 +1,154 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  https://docs.token.io/products/tpp/sip/sip-v2/sip-v2-payment-status,
+  https://docs.token.io/products/tpp/sip/sip-v2/iso-20022,
+  https://docs.token.io/products/tpp/settlement-accounts/refunds,
+  https://docs.token.io/products/tpp/integration-considerations/webhooks
+provider: Token.io
+providerId: token-io
+description: >-
+  An account-to-account payment has no card decline code. What Token.io publishes instead is a
+  two-layer status vocabulary, and both layers must be read to know why a payment did not
+  complete: Token.io's own payment status (the platform's view of the initiation) and the raw ISO
+  20022 status the bank returned, passed through untranslated in `bankPaymentStatus` (v2) or
+  `transfer.providerDetails.status` (v1). Token.io states plainly that mapping between the two is
+  BANK-DEPENDENT and not standardised across banks, which is the single most important fact on
+  this page: the same declined outcome arrives with different bank codes depending on which bank
+  the user chose.
+envelope:
+  status_field: payment.status
+  bank_status_field: payment.bankPaymentStatus
+  reason_field: payment.statusReasonInformation
+  v1_fields:
+    status: transfer.status
+    bank_status: transfer.providerDetails.status
+  delivery: >-
+    Both a PAYMENT_STATUS_CHANGED webhook and GET /v2/payments/{paymentId} carry these; the webhook
+    is the recommended path.
+masked_to_buyer: >-
+    Not documented. Token.io does not state which statuses a TPP should or should not surface to
+    the payer; statusReasonInformation frequently carries a raw bank string.
+decline_codes:
+  - code: INITIATION_REJECTED
+    layer: token
+    meaning: The payment initiation request was rejected by the bank.
+    final: true
+    action: Do not retry against the same bank without changing the request. Inspect statusReasonInformation.
+  - code: INITIATION_REJECTED_INSUFFICIENT_FUNDS
+    layer: token
+    meaning: Rejected by the bank for insufficient funds.
+    final: true
+    action: >-
+      A payer-actionable decline. Offer another account or another method; retrying the same
+      instruction will fail again.
+  - code: INITIATION_DECLINED
+    layer: token
+    meaning: >-
+      Declined, in most cases actively by the user — cancellation, refusal of consent, or
+      permission denied at the bank.
+    final: true
+    action: Treat as user abandonment, not as a technical failure. Re-prompt rather than retry.
+  - code: INITIATION_FAILED
+    layer: token
+    meaning: The initiation failed.
+    final: true
+  - code: INITIATION_EXPIRED
+    layer: token
+    meaning: >-
+      The bank never returned a final status. Reached ~30 minutes after initiation when polling is
+      exhausted, or ~40 minutes when the user never completed the bank login and the payment sat in
+      INITIATION_PENDING_REDIRECT_AUTH.
+    final: true
+    action: Treat as unknown-outcome, not as a decline; reconcile before re-charging.
+  - code: INITIATION_NO_FINAL_STATUS_AVAILABLE
+    layer: token
+    meaning: Token.io could not establish a final status with the bank.
+    final: true
+    action: Reconcile against the bank/settlement record before acting.
+  - code: SETTLEMENT_INCOMPLETE
+    layer: token
+    meaning: Initiation succeeded but settlement did not complete.
+    final: true
+  - code: RJCT
+    layer: iso20022
+    name: Rejected
+    meaning: >-
+      The payment initiation, or an individual transaction within it, has been rejected. Sent by
+      any bank in the flow to the previous bank.
+    action: The bank-side counterpart of INITIATION_REJECTED.
+  - code: CANC
+    layer: iso20022
+    name: Cancelled
+    meaning: Payment initiation was cancelled before execution.
+  - code: PDNG
+    layer: iso20022
+    name: Pending
+    meaning: Pending; further checks and a status update will follow.
+    final: false
+  - code: PART
+    layer: iso20022
+    name: PartiallyAccepted
+    meaning: >-
+      Some transactions accepted, some not yet accepted. Bulk payments only, where reporting is
+      against the whole file.
+  - code: PATC
+    layer: iso20022
+    name: PartiallyAcceptedTechnicalCorrect
+    meaning: >-
+      Multiple authentications are required and only some have been performed; syntactic and
+      semantic validation passed.
+    final: false
+accepted_codes:
+  note: >-
+    Recorded because a TPP has to distinguish "accepted by someone in the chain" from "money moved"
+    — several of these are acceptances that are not yet settlement.
+  codes:
+    - code: ACSC
+      name: AcceptedSettlementCompleted
+      meaning: Settlement on the debtor's account is complete.
+    - code: ACCC
+      name: AcceptedCreditSettlementCompleted
+      meaning: Settlement on the creditor's account is complete.
+    - code: ACCP
+      name: AcceptedCustomerProfile
+      meaning: Technical validation and customer profile checks succeeded.
+    - code: ACSP
+      name: AcceptedSettlementInProcess
+      meaning: Accepted for execution.
+    - code: ACTC
+      name: AcceptedTechnicalValidation
+      meaning: Authentication plus syntactic and semantic validation succeeded.
+    - code: ACWC
+      name: AcceptedWithChange
+      meaning: Accepted, but a change will be made (for example date or remittance not sent).
+    - code: ACWP
+      name: AcceptedWithoutPosting
+      meaning: Accepted without posting to the creditor's account.
+    - code: ACFC
+      name: AcceptedFundsChecked
+      meaning: Accepted with a positive automatic funds check.
+    - code: RCVD
+      name: Received
+      meaning: Received by the bank's payment engine.
+refund_statuses:
+  - code: INITIATION_PENDING
+    meaning: Refund received and validated by Token.io.
+  - code: INITIATION_PROCESSING
+    meaning: >-
+      Acknowledged by the bank and processing. Poll GET /refunds/{id} every 120 minutes if no
+      webhook arrives.
+  - code: INITIATION_COMPLETED
+    meaning: Final success.
+  - code: INITIATION_REJECTED
+    meaning: Rejected by the bank.
+  - code: INITIATION_FAILED
+    meaning: Failed, including when the status polling period is exhausted.
+summary:
+  token_decline_codes: 7
+  iso20022_decline_codes: 5
+  iso20022_accepted_codes: 9
+  standard: ISO 20022 payment status codes, passed through unmapped
+  caveat: >-
+    Token.io states the mapping from bank status to Token.io status is bank-dependent and not
+    standardised, so no exhaustive bank-code list exists or can exist for this provider.

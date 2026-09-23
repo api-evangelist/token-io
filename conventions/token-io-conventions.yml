@@ -1,0 +1,204 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  https://docs.token.io/products/tpp/integration-considerations/api-basics,
+  https://docs.token.io/products/tpp/integration-considerations/webhooks,
+  https://docs.token.io/products/tpp/integration-considerations/authentication-keys-api-signing,
+  https://docs.token.io/products/tpp/settlement-accounts/refunds,
+  https://docs.token.io/products/tpp/vrp/vrp-consent-revocation, cross-checked against
+  openapi/token-io-rest-api-swagger.json
+provider: Token.io
+providerId: token-io
+description: >-
+  Cross-cutting runtime semantics for the Token.io Open Banking API — what an agent or an
+  integrator has to know that is not in any single operation. Token.io documents its headers,
+  error envelope, tracing and backward-compatibility policy unusually well for a regulated
+  payments platform; it documents no replay-protection mechanism at all, which is the single
+  largest gap on this page.
+auth:
+  style: JWT bearer, self-signed with an enrolled key (production and sandbox)
+  alternative: HTTP Basic API key, sandbox only
+  header: Authorization
+  detail: >-
+    The TPP signs each request itself — there is no token-issuance endpoint to call. A detached
+    JWT is built over the request method, path and body with a key enrolled against the member,
+    and an `exp` under 10 minutes from the request time is recommended.
+  docs: https://docs.token.io/products/tpp/integration-considerations/authentication-keys-api-signing
+  artifact: authentication/token-io-authentication.yml
+idempotency:
+  coverage: none
+  mechanism: null
+  header: null
+  scope: []
+  detail: >-
+    Token.io documents NO idempotency key, no replay-protection header, and no de-duplication
+    guarantee on any write. The API reference, the api-basics page and the payment-initiation
+    guides were all read for this: `refId` is a caller-supplied remittance/correlation reference
+    that Token.io echoes back and that appears in webhooks, and the docs never state that resending
+    the same `refId` collapses to one payment. The recovery guidance for an uncertain payment is to
+    poll GET /v2/payments/{paymentId} or wait for the PAYMENT_STATUS_CHANGED webhook, not to retry
+    the write. For a payments API this is the most consequential documentation gap in the record:
+    an agent that retries a timed-out POST /v2/payments has no published guarantee it will not
+    initiate a second payment.
+  docs: https://docs.token.io/products/tpp/integration-considerations/api-basics
+reversibility:
+  grade: documented
+  detail: >-
+    Token.io publishes a real reversal path for every major write, and states a window for none of
+    them. Refunds are bounded by amount rather than by time — the docs state that partial and full
+    refunds are supported and that Token.io will not let the cumulative refunded amount exceed the
+    original payment — but no deadline is given. Payment, consent, token and payment-link
+    cancellation are all documented as operations with no stated cut-off. The time limits the docs
+    DO state are unrelated to reversal (a payment goes INITIATION_EXPIRED after ~30 minutes without
+    a final bank status, 40 minutes if the user never authenticates; webhook retries run for 72
+    hours), so they are recorded here as context and explicitly not as reversal windows.
+  operations:
+    - surface: Payment (v2)
+      write: GatewayService.CreatePaymentV2 (POST /v2/payments)
+      reversal: GatewayService.CancelPayment (DELETE /v2/payments/{paymentId})
+      window: null
+      window_stated: false
+      docs: https://docs.token.io/products/tpp/sip/sip-v2/sip-v2-api-intro
+    - surface: Payment (settled)
+      write: GatewayService.CreatePaymentV2 (POST /v2/payments)
+      reversal: GatewayService.InitiateRefund (POST /refunds)
+      window: null
+      window_stated: false
+      constraint: >-
+        Cumulative refunds cannot exceed the original payment amount; partial refunds are supported.
+        An unregulated TPP must pass initiation.onBehalfOfId.
+      docs: https://docs.token.io/products/tpp/settlement-accounts/refunds
+    - surface: VRP consent
+      write: CreateVrpConsent (POST /vrp-consents)
+      reversal: RevokeVrpConsent (DELETE /vrp-consents/{id})
+      window: null
+      window_stated: false
+      note: >-
+        Status moves to REVOKED on successful completion with the bank. Operations from
+        openapi/token-io-variable-recurring-payments-api-openapi.yml.
+      docs: https://docs.token.io/products/tpp/vrp/vrp-consent-revocation
+    - surface: AIS data consent (v2)
+      write: ConsentGatewayService.RequestConsent (POST /v2/consents)
+      reversal: ConsentGatewayService.RevokeConsent (DELETE /v2/consents/{consentId})
+      window: null
+      window_stated: false
+    - surface: Token (v1 access/transfer token)
+      write: GatewayService.StoreTokenRequest (POST /token-requests)
+      reversal: GatewayService.CancelToken (PUT /tokens/{tokenId}/cancel)
+      window: null
+      window_stated: false
+    - surface: Bank consent (v1)
+      write: GatewayService.CreateConsent (POST /banks/{bankId}/consents)
+      reversal: GatewayService.CancelConsent (DELETE /banks/{bankId}/consents/{consentId})
+      window: null
+      window_stated: false
+    - surface: Pay by Link
+      write: PaymentLinkService.CreatePaymentLink (POST /v2/payment-links)
+      reversal: PaymentLinkService.CancelPaymentLink (DELETE /v2/payment-links/{paymentLinkId})
+      window: null
+      window_stated: false
+    - surface: Webhook subscription
+      write: GatewayService.SetWebhookConfig (PUT /webhook/config)
+      reversal: GatewayService.DeleteWebhookConfig (DELETE /webhook/config)
+      window: null
+      window_stated: false
+dry_run_mode:
+  supported: false
+  substitute: >-
+    No dry-run or simulate flag on any operation. The published substitute is the sandbox: the
+    mock-redirect bank replays a chosen outcome from the payment amount (see
+    sandbox/token-io-sandbox.yml).
+pagination:
+  style: cursor/offset hybrid, per-resource
+  detail: >-
+    Not a single documented convention. Collection reads take resource-specific paging parameters
+    (for example `page`/`perPage` on transactions, `offset`/`limit` elsewhere) declared per
+    operation in the OpenAPI rather than by a platform-wide rule.
+  source: openapi/token-io-rest-api-swagger.json
+request_headers:
+  - name: Authorization
+    required: true
+    detail: Bearer JWT (production and sandbox) or Basic API key (sandbox only).
+  - name: customer-initiated
+    required: false
+    detail: >-
+      Boolean. Declares that a human initiated the call. For AIS this is what keeps the request out
+      of the PSD2 four-per-24-hours TPP-initiated cap; for VRP it declares PSU presence. Absent, the
+      customer is assumed NOT present. This is the header an autonomous agent must get right.
+  - name: token-customer-ip-address
+    required: false
+    recommended: true
+    detail: Implies the user is present during the session; omitting it is read as TPP-initiated.
+  - name: request-timeout
+    required: false
+    detail: Integer seconds; the call aborts with DEADLINE_EXCEEDED when exceeded.
+  - name: token-customer-last-logged-time
+    required: false
+  - name: token-customer-device-id
+    required: false
+  - name: token-customer-user-agent
+    required: false
+  - name: token-json-error
+    required: false
+    detail: Boolean. Switches the error body to the JSON envelope described in errors/.
+response_headers:
+  - name: tokenTraceId
+    detail: >-
+      Unique per request/response flow, propagated to the bank and stored across the payment's
+      lifecycle. Token.io asks TPPs to propagate it and quote it on support tickets. This is the
+      request-id convention for the platform.
+  - name: token-external-error
+    detail: >-
+      Set to "true" when a 5xx originated at the BANK rather than at Token.io. Not populated for
+      Token.io-internal failures or for bank 4xx responses, so its absence must be read as false.
+      This is the header that tells an agent whether a retry can possibly help.
+error_envelope:
+  format: proprietary JSON (not RFC 9457)
+  opt_in_header: 'token-json-error: true'
+  shape:
+    error:
+      code: server error code
+      message: string form of the gRPC error enum
+      token_trace_id: the trace id
+      error_origin: bank | token
+  artifact: errors/token-io-problem-types.yml
+rate_limit_signaling:
+  documented_limits: false
+  exhaustion_status: 429
+  grpc_status: RESOURCE_EXHAUSTED (8)
+  headers: []
+  detail: >-
+    Token.io publishes no numeric limit and no RateLimit-*/X-RateLimit-* response headers. The
+    binding constraints are PSD2/Open Banking limits applied per consent at each connected bank
+    (notably the four TPP-initiated AIS accesses per 24 hours). See rate-limits/token-io-rate-limits.yml.
+versioning:
+  style: URI path segment
+  detail: >-
+    Major versions sit in the path (/v2/payments, /v2/consents) alongside the unversioned v1
+    surface; there is no version header and no date-pinned version. Both generations are live
+    simultaneously and the docs carry a v1-to-v2 migration guide.
+  backward_compatible_changes:
+    - adding new API endpoints
+    - adding new properties to existing responses
+    - reordering response properties
+    - adding optional request parameters
+    - altering the format or length of ids
+    - altering validation/error message attributes
+    - sending webhooks for new event types
+  client_obligation: >-
+    Token.io states these are handled by the caller and recommends a lenient JSON parser. Anything
+    outside the list is treated as breaking and is announced in advance by Technical Bulletin.
+  artifact: lifecycle/token-io-lifecycle.yml
+webhooks:
+  signature_header: token-signature
+  event_header: token-event
+  retry: exponential backoff (~10, 30, 70, 150 minutes …) for up to 72 hours, ~10 attempts
+  ack: subscriber must return 200
+  artifact: asyncapi/token-io-webhooks.yml
+cross_links:
+  errors: errors/token-io-problem-types.yml
+  decline_codes: errors/token-io-decline-codes.yml
+  lifecycle: lifecycle/token-io-lifecycle.yml
+  authentication: authentication/token-io-authentication.yml
+  rate_limits: rate-limits/token-io-rate-limits.yml
+  sandbox: sandbox/token-io-sandbox.yml

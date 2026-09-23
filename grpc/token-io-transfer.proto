@@ -1,0 +1,58 @@
+syntax = "proto3";
+package io.token.proto.common.transfer;
+
+option java_outer_classname = "TransferProtos";
+option csharp_namespace = "Tokenio.Proto.Common.TransferProtos";
+
+import "money.proto";
+import "security.proto";
+import "submission.proto";
+import "token.proto";
+import "transaction.proto";
+import "transferinstructions.proto";
+
+// A transfer record as persisted on the ledger.
+message Transfer {
+  string id = 1;                               // Computed as the hash of the transfer payload.
+  string transaction_id = 2;                   // Bank transaction reference id.
+  int64 created_at_ms = 3;
+  TransferPayload payload = 4;
+  repeated io.token.proto.common.security.Signature payload_signatures = 5; // Signatures
+  io.token.proto.common.transaction.TransactionStatus status = 6;
+  string order_id = 7;                         // Currency Ledger order id.
+  Method method = 8;                           // Instant (currency ledger) or default
+  string execution_date = 9;                   // Execution date. Same as the value on the transfer token payload.
+
+  enum Method {
+    DEFAULT = 0;
+    INSTANT = 1; // Use Token's Currency Ledger
+  }
+}
+
+message BulkTransfer {
+  string id = 1;                            // Token ID computed as the hash of the token payload
+  string token_id = 2;
+  int64 created_at_ms = 3;
+  repeated Transaction transactions = 4;    // Transactions for which the bank provides IDs and/or statuses.
+                                            // Might not be populated right away.
+  string total_amount = 5;                  // Total amount irrespective of currency. Used for redundancy check.
+  transferinstructions.TransferEndpoint source = 6;
+
+  message Transaction {
+    io.token.proto.common.token.BulkTransferBody.Transfer transfer = 1;
+    string transaction_id = 2;
+    transaction.TransactionStatus status = 3;
+  }
+}
+
+// A transfer payload that is being signed by the redeemer and the bank.
+message TransferPayload {
+  string ref_id = 1;                                                                      // Client assigned unique request id.
+  string token_id = 2;                                                                    // Token id.
+  io.token.proto.common.money.Money amount = 3;                                           // Amount and currency.
+  repeated io.token.proto.common.transferinstructions.TransferEndpoint destinations = 5 [deprecated=true];
+  string description = 6;                                                                 // Optional
+  repeated io.token.proto.common.transferinstructions.TransferDestination transfer_destinations = 7;  // Transfer destinations, sorted in priority order.
+  io.token.proto.common.transferinstructions.TransferInstructions.Metadata metadata = 8;
+  bool confirm_funds = 9;
+}
