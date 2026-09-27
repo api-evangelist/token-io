@@ -1,0 +1,101 @@
+openapi: 3.2.0
+info:
+  title: Token Webhook API
+  version: 1.0.0
+  description: Token REST API.
+servers:
+- url: https://api.token.io/v1
+tags:
+- name: Webhook
+paths:
+  /webhook/config:
+    get:
+      operationId: GatewayService.GetWebhookConfig
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.GetWebhookConfigResponse'
+      tags:
+      - Webhook
+      summary: Gets the webhook config
+      deprecated: false
+    put:
+      operationId: GatewayService.SetWebhookConfig
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.SetWebhookConfigResponse'
+      tags:
+      - Webhook
+      summary: Sets the webhook config
+      deprecated: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/io.token.proto.gateway.SetWebhookConfigRequest'
+        required: true
+    delete:
+      operationId: GatewayService.DeleteWebhookConfig
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.DeleteWebhookConfigResponse'
+      tags:
+      - Webhook
+      summary: Deletes the webhook config
+      deprecated: false
+components:
+  schemas:
+    io.token.proto.gateway.DeleteWebhookConfigResponse:
+      type: object
+      properties: {}
+    io.token.proto.common.webhook.Webhook.Config:
+      type: object
+      properties:
+        type:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.webhook.EventType'
+          type: array
+        url:
+          type: string
+    io.token.proto.common.webhook.EventType:
+      enum:
+      - INVALID
+      - TRANSFER_STATUS_CHANGED
+      - BULK_TRANSFER_STATUS_CHANGED
+      - STANDING_ORDER_STATUS_CHANGED
+      - REFUND_STATUS_CHANGED
+      - VRP_STATUS_CHANGED
+      - VRP_CONSENT_STATUS_CHANGED
+      - BANK_AIS_OUTAGE_STATUS_CHANGED
+      - BANK_SIP_OUTAGE_STATUS_CHANGED
+      - PAYMENT_STATUS_CHANGED
+      - PAYOUT_STATUS_CHANGED
+      - SETTLEMENT_RULE_PAYOUT_EXECUTION_FAILED
+      - VIRTUAL_ACCOUNT_CREDIT_RECEIVED
+      - SUB_TPP_STATUS_UPDATE
+      default: INVALID
+      type: string
+    io.token.proto.gateway.SetWebhookConfigResponse:
+      type: object
+      properties: {}
+    io.token.proto.gateway.GetWebhookConfigResponse:
+      type: object
+      properties:
+        config:
+          $ref: '#/components/schemas/io.token.proto.common.webhook.Webhook.Config'
+    io.token.proto.gateway.SetWebhookConfigRequest:
+      type: object
+      properties:
+        config:
+          $ref: '#/components/schemas/io.token.proto.common.webhook.Webhook.Config'

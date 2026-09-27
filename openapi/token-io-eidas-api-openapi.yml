@@ -1,0 +1,321 @@
+openapi: 3.2.0
+info:
+  title: Token Eidas API
+  version: 1.0.0
+  description: Token REST API.
+servers:
+- url: https://api.token.io/v1
+tags:
+- name: eidas
+paths:
+  /eidas/recovery/operations:
+    post:
+      operationId: GatewayService.RecoverEidasMember
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.RecoverEidasResponse'
+      tags:
+      - eidas
+      summary: Recover an eIDAS-verified member
+      description: 'Recover a business member that was onboarded with an eIDAS certificate under a realm of a bank.**See also:**
+
+        RecoverEidasMember
+
+        Certificate and payload signature format'
+      deprecated: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/io.token.proto.gateway.RecoverEidasRequest'
+        required: true
+  /eidas/register:
+    put:
+      operationId: GatewayService.RegisterWithEidas
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.RegisterWithEidasResponse'
+      tags:
+      - eidas
+      summary: Create and register a business member with an eIDAS certificate
+      description: 'Create and asynchronously onboard a business member under realm of a bank.
+
+        **See also:**
+
+        RegisterWithEidas
+
+        Certificate and payload signature format'
+      deprecated: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/io.token.proto.gateway.RegisterWithEidasRequest'
+        required: true
+  /eidas/status:
+    get:
+      operationId: GatewayService.getEidasCertificateStatus
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.GetEidasCertificateStatusResponse'
+      tags:
+      - eidas
+      summary: Get a status of the current eIDAS certificate
+      description: 'Get a status of an eIDAS certificate on file together with the certificate itself.**See also:**
+
+        GetEidasCertificateStatus'
+      deprecated: false
+  /eidas/verifications:
+    post:
+      operationId: GatewayService.VerifyEidas
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.VerifyEidasResponse'
+      tags:
+      - eidas
+      summary: Submit an eIDAS certificate for verification
+      description: 'Submit an eIDAS certificate for a business member registered under the realm of a bank.
+
+        **See also:**
+
+        VerifyEidas
+
+        Certificate and payload signature format'
+      deprecated: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/io.token.proto.gateway.VerifyEidasRequest'
+        required: true
+  /eidas/verifications/{verificationId}:
+    get:
+      operationId: GatewayService.GetEidasVerificationStatus
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.GetEidasVerificationStatusResponse'
+      parameters:
+      - name: verificationId
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - eidas
+      summary: Get a status of an eIDAS verification
+      description: 'Given a verificationId, get a status of the eIDAS verification together with submitted certificate and alias value.
+
+        **See also:**
+
+        GetEidasVerificationStatus'
+      deprecated: false
+components:
+  schemas:
+    io.token.proto.gateway.VerifyEidasRequest:
+      type: object
+      properties:
+        payload:
+          $ref: '#/components/schemas/io.token.proto.common.eidas.VerifyEidasPayload'
+        signature:
+          type: string
+    io.token.proto.common.eidas.EidasVerificationStatus:
+      enum:
+      - INVALID_EIDAS_STATUS
+      - EIDAS_STATUS_SUCCESS
+      - EIDAS_STATUS_FAILURE
+      - EIDAS_STATUS_ERROR
+      - EIDAS_STATUS_PENDING
+      default: INVALID_EIDAS_STATUS
+      type: string
+    io.token.proto.common.eidas.VerifyEidasPayload:
+      type: object
+      properties:
+        algorithm:
+          $ref: '#/components/schemas/io.token.proto.common.security.Key.Algorithm'
+        alias:
+          $ref: '#/components/schemas/io.token.proto.common.alias.Alias'
+        certificate:
+          type: string
+        memberId:
+          type: string
+    io.token.proto.gateway.VerifyEidasResponse:
+      type: object
+      properties:
+        eidasStatus:
+          $ref: '#/components/schemas/io.token.proto.common.eidas.EidasVerificationStatus'
+        statusDetails:
+          type: string
+        verificationId:
+          type: string
+    io.token.proto.common.alias.Alias.Type:
+      enum:
+      - INVALID
+      - UNKNOWN
+      - EMAIL
+      - PHONE
+      - DOMAIN
+      - USERNAME
+      - BANK
+      - CUSTOM
+      - EIDAS
+      default: INVALID
+      type: string
+    io.token.proto.common.member.MemberRecoveryOperation:
+      type: object
+      properties:
+        agentSignature:
+          $ref: '#/components/schemas/io.token.proto.common.security.Signature'
+        authorization:
+          $ref: '#/components/schemas/io.token.proto.common.member.MemberRecoveryOperation.Authorization'
+    io.token.proto.common.security.Signature:
+      type: object
+      properties:
+        keyId:
+          type: string
+        memberId:
+          type: string
+        signature:
+          type: string
+    io.token.proto.gateway.GetEidasCertificateStatusResponse:
+      type: object
+      properties:
+        certificate:
+          type: string
+        status:
+          $ref: '#/components/schemas/io.token.proto.common.eidas.EidasCertificateStatus'
+    io.token.proto.common.eidas.EidasRecoveryPayload:
+      type: object
+      properties:
+        algorithm:
+          $ref: '#/components/schemas/io.token.proto.common.security.Key.Algorithm'
+        certificate:
+          type: string
+        key:
+          $ref: '#/components/schemas/io.token.proto.common.security.Key'
+        memberId:
+          type: string
+    io.token.proto.gateway.RecoverEidasRequest:
+      type: object
+      properties:
+        payload:
+          $ref: '#/components/schemas/io.token.proto.common.eidas.EidasRecoveryPayload'
+        signature:
+          type: string
+    io.token.proto.gateway.GetEidasVerificationStatusResponse:
+      type: object
+      properties:
+        aliasValue:
+          type: string
+        certificate:
+          type: string
+        eidasStatus:
+          $ref: '#/components/schemas/io.token.proto.common.eidas.EidasVerificationStatus'
+        statusDetails:
+          type: string
+    io.token.proto.gateway.RecoverEidasResponse:
+      type: object
+      properties:
+        recoveryEntry:
+          $ref: '#/components/schemas/io.token.proto.common.member.MemberRecoveryOperation'
+    io.token.proto.gateway.RegisterWithEidasRequest:
+      type: object
+      properties:
+        payload:
+          $ref: '#/components/schemas/io.token.proto.common.eidas.RegisterWithEidasPayload'
+        signature:
+          type: string
+    io.token.proto.gateway.RegisterWithEidasResponse:
+      type: object
+      properties:
+        keyId:
+          type: string
+        memberId:
+          type: string
+        verificationId:
+          type: string
+    io.token.proto.common.member.MemberRecoveryOperation.Authorization:
+      type: object
+      properties:
+        memberId:
+          type: string
+        memberKey:
+          $ref: '#/components/schemas/io.token.proto.common.security.Key'
+        prevHash:
+          type: string
+    io.token.proto.common.security.Key:
+      type: object
+      properties:
+        algorithm:
+          $ref: '#/components/schemas/io.token.proto.common.security.Key.Algorithm'
+        expiresAtMs:
+          format: string
+          type: string
+        id:
+          type: string
+        level:
+          $ref: '#/components/schemas/io.token.proto.common.security.Key.Level'
+        publicKey:
+          type: string
+    io.token.proto.common.eidas.EidasCertificateStatus:
+      enum:
+      - INVALID_CERTIFICATE_STATUS
+      - CERTIFICATE_VALID
+      - CERTIFICATE_INVALID
+      - CERTIFICATE_NOT_FOUND
+      default: INVALID_CERTIFICATE_STATUS
+      type: string
+    io.token.proto.common.eidas.RegisterWithEidasPayload:
+      type: object
+      properties:
+        bankId:
+          type: string
+        certificate:
+          type: string
+    io.token.proto.common.security.Key.Algorithm:
+      enum:
+      - INVALID_ALGORITHM
+      - ED25519
+      - ECDSA_SHA256
+      - RS256
+      - RS512
+      default: INVALID_ALGORITHM
+      type: string
+    io.token.proto.common.alias.Alias:
+      type: object
+      properties:
+        realm:
+          type: string
+        realmId:
+          type: string
+        type:
+          $ref: '#/components/schemas/io.token.proto.common.alias.Alias.Type'
+        value:
+          type: string
+    io.token.proto.common.security.Key.Level:
+      enum:
+      - INVALID_LEVEL
+      - PRIVILEGED
+      - STANDARD
+      - LOW
+      default: INVALID_LEVEL
+      type: string

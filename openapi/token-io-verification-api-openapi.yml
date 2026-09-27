@@ -97,11 +97,6 @@ paths:
       - BasicAuth: []
 components:
   schemas:
-    inline_response_400:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
     AccountVerificationRequest:
       type: object
       required:
@@ -135,18 +130,6 @@ components:
             > **Conditional** - If this verification check is independent of a Token provided settlement account, this should **NOT** be provided.
 
             '
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A description of the error.
-          example: This is a description of the error.
-        tokenTraceId:
-          type: string
-          description: The trace identifier for the given call.
-          example: '5678912345'
-      description: The request does not have valid authentication credentials needed to perform the operation.
     AccountVerificationResponse:
       type: object
       required:
@@ -191,6 +174,23 @@ components:
                 name:
                   type: string
                   description: The name matched to the account provided
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: The request does not have valid authentication credentials needed to perform the operation.
+    inline_response_400:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
   securitySchemes:
     Bearer:
       type: http

@@ -1,0 +1,349 @@
+openapi: 3.2.0
+info:
+  title: Token Consents API
+  version: 1.0.0
+  description: Token REST API.
+servers:
+- url: https://api.token.io/v1
+tags:
+- name: Consents
+paths:
+  /v2/consents:
+    get:
+      operationId: ConsentGatewayService.GetConsents
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.consent.GetConsentsResponse'
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: ids
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: statuses
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            enum:
+            - UNKNOWN_CONSENT_STATUS
+            - PENDING
+            - PENDING_REDIRECT_AUTH
+            - FAILURE_REJECTED
+            - AUTHORIZED
+            - EXPIRED
+            - FAILURE_EXPIRED
+            - FAILURE_CANCELLED
+            - REVOKED
+            - PENDING_REDIRECT_HP
+            type: string
+            default: UNKNOWN_CONSENT_STATUS
+      - name: createdAfter
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: createdBefore
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: expiresAfter
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: expiresBefore
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: externalPsuReference
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: reconfirmByAfter
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: reconfirmByBefore
+        in: query
+        required: false
+        schema:
+          type: string
+      tags:
+      - Consents
+      summary: Consent gateway service get consents
+      x-summary-source: derived
+    post:
+      operationId: ConsentGatewayService.RequestConsent
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.consent.ConsentResponse'
+      tags:
+      - Consents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/io.token.proto.gateway.consent.ConsentRequest'
+        required: true
+      summary: Consent gateway service request consent
+      x-summary-source: derived
+  /v2/consents/{consentId}:
+    get:
+      operationId: ConsentGatewayService.GetConsent
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.consent.ConsentResponse'
+      parameters:
+      - name: consentId
+        in: query
+        required: false
+        schema:
+          type: string
+      tags:
+      - Consents
+      summary: Consent gateway service get consent
+      x-summary-source: derived
+    delete:
+      operationId: ConsentGatewayService.RevokeConsent
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.consent.ConsentResponse'
+      parameters:
+      - name: consentId
+        in: query
+        required: false
+        schema:
+          type: string
+      tags:
+      - Consents
+      summary: Consent gateway service revoke consent
+      x-summary-source: derived
+  /v2/consents/{consentId}/authentications:
+    post:
+      operationId: ConsentGatewayService.ConfirmConsentAuthentication
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.consent.ConsentResponse'
+      tags:
+      - Consents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/io.token.proto.gateway.consent.ConfirmConsentAuthenticationRequest'
+        required: true
+      summary: Consent gateway service confirm consent authentication
+      x-summary-source: derived
+  /v2/consents/{consentId}/confirmations:
+    post:
+      operationId: ConsentGatewayService.ConfirmConsent
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.consent.ConsentResponse'
+      tags:
+      - Consents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/io.token.proto.gateway.consent.ConfirmConsentRequest'
+        required: true
+      summary: Consent gateway service confirm consent
+      x-summary-source: derived
+components:
+  schemas:
+    io.token.proto.gateway.consent.GetConsentsResponse:
+      type: object
+      properties:
+        consents:
+          items:
+            $ref: '#/components/schemas/io.token.proto.gateway.consent.Consent'
+          type: array
+        page:
+          $ref: '#/components/schemas/io.token.proto.common.v2.paging.PageInfo'
+    io.token.proto.gateway.consent.Permission:
+      enum:
+      - UNKNOWN_PERMISSION
+      - READ_ACCOUNTS
+      - READ_ACCOUNT_BALANCES
+      - READ_ACCOUNT_TRANSACTIONS
+      - READ_ACCOUNT_PARTIES
+      default: UNKNOWN_PERMISSION
+      type: string
+    io.token.proto.gateway.consent.ConsentRequest:
+      type: object
+      properties:
+        bankId:
+          type: string
+        callbackState:
+          type: string
+        callbackUrl:
+          type: string
+        consentTermsAccepted:
+          format: boolean
+          type: boolean
+        expiresAt:
+          type: string
+        externalPsuReference:
+          type: string
+        flowType:
+          $ref: '#/components/schemas/io.token.proto.common.v2.common.FlowType'
+        onBehalfOfId:
+          type: string
+        permissions:
+          items:
+            $ref: '#/components/schemas/io.token.proto.gateway.consent.Permission'
+          type: array
+        transactionHistoryDays:
+          format: int32
+          type: integer
+    io.token.proto.gateway.consent.ConfirmConsentRequest:
+      type: object
+      properties:
+        consentId:
+          type: string
+        psuConfirmedAt:
+          type: string
+    io.token.proto.common.v2.paging.PageInfo:
+      type: object
+      properties:
+        haveMore:
+          format: boolean
+          type: boolean
+        limit:
+          format: int32
+          type: integer
+        nextOffset:
+          type: string
+        offset:
+          type: string
+    io.token.proto.gateway.consent.Consent:
+      type: object
+      properties:
+        authentication:
+          $ref: '#/components/schemas/io.token.proto.gateway.consent.Authentication'
+        bankId:
+          type: string
+        callbackState:
+          type: string
+        callbackUrl:
+          type: string
+        createdAt:
+          type: string
+        expiresAt:
+          type: string
+        externalPsuReference:
+          type: string
+        flowType:
+          $ref: '#/components/schemas/io.token.proto.common.v2.common.FlowType'
+        id:
+          type: string
+        memberId:
+          type: string
+        onBehalfOfId:
+          type: string
+        permissions:
+          items:
+            $ref: '#/components/schemas/io.token.proto.gateway.consent.Permission'
+          type: array
+        reconfirmBy:
+          type: string
+        status:
+          $ref: '#/components/schemas/io.token.proto.gateway.consent.ConsentStatus'
+        statusReason:
+          type: string
+        transactionHistoryDays:
+          format: int32
+          type: integer
+        updatedAt:
+          type: string
+    io.token.proto.gateway.consent.ConfirmConsentAuthenticationRequest:
+      type: object
+      properties:
+        consentId:
+          type: string
+        query:
+          type: string
+    io.token.proto.gateway.consent.ConsentResponse:
+      type: object
+      properties:
+        consent:
+          $ref: '#/components/schemas/io.token.proto.gateway.consent.Consent'
+    io.token.proto.common.v2.common.FlowType:
+      enum:
+      - UNKNOWN
+      - API
+      - WEB_APP
+      - WEB_APP_CREDENTIAL
+      - API_ONLY
+      - FULL_HOSTED_PAGES
+      - EMBEDDED_HOSTED_PAGES
+      - PAY_BY_LINK_HOSTED_PAGES
+      default: UNKNOWN
+      type: string
+    io.token.proto.gateway.consent.ConsentStatus:
+      enum:
+      - UNKNOWN_CONSENT_STATUS
+      - PENDING
+      - PENDING_REDIRECT_AUTH
+      - FAILURE_REJECTED
+      - AUTHORIZED
+      - EXPIRED
+      - FAILURE_EXPIRED
+      - FAILURE_CANCELLED
+      - REVOKED
+      - PENDING_REDIRECT_HP
+      default: UNKNOWN_CONSENT_STATUS
+      type: string
+    io.token.proto.gateway.consent.Authentication:
+      type: object
+      properties:
+        redirectUrl:
+          type: string

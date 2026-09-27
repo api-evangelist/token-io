@@ -333,12 +333,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/inline_response_400_2'
-        '401':
-          description: The authorization information is missing or invalid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_401'
         '403':
           description: Permission to access this endpoint is denied
           content:
@@ -370,9 +364,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/inline_response_504'
       deprecated: false
-      security:
-      - Bearer: []
-      - BasicAuth: []
+      security: []
       x-hideTryItPanel: true
 components:
   schemas:
@@ -380,117 +372,20 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/scaMethods'
-    PanDetectedError:
-      type: object
-      properties:
-        errorCode:
-          example: PanDetected
-      description: Error object retured when PAN is detected in the submitted initiation payload. The error code value is `PanDetected`.
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    scaMethods:
-      type: string
-      description: 'The SCA (Strong Customer Authentication) method: <ul><li><b>Redirect</b> - User is redirected to bank for SCA.</li><li><b>Decoupled</b> - User receives sms / notification during authentication at bank</li><li><b>Confirmation Page</b> - User is presented with a page where they confirm authentication.</li><li><b>Multi-redirect</b> - Intermediate steps as part of authentication flow for user at bank.</li><li><b>Embedded single step</b> - Capture of fields for credentials in a single step.</li><li><b>Embedded multi-step</b> - Multiple steps in capture of credential fields from user.</li></ul>'
-      example: REDIRECT
-      default: INVALID_SCA_METHOD
-      enum:
-      - INVALID_SCA_METHOD
-      - REDIRECT
-      - DECOUPLED
-      - CONFIRMATION_PAGE
-      - MULTI_REDIRECT
-      - EMBEDDED_SINGLE_STEP
-      - EMBEDDED_MULTI_STEP
-    OpenBankingStandard:
-      type: string
-      description: Specifies the API standard adopted by the bank.
-      example: UK_Open_Banking_Standard
-      default: Invalid_Standard
-      enum:
-      - Invalid_Standard
-      - UK_Open_Banking_Standard
-      - Starling_Bank_API
-      - PolishApi
-      - STET_PSD2_API
-      - Citi_Handlowy_PSD2_API
-      - NextGenPsd2
-      - Slovak_Banking_API_Standard
-      - Czech_Open_Banking_Standard
-      - American_Express_PSD2_API
-      - Budapest_Bank_API
-    NotImplementedError:
+    GatewayTimeoutError:
       required:
       - paymentId
       type: object
       properties:
         errorCode:
-          example: UNIMPLEMENTED
+          example: DEADLINE_EXCEEDED
         paymentId:
           type: string
-          description: The operation was not implemented,supported or enabled by the bank.
-          example: Not implemented.
-      description: The operation was not implemented, supported or enabled by the bank.
+          description: The deadline expired before the operation could complete.
+          example: Deadline exceeded.
+      description: The deadline expired before the operation could complete.
       allOf:
       - $ref: '#/components/schemas/ErrorWithCode'
-    MandatoryFieldsv2_inner:
-      type: object
-      properties:
-        products:
-          type: array
-          description: The products this mandatory fields entry applies to.
-          items:
-            type: string
-            example: SIP
-        fieldPaths:
-          type: array
-          description: The paths to the mandatory fields for this entry.
-          items:
-            type: string
-            example: initiation.debtor
-        paymentTypes:
-          type: array
-          description: The types of payments (International/Domestic) this mandatory fields entry applies to.
-          items:
-            type: string
-            example: International
-        localInstruments:
-          type: array
-          description: The local instruments this mandatory fields entry applies to.
-          items:
-            type: string
-            example: SEPA
-    RequiredField:
-      required:
-      - displayName
-      - id
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-          description: The `type` determines how the field is presented to the user. <ul><li><b>FIELD</b> - displays a form with a text input field; use `displayName` value to add a label.</li><li><b>PASSWORD</b> - displays a form with a password input field; use `displayName` value to add a label.</li><li><b>CHOICE_FIELD</b> - displays a form that allows the user to choose one of the provided options; use `displayName` value to add a label.</li></ul>
-          enum:
-          - FIELD
-          - PASSWORD
-          - CHOICE_FIELD
-        id:
-          type: string
-          description: The ID used when passing the value of this field to Token.io.
-          example: '67891234'
-        displayName:
-          type: string
-          description: The name of the requested field displayed to the user.
-          example: 'Password:'
-        additionalInformation:
-          type: string
-          description: Additional information about this field.
-          example: This field is required.
-        options:
-          type: array
-          description: A list of options for the user to select from. For example, it can be an SCA method choice (SMS message, phone call <i>etc</i>.), or confirm/decline options for a confirmation page. The customer sends one of the values back to Token.io with the corresponding id.
-          items:
-            type: string
-      description: Contains information used in embedded authentication flows. These are optional credential request fields.
     ErrorWithCode:
       required:
       - errorCode
@@ -508,105 +403,37 @@ components:
       description: Error object providing details about the error.
       allOf:
       - $ref: '#/components/schemas/Error'
-    inline_response_401:
+    inline_response_504:
+      required:
+      - error
       type: object
       properties:
         error:
-          $ref: '#/components/schemas/Error'
-    bankId:
-      type: string
-      description: The Token.io id of the bank where the consent is created. **This field is required if the customer is not using Token.io's Hosted Pages for bank selection, <i>i.e.</i>, API-only integration when `EMBEDDED_HOSTED_PAGES` is selected in `flowType`, or Hosted Pages embedded (modal) integration.**
-      example: ob-modelo
-    TokenBankError:
+          $ref: '#/components/schemas/GatewayTimeoutError'
+    GetBanksV2Response:
       type: object
       properties:
-        errorCode:
-          example: FieldBank.RegistrationNotFound
-        bankId:
-          $ref: '#/components/schemas/bankId'
-      description: 'Error object providing details about an error related to the debtor bank. Possible error code values include: <br/><br/> - `Bank.RegistrationNotFound` - unable to find registration of the calling member with the given bank <br/><br/> - `Bank.FeatureNotSupported` - bank does not support VRP <br/><br/>'
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    PermissionDeniedError:
-      type: object
-      properties:
-        errorCode:
-          example: PermissionDenied
-      description: 'The error returned when the member is not authorized to perform the given operation: PermissionDenied. <br/>This error message will be accompanied by the reason from the bank. Typically this means the access token has expired and the user must re-authenticate with the bank.'
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    FieldError:
-      title: FieldError
-      required:
-      - paths
-      type: object
-      properties:
-        paths:
+        banks:
           type: array
-          description: A list of paths to the problematic fields.
+          description: This field contains information for each bank matching the request criteria.
           items:
-            type: string
-            description: A reference to the JSON path of the field that caused the error.
-            example: initiation.refId
-      description: 'An error object providing details about an error caused by a particular field or fields in the request. Possible error code values include: <br/><br/> <b>Field.NotUnique</b> - The field value should be unique, but it isn''t.<br/><br/> <b>Field.Expected</b> - A field is expected/required but is missing altogether. <br/><br/> <b>Field.InvalidFormat</b> - A field is present but has an invalid format. This includes invalid value type (<i>e.g.</i>, not a number where a number is expected) and an invalid format (<i>e.g.</i>, a value is too long). <br/><br/> <b>Field.Invalid</b> - A field is present but has an invalid value. This covers all cases, where a field is present and invalid, that are not covered by `Field.InvalidFormat`.'
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    Error:
-      type: object
-      properties:
-        message:
+            $ref: '#/components/schemas/BankV2'
+        paging:
+          $ref: '#/components/schemas/Paging'
+        rank:
+          type: integer
+          description: Sorts banks by rank.
+          example:
+          - 1
+          - 2
+          - 100
+        bankSubGroup:
           type: string
-          description: A description of the error.
-          example: This is a description of the error.
-        tokenTraceId:
-          type: string
-          description: The trace identifier for the given call.
-          example: '5678912345'
-      description: The request does not have valid authentication credentials needed to perform the operation.
-    inline_response_403:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/PermissionDeniedError'
-    MaintenanceWindow:
-      description: Details of the bank's planned or unplanned maintenance window.
-      type: array
-      items:
-        $ref: '#/components/schemas/maintenance'
-    ServiceUnavailableError:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: UNAVAILABLE
-        paymentId:
-          type: string
-          description: The service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
-          example: Unavailable
-      description: Service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    inline_response_500:
-      properties:
-        error:
-          allOf:
-          - type: object
-            properties:
-              errorCode:
-                type: string
-                description: This is a textual error code categorising the error.
-                example: InternalServerError
-          - $ref: '#/components/schemas/ServerError'
-    inline_response_501:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/NotImplementedError'
+          description: Filters for banks that are part of the bank sub-group specified.
+          example:
+          - CMM Grand
+          - Banque Populaire
+          - La Banque
     inline_response_503:
       required:
       - error
@@ -614,20 +441,6 @@ components:
       properties:
         error:
           $ref: '#/components/schemas/ServiceUnavailableError'
-    GatewayTimeoutError:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: DEADLINE_EXCEEDED
-        paymentId:
-          type: string
-          description: The deadline expired before the operation could complete.
-          example: Deadline exceeded.
-      description: The deadline expired before the operation could complete.
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
     BankV2:
       type: object
       properties:
@@ -780,44 +593,17 @@ components:
           description: The bank connection supports variable recurring payments.
           format: boolean
           example: true
-    GetBanksV2Response:
-      type: object
+    inline_response_500:
       properties:
-        banks:
-          type: array
-          description: This field contains information for each bank matching the request criteria.
-          items:
-            $ref: '#/components/schemas/BankV2'
-        paging:
-          $ref: '#/components/schemas/Paging'
-        rank:
-          type: integer
-          description: Sorts banks by rank.
-          example:
-          - 1
-          - 2
-          - 100
-        bankSubGroup:
-          type: string
-          description: Filters for banks that are part of the bank sub-group specified.
-          example:
-          - CMM Grand
-          - Banque Populaire
-          - La Banque
-    ServerError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A description of the error.
-          example: This is a description of the error.
-        tokenTraceId:
-          type: string
-          description: The trace identifier for the given call.
-          example: '5678912345'
-      description: 'This could refer to either an error by the payment service provider or the bank. When the bank reports a 5xx error, `"token-external-error": "true"` is set as a header in the HTTP response, indicating that the "internal" error originates from the bank. When one of the payment service providers internal services fails or when the bank reports a 4xx error, this header is not populated. The absence of this response header should be interpreted as `"token-external-error": "false"`.'
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
+        error:
+          allOf:
+          - type: object
+            properties:
+              errorCode:
+                type: string
+                description: This is a textual error code categorising the error.
+                example: InternalServerError
+          - $ref: '#/components/schemas/ServerError'
     maintenance:
       type: object
       properties:
@@ -848,6 +634,42 @@ components:
           - INVALID
           - AIS
           - SIP
+    FieldError:
+      title: FieldError
+      required:
+      - paths
+      type: object
+      properties:
+        paths:
+          type: array
+          description: A list of paths to the problematic fields.
+          items:
+            type: string
+            description: A reference to the JSON path of the field that caused the error.
+            example: initiation.refId
+      description: 'An error object providing details about an error caused by a particular field or fields in the request. Possible error code values include: <br/><br/> <b>Field.NotUnique</b> - The field value should be unique, but it isn''t.<br/><br/> <b>Field.Expected</b> - A field is expected/required but is missing altogether. <br/><br/> <b>Field.InvalidFormat</b> - A field is present but has an invalid format. This includes invalid value type (<i>e.g.</i>, not a number where a number is expected) and an invalid format (<i>e.g.</i>, a value is too long). <br/><br/> <b>Field.Invalid</b> - A field is present but has an invalid value. This covers all cases, where a field is present and invalid, that are not covered by `Field.InvalidFormat`.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    PermissionDeniedError:
+      type: object
+      properties:
+        errorCode:
+          example: PermissionDenied
+      description: 'The error returned when the member is not authorized to perform the given operation: PermissionDenied. <br/>This error message will be accompanied by the reason from the bank. Typically this means the access token has expired and the user must re-authenticate with the bank.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: The request does not have valid authentication credentials needed to perform the operation.
     FieldsFormatInformation:
       type: object
       properties:
@@ -864,6 +686,44 @@ components:
           description: The `object.field` path indicating the constrained field's position in the Token.io `requestPayload`.
           example: credentials.credentials1
       description: Contains bank-dependent formatting constraints indicating allowable characters, if any.
+    bankId:
+      type: string
+      description: The Token.io id of the bank where the consent is created. **This field is required if the customer is not using Token.io's Hosted Pages for bank selection, <i>i.e.</i>, API-only integration when `EMBEDDED_HOSTED_PAGES` is selected in `flowType`, or Hosted Pages embedded (modal) integration.**
+      example: ob-modelo
+    NotImplementedError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: UNIMPLEMENTED
+        paymentId:
+          type: string
+          description: The operation was not implemented,supported or enabled by the bank.
+          example: Not implemented.
+      description: The operation was not implemented, supported or enabled by the bank.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    TokenBankError:
+      type: object
+      properties:
+        errorCode:
+          example: FieldBank.RegistrationNotFound
+        bankId:
+          $ref: '#/components/schemas/bankId'
+      description: 'Error object providing details about an error related to the debtor bank. Possible error code values include: <br/><br/> - `Bank.RegistrationNotFound` - unable to find registration of the calling member with the given bank <br/><br/> - `Bank.FeatureNotSupported` - bank does not support VRP <br/><br/>'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    MaintenanceWindow:
+      description: Details of the bank's planned or unplanned maintenance window.
+      type: array
+      items:
+        $ref: '#/components/schemas/maintenance'
+    MandatoryFieldsv2:
+      type: array
+      description: Contains the fields required by the bank, which the TPP must populate in the token request, where applicable.
+      items:
+        $ref: '#/components/schemas/MandatoryFieldsv2_inner'
     Paging:
       type: object
       properties:
@@ -888,11 +748,78 @@ components:
           format: int32
           example: 2500
       description: Contains the page information for response content.
-    MandatoryFieldsv2:
-      type: array
-      description: Contains the fields required by the bank, which the TPP must populate in the token request, where applicable.
-      items:
-        $ref: '#/components/schemas/MandatoryFieldsv2_inner'
+    inline_response_501:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/NotImplementedError'
+    ServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: 'This could refer to either an error by the payment service provider or the bank. When the bank reports a 5xx error, `"token-external-error": "true"` is set as a header in the HTTP response, indicating that the "internal" error originates from the bank. When one of the payment service providers internal services fails or when the bank reports a 4xx error, this header is not populated. The absence of this response header should be interpreted as `"token-external-error": "false"`.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    inline_response_403:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/PermissionDeniedError'
+    MandatoryFieldsv2_inner:
+      type: object
+      properties:
+        products:
+          type: array
+          description: The products this mandatory fields entry applies to.
+          items:
+            type: string
+            example: SIP
+        fieldPaths:
+          type: array
+          description: The paths to the mandatory fields for this entry.
+          items:
+            type: string
+            example: initiation.debtor
+        paymentTypes:
+          type: array
+          description: The types of payments (International/Domestic) this mandatory fields entry applies to.
+          items:
+            type: string
+            example: International
+        localInstruments:
+          type: array
+          description: The local instruments this mandatory fields entry applies to.
+          items:
+            type: string
+            example: SEPA
+    OpenBankingStandard:
+      type: string
+      description: Specifies the API standard adopted by the bank.
+      example: UK_Open_Banking_Standard
+      default: Invalid_Standard
+      enum:
+      - Invalid_Standard
+      - UK_Open_Banking_Standard
+      - Starling_Bank_API
+      - PolishApi
+      - STET_PSD2_API
+      - Citi_Handlowy_PSD2_API
+      - NextGenPsd2
+      - Slovak_Banking_API_Standard
+      - Czech_Open_Banking_Standard
+      - American_Express_PSD2_API
+      - Budapest_Bank_API
     inline_response_400_2:
       required:
       - error
@@ -903,13 +830,73 @@ components:
           - $ref: '#/components/schemas/FieldError'
           - $ref: '#/components/schemas/PanDetectedError'
           - $ref: '#/components/schemas/TokenBankError'
-    inline_response_504:
-      required:
-      - error
+    scaMethods:
+      type: string
+      description: 'The SCA (Strong Customer Authentication) method: <ul><li><b>Redirect</b> - User is redirected to bank for SCA.</li><li><b>Decoupled</b> - User receives sms / notification during authentication at bank</li><li><b>Confirmation Page</b> - User is presented with a page where they confirm authentication.</li><li><b>Multi-redirect</b> - Intermediate steps as part of authentication flow for user at bank.</li><li><b>Embedded single step</b> - Capture of fields for credentials in a single step.</li><li><b>Embedded multi-step</b> - Multiple steps in capture of credential fields from user.</li></ul>'
+      example: REDIRECT
+      default: INVALID_SCA_METHOD
+      enum:
+      - INVALID_SCA_METHOD
+      - REDIRECT
+      - DECOUPLED
+      - CONFIRMATION_PAGE
+      - MULTI_REDIRECT
+      - EMBEDDED_SINGLE_STEP
+      - EMBEDDED_MULTI_STEP
+    PanDetectedError:
       type: object
       properties:
-        error:
-          $ref: '#/components/schemas/GatewayTimeoutError'
+        errorCode:
+          example: PanDetected
+      description: Error object retured when PAN is detected in the submitted initiation payload. The error code value is `PanDetected`.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    ServiceUnavailableError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: UNAVAILABLE
+        paymentId:
+          type: string
+          description: The service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+          example: Unavailable
+      description: Service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    RequiredField:
+      required:
+      - displayName
+      - id
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: The `type` determines how the field is presented to the user. <ul><li><b>FIELD</b> - displays a form with a text input field; use `displayName` value to add a label.</li><li><b>PASSWORD</b> - displays a form with a password input field; use `displayName` value to add a label.</li><li><b>CHOICE_FIELD</b> - displays a form that allows the user to choose one of the provided options; use `displayName` value to add a label.</li></ul>
+          enum:
+          - FIELD
+          - PASSWORD
+          - CHOICE_FIELD
+        id:
+          type: string
+          description: The ID used when passing the value of this field to Token.io.
+          example: '67891234'
+        displayName:
+          type: string
+          description: The name of the requested field displayed to the user.
+          example: 'Password:'
+        additionalInformation:
+          type: string
+          description: Additional information about this field.
+          example: This field is required.
+        options:
+          type: array
+          description: A list of options for the user to select from. For example, it can be an SCA method choice (SMS message, phone call <i>etc</i>.), or confirm/decline options for a confirmation page. The customer sends one of the values back to Token.io with the corresponding id.
+          items:
+            type: string
+      description: Contains information used in embedded authentication flows. These are optional credential request fields.
   securitySchemes:
     Bearer:
       type: http

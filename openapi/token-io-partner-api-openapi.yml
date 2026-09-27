@@ -1,0 +1,134 @@
+openapi: 3.2.0
+info:
+  title: Token Partner API
+  version: 1.0.0
+  description: Token REST API.
+servers:
+- url: https://api.token.io/v1
+tags:
+- name: Partner
+paths:
+  /partner/members:
+    get:
+      operationId: GatewayService.GetMembersUnderPartner
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.GetMembersUnderPartnerResponse'
+      parameters:
+      - name: page.offset
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: page.limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      tags:
+      - Partner
+      summary: Get a list of members
+      description: Get a list of members registered under the realm of the partner
+      deprecated: false
+  /partner/members/{memberId}/disable:
+    put:
+      operationId: GatewayService.DisableMember
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.DisableMemberResponse'
+      parameters:
+      - name: memberId
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Partner
+      summary: Disables a member
+      description: Disables a member that's under the realm of the partner
+      deprecated: false
+  /partner/members/{memberId}/enable:
+    put:
+      operationId: GatewayService.EnableMember
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.EnableMemberResponse'
+      parameters:
+      - name: memberId
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Partner
+      summary: Enables a member
+      description: Enables a member that's under the realm of the partner
+      deprecated: false
+components:
+  schemas:
+    io.token.proto.gateway.DisableMemberResponse:
+      type: object
+      properties: {}
+    io.token.proto.gateway.EnableMemberResponse:
+      type: object
+      properties: {}
+    io.token.proto.common.member.MemberInfo:
+      type: object
+      properties:
+        aliases:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.alias.Alias'
+          type: array
+        createdAtMs:
+          format: string
+          type: string
+        id:
+          type: string
+        profileName:
+          type: string
+    io.token.proto.gateway.GetMembersUnderPartnerResponse:
+      type: object
+      properties:
+        members:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.member.MemberInfo'
+          type: array
+        offset:
+          type: string
+    io.token.proto.common.alias.Alias:
+      type: object
+      properties:
+        realm:
+          type: string
+        realmId:
+          type: string
+        type:
+          $ref: '#/components/schemas/io.token.proto.common.alias.Alias.Type'
+        value:
+          type: string
+    io.token.proto.common.alias.Alias.Type:
+      enum:
+      - INVALID
+      - UNKNOWN
+      - EMAIL
+      - PHONE
+      - DOMAIN
+      - USERNAME
+      - BANK
+      - CUSTOM
+      - EIDAS
+      default: INVALID
+      type: string

@@ -1,0 +1,611 @@
+openapi: 3.2.0
+info:
+  title: Token Sub Tpp API
+  version: 1.0.0
+  description: Token REST API.
+servers:
+- url: https://api.token.io/v1
+tags:
+- name: subTpp
+paths:
+  /member/sub-tpps:
+    get:
+      operationId: GatewayService.RetrieveSubTpps
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.RetrieveSubTppsResponse'
+      parameters:
+      - name: page.offset
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: page.limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: filter.byCompanyNames
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: filter.byRegistrationDates
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: name
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: createdAt
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: statuses
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            enum:
+            - INVALID_STATUS
+            - ACTIVATED
+            - REJECTED
+            - AWAITING_APPROVAL
+            - DEACTIVATED
+            - AWAITING_DOCUMENTS
+            type: string
+            default: INVALID_STATUS
+      - name: domicileCountries
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: subTppId
+        in: query
+        required: false
+        schema:
+          type: string
+      tags:
+      - subTpp
+      summary: Retrieves all the sub tpps
+      description: Retrieves all the sub tpps for the reseller
+      deprecated: false
+    post:
+      operationId: GatewayService.CreateSubTpp
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.CreateSubTppResponse'
+      tags:
+      - subTpp
+      summary: Create a new sub tpp
+      description: Creates a sub tpp for the reseller
+      deprecated: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/io.token.proto.gateway.CreateSubTppRequest'
+        required: true
+  /member/sub-tpps/{subTppId}:
+    get:
+      operationId: GatewayService.RetrieveSubTpp
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.RetrieveSubTppResponse'
+      parameters:
+      - name: subTppId
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - subTpp
+      summary: Retrieves the sub tpp details
+      description: Retrieves the sub tpp for the reseller
+      deprecated: false
+    put:
+      operationId: GatewayService.UpdateSubTpp
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.UpdateSubTppResponse'
+      parameters:
+      - name: subTppId
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - subTpp
+      summary: Updates the sub tpp
+      deprecated: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/io.token.proto.gateway.UpdateSubTppRequest'
+        required: true
+    delete:
+      operationId: GatewayService.DeleteSubTpp
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.DeleteSubTppResponse'
+      parameters:
+      - name: subTppId
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - subTpp
+      summary: Delete an existing sub tpp
+      description: Deletes the sub tpp for the reseller
+      deprecated: false
+  /member/sub-tpps/{subTppId}/children:
+    get:
+      operationId: GatewayService.RetrieveSubTppChildren
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.RetrieveSubTppChildrenResponse'
+      parameters:
+      - name: subTppId
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - subTpp
+      summary: Retrieves the sub tpp children
+      description: Retrieves the sub tpp children for the provided sub tpp id
+      deprecated: false
+  /member/sub-tpps/{subTppId}/documents:
+    get:
+      operationId: GatewayService.GetDocuments
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.GetDocumentsResponse'
+      parameters:
+      - name: subTppId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: statuses
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            enum:
+            - INVALID_DOCUMENT_STATUS
+            - PENDING_UPLOAD
+            - UPLOADED
+            - WITHDRAWN
+            type: string
+            default: INVALID_DOCUMENT_STATUS
+      tags:
+      - subTpp
+      summary: Get all the sub tpp documents
+      description: Retrieves all the sub tpp documents for the sub tpp
+      deprecated: false
+  /member/sub-tpps/{subTppId}/documents/{documentId}/view:
+    get:
+      operationId: GatewayService.GetPreSignedUrl
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.GetPreSignedUrlResponse'
+      parameters:
+      - name: subTppId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: documentId
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - subTpp
+      summary: Get pre-signed URL
+      description: Get pre-signed URL to view/download uploaded document
+      deprecated: false
+  /member/sub-tpps/{subTppId}/upload-document/{documentId}:
+    post:
+      operationId: GatewayService.UploadDocument
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.UploadDocumentResponse'
+      parameters:
+      - name: subTppId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: documentId
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - subTpp
+      summary: Upload SubTpp documents
+      description: Upload documents for SubTpp
+      deprecated: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/io.token.proto.gateway.UploadDocumentRequest'
+        required: true
+components:
+  schemas:
+    io.token.proto.common.member.Merchant.PersonDetail:
+      type: object
+      properties:
+        address:
+          type: string
+        dateOfBirth:
+          type: string
+        fullName:
+          type: string
+    io.token.proto.gateway.CreateSubTppResponse:
+      type: object
+      properties:
+        subTppId:
+          type: string
+    io.token.proto.gateway.GetDocumentsResponse:
+      type: object
+      properties:
+        documents:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.member.Document'
+          type: array
+    io.token.proto.gateway.DeleteSubTppResponse:
+      type: object
+      properties: {}
+    io.token.proto.common.member.Merchant.CompetentAuthorities:
+      enum:
+      - INVALID_AUTHORITY
+      - FCA
+      - BAFIN
+      default: INVALID_AUTHORITY
+      type: string
+    io.token.proto.common.member.Document:
+      type: object
+      properties:
+        createdAtMs:
+          format: string
+          type: string
+        description:
+          type: string
+        documentName:
+          type: string
+        fileId:
+          type: string
+        id:
+          type: string
+        memberId:
+          type: string
+        status:
+          $ref: '#/components/schemas/io.token.proto.common.member.DocumentStatus'
+        subTppId:
+          type: string
+        updatedAtMs:
+          format: string
+          type: string
+        uploadOptional:
+          format: boolean
+          type: boolean
+    io.token.proto.gateway.CreateSubTppRequest:
+      type: object
+      properties:
+        domain:
+          type: string
+        domicileCountry:
+          type: string
+        logo:
+          format: byte
+          type: string
+        mccCode:
+          type: string
+        merchant:
+          $ref: '#/components/schemas/io.token.proto.common.member.Merchant'
+        name:
+          type: string
+        parentSubTppId:
+          type: string
+        useNewFlow:
+          format: boolean
+          type: boolean
+    io.token.proto.common.blob.Blob.Payload:
+      type: object
+      properties:
+        accessMode:
+          $ref: '#/components/schemas/io.token.proto.common.blob.Blob.AccessMode'
+        data:
+          format: byte
+          type: string
+        name:
+          type: string
+        ownerId:
+          type: string
+        type:
+          type: string
+    io.token.proto.gateway.UpdateSubTppResponse:
+      type: object
+      properties: {}
+    io.token.proto.common.member.Merchant.RegulatoryType:
+      enum:
+      - INVALID_TYPE
+      - TYPE_1
+      - TYPE_2
+      default: INVALID_TYPE
+      type: string
+    io.token.proto.common.member.SubTpp.Status:
+      enum:
+      - INVALID_STATUS
+      - ACTIVATED
+      - REJECTED
+      - AWAITING_APPROVAL
+      - DEACTIVATED
+      - AWAITING_DOCUMENTS
+      default: INVALID_STATUS
+      type: string
+    io.token.proto.common.member.Merchant.MerchantType:
+      enum:
+      - INVALID_MERCHANT_TYPE
+      - TOKEN_LICENSED_SOLE_TRADER
+      - TOKEN_LICENSED_NON_SOLE_TRADER_PUBLIC
+      - TOKEN_LICENSED_NON_SOLE_TRADER_PRIVATE
+      - LICENSED_TPP_SOLE_TRADER
+      - LICENSED_TPP_NON_SOLE_TRADER
+      default: INVALID_MERCHANT_TYPE
+      type: string
+    io.token.proto.common.member.SubTpp.CallbackType:
+      enum:
+      - UNSPECIFIED
+      - TOKEN_CALLBACK
+      - TPP_CALLBACK
+      default: UNSPECIFIED
+      type: string
+    io.token.proto.gateway.UploadDocumentResponse:
+      type: object
+      properties: {}
+    io.token.proto.common.blob.Blob.AccessMode:
+      enum:
+      - DEFAULT
+      - PUBLIC
+      default: DEFAULT
+      type: string
+    io.token.proto.common.member.Merchant.RiskAssessmentScore:
+      enum:
+      - INVALID_SCORE
+      - GREEN
+      - AMBER
+      - RED
+      default: INVALID_SCORE
+      type: string
+    io.token.proto.common.member.Merchant.ChargeableStatus:
+      enum:
+      - INVALID_STATUS
+      - CHARGEABLE
+      - PASS_THROUGH
+      - INTERNAL
+      default: INVALID_STATUS
+      type: string
+    io.token.proto.gateway.GetPreSignedUrlResponse:
+      type: object
+      properties:
+        expiresAt:
+          type: string
+        url:
+          type: string
+    io.token.proto.gateway.RetrieveSubTppResponse:
+      type: object
+      properties:
+        subTpp:
+          $ref: '#/components/schemas/io.token.proto.common.member.SubTpp'
+    io.token.proto.gateway.RetrieveSubTppsResponse:
+      type: object
+      properties:
+        offset:
+          type: string
+        subTpps:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.member.SubTpp'
+          type: array
+    io.token.proto.gateway.UploadDocumentRequest:
+      type: object
+      properties:
+        file:
+          $ref: '#/components/schemas/io.token.proto.common.blob.Blob.Payload'
+        fileType:
+          type: string
+    io.token.proto.common.member.Merchant:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        approvalDate:
+          type: string
+        bic:
+          type: string
+        chargeableStatus:
+          $ref: '#/components/schemas/io.token.proto.common.member.Merchant.ChargeableStatus'
+        companyRegistrationNumber:
+          type: string
+        competentAuthorities:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.member.Merchant.CompetentAuthorities'
+          type: array
+        directors:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.member.Merchant.PersonDetail'
+          type: array
+        hasVirtualAccount:
+          format: boolean
+          type: boolean
+        iban:
+          type: string
+        industry:
+          type: string
+        legalEntityName:
+          type: string
+        mccSubType:
+          type: string
+        merchantJurisdiction:
+          type: string
+        merchantType:
+          $ref: '#/components/schemas/io.token.proto.common.member.Merchant.MerchantType'
+        primaryUseCase:
+          type: string
+        regulatoryType:
+          $ref: '#/components/schemas/io.token.proto.common.member.Merchant.RegulatoryType'
+        reportingIdentifier:
+          type: string
+        reportingLabel:
+          type: string
+        riskAssessmentReviewDate:
+          type: string
+        riskAssessmentScore:
+          $ref: '#/components/schemas/io.token.proto.common.member.Merchant.RiskAssessmentScore'
+        signatories:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.member.Merchant.PersonDetail'
+          type: array
+        soleTrader:
+          $ref: '#/components/schemas/io.token.proto.common.member.Merchant.PersonDetail'
+        sortCode:
+          type: string
+        subTppId:
+          type: string
+        terminationDate:
+          type: string
+        ubos:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.member.Merchant.PersonDetail'
+          type: array
+        uid:
+          type: string
+    io.token.proto.gateway.UpdateSubTppRequest:
+      type: object
+      properties:
+        subTpp:
+          $ref: '#/components/schemas/io.token.proto.common.member.SubTpp'
+    io.token.proto.gateway.RetrieveSubTppChildrenResponse:
+      type: object
+      properties:
+        subTpps:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.member.SubTpp'
+          type: array
+    io.token.proto.common.member.DocumentStatus:
+      enum:
+      - INVALID_DOCUMENT_STATUS
+      - PENDING_UPLOAD
+      - UPLOADED
+      - WITHDRAWN
+      default: INVALID_DOCUMENT_STATUS
+      type: string
+    io.token.proto.common.member.SubTpp:
+      type: object
+      properties:
+        callbackType:
+          $ref: '#/components/schemas/io.token.proto.common.member.SubTpp.CallbackType'
+        childSubTppIds:
+          items:
+            type: string
+          type: array
+        createdAt:
+          format: string
+          type: string
+        domain:
+          type: string
+        domicileCountry:
+          type: string
+        id:
+          type: string
+        logo:
+          format: byte
+          type: string
+        mccCode:
+          type: string
+        memberId:
+          type: string
+        merchant:
+          $ref: '#/components/schemas/io.token.proto.common.member.Merchant'
+        name:
+          type: string
+        parentSubTppId:
+          type: string
+        parentSubTppName:
+          type: string
+        restrictedCountries:
+          items:
+            type: string
+          type: array
+        status:
+          $ref: '#/components/schemas/io.token.proto.common.member.SubTpp.Status'
+        statusReasonInformation:
+          type: string
+        updatedAt:
+          format: string
+          type: string

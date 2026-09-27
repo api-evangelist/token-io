@@ -1,0 +1,362 @@
+openapi: 3.2.0
+info:
+  title: Token Member API
+  version: 1.0.0
+  description: Token REST API.
+servers:
+- url: https://api.token.io/v1
+tags:
+- name: Member
+paths:
+  /member/product/restrictions:
+    get:
+      operationId: GatewayService.GetRestrictions
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.GetRestrictionsResponse'
+      parameters:
+      - name: filter.byRestrictionId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: filter.byTargetMemberId
+        in: query
+        required: false
+        schema:
+          type: string
+      tags:
+      - Member
+      summary: Gateway service get restrictions
+      x-summary-source: derived
+    post:
+      operationId: GatewayService.CreateRestriction
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.CreateRestrictionResponse'
+      tags:
+      - Member
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/io.token.proto.gateway.CreateRestrictionRequest'
+        required: true
+      summary: Gateway service create restriction
+      x-summary-source: derived
+  /member/product/restrictions/countries:
+    get:
+      operationId: GatewayService.GetCountries
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.GetCountriesResponse'
+      tags:
+      - Member
+      summary: Gateway service get countries
+      x-summary-source: derived
+  /member/product/restrictions/countries/{countryCode}/regions:
+    get:
+      operationId: GatewayService.GetRegions
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.GetRegionsResponse'
+      parameters:
+      - name: countryCode
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Member
+      summary: Gateway service get regions
+      x-summary-source: derived
+  /member/product/restrictions/{restrictionId}:
+    put:
+      operationId: GatewayService.UpdateRestriction
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.UpdateRestrictionResponse'
+      parameters:
+      - name: restrictionId
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Member
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/io.token.proto.gateway.UpdateRestrictionRequest'
+        required: true
+      summary: Gateway service update restriction
+      x-summary-source: derived
+    delete:
+      operationId: GatewayService.DeleteRestriction
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.DeleteRestrictionResponse'
+      parameters:
+      - name: restrictionId
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Member
+      summary: Gateway service delete restriction
+      x-summary-source: derived
+  /member/product/restrictions/{restrictionId}/rule:
+    post:
+      operationId: GatewayService.CreateRule
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.CreateRuleResponse'
+      parameters:
+      - name: restrictionId
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Member
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/io.token.proto.gateway.CreateRuleRequest'
+        required: true
+      summary: Gateway service create rule
+      x-summary-source: derived
+  /member/product/restrictions/{restrictionId}/rules/{ruleId}:
+    put:
+      operationId: GatewayService.UpdateRule
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.UpdateRuleResponse'
+      parameters:
+      - name: ruleId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: restrictionId
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Member
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/io.token.proto.gateway.UpdateRuleRequest'
+        required: true
+      summary: Gateway service update rule
+      x-summary-source: derived
+    delete:
+      operationId: GatewayService.DeleteRule
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.DeleteRuleResponse'
+      parameters:
+      - name: ruleId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: restrictionId
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Member
+      summary: Gateway service delete rule
+      x-summary-source: derived
+components:
+  schemas:
+    io.token.proto.gateway.CreateRestrictionResponse:
+      type: object
+      properties:
+        restrictionId:
+          type: string
+    io.token.proto.gateway.UpdateRestrictionResponse:
+      type: object
+      properties: {}
+    io.token.proto.gateway.GetCountriesResponse:
+      type: object
+      properties:
+        countries:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.restriction.Country'
+          type: array
+    io.token.proto.gateway.UpdateRestrictionRequest:
+      type: object
+      properties:
+        updatedRestriction:
+          $ref: '#/components/schemas/io.token.proto.common.restriction.Restriction'
+    io.token.proto.gateway.UpdateRuleResponse:
+      type: object
+      properties: {}
+    io.token.proto.gateway.DeleteRuleResponse:
+      type: object
+      properties:
+        deletedRule:
+          $ref: '#/components/schemas/io.token.proto.common.restriction.Rule'
+    io.token.proto.gateway.GetRegionsResponse:
+      type: object
+      properties:
+        regions:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.restriction.Region'
+          type: array
+    io.token.proto.common.restriction.Rule:
+      type: object
+      properties:
+        createdAt:
+          type: string
+        enabled:
+          format: boolean
+          type: boolean
+        id:
+          type: string
+        name:
+          type: string
+        text:
+          type: string
+    io.token.proto.common.restriction.Region:
+      type: object
+      properties:
+        country:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+    io.token.proto.common.restriction.Restriction:
+      type: object
+      properties:
+        createdAt:
+          type: string
+        enabled:
+          format: boolean
+          type: boolean
+        id:
+          type: string
+        ownerMemberId:
+          type: string
+        productType:
+          $ref: '#/components/schemas/io.token.proto.common.restriction.RestrictedProductType'
+        rules:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.restriction.Rule'
+          type: array
+        targetMemberId:
+          type: string
+        updatedAt:
+          type: string
+    io.token.proto.gateway.UpdateRuleRequest:
+      type: object
+      properties:
+        updatedRule:
+          $ref: '#/components/schemas/io.token.proto.common.restriction.Rule'
+    io.token.proto.gateway.CreateRestrictionRequest:
+      type: object
+      properties:
+        restrictionPayload:
+          $ref: '#/components/schemas/io.token.proto.common.restriction.RestrictionPayload'
+        targetMemberId:
+          type: string
+    io.token.proto.common.restriction.Country:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+    io.token.proto.gateway.CreateRuleResponse:
+      type: object
+      properties:
+        ruleId:
+          type: string
+    io.token.proto.gateway.DeleteRestrictionResponse:
+      type: object
+      properties:
+        deletedRestriction:
+          $ref: '#/components/schemas/io.token.proto.common.restriction.Restriction'
+    io.token.proto.common.restriction.RulePayload:
+      type: object
+      properties:
+        name:
+          type: string
+        text:
+          type: string
+    io.token.proto.gateway.GetRestrictionsResponse:
+      type: object
+      properties:
+        restrictions:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.restriction.Restriction'
+          type: array
+    io.token.proto.common.restriction.RestrictionPayload:
+      type: object
+      properties:
+        productType:
+          $ref: '#/components/schemas/io.token.proto.common.restriction.RestrictedProductType'
+        rulePayloads:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.restriction.RulePayload'
+          type: array
+    io.token.proto.common.restriction.RestrictedProductType:
+      enum:
+      - UNKNOWN_PRODUCT_TYPE
+      - SINGLE_IMMEDIATE_PAYMENT
+      - IP_ADDRESS
+      - GEO_LOCATION
+      - PIS_PAYMENT_NETWORK
+      default: UNKNOWN_PRODUCT_TYPE
+      type: string
+    io.token.proto.gateway.CreateRuleRequest:
+      type: object
+      properties:
+        rule:
+          $ref: '#/components/schemas/io.token.proto.common.restriction.RulePayload'

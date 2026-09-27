@@ -1,0 +1,56 @@
+openapi: 3.2.0
+info:
+  title: Token Bank Integration Health API
+  description: This API is for banks integrating with Token
+  contact:
+    email: service@token.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.6
+servers:
+- url: /
+tags:
+- name: Health
+  description: Health Check Endpoints.
+paths:
+  /health:
+    get:
+      tags:
+      - Health
+      summary: Get health check
+      description: Used to retrieve the current state of the bank connection.
+      operationId: getHealthCheck
+      parameters:
+      - name: bankId
+        in: query
+        description: The token bank identifier.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Access token is missing or invalid
+        '503':
+          description: Service unavailable
+        default:
+          description: Unexpected error
+      security:
+      - BasicAuth: []
+      - Bearer: []
+      x-hideTryItPanel: true
+components:
+  securitySchemes:
+    BasicAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+    Bearer:
+      type: http
+      description: Enter JWT Bearer token only (see <a href="https://developer.token.io/token_rest_api_doc/content/e-rest/jwt_auth.htm" target="_blank">Using JWT Authentication</a> for more information).
+      scheme: bearer
+      bearerFormat: JWT

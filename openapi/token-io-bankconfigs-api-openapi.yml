@@ -1,0 +1,693 @@
+openapi: 3.2.0
+info:
+  title: Token Bank Configs API
+  version: 1.0.0
+  description: Token REST API.
+servers:
+- url: https://api.token.io/v1
+tags:
+- name: bankConfigs
+paths:
+  /members/{memberId}/bank-configs:
+    get:
+      operationId: GatewayService.GetBankConfigs
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.GetBankConfigsResponse'
+      parameters:
+      - name: memberId
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - bankConfigs
+      summary: Get bank configs
+      description: Get all bank configs
+      deprecated: false
+  /members/{memberId}/bank-configs/{bankId}:
+    get:
+      operationId: GatewayService.GetBankConfig
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.GetBankConfigResponse'
+      parameters:
+      - name: memberId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: bankId
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - bankConfigs
+      summary: Get bank config
+      description: Get the bank config
+      deprecated: false
+    put:
+      operationId: GatewayService.StoreBankConfig
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.StoreBankConfigResponse'
+      parameters:
+      - name: memberId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: bankId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: uk_open_banking_standard.bank_config.organisationId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: uk_open_banking_standard.bank_config.softwareStatementId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: uk_open_banking_standard.bank_config.authenticationType
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: uk_open_banking_standard.bank_config.clientId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: uk_open_banking_standard.bank_config.aisClientId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: uk_open_banking_standard.bank_config.clientSecret
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: uk_open_banking_standard.bank_config.jwtSigningKeyId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: uk_open_banking_standard.bank_config.jwtSigningAlgorithm
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: uk_open_banking_standard.bank_config.signingKeyId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: uk_open_banking_standard.bank_config.transportKeyId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: uk_open_banking_standard.bank_config.isEidas
+        in: query
+        required: false
+        schema:
+          type: boolean
+          format: boolean
+      - name: next_gen_psd2_standard.bank_config.xApiKeyAis
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: next_gen_psd2_standard.bank_config.xApiKeyPis
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: next_gen_psd2_standard.bank_config.clientId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: next_gen_psd2_standard.bank_config.clientSecret
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: next_gen_psd2_standard.bank_config.psuCorporateIdType
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: next_gen_psd2_standard.bank_config.psuIdType
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: next_gen_psd2_standard.bank_config.jwtSigningKeyId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: next_gen_psd2_standard.bank_config.jwtSigningAlgorithm
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: next_gen_psd2_standard.bank_config.qsealCertificate
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: next_gen_psd2_standard.bank_config.qwacCertificate
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: next_gen_psd2_standard.bank_config.signingKeyId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: next_gen_psd2_standard.bank_config.transportKeyId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: polish_api_standard.bank_config.clientId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: polish_api_standard.bank_config.clientSecret
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: polish_api_standard.bank_config.signingKeyId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: polish_api_standard.bank_config.transportKeyId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: polish_api_standard.bank_config.jwtSigningKeyId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: polish_api_standard.bank_config.x5u
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: polish_api_standard.bank_config.x5c
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: polish_api_standard.bank_config.x5t
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: polish_api_standard.bank_config.kid
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: polish_api_standard.bank_config.tppId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: provider_sample_standard.bank_config.clientId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: provider_sample_standard.bank_config.clientSecret
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: provider_sample_standard.bank_config.jwtSigningKeyId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: provider_sample_standard.bank_config.jwtSigningAlgorithm
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: provider_sample_standard.bank_config.signingKeyId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: provider_sample_standard.bank_config.transportKeyId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: stet_psd2_standard.bank_config.clientId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: stet_psd2_standard.bank_config.clientSecret
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: stet_psd2_standard.bank_config.jwtSigningKeyId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: stet_psd2_standard.bank_config.jwtSigningAlgorithm
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: stet_psd2_standard.bank_config.signingKeyId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: stet_psd2_standard.bank_config.transportKeyId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: stet_psd2_standard.bank_config.certificateOwnerName
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: stet_psd2_standard.bank_config.xApiKeyAis
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: stet_psd2_standard.bank_config.xApiKeyPis
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: starling_api_standard.bank_config.aisClientId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: starling_api_standard.bank_config.aisClientSecret
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: starling_api_standard.bank_config.pisClientId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: starling_api_standard.bank_config.pisClientSecret
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: starling_api_standard.bank_config.jwtSigningKeyId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: starling_api_standard.bank_config.signingKeyId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: starling_api_standard.bank_config.transportKeyId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: czech_psd2_standard.bank_config.xApiKey
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: czech_psd2_standard.bank_config.clientId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: czech_psd2_standard.bank_config.clientSecret
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: czech_psd2_standard.bank_config.jwtSigningKeyId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: czech_psd2_standard.bank_config.jwtSigningAlgorithm
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: czech_psd2_standard.bank_config.qsealCertificate
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: czech_psd2_standard.bank_config.signingKeyId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: czech_psd2_standard.bank_config.transportKeyId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: budapest_psd2_standard.bank_config.clientId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: budapest_psd2_standard.bank_config.signingKeyId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: budapest_psd2_standard.bank_config.transportKeyId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: budapest_psd2_standard.bank_config.tppId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: slovak_psd2_standard.bank_config.clientId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: slovak_psd2_standard.bank_config.clientSecret
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: slovak_psd2_standard.bank_config.tppClientId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: slovak_psd2_standard.bank_config.signingKeyId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: slovak_psd2_standard.bank_config.transportKeyId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: bank_config.noLicenceRequired
+        in: query
+        required: false
+        schema:
+          type: boolean
+          format: boolean
+      tags:
+      - bankConfigs
+      summary: Store bank config
+      description: Store the bank config
+      deprecated: false
+    delete:
+      operationId: GatewayService.DeleteBankConfig
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.DeleteBankConfigResponse'
+      parameters:
+      - name: memberId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: bankId
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - bankConfigs
+      summary: Delete bank config
+      description: Delete the bank config
+      deprecated: false
+components:
+  schemas:
+    io.token.proto.common.tsp.bankconfig.BankConfig.ProviderSampleStandard:
+      type: object
+      properties:
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        jwtSigningAlgorithm:
+          type: string
+        jwtSigningKeyId:
+          type: string
+        signingKeyId:
+          type: string
+        transportKeyId:
+          type: string
+    io.token.proto.gateway.StoreBankConfigResponse:
+      type: object
+      properties: {}
+    io.token.proto.gateway.GetBankConfigsResponse.BankConfigsEntry:
+      type: object
+      properties: {}
+      additionalProperties:
+        $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig'
+    io.token.proto.common.tsp.bankconfig.BankConfig.PolishApiStandard:
+      type: object
+      properties:
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        jwtSigningKeyId:
+          type: string
+        kid:
+          type: string
+        signingKeyId:
+          type: string
+        tppId:
+          type: string
+        transportKeyId:
+          type: string
+        x5c:
+          type: string
+        x5t:
+          type: string
+        x5u:
+          type: string
+    io.token.proto.common.tsp.bankconfig.BankConfig.UKOpenBankingStandard:
+      type: object
+      properties:
+        aisClientId:
+          type: string
+        authenticationType:
+          type: string
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        isEidas:
+          format: boolean
+          type: boolean
+        jwtSigningAlgorithm:
+          type: string
+        jwtSigningKeyId:
+          type: string
+        organisationId:
+          type: string
+        signingKeyId:
+          type: string
+        softwareStatementId:
+          type: string
+        transportKeyId:
+          type: string
+    io.token.proto.gateway.DeleteBankConfigResponse:
+      type: object
+      properties: {}
+    io.token.proto.common.tsp.bankconfig.BankConfig.SlovakPsd2Standard:
+      type: object
+      properties:
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        signingKeyId:
+          type: string
+        tppClientId:
+          type: string
+        transportKeyId:
+          type: string
+    io.token.proto.common.tsp.bankconfig.BankConfig:
+      type: object
+      properties:
+        budapestPsd2Standard:
+          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig.BudapestPsd2Standard'
+        czechPsd2Standard:
+          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig.CzechPsd2Standard'
+        nextGenPsd2Standard:
+          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig.NextGenPsd2Standard'
+        noLicenceRequired:
+          format: boolean
+          type: boolean
+        polishApiStandard:
+          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig.PolishApiStandard'
+        providerSampleStandard:
+          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig.ProviderSampleStandard'
+        slovakPsd2Standard:
+          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig.SlovakPsd2Standard'
+        starlingApiStandard:
+          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig.StarlingApiStandard'
+        stetPsd2Standard:
+          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig.StetPsd2Standard'
+        ukOpenBankingStandard:
+          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig.UKOpenBankingStandard'
+    io.token.proto.common.tsp.bankconfig.BankConfig.StarlingApiStandard:
+      type: object
+      properties:
+        aisClientId:
+          type: string
+        aisClientSecret:
+          type: string
+        jwtSigningKeyId:
+          type: string
+        pisClientId:
+          type: string
+        pisClientSecret:
+          type: string
+        signingKeyId:
+          type: string
+        transportKeyId:
+          type: string
+    io.token.proto.common.tsp.bankconfig.BankConfig.BudapestPsd2Standard:
+      type: object
+      properties:
+        clientId:
+          type: string
+        signingKeyId:
+          type: string
+        tppId:
+          type: string
+        transportKeyId:
+          type: string
+    io.token.proto.common.tsp.bankconfig.BankConfig.NextGenPsd2Standard:
+      type: object
+      properties:
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        jwtSigningAlgorithm:
+          type: string
+        jwtSigningKeyId:
+          type: string
+        psuCorporateIdType:
+          type: string
+        psuIdType:
+          type: string
+        qsealCertificate:
+          type: string
+        qwacCertificate:
+          type: string
+        signingKeyId:
+          type: string
+        transportKeyId:
+          type: string
+        xApiKeyAis:
+          type: string
+        xApiKeyPis:
+          type: string
+    io.token.proto.common.tsp.bankconfig.BankConfig.CzechPsd2Standard:
+      type: object
+      properties:
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        jwtSigningAlgorithm:
+          type: string
+        jwtSigningKeyId:
+          type: string
+        qsealCertificate:
+          type: string
+        signingKeyId:
+          type: string
+        transportKeyId:
+          type: string
+        xApiKey:
+          type: string
+    io.token.proto.common.tsp.bankconfig.BankConfig.StetPsd2Standard:
+      type: object
+      properties:
+        certificateOwnerName:
+          type: string
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        jwtSigningAlgorithm:
+          type: string
+        jwtSigningKeyId:
+          type: string
+        signingKeyId:
+          type: string
+        transportKeyId:
+          type: string
+        xApiKeyAis:
+          type: string
+        xApiKeyPis:
+          type: string
+    io.token.proto.gateway.GetBankConfigResponse:
+      type: object
+      properties:
+        bankConfig:
+          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig'
+    io.token.proto.gateway.GetBankConfigsResponse:
+      type: object
+      properties:
+        bankConfigs:
+          $ref: '#/components/schemas/io.token.proto.gateway.GetBankConfigsResponse.BankConfigsEntry'

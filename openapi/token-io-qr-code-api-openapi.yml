@@ -1,0 +1,37 @@
+openapi: 3.2.0
+info:
+  title: Token Qr Code API
+  version: 1.0.0
+  description: Token REST API.
+servers:
+- url: https://api.token.io/v1
+tags:
+- name: Qr Code
+paths:
+  /qr-code:
+    get:
+      operationId: GatewayService.GetQrCode
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.GetQrCodeResponse'
+      parameters:
+      - name: data
+        in: query
+        required: false
+        schema:
+          type: string
+      tags:
+      - Qr Code
+      summary: Gateway service get qr code
+      x-summary-source: derived
+components:
+  schemas:
+    io.token.proto.gateway.GetQrCodeResponse:
+      type: object
+      properties:
+        qrCode:
+          type: string

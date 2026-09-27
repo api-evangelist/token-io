@@ -1,0 +1,154 @@
+openapi: 3.2.0
+info:
+  title: Token Members API
+  version: 1.0.0
+  description: Token REST API.
+servers:
+- url: https://api.token.io/v1
+tags:
+- name: Members
+paths:
+  /members/{memberId}/keys:
+    get:
+      operationId: GatewayService.GetMemberKeys
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.GetMemberKeysResponse'
+      parameters:
+      - name: memberId
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Members
+      summary: Gateway service get member keys
+      x-summary-source: derived
+    post:
+      operationId: GatewayService.AddMemberKey
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.AddMemberKeyResponse'
+      parameters:
+      - name: memberId
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Members
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/io.token.proto.gateway.AddMemberKeyRequest'
+        required: true
+      summary: Gateway service add member key
+      x-summary-source: derived
+  /members/{memberId}/keys/{keyId}:
+    get:
+      operationId: GatewayService.GetMemberKey
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.GetMemberKeyResponse'
+      parameters:
+      - name: memberId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: keyId
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Members
+      summary: Gateway service get member key
+      x-summary-source: derived
+    delete:
+      operationId: GatewayService.DeleteMemberKey
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.DeleteMemberKeyResponse'
+      parameters:
+      - name: memberId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: keyId
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Members
+      summary: Gateway service delete member key
+      x-summary-source: derived
+components:
+  schemas:
+    io.token.proto.gateway.GetMemberKeysResponse:
+      type: object
+      properties:
+        key:
+          items:
+            $ref: '#/components/schemas/io.token.proto.gateway.MemberKey'
+          type: array
+    io.token.proto.gateway.AddMemberKeyRequest:
+      type: object
+      properties:
+        keyAlgorithm:
+          $ref: '#/components/schemas/io.token.proto.common.security.Key.Algorithm'
+        publicKey:
+          type: string
+    io.token.proto.gateway.MemberKey:
+      type: object
+      properties:
+        algorithm:
+          $ref: '#/components/schemas/io.token.proto.common.security.Key.Algorithm'
+        expiresAtMs:
+          format: string
+          type: string
+        id:
+          type: string
+        publicKey:
+          type: string
+    io.token.proto.gateway.DeleteMemberKeyResponse:
+      type: object
+      properties: {}
+    io.token.proto.gateway.AddMemberKeyResponse:
+      type: object
+      properties:
+        keyId:
+          type: string
+    io.token.proto.gateway.GetMemberKeyResponse:
+      type: object
+      properties:
+        key:
+          $ref: '#/components/schemas/io.token.proto.gateway.MemberKey'
+    io.token.proto.common.security.Key.Algorithm:
+      enum:
+      - INVALID_ALGORITHM
+      - ED25519
+      - ECDSA_SHA256
+      - RS256
+      - RS512
+      default: INVALID_ALGORITHM
+      type: string

@@ -1,0 +1,43 @@
+openapi: 3.2.0
+info:
+  title: Token Vrps API
+  version: 1.0.0
+  description: Token REST API.
+servers:
+- url: https://api.token.io/v1
+tags:
+- name: Vrps
+paths:
+  /vrps/{vrpConsentId}/confirm-funds:
+    get:
+      operationId: GatewayService.ConfirmFundsAvailability
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.ConfirmFundsAvailabilityResponse'
+      parameters:
+      - name: vrpConsentId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: amount
+        in: query
+        required: false
+        schema:
+          type: string
+      tags:
+      - Vrps
+      summary: Gateway service confirm funds availability
+      x-summary-source: derived
+components:
+  schemas:
+    io.token.proto.gateway.ConfirmFundsAvailabilityResponse:
+      type: object
+      properties:
+        fundsAvailable:
+          format: boolean
+          type: boolean

@@ -359,233 +359,6 @@ paths:
       - BasicAuth: []
 components:
   schemas:
-    CorporateApiDebtorInformation:
-      description: The debtor information.
-      required:
-      - accountId
-      type: object
-      properties:
-        accountId:
-          type: string
-          description: The ID for the debtor settlement account.
-          example: a12345
-    payouts_body:
-      required:
-      - initiation
-      type: object
-      properties:
-        initiation:
-          $ref: '#/components/schemas/PayoutInitiation'
-    PagingInfo:
-      type: object
-      properties:
-        limit:
-          type: integer
-          description: The limit (maximum number of records to return) that was sent in the request. If the actual number of returned records is less then the limit, there are no more records left to fetch. <br/>The maximum allowed limit is 200. If the passed limit is bigger than this, it will be set to 200.
-          format: int32
-        offset:
-          type: string
-          description: Offset for the next page.
-          example: LerV6Jmex
-    Amount:
-      description: The transaction amount and currency.
-      required:
-      - currency
-      - value
-      type: object
-      properties:
-        value:
-          type: string
-          description: The transaction amount with up to four digits after the decimal point.
-          example: '10.23'
-        currency:
-          type: string
-          description: The <a href="https://www.iso.org/iso-4217-currency-codes.html" target="_blank">ISO 4217</a> three letter currency code.
-          example: EUR
-    NotImplementedError:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: UNIMPLEMENTED
-        paymentId:
-          type: string
-          description: The operation was not implemented,supported or enabled by the bank.
-          example: Not implemented.
-      description: The operation was not implemented, supported or enabled by the bank.
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    PaymentNotFoundError:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: NOT_FOUND
-        paymentId:
-          type: string
-          description: The requested entity, the `paymentID`, was not found.
-          example: pm2:12345abcd:abcde
-      description: 'The error object returned when given payment cannot be found: ResourceNotFound.'
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    ErrorWithCode:
-      required:
-      - errorCode
-      - message
-      type: object
-      properties:
-        errorCode:
-          type: string
-          description: A textual error code categorising the error.
-          example: InternalServerError
-        message:
-          type: string
-          description: A description of the error that occurred and a possible way to fix it.
-          example: '`RefId` should not be longer than 35 symbols.'
-      description: Error object providing details about the error.
-      allOf:
-      - $ref: '#/components/schemas/Error'
-    inline_response_400:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-    ResourceExhaustedError:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: RESOURCE_EXHAUSTED
-        paymentId:
-          type: string
-          description: The maximum number of requests has been reached.
-          example: Resource exhausted. Check quota.
-      description: Resource exhausted. Too many requests.
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    inline_response_401:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-    ResolvedPayoutInitiation:
-      required:
-      - amount
-      - creditor
-      - debtor
-      - paymentType
-      - refId
-      type: object
-      properties:
-        description:
-          type: string
-          description: The description for the payout.
-          example: payout for some reason
-        refId:
-          $ref: '#/components/schemas/refId'
-        amount:
-          $ref: '#/components/schemas/Amount'
-        debtor:
-          oneOf:
-          - $ref: '#/components/schemas/CorporateApiDebtorInformation'
-        creditor:
-          $ref: '#/components/schemas/CreditorInformationPayout'
-      description: The Initiation payload for the refund.
-    PermissionDeniedError:
-      type: object
-      properties:
-        errorCode:
-          example: PermissionDenied
-      description: 'The error returned when the member is not authorized to perform the given operation: PermissionDenied. <br/>This error message will be accompanied by the reason from the bank. Typically this means the access token has expired and the user must re-authenticate with the bank.'
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A description of the error.
-          example: This is a description of the error.
-        tokenTraceId:
-          type: string
-          description: The trace identifier for the given call.
-          example: '5678912345'
-      description: The request does not have valid authentication credentials needed to perform the operation.
-    CreditorInformationPayout:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The owner's name for the creditor account.
-          example: Customer Inc.
-        ultimateCreditorName:
-          type: string
-          description: The ultimate creditor's name.
-          example: Customer Inc.
-        bankName:
-          type: string
-          description: The creditor's bank name.
-        iban:
-          type: string
-          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
-          example: GB29NWBK60161331926819
-        bic:
-          type: string
-          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
-          example: BOFIIE2D
-        accountNumber:
-          type: string
-          description: The unique identifier for the bank account in the UK or Ireland.
-          example: '12345678'
-        sortCode:
-          type: string
-          description: The number assigned to a branch of a bank, typically containing six digits and most commonly used in the UK and Ireland.
-          example: 123456
-        accountVerificationId:
-          $ref: '#/components/schemas/AccountVerificationId'
-      description: The payout creditor object.
-    inline_response_403:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/PermissionDeniedError'
-    PayoutStatus:
-      type: string
-      description: The Token.io Payout Initiation Status. <br/><br/> INITIATION_PENDING - Token.io has received the payout initiation and the initiation passed Token.io validation. <br/><br/> INITIATION_PROCESSING - the payout is processing on the bank side. Status can be updated to one of INITIATION_COMPLETED, INITIATION_REJECTED or INITIATION_FAILED.<br/>If the status is never updated by the bank within certain period of time, the status will stay INITIATION_PROCESSING forever and the corresponding status reason information field will reflect this fact.<br/><br/> INITIATION_COMPLETED - the payout initiation is successful. This does not guarantee the payout is settled.<br/><br/> INITIATION_REJECTED - the payout is rejected by the bank. More details are shared in the corresponding status reason information.  <br/><br/> INITIATION_FAILED - Token.io failed to create the initiation due to failures on the bank side, e.g. the bank is not available at the moment.
-      example: INITIATION_COMPLETED
-      default: INITIATION_PENDING
-      enum:
-      - INITIATION_PENDING
-      - INITIATION_PROCESSING
-      - INITIATION_COMPLETED
-      - INITIATION_REJECTED
-      - INITIATION_FAILED
-    ServiceUnavailableError:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: UNAVAILABLE
-        paymentId:
-          type: string
-          description: The service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
-          example: Unavailable
-      description: Service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    inline_response_404:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/PaymentNotFoundError'
     Payout:
       required:
       - createdDateTime
@@ -626,40 +399,6 @@ components:
         initiation:
           $ref: '#/components/schemas/ResolvedPayoutInitiation'
       description: The payout object.
-    inline_response_500:
-      properties:
-        error:
-          allOf:
-          - type: object
-            properties:
-              errorCode:
-                type: string
-                description: This is a textual error code categorising the error.
-                example: InternalServerError
-          - $ref: '#/components/schemas/ServerError'
-    inline_response_501:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/NotImplementedError'
-    PayoutsResponse:
-      type: object
-      properties:
-        payouts:
-          type: array
-          items:
-            $ref: '#/components/schemas/Payout'
-        paging:
-          $ref: '#/components/schemas/PagingInfo'
-    inline_response_503:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/ServiceUnavailableError'
     GatewayTimeoutError:
       required:
       - paymentId
@@ -674,6 +413,52 @@ components:
       description: The deadline expired before the operation could complete.
       allOf:
       - $ref: '#/components/schemas/ErrorWithCode'
+    ErrorWithCode:
+      required:
+      - errorCode
+      - message
+      type: object
+      properties:
+        errorCode:
+          type: string
+          description: A textual error code categorising the error.
+          example: InternalServerError
+        message:
+          type: string
+          description: A description of the error that occurred and a possible way to fix it.
+          example: '`RefId` should not be longer than 35 symbols.'
+      description: Error object providing details about the error.
+      allOf:
+      - $ref: '#/components/schemas/Error'
+    inline_response_504:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/GatewayTimeoutError'
+    Amount:
+      description: The transaction amount and currency.
+      required:
+      - currency
+      - value
+      type: object
+      properties:
+        value:
+          type: string
+          description: The transaction amount with up to four digits after the decimal point.
+          example: '10.23'
+        currency:
+          type: string
+          description: The <a href="https://www.iso.org/iso-4217-currency-codes.html" target="_blank">ISO 4217</a> three letter currency code.
+          example: EUR
+    inline_response_503:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ServiceUnavailableError'
     inline_response_429:
       required:
       - error
@@ -681,24 +466,6 @@ components:
       properties:
         error:
           $ref: '#/components/schemas/ResourceExhaustedError'
-    memberId:
-      type: string
-      description: The Token.io-assigned member id of the TPP.
-      example: m:123456abcd:abcd
-    ServerError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A description of the error.
-          example: This is a description of the error.
-        tokenTraceId:
-          type: string
-          description: The trace identifier for the given call.
-          example: '5678912345'
-      description: 'This could refer to either an error by the payment service provider or the bank. When the bank reports a 5xx error, `"token-external-error": "true"` is set as a header in the HTTP response, indicating that the "internal" error originates from the bank. When one of the payment service providers internal services fails or when the bank reports a 4xx error, this header is not populated. The absence of this response header should be interpreted as `"token-external-error": "false"`.'
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
     PayoutInitiation:
       required:
       - amount
@@ -727,25 +494,258 @@ components:
         creditor:
           $ref: '#/components/schemas/CreditorInformationPayout'
       description: The initiation payload for the payout.
-    PayoutResponse:
+    inline_response_500:
+      properties:
+        error:
+          allOf:
+          - type: object
+            properties:
+              errorCode:
+                type: string
+                description: This is a textual error code categorising the error.
+                example: InternalServerError
+          - $ref: '#/components/schemas/ServerError'
+    PermissionDeniedError:
       type: object
       properties:
-        payout:
-          $ref: '#/components/schemas/Payout'
-    inline_response_504:
+        errorCode:
+          example: PermissionDenied
+      description: 'The error returned when the member is not authorized to perform the given operation: PermissionDenied. <br/>This error message will be accompanied by the reason from the bank. Typically this means the access token has expired and the user must re-authenticate with the bank.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    PaymentNotFoundError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: NOT_FOUND
+        paymentId:
+          type: string
+          description: The requested entity, the `paymentID`, was not found.
+          example: pm2:12345abcd:abcde
+      description: 'The error object returned when given payment cannot be found: ResourceNotFound.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: The request does not have valid authentication credentials needed to perform the operation.
+    PayoutsResponse:
+      type: object
+      properties:
+        payouts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Payout'
+        paging:
+          $ref: '#/components/schemas/PagingInfo'
+    AccountVerificationId:
+      type: string
+      description: The Id returned from the /account-verifications endpoint and used to identify the account verification relating to the beneficiary of the payment. Only required for EUR payments.
+    ResolvedPayoutInitiation:
+      required:
+      - amount
+      - creditor
+      - debtor
+      - paymentType
+      - refId
+      type: object
+      properties:
+        description:
+          type: string
+          description: The description for the payout.
+          example: payout for some reason
+        refId:
+          $ref: '#/components/schemas/refId'
+        amount:
+          $ref: '#/components/schemas/Amount'
+        debtor:
+          oneOf:
+          - $ref: '#/components/schemas/CorporateApiDebtorInformation'
+        creditor:
+          $ref: '#/components/schemas/CreditorInformationPayout'
+      description: The Initiation payload for the refund.
+    ResourceExhaustedError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: RESOURCE_EXHAUSTED
+        paymentId:
+          type: string
+          description: The maximum number of requests has been reached.
+          example: Resource exhausted. Check quota.
+      description: Resource exhausted. Too many requests.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    inline_response_400:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    NotImplementedError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: UNIMPLEMENTED
+        paymentId:
+          type: string
+          description: The operation was not implemented,supported or enabled by the bank.
+          example: Not implemented.
+      description: The operation was not implemented, supported or enabled by the bank.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    CorporateApiDebtorInformation:
+      description: The debtor information.
+      required:
+      - accountId
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: The ID for the debtor settlement account.
+          example: a12345
+    PagingInfo:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: The limit (maximum number of records to return) that was sent in the request. If the actual number of returned records is less then the limit, there are no more records left to fetch. <br/>The maximum allowed limit is 200. If the passed limit is bigger than this, it will be set to 200.
+          format: int32
+        offset:
+          type: string
+          description: Offset for the next page.
+          example: LerV6Jmex
+    inline_response_401:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    inline_response_501:
       required:
       - error
       type: object
       properties:
         error:
-          $ref: '#/components/schemas/GatewayTimeoutError'
-    AccountVerificationId:
-      type: string
-      description: The Id returned from the /account-verifications endpoint and used to identify the account verification relating to the beneficiary of the payment. Only required for EUR payments.
+          $ref: '#/components/schemas/NotImplementedError'
+    inline_response_403:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/PermissionDeniedError'
+    ServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: 'This could refer to either an error by the payment service provider or the bank. When the bank reports a 5xx error, `"token-external-error": "true"` is set as a header in the HTTP response, indicating that the "internal" error originates from the bank. When one of the payment service providers internal services fails or when the bank reports a 4xx error, this header is not populated. The absence of this response header should be interpreted as `"token-external-error": "false"`.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    payouts_body:
+      required:
+      - initiation
+      type: object
+      properties:
+        initiation:
+          $ref: '#/components/schemas/PayoutInitiation'
     refId:
       type: string
       description: The TPP-generated reference identifier for the token. This is not to be confused with the `requestId`. The `refId` maps to the `tppRefId` in the bank's `consentRequest`. This is needed to match/verify the originating token request with the bank's consent request. <br/>We recommend that the `refId` should not contain special characters (the allowed characters are the 26-letter Latin alphabet, the numerical digits from 0-9 and the hyphen '-'). This field should not exceed 18 characters in length.
       example: 9htio4a1sp2akdr1aa
+    PayoutStatus:
+      type: string
+      description: The Token.io Payout Initiation Status. <br/><br/> INITIATION_PENDING - Token.io has received the payout initiation and the initiation passed Token.io validation. <br/><br/> INITIATION_PROCESSING - the payout is processing on the bank side. Status can be updated to one of INITIATION_COMPLETED, INITIATION_REJECTED or INITIATION_FAILED.<br/>If the status is never updated by the bank within certain period of time, the status will stay INITIATION_PROCESSING forever and the corresponding status reason information field will reflect this fact.<br/><br/> INITIATION_COMPLETED - the payout initiation is successful. This does not guarantee the payout is settled.<br/><br/> INITIATION_REJECTED - the payout is rejected by the bank. More details are shared in the corresponding status reason information.  <br/><br/> INITIATION_FAILED - Token.io failed to create the initiation due to failures on the bank side, e.g. the bank is not available at the moment.
+      example: INITIATION_COMPLETED
+      default: INITIATION_PENDING
+      enum:
+      - INITIATION_PENDING
+      - INITIATION_PROCESSING
+      - INITIATION_COMPLETED
+      - INITIATION_REJECTED
+      - INITIATION_FAILED
+    memberId:
+      type: string
+      description: The Token.io-assigned member id of the TPP.
+      example: m:123456abcd:abcd
+    inline_response_404:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/PaymentNotFoundError'
+    PayoutResponse:
+      type: object
+      properties:
+        payout:
+          $ref: '#/components/schemas/Payout'
+    ServiceUnavailableError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: UNAVAILABLE
+        paymentId:
+          type: string
+          description: The service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+          example: Unavailable
+      description: Service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    CreditorInformationPayout:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The owner's name for the creditor account.
+          example: Customer Inc.
+        ultimateCreditorName:
+          type: string
+          description: The ultimate creditor's name.
+          example: Customer Inc.
+        bankName:
+          type: string
+          description: The creditor's bank name.
+        iban:
+          type: string
+          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
+          example: BOFIIE2D
+        accountNumber:
+          type: string
+          description: The unique identifier for the bank account in the UK or Ireland.
+          example: '12345678'
+        sortCode:
+          type: string
+          description: The number assigned to a branch of a bank, typically containing six digits and most commonly used in the UK and Ireland.
+          example: 123456
+        accountVerificationId:
+          $ref: '#/components/schemas/AccountVerificationId'
+      description: The payout creditor object.
   securitySchemes:
     Bearer:
       type: http

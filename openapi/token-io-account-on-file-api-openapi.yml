@@ -262,140 +262,18 @@ paths:
       x-hideTryItPanel: true
 components:
   schemas:
-    CreateTokenizedAccountRequest:
-      type: object
-      required:
-      - accountDetails
-      properties:
-        accountDetails:
-          $ref: '#/components/schemas/AccountInformation'
-        bankId:
-          type: string
-          description: Identifier of the bank where the account belongs.
-          example: ob-modelo
-    ElixirAccountDebtor:
-      title: ElixirAccount
-      oneOf:
-      - $ref: '#/components/schemas/PLIbanAccount'
-      description: The Elixir debtor account details.
-    inline_response_400_bad_request:
-      type: object
-      description: Response returned when the request contains invalid, missing, or improperly formatted parameters.
-      properties:
-        error:
-          $ref: '#/components/schemas/BadRequestError'
-    SepaInstantAccount:
-      title: SepaInstantAccount
-      required:
-      - iban
-      type: object
-      properties:
-        iban:
-          type: string
-          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
-          example: GB29NWBK60161331926819
-        bic:
-          type: string
-          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
-          example: BOFIIE2D
-      description: SEPA Instant account details where the iban is required and the bic is optional.
-    PlusGiroAccount:
-      title: PlusGiroAccount
-      required:
-      - plusgiroNumber
-      type: object
-      properties:
-        plusgiroNumber:
-          type: string
-          description: The unique identifier for the Swedish money transaction system owned by <a href="https://www.nordea.com" target="blank">Nordea</a>.
-          example: '67812345'
-        bic:
-          type: string
-          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
-          example: BOFIIE2D
-      description: Account details where the plusgiroNumber is required and the bic is optional.
-    ClearingNumberAccount:
-      title: ClearingNumberAccount
-      required:
-      - bban
-      type: object
-      properties:
-        bban:
-          type: string
-          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
-          example: NWBK60161331926819
-        clearingNumber:
-          type: string
-          description: The bank clearing number or BC number is a number used for the identification of financial institutions in Switzerland and Liechtenstein. Bank clearing numbers are connected to the Swiss Interbank Clearing and the EuroSIC system.
-          example: 87654321
-      description: Account details where the bban is required and the clearing number is optional.
-    FasterPaymentsAccount:
-      title: FasterPaymentsAccount
-      required:
-      - accountNumber
-      - sortCode
-      type: object
-      properties:
-        accountNumber:
-          type: string
-          description: The unique identifier for the bank account in the UK or Ireland.
-          example: '12345678'
-        sortCode:
-          type: string
-          description: The number assigned to a branch of a bank, typically containing six digits and most commonly used in the UK and Ireland.
-          example: '123456'
-      description: A UK or Irish account where the sort code and account number are required.
-    DeleteTokenizedAccountResponse:
-      type: object
-      description: No data returned in the successful response.
-    SepaAccount:
-      title: SepaAccount
-      required:
-      - iban
-      type: object
-      properties:
-        iban:
-          type: string
-          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
-          example: GB29NWBK60161331926819
-        bic:
-          type: string
-          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
-          example: BOFIIE2D
-      description: SEPA account details where the iban is required and the bic is optional.
-    EUDomesticNonEuroInstantAccountDebtor:
-      title: EUDomesticNonEuroInstantAccount
-      oneOf:
-      - $ref: '#/components/schemas/EUIbanAccount'
-      - $ref: '#/components/schemas/BbanAccount'
-      - $ref: '#/components/schemas/ClearingNumberAccount'
-      description: The instant payment system within a European country using that country's non-Euro domestic currency. An IBAN account will require an iban and an optional bic, a BBAN account will require a bban and an optional bic, a Clearing Number account will require a bban and a clearingNumber.
-    NotImplementedError:
+    GatewayTimeoutError:
       required:
       - paymentId
       type: object
       properties:
         errorCode:
-          example: UNIMPLEMENTED
+          example: DEADLINE_EXCEEDED
         paymentId:
           type: string
-          description: The operation was not implemented,supported or enabled by the bank.
-          example: Not implemented.
-      description: The operation was not implemented, supported or enabled by the bank.
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    PaymentNotFoundError:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: NOT_FOUND
-        paymentId:
-          type: string
-          description: The requested entity, the `paymentID`, was not found.
-          example: pm2:12345abcd:abcde
-      description: 'The error object returned when given payment cannot be found: ResourceNotFound.'
+          description: The deadline expired before the operation could complete.
+          example: Deadline exceeded.
+      description: The deadline expired before the operation could complete.
       allOf:
       - $ref: '#/components/schemas/ErrorWithCode'
     ErrorWithCode:
@@ -415,6 +293,128 @@ components:
       description: Error object providing details about the error.
       allOf:
       - $ref: '#/components/schemas/Error'
+    PlusGiroAccount:
+      title: PlusGiroAccount
+      required:
+      - plusgiroNumber
+      type: object
+      properties:
+        plusgiroNumber:
+          type: string
+          description: The unique identifier for the Swedish money transaction system owned by <a href="https://www.nordea.com" target="blank">Nordea</a>.
+          example: '67812345'
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
+          example: BOFIIE2D
+      description: Account details where the plusgiroNumber is required and the bic is optional.
+    inline_response_504:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/GatewayTimeoutError'
+    inline_response_503:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ServiceUnavailableError'
+    inline_response_403_1:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/TokenizedPermissionDeniedError'
+    BbanAccount:
+      title: BbanAccount
+      required:
+      - bban
+      type: object
+      properties:
+        bban:
+          type: string
+          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
+          example: NWBK60161331926819
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
+          example: BOFIIE2D
+      description: Account details where the bban is required and the bic is optional.
+    inline_response_429:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ResourceExhaustedError'
+    EUDomesticNonEuroAccountDebtor:
+      title: EUDomesticNonEuroAccount
+      oneOf:
+      - $ref: '#/components/schemas/EUIbanAccount'
+      - $ref: '#/components/schemas/BbanAccount'
+      - $ref: '#/components/schemas/ClearingNumberAccount'
+      description: The payment system within a European country using that country's non-Euro domestic currency. An IBAN account will require an iban and an optional bic, a BBAN account will require a bban and an optional bic, a Clearing Number account will require a bban and a clearingNumber.
+    DebtorAccountDetails:
+      description: 'The raw debtor account identifiers. Exactly one format must be used, depending on the payment instrument and jurisdiction.
+
+        '
+      oneOf:
+      - $ref: '#/components/schemas/SepaAccount'
+      - $ref: '#/components/schemas/SepaInstantAccount'
+      - $ref: '#/components/schemas/FasterPaymentsAccount'
+      - $ref: '#/components/schemas/ElixirAccountDebtor'
+      - $ref: '#/components/schemas/EUDomesticNonEuroAccountDebtor'
+      - $ref: '#/components/schemas/EUDomesticNonEuroInstantAccountDebtor'
+      - $ref: '#/components/schemas/BankGiroAccount'
+      - $ref: '#/components/schemas/PlusGiroAccount'
+    CreateTokenizedAccountResponse:
+      type: object
+      properties:
+        tokenizedAccountId:
+          type: string
+          description: The tokenized account id of the provided account details.
+          example: tai:4HoNxTfhn9EjwNnQmjGCsWsuYS7S:5zJAqBcE
+      description: Contains the response of the create a tokenized account request.
+    PaymentNotFoundError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: NOT_FOUND
+        paymentId:
+          type: string
+          description: The requested entity, the `paymentID`, was not found.
+          example: pm2:12345abcd:abcde
+      description: 'The error object returned when given payment cannot be found: ResourceNotFound.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: The request does not have valid authentication credentials needed to perform the operation.
+    GetTokenizedAccountResponse:
+      type: object
+      properties:
+        accountDetails:
+          $ref: '#/components/schemas/AccountInformation'
+        bankId:
+          type: string
+          description: Identifier of the bank where the account belongs.
+          example: ob-modelo
+      description: Contains the response of the get tokenized account request.
     ResourceExhaustedError:
       required:
       - paymentId
@@ -429,40 +429,45 @@ components:
       description: Resource exhausted. Too many requests.
       allOf:
       - $ref: '#/components/schemas/ErrorWithCode'
-    inline_response_401:
+    NotImplementedError:
+      required:
+      - paymentId
       type: object
       properties:
-        error:
-          $ref: '#/components/schemas/Error'
-    EUDomesticNonEuroAccountDebtor:
-      title: EUDomesticNonEuroAccount
+        errorCode:
+          example: UNIMPLEMENTED
+        paymentId:
+          type: string
+          description: The operation was not implemented,supported or enabled by the bank.
+          example: Not implemented.
+      description: The operation was not implemented, supported or enabled by the bank.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    EUIbanAccount:
+      title: EUIbanAccount
+      required:
+      - iban
+      type: object
+      properties:
+        iban:
+          type: string
+          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
+          example: BOFIIE2D
+      description: Account details where the iban is required and the bic is optional.
+    DeleteTokenizedAccountResponse:
+      type: object
+      description: No data returned in the successful response.
+    EUDomesticNonEuroInstantAccountDebtor:
+      title: EUDomesticNonEuroInstantAccount
       oneOf:
       - $ref: '#/components/schemas/EUIbanAccount'
       - $ref: '#/components/schemas/BbanAccount'
       - $ref: '#/components/schemas/ClearingNumberAccount'
-      description: The payment system within a European country using that country's non-Euro domestic currency. An IBAN account will require an iban and an optional bic, a BBAN account will require a bban and an optional bic, a Clearing Number account will require a bban and a clearingNumber.
-    AccountInformation:
-      description: The account information for the PSU or Business.
-      allOf:
-      - $ref: '#/components/schemas/DebtorAccountDetails'
-      - type: object
-        properties:
-          name:
-            type: string
-            description: The owner's name of the debtor account.
-            example: John Smith
-          ultimateDebtorName:
-            type: string
-            description: The ultimate debtor's name.
-            example: John Smith
-          address:
-            $ref: '#/components/schemas/Address'
-    GetTokenizedAccountResponse:
-      type: object
-      properties:
-        accountDetails:
-          $ref: '#/components/schemas/AccountInformation'
-      description: Contains the response of the get tokenized account request.
+      description: The instant payment system within a European country using that country's non-Euro domestic currency. An IBAN account will require an iban and an optional bic, a BBAN account will require a bban and an optional bic, a Clearing Number account will require a bban and a clearingNumber.
     Address:
       type: object
       properties:
@@ -499,54 +504,21 @@ components:
           description: Two-letter country code in upper case (ISO 3166-1 alpha-2).
           example: GB
       description: Address
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A description of the error.
-          example: This is a description of the error.
-        tokenTraceId:
-          type: string
-          description: The trace identifier for the given call.
-          example: '5678912345'
-      description: The request does not have valid authentication credentials needed to perform the operation.
-    BbanAccount:
-      title: BbanAccount
+    SepaInstantAccount:
+      title: SepaInstantAccount
       required:
-      - bban
+      - iban
       type: object
       properties:
-        bban:
+        iban:
           type: string
-          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
-          example: NWBK60161331926819
+          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
         bic:
           type: string
-          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
           example: BOFIIE2D
-      description: Account details where the bban is required and the bic is optional.
-    ServiceUnavailableError:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: UNAVAILABLE
-        paymentId:
-          type: string
-          description: The service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
-          example: Unavailable
-      description: Service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    inline_response_404:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/PaymentNotFoundError'
+      description: SEPA Instant account details where the iban is required and the bic is optional.
     PLIbanAccount:
       title: PLIbanAccount
       required:
@@ -562,20 +534,74 @@ components:
           description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
           example: BOFIIE2D
       description: Polish account details where the iban is required and the bic is optional.
-    BadRequestError:
+    inline_response_401:
       type: object
-      description: The request contains invalid, missing, or improperly formatted parameters.
       properties:
-        message:
+        error:
+          $ref: '#/components/schemas/Error'
+    inline_response_501:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/NotImplementedError'
+    CreateTokenizedAccountRequest:
+      type: object
+      required:
+      - accountDetails
+      properties:
+        accountDetails:
+          $ref: '#/components/schemas/AccountInformation'
+        bankId:
           type: string
-          description: A description of the validation issue with the request.
-          example: The field 'accountNumber' is missing or invalid.
-        tokenTraceId:
+          description: Identifier of the bank where the account belongs.
+          example: ob-modelo
+    inline_response_500_internal:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/InternalServiceError'
+      description: Returned when the server fails to complete the request due to an unexpected internal error.
+    FasterPaymentsAccount:
+      title: FasterPaymentsAccount
+      required:
+      - accountNumber
+      - sortCode
+      type: object
+      properties:
+        accountNumber:
           type: string
-          description: The trace identifier for the given call.
-          example: '5678912345'
-    EUIbanAccount:
-      title: EUIbanAccount
+          description: The unique identifier for the bank account in the UK or Ireland.
+          example: '12345678'
+        sortCode:
+          type: string
+          description: The number assigned to a branch of a bank, typically containing six digits and most commonly used in the UK and Ireland.
+          example: '123456'
+      description: A UK or Irish account where the sort code and account number are required.
+    inline_response_400_bad_request:
+      type: object
+      description: Response returned when the request contains invalid, missing, or improperly formatted parameters.
+      properties:
+        error:
+          $ref: '#/components/schemas/BadRequestError'
+    ClearingNumberAccount:
+      title: ClearingNumberAccount
+      required:
+      - bban
+      type: object
+      properties:
+        bban:
+          type: string
+          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
+          example: NWBK60161331926819
+        clearingNumber:
+          type: string
+          description: The bank clearing number or BC number is a number used for the identification of financial institutions in Switzerland and Liechtenstein. Bank clearing numbers are connected to the Swiss Interbank Clearing and the EuroSIC system.
+          example: 87654321
+      description: Account details where the bban is required and the clearing number is optional.
+    SepaAccount:
+      title: SepaAccount
       required:
       - iban
       type: object
@@ -586,9 +612,21 @@ components:
           example: GB29NWBK60161331926819
         bic:
           type: string
-          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
           example: BOFIIE2D
-      description: Account details where the iban is required and the bic is optional.
+      description: SEPA account details where the iban is required and the bic is optional.
+    InternalServiceError:
+      type: object
+      description: The server encountered an unexpected internal condition while processing the request.
+      properties:
+        message:
+          type: string
+          description: A description of the internal failure.
+          example: An unexpected error occurred while storing the account details.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
     BankGiroAccount:
       title: BankGiroAccount
       required:
@@ -604,75 +642,34 @@ components:
           description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
           example: BOFIIE2D
       description: Account details where the bankgiroNumber is required and the bic is optional.
-    inline_response_500_internal:
+    BadRequestError:
       type: object
+      description: The request contains invalid, missing, or improperly formatted parameters.
       properties:
-        error:
-          $ref: '#/components/schemas/InternalServiceError'
-      description: Returned when the server fails to complete the request due to an unexpected internal error.
-    inline_response_501:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/NotImplementedError'
-    inline_response_503:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/ServiceUnavailableError'
-    inline_response_429:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/ResourceExhaustedError'
-    GatewayTimeoutError:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: DEADLINE_EXCEEDED
-        paymentId:
+        message:
           type: string
-          description: The deadline expired before the operation could complete.
-          example: Deadline exceeded.
-      description: The deadline expired before the operation could complete.
+          description: A description of the validation issue with the request.
+          example: The field 'accountNumber' is missing or invalid.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+    AccountInformation:
+      description: The account information for the PSU or Business.
       allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    DebtorAccountDetails:
-      description: 'The raw debtor account identifiers. Exactly one format must be used, depending on the payment instrument and jurisdiction.
-
-        '
-      oneOf:
-      - $ref: '#/components/schemas/SepaAccount'
-      - $ref: '#/components/schemas/SepaInstantAccount'
-      - $ref: '#/components/schemas/FasterPaymentsAccount'
-      - $ref: '#/components/schemas/ElixirAccountDebtor'
-      - $ref: '#/components/schemas/EUDomesticNonEuroAccountDebtor'
-      - $ref: '#/components/schemas/EUDomesticNonEuroInstantAccountDebtor'
-      - $ref: '#/components/schemas/BankGiroAccount'
-      - $ref: '#/components/schemas/PlusGiroAccount'
-    CreateTokenizedAccountResponse:
-      type: object
-      properties:
-        tokenizedAccountId:
-          type: string
-          description: The tokenized account id of the provided account details.
-          example: tai:4HoNxTfhn9EjwNnQmjGCsWsuYS7S:5zJAqBcE
-      description: Contains the response of the create a tokenized account request.
-    inline_response_403_1:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/TokenizedPermissionDeniedError'
+      - $ref: '#/components/schemas/DebtorAccountDetails'
+      - type: object
+        properties:
+          name:
+            type: string
+            description: The owner's name of the debtor account.
+            example: John Smith
+          ultimateDebtorName:
+            type: string
+            description: The ultimate debtor's name.
+            example: John Smith
+          address:
+            $ref: '#/components/schemas/Address'
     TokenizedPermissionDeniedError:
       type: object
       allOf:
@@ -681,25 +678,32 @@ components:
       properties:
         errorCode:
           example: PermissionDenied
-    inline_response_504:
+    inline_response_404:
       required:
       - error
       type: object
       properties:
         error:
-          $ref: '#/components/schemas/GatewayTimeoutError'
-    InternalServiceError:
+          $ref: '#/components/schemas/PaymentNotFoundError'
+    ServiceUnavailableError:
+      required:
+      - paymentId
       type: object
-      description: The server encountered an unexpected internal condition while processing the request.
       properties:
-        message:
+        errorCode:
+          example: UNAVAILABLE
+        paymentId:
           type: string
-          description: A description of the internal failure.
-          example: An unexpected error occurred while storing the account details.
-        tokenTraceId:
-          type: string
-          description: The trace identifier for the given call.
-          example: '5678912345'
+          description: The service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+          example: Unavailable
+      description: Service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    ElixirAccountDebtor:
+      title: ElixirAccount
+      oneOf:
+      - $ref: '#/components/schemas/PLIbanAccount'
+      description: The Elixir debtor account details.
   securitySchemes:
     Bearer:
       type: http

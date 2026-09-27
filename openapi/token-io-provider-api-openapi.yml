@@ -1,0 +1,295 @@
+openapi: 3.2.0
+info:
+  title: Token Provider API
+  version: 1.0.0
+  description: Token REST API.
+servers:
+- url: https://api.token.io/v1
+tags:
+- name: Provider
+paths:
+  /provider/registrations:
+    get:
+      operationId: GatewayService.GetProviderRegistrations
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.GetProviderRegistrationsResponse'
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: product
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - UNKNOWN
+          - REFUND
+          - PAYOUT
+          - RECONCILIATION
+          default: UNKNOWN
+      tags:
+      - Provider
+      summary: Gateway service get provider registrations
+      x-summary-source: derived
+    post:
+      operationId: GatewayService.RegisterProvider
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.ProviderRegistrationResponse'
+      tags:
+      - Provider
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/io.token.proto.gateway.RegisterProviderRequest'
+        required: true
+      summary: Gateway service register provider
+      x-summary-source: derived
+  /provider/registrations/{registrationId}:
+    get:
+      operationId: GatewayService.GetProviderRegistration
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.ProviderRegistrationResponse'
+      parameters:
+      - name: registrationId
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Provider
+      summary: Gateway service get provider registration
+      x-summary-source: derived
+    delete:
+      operationId: GatewayService.DeleteProviderRegistration
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.EmptyResponse'
+      parameters:
+      - name: registrationId
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Provider
+      summary: Gateway service delete provider registration
+      x-summary-source: derived
+components:
+  schemas:
+    io.token.proto.gateway.ProviderRegistrationResponse:
+      type: object
+      properties:
+        registration:
+          $ref: '#/components/schemas/io.token.proto.common.virtualaccount.Registration'
+    io.token.proto.gateway.EmptyResponse:
+      type: object
+      properties: {}
+    io.token.proto.gateway.GetProviderRegistrationsResponse:
+      type: object
+      properties:
+        pageInfo:
+          $ref: '#/components/schemas/io.token.proto.common.v2.paging.PageInfo'
+        registrations:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.virtualaccount.Registration'
+          type: array
+    io.token.proto.common.virtualaccount.HsbcRegistrationPayload:
+      type: object
+      properties:
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        debtor:
+          $ref: '#/components/schemas/io.token.proto.common.v2.common.DebtorInformation'
+        debtors:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.v2.common.DebtorInformation'
+          type: array
+        pgpPrivateKey:
+          type: string
+        pgpPrivateKeyPassphrase:
+          type: string
+        pgpPublicKey:
+          type: string
+        profileId:
+          type: string
+    io.token.proto.common.v2.payout.CorporateApiDebtorInformation:
+      type: object
+      properties:
+        accountId:
+          type: string
+    io.token.proto.common.v2.common.DebtorInformation:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        address:
+          $ref: '#/components/schemas/io.token.proto.common.v2.common.Address'
+        bankgiroNumber:
+          type: string
+        bban:
+          type: string
+        bic:
+          type: string
+        clearingNumber:
+          type: string
+        iban:
+          type: string
+        name:
+          type: string
+        plusgiroNumber:
+          type: string
+        sortCode:
+          type: string
+        tokenizedAccountId:
+          type: string
+        ultimateDebtorName:
+          type: string
+    io.token.proto.gateway.RegisterProviderRequest:
+      type: object
+      properties:
+        bnpp:
+          $ref: '#/components/schemas/io.token.proto.common.virtualaccount.BnppRegistrationPayload'
+        corporateApi:
+          $ref: '#/components/schemas/io.token.proto.common.virtualaccount.CorporateApiRegistrationPayload'
+        fank:
+          $ref: '#/components/schemas/io.token.proto.common.virtualaccount.FankRegistrationPayload'
+        hsbc:
+          $ref: '#/components/schemas/io.token.proto.common.virtualaccount.HsbcRegistrationPayload'
+        product:
+          $ref: '#/components/schemas/io.token.proto.common.virtualaccount.Product'
+    io.token.proto.common.virtualaccount.Registration:
+      type: object
+      properties:
+        bnpp:
+          $ref: '#/components/schemas/io.token.proto.common.virtualaccount.BnppRegistrationPayload'
+        corporateApi:
+          $ref: '#/components/schemas/io.token.proto.common.virtualaccount.CorporateApiRegistrationPayload'
+        createdDateTime:
+          type: string
+        fank:
+          $ref: '#/components/schemas/io.token.proto.common.virtualaccount.FankRegistrationPayload'
+        hsbc:
+          $ref: '#/components/schemas/io.token.proto.common.virtualaccount.HsbcRegistrationPayload'
+        id:
+          type: string
+        product:
+          $ref: '#/components/schemas/io.token.proto.common.virtualaccount.Product'
+        provider:
+          $ref: '#/components/schemas/io.token.proto.common.virtualaccount.Provider'
+    io.token.proto.common.v2.common.Address:
+      type: object
+      properties:
+        addressLine:
+          items:
+            type: string
+          type: array
+        buildingNumber:
+          type: string
+        country:
+          type: string
+        countrySubDivision:
+          items:
+            type: string
+          type: array
+        district:
+          type: string
+        postCode:
+          type: string
+        state:
+          type: string
+        streetName:
+          type: string
+        townName:
+          type: string
+    io.token.proto.common.virtualaccount.CorporateApiRegistrationPayload:
+      type: object
+      properties:
+        debtors:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.v2.payout.CorporateApiDebtorInformation'
+          type: array
+        memberId:
+          type: string
+        onBehalfOfId:
+          type: string
+    io.token.proto.common.v2.paging.PageInfo:
+      type: object
+      properties:
+        haveMore:
+          format: boolean
+          type: boolean
+        limit:
+          format: int32
+          type: integer
+        nextOffset:
+          type: string
+        offset:
+          type: string
+    io.token.proto.common.virtualaccount.BnppRegistrationPayload:
+      type: object
+      properties:
+        appId:
+          type: string
+        appSecret:
+          type: string
+        debtor:
+          $ref: '#/components/schemas/io.token.proto.common.v2.common.DebtorInformation'
+        debtors:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.v2.common.DebtorInformation'
+          type: array
+        signingKeyId:
+          type: string
+        tokenSigningKeyId:
+          type: string
+    io.token.proto.common.virtualaccount.Product:
+      enum:
+      - UNKNOWN
+      - REFUND
+      - PAYOUT
+      - RECONCILIATION
+      default: UNKNOWN
+      type: string
+    io.token.proto.common.virtualaccount.FankRegistrationPayload:
+      type: object
+      properties: {}
+    io.token.proto.common.virtualaccount.Provider:
+      enum:
+      - UNKNOWN_PROVIDER
+      - BNPP
+      - HSBC
+      - FANK
+      - CORPORATE_API
+      default: UNKNOWN_PROVIDER
+      type: string

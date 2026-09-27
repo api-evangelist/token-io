@@ -1,0 +1,90 @@
+openapi: 3.2.0
+info:
+  title: Token Virtual Accounts API
+  version: 1.0.0
+  description: Token REST API.
+servers:
+- url: https://api.token.io/v1
+tags:
+- name: Virtual Accounts
+paths:
+  /virtual-accounts/{accountId}/credit:
+    post:
+      operationId: GatewayService.CreditVirtualAccount
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.CreditVirtualAccountResponse'
+      parameters:
+      - name: accountId
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Virtual Accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/io.token.proto.gateway.CreditVirtualAccountRequest'
+        required: true
+      summary: Gateway service credit virtual account
+      x-summary-source: derived
+components:
+  schemas:
+    io.token.proto.gateway.CreditVirtualAccountRequest:
+      type: object
+      properties:
+        amount:
+          type: string
+        description:
+          type: string
+        payer:
+          $ref: '#/components/schemas/io.token.proto.gateway.Payer'
+        type:
+          $ref: '#/components/schemas/io.token.proto.gateway.CreditVirtualAccountRequest.Type'
+    io.token.proto.gateway.AccountDetails:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        sortCode:
+          type: string
+    io.token.proto.gateway.CreditVirtualAccountResponse:
+      type: object
+      properties: {}
+    io.token.proto.gateway.CreditVirtualAccountRequest.Type:
+      enum:
+      - UNKNOWN
+      - FASTER_PAYMENTS
+      - SEPA_CREDIT_TRANSFERS
+      - SEPA_INSTANT_CREDIT_TRANSFERS
+      default: UNKNOWN
+      type: string
+    io.token.proto.gateway.Iban:
+      type: object
+      properties:
+        bic:
+          type: string
+        iban:
+          type: string
+    io.token.proto.gateway.Payer:
+      type: object
+      properties:
+        identifier:
+          $ref: '#/components/schemas/io.token.proto.gateway.Identifier'
+        name:
+          type: string
+    io.token.proto.gateway.Identifier:
+      type: object
+      properties:
+        accountDetails:
+          $ref: '#/components/schemas/io.token.proto.gateway.AccountDetails'
+        iban:
+          $ref: '#/components/schemas/io.token.proto.gateway.Iban'
+        type:
+          type: string

@@ -1,0 +1,143 @@
+openapi: 3.2.0
+info:
+  title: Tokenized Accounts API
+  version: 1.0.0
+  description: Token REST API.
+servers:
+- url: https://api.token.io/v1
+tags:
+- name: Tokenized Accounts
+paths:
+  /tokenized-accounts:
+    post:
+      operationId: TokenizedAccountService.CreateTokenizedAccount
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.tokenizedaccount.CreateTokenizedAccountResponse'
+      tags:
+      - Tokenized Accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/io.token.proto.gateway.tokenizedaccount.CreateTokenizedAccountRequest'
+        required: true
+      summary: Tokenized account service create tokenized account
+      x-summary-source: derived
+  /tokenized-accounts/{tokenizedAccountId}:
+    get:
+      operationId: TokenizedAccountService.GetTokenizedAccount
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/io.token.proto.gateway.tokenizedaccount.GetTokenizedAccountResponse'
+      parameters:
+      - name: tokenizedAccountId
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Tokenized Accounts
+      summary: Tokenized account service get tokenized account
+      x-summary-source: derived
+    delete:
+      operationId: TokenizedAccountService.DeleteTokenizedAccount
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/google.protobuf.Empty'
+      parameters:
+      - name: tokenizedAccountId
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - Tokenized Accounts
+      summary: Tokenized account service delete tokenized account
+      x-summary-source: derived
+components:
+  schemas:
+    io.token.proto.gateway.tokenizedaccount.CreateTokenizedAccountRequest:
+      type: object
+      properties:
+        accountDetails:
+          $ref: '#/components/schemas/io.token.proto.gateway.tokenizedaccount.AccountDetails'
+        bankId:
+          type: string
+    io.token.proto.gateway.tokenizedaccount.CreateTokenizedAccountResponse:
+      type: object
+      properties:
+        tokenizedAccountId:
+          type: string
+    google.protobuf.Empty:
+      type: object
+      properties: {}
+    io.token.proto.common.v2.common.Address:
+      type: object
+      properties:
+        addressLine:
+          items:
+            type: string
+          type: array
+        buildingNumber:
+          type: string
+        country:
+          type: string
+        countrySubDivision:
+          items:
+            type: string
+          type: array
+        district:
+          type: string
+        postCode:
+          type: string
+        state:
+          type: string
+        streetName:
+          type: string
+        townName:
+          type: string
+    io.token.proto.gateway.tokenizedaccount.GetTokenizedAccountResponse:
+      type: object
+      properties:
+        accountDetails:
+          $ref: '#/components/schemas/io.token.proto.gateway.tokenizedaccount.AccountDetails'
+        bankId:
+          type: string
+    io.token.proto.gateway.tokenizedaccount.AccountDetails:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        address:
+          $ref: '#/components/schemas/io.token.proto.common.v2.common.Address'
+        bankgiroNumber:
+          type: string
+        bban:
+          type: string
+        bic:
+          type: string
+        clearingNumber:
+          type: string
+        iban:
+          type: string
+        name:
+          type: string
+        plusgiroNumber:
+          type: string
+        sortCode:
+          type: string
+        ultimateName:
+          type: string
