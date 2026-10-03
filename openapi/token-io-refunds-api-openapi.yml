@@ -925,227 +925,14 @@ paths:
     - url: https://api.token.io/v1
 components:
   schemas:
-    GatewayTimeoutError:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: DEADLINE_EXCEEDED
-        paymentId:
-          type: string
-          description: The deadline expired before the operation could complete.
-          example: Deadline exceeded.
-      description: The deadline expired before the operation could complete.
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    ErrorWithCode:
-      required:
-      - errorCode
-      - message
-      type: object
-      properties:
-        errorCode:
-          type: string
-          description: A textual error code categorising the error.
-          example: InternalServerError
-        message:
-          type: string
-          description: A description of the error that occurred and a possible way to fix it.
-          example: '`RefId` should not be longer than 35 symbols.'
-      description: Error object providing details about the error.
-      allOf:
-      - $ref: '#/components/schemas/Error'
-    PlusGiroAccount:
-      title: PlusGiroAccount
-      required:
-      - plusgiroNumber
-      type: object
-      properties:
-        plusgiroNumber:
-          type: string
-          description: The unique identifier for the Swedish money transaction system owned by <a href="https://www.nordea.com" target="blank">Nordea</a>.
-          example: '67812345'
-        bic:
-          type: string
-          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
-          example: BOFIIE2D
-      description: Account details where the plusgiroNumber is required and the bic is optional.
-    inline_response_504:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/GatewayTimeoutError'
-    Amount:
-      description: The transaction amount and currency.
-      required:
-      - currency
-      - value
-      type: object
-      properties:
-        value:
-          type: string
-          description: The transaction amount with up to four digits after the decimal point.
-          example: '10.23'
-        currency:
-          type: string
-          description: The <a href="https://www.iso.org/iso-4217-currency-codes.html" target="_blank">ISO 4217</a> three letter currency code.
-          example: EUR
-    inline_response_503:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/ServiceUnavailableError'
-    BbanAccount:
-      title: BbanAccount
-      required:
-      - bban
-      type: object
-      properties:
-        bban:
-          type: string
-          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
-          example: NWBK60161331926819
-        bic:
-          type: string
-          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
-          example: BOFIIE2D
-      description: Account details where the bban is required and the bic is optional.
-    inline_response_429:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/ResourceExhaustedError'
-    inline_response_500:
-      properties:
-        error:
-          allOf:
-          - type: object
-            properties:
-              errorCode:
-                type: string
-                description: This is a textual error code categorising the error.
-                example: InternalServerError
-          - $ref: '#/components/schemas/ServerError'
-    VirtualAccountCreditor:
-      title: VirtualAccount
-      required:
-      - virtualAccountId
-      type: object
-      properties:
-        virtualAccountId:
-          type: string
-          description: The unique identifier for the settlement account. This field is mandatory for unregulated TPPs.
-          example: pa:4TXFcixy9yKfEmhad45Jp6Lb34d1:2gFUX1NEGTG
-      description: The creditor settlement account details.
-    PaymentNotFoundError:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: NOT_FOUND
-        paymentId:
-          type: string
-          description: The requested entity, the `paymentID`, was not found.
-          example: pm2:12345abcd:abcde
-      description: 'The error object returned when given payment cannot be found: ResourceNotFound.'
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    PermissionDeniedError:
-      type: object
-      properties:
-        errorCode:
-          example: PermissionDenied
-      description: 'The error returned when the member is not authorized to perform the given operation: PermissionDenied. <br/>This error message will be accompanied by the reason from the bank. Typically this means the access token has expired and the user must re-authenticate with the bank.'
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A description of the error.
-          example: This is a description of the error.
-        tokenTraceId:
-          type: string
-          description: The trace identifier for the given call.
-          example: '5678912345'
-      description: The request does not have valid authentication credentials needed to perform the operation.
-    StatusRefund:
-      title: StatusRefund
-      type: string
-      description: The Token.io Refund Initiation Status. <ul><li> <b>INITIATION_PENDING</b> - Token.io has received the refund initiation and the initiation has passed Token.io's validation.</li><li><b>INITIATION_PROCESSING</b> - the refund is processing on the bank side. The status can be updated to one of `INITIATION_COMPLETED`, `INITIATION_REJECTED` or `INITIATION_FAILED`. If the status is not updated by the bank within a certain period of time, the status will remain as `INITIATION_PROCESSING` and the corresponding status reason information field will reflect this.</li><li><b>INITIATION_COMPLETED</b> - the refund initiation is successful. This does not guarantee the refund is settled.</li><li><b>INITIATION_REJECTED</b> - the refund is rejected by the bank. More details are shared in the corresponding status reason information.</li><li><b>INITIATION_FAILED</b> - Token.io failed to create the initiation as a result of failures on the bank side, <i>e.g.</i> the bank is not available at the moment.</li><li><b>INITIATION_NO_FINAL_STATUS_AVAILABLE</b> - The payment status has not been updated for some time and Token.io has stopped polling it. The recommended maximum polling time is 30 days. The status will change to `INITIATION_NO_FINAL_STATUS_AVAILABLE` after 30 days if the bank doesn't update the status. This is a final status, but it doesn't indicate success or failure. Please contact the bank to check the actual status of the payment.</li></ul>
-      example: INITIATION_COMPLETED
-      default: INITIATION_PENDING
-      enum:
-      - INITIATION_PENDING
-      - INITIATION_PROCESSING
-      - INITIATION_COMPLETED
-      - INITIATION_REJECTED
-      - INITIATION_FAILED
-      - INITIATION_NO_FINAL_STATUS_AVAILABLE
-    refunds_body:
-      required:
-      - initiation
-      type: object
-      properties:
-        initiation:
-          $ref: '#/components/schemas/RefundInitiation'
-    RefundDebtorInformation:
-      description: The debtor information. Account information (one of) is required.
-      allOf:
-      - oneOf:
-        - $ref: '#/components/schemas/SepaAccount'
-        - $ref: '#/components/schemas/FasterPaymentsAccount'
-      - type: object
-        properties:
-          name:
-            type: string
-            description: The owner name for the debtor account.
-            example: John Smith
-          ultimateDebtorName:
-            type: string
-            description: The ultimate debtor name.
-            example: John Smith
-          address:
-            $ref: '#/components/schemas/Address'
-    CreditorInformation:
-      description: The creditor information. The account information (one of) is required.
-      allOf:
-      - oneOf:
-        - $ref: '#/components/schemas/SepaAccount'
-        - $ref: '#/components/schemas/SepaInstantAccount'
-        - $ref: '#/components/schemas/FasterPaymentsAccount'
-        - $ref: '#/components/schemas/ElixirAccountCreditor'
-        - $ref: '#/components/schemas/EUDomesticNonEuroAccountCreditor'
-        - $ref: '#/components/schemas/EUDomesticNonEuroInstantAccountCreditor'
-        - $ref: '#/components/schemas/BankGiroAccount'
-        - $ref: '#/components/schemas/PlusGiroAccount'
-        - $ref: '#/components/schemas/VirtualAccountCreditor'
-      - type: object
-      - required:
-        - name
-        properties:
-          name:
-            type: string
-            description: The owner's name for the creditor account. This parameter is not required for settlement accounts.
-            example: Customer Inc.
-          ultimateCreditorName:
-            type: string
-            description: The ultimate creditor's name.
-            example: Customer Inc.
-          address:
-            $ref: '#/components/schemas/Address'
-          bankName:
-            type: string
-            description: The creditor's bank name.
+    EUDomesticNonEuroInstantAccountCreditor:
+      title: EUDomesticNonEuroInstantAccount
+      oneOf:
+      - $ref: '#/components/schemas/EUIbanAccount'
+      - $ref: '#/components/schemas/BbanAccount'
+      - $ref: '#/components/schemas/ClearingNumberAccount'
+      - $ref: '#/components/schemas/SENoBankIdCreditorAccount'
+      description: The instant payment system within a European country using that country's non-Euro domestic currency. An IBAN account will require an `iban` and an optional `bic`, a BBAN account will require a `bban` and an optional `bic`, a Clearing Number account will require a `bban` and a `clearingNumber`. A SENoBankId account, where the currency is SEK or NOK, will require an `iban` and `bban` with an optional `bic` and/or `clearingNumber`. This option is only available for an HP flow that doesn't have a preselected `bankId`.
     RefundsResponse:
       type: object
       properties:
@@ -1155,55 +942,44 @@ components:
             $ref: '#/components/schemas/Refund'
         paging:
           $ref: '#/components/schemas/PagingInfo'
-    EUDomesticNonEuroAccountCreditor:
-      title: EUDomesticNonEuroAccount
-      oneOf:
-      - $ref: '#/components/schemas/EUIbanAccount'
-      - $ref: '#/components/schemas/BbanAccount'
-      - $ref: '#/components/schemas/ClearingNumberAccount'
-      - $ref: '#/components/schemas/SENoBankIdCreditorAccount'
-      description: The payment system within a European country using that country's non-Euro domestic currency. An IBAN account will require an `iban` and an optional `bic`, a BBAN account will require a `bban` and an optional `bic`, a Clearing Number account will require a `bban` and a `clearingNumber`. A SENoBankId account, where the currency is SEK or NOK, will require an `iban` and `bban` with an optional `bic` and/or `clearingNumber`. This option is only available for an HP flow that doesn't have a preselected `bankId`.
-    AccountVerificationId:
-      type: string
-      description: The Id returned from the /account-verifications endpoint and used to identify the account verification relating to the beneficiary of the payment. Only required for EUR payments.
-    ResourceExhaustedError:
+    ResolvedRefundInitiation:
       required:
-      - paymentId
+      - amount
+      - creditor
+      - debtor
+      - localInstrument
+      - originalPaymentId
+      - paymentType
+      - refId
       type: object
       properties:
-        errorCode:
-          example: RESOURCE_EXHAUSTED
-        paymentId:
+        description:
           type: string
-          description: The maximum number of requests has been reached.
-          example: Resource exhausted. Check quota.
-      description: Resource exhausted. Too many requests.
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    RefundResponse:
-      type: object
-      properties:
-        refund:
-          $ref: '#/components/schemas/Refund'
-    inline_response_400:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-    NotImplementedError:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: UNIMPLEMENTED
-        paymentId:
+          description: The description for the refund.
+          example: refund for some reason
+        refId:
+          $ref: '#/components/schemas/refId'
+        amount:
+          $ref: '#/components/schemas/Amount'
+        originalPaymentId:
+          $ref: '#/components/schemas/originalPaymentId'
+        registrationId:
           type: string
-          description: The operation was not implemented,supported or enabled by the bank.
-          example: Not implemented.
-      description: The operation was not implemented, supported or enabled by the bank.
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
+          description: The registraion id.
+          example: regId
+        localInstrument:
+          type: string
+          description: The bank's payment service to be used for making a payment.
+          example: SEPA_INSTANT
+          enum:
+          - SEPA
+          - SEPA_INSTANT
+          - FASTER_PAYMENTS
+        debtor:
+          $ref: '#/components/schemas/RefundDebtorInformation'
+        creditor:
+          $ref: '#/components/schemas/CreditorInformation'
+      description: The Initiation payload for the refund.
     EUIbanAccount:
       title: EUIbanAccount
       required:
@@ -1219,6 +995,192 @@ components:
           description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
           example: BOFIIE2D
       description: Account details where the iban is required and the bic is optional.
+    memberId:
+      type: string
+      description: The Token.io-assigned member id of the TPP.
+      example: m:123456abcd:abcd
+    RefundResponse:
+      type: object
+      properties:
+        refund:
+          $ref: '#/components/schemas/Refund'
+    ClearingNumberAccount:
+      title: ClearingNumberAccount
+      required:
+      - bban
+      type: object
+      properties:
+        bban:
+          type: string
+          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
+          example: NWBK60161331926819
+        clearingNumber:
+          type: string
+          description: The bank clearing number or BC number is a number used for the identification of financial institutions in Switzerland and Liechtenstein. Bank clearing numbers are connected to the Swiss Interbank Clearing and the EuroSIC system.
+          example: 87654321
+      description: Account details where the bban is required and the clearing number is optional.
+    SENoBankIdCreditorAccount:
+      title: SENoBankIdCreditorAccount
+      required:
+      - iban
+      - bban
+      type: object
+      properties:
+        iban:
+          type: string
+          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+        bban:
+          type: string
+          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
+          example: NWBK60161331926819
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
+          example: BOFIIE2D
+        clearingNumber:
+          type: string
+          description: The bank clearing number or BC number is a number used for the identification of financial institutions in Switzerland and Liechtenstein. Bank clearing numbers are connected to the Swiss Interbank Clearing and the EuroSIC system.
+          example: 87654321
+      description: Account details where the iban and bban are required and the bic and clearing number are optional. This is ONLY allowed for an HP flow if there is no `bankId` provided in the initiation AND the currency is SEK or NOK.
+    PaymentNotFoundError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: NOT_FOUND
+        paymentId:
+          type: string
+          description: The requested entity, the `paymentID`, was not found.
+          example: pm2:12345abcd:abcde
+      description: 'The error object returned when given payment cannot be found: ResourceNotFound.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    EUDomesticNonEuroAccountCreditor:
+      title: EUDomesticNonEuroAccount
+      oneOf:
+      - $ref: '#/components/schemas/EUIbanAccount'
+      - $ref: '#/components/schemas/BbanAccount'
+      - $ref: '#/components/schemas/ClearingNumberAccount'
+      - $ref: '#/components/schemas/SENoBankIdCreditorAccount'
+      description: The payment system within a European country using that country's non-Euro domestic currency. An IBAN account will require an `iban` and an optional `bic`, a BBAN account will require a `bban` and an optional `bic`, a Clearing Number account will require a `bban` and a `clearingNumber`. A SENoBankId account, where the currency is SEK or NOK, will require an `iban` and `bban` with an optional `bic` and/or `clearingNumber`. This option is only available for an HP flow that doesn't have a preselected `bankId`.
+    inline_response_429:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ResourceExhaustedError'
+    PLAccount:
+      title: PLAccount
+      required:
+      - accountNumber
+      type: object
+      properties:
+        accountNumber:
+          type: string
+          description: The payee's Elixir-registered bank account number.
+          example: FRAX82783423
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
+          example: BOFIIE2D
+      description: Polish account details where the account number is required and the bic is optional.
+    inline_response_500:
+      properties:
+        error:
+          allOf:
+          - type: object
+            properties:
+              errorCode:
+                type: string
+                description: This is a textual error code categorising the error.
+                example: InternalServerError
+          - $ref: '#/components/schemas/ServerError'
+    SepaAccount:
+      title: SepaAccount
+      required:
+      - iban
+      type: object
+      properties:
+        iban:
+          type: string
+          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
+          example: BOFIIE2D
+      description: SEPA account details where the iban is required and the bic is optional.
+    BankGiroAccount:
+      title: BankGiroAccount
+      required:
+      - bankgiroNumber
+      type: object
+      properties:
+        bankgiroNumber:
+          type: string
+          description: The unique identifier for the bank account in Sweden (known in Swedish as Bankgironummer), it consists of 7 or 8 digits.
+          example: '56781234'
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
+          example: BOFIIE2D
+      description: Account details where the bankgiroNumber is required and the bic is optional.
+    FasterPaymentsAccount:
+      title: FasterPaymentsAccount
+      required:
+      - accountNumber
+      - sortCode
+      type: object
+      properties:
+        accountNumber:
+          type: string
+          description: The unique identifier for the bank account in the UK or Ireland.
+          example: '12345678'
+        sortCode:
+          type: string
+          description: The number assigned to a branch of a bank, typically containing six digits and most commonly used in the UK and Ireland.
+          example: '123456'
+      description: A UK or Irish account where the sort code and account number are required.
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: The request does not have valid authentication credentials needed to perform the operation.
+    inline_response_504:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/GatewayTimeoutError'
+    BbanAccount:
+      title: BbanAccount
+      required:
+      - bban
+      type: object
+      properties:
+        bban:
+          type: string
+          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
+          example: NWBK60161331926819
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
+          example: BOFIIE2D
+      description: Account details where the bban is required and the bic is optional.
+    AccountVerificationId:
+      type: string
+      description: The Id returned from the /account-verifications endpoint and used to identify the account verification relating to the beneficiary of the payment. Only required for EUR payments.
     CorporateApiDebtorInformation:
       description: The debtor information.
       required:
@@ -1229,17 +1191,26 @@ components:
           type: string
           description: The ID for the debtor settlement account.
           example: a12345
-    PagingInfo:
+    StatusRefund:
+      title: StatusRefund
+      type: string
+      description: The Token.io Refund Initiation Status. <ul><li> <b>INITIATION_PENDING</b> - Token.io has received the refund initiation and the initiation has passed Token.io's validation.</li><li><b>INITIATION_PROCESSING</b> - the refund is processing on the bank side. The status can be updated to one of `INITIATION_COMPLETED`, `INITIATION_REJECTED` or `INITIATION_FAILED`. If the status is not updated by the bank within a certain period of time, the status will remain as `INITIATION_PROCESSING` and the corresponding status reason information field will reflect this.</li><li><b>INITIATION_COMPLETED</b> - the refund initiation is successful. This does not guarantee the refund is settled.</li><li><b>INITIATION_REJECTED</b> - the refund is rejected by the bank. More details are shared in the corresponding status reason information.</li><li><b>INITIATION_FAILED</b> - Token.io failed to create the initiation as a result of failures on the bank side, <i>e.g.</i> the bank is not available at the moment.</li><li><b>INITIATION_NO_FINAL_STATUS_AVAILABLE</b> - The payment status has not been updated for some time and Token.io has stopped polling it. The recommended maximum polling time is 30 days. The status will change to `INITIATION_NO_FINAL_STATUS_AVAILABLE` after 30 days if the bank doesn't update the status. This is a final status, but it doesn't indicate success or failure. Please contact the bank to check the actual status of the payment.</li></ul>
+      example: INITIATION_COMPLETED
+      default: INITIATION_PENDING
+      enum:
+      - INITIATION_PENDING
+      - INITIATION_PROCESSING
+      - INITIATION_COMPLETED
+      - INITIATION_REJECTED
+      - INITIATION_FAILED
+      - INITIATION_NO_FINAL_STATUS_AVAILABLE
+    inline_response_501:
+      required:
+      - error
       type: object
       properties:
-        limit:
-          type: integer
-          description: The limit (maximum number of records to return) that was sent in the request. If the actual number of returned records is less then the limit, there are no more records left to fetch. <br/>The maximum allowed limit is 200. If the passed limit is bigger than this, it will be set to 200.
-          format: int32
-        offset:
-          type: string
-          description: Offset for the next page.
-          example: LerV6Jmex
+        error:
+          $ref: '#/components/schemas/NotImplementedError'
     RefundInitiation:
       required:
       - amount
@@ -1281,84 +1252,42 @@ components:
         corporateApiDebtor:
           $ref: '#/components/schemas/CorporateApiDebtorInformation'
       description: The Initiation payload for the refund.
-    Address:
-      type: object
-      properties:
-        addressLine:
-          type: array
-          items:
-            type: string
-            example: The Coach House
-        streetName:
-          type: string
-          description: Street number
-          example: 221B
-        buildingNumber:
-          type: string
-          description: Building number
-          example: 2C
-        postCode:
-          type: string
-          description: Post Code
-          example: TR26 1EZ
-        townName:
-          type: string
-          description: Town name
-          example: Saint Ives
-        state:
-          type: string
-          description: State
-          example: Cornwall
-        district:
-          type: string
-          description: The district.
-        country:
-          type: string
-          description: Two-letter country code in upper case (ISO 3166-1 alpha-2).
-          example: GB
-      description: Address
-    ResolvedRefundInitiation:
+    inline_response_404:
       required:
-      - amount
-      - creditor
-      - debtor
-      - localInstrument
-      - originalPaymentId
-      - paymentType
-      - refId
+      - error
       type: object
       properties:
-        description:
+        error:
+          $ref: '#/components/schemas/PaymentNotFoundError'
+    inline_response_400:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    refunds_body:
+      required:
+      - initiation
+      type: object
+      properties:
+        initiation:
+          $ref: '#/components/schemas/RefundInitiation'
+    ErrorWithCode:
+      required:
+      - errorCode
+      - message
+      type: object
+      properties:
+        errorCode:
           type: string
-          description: The description for the refund.
-          example: refund for some reason
-        refId:
-          $ref: '#/components/schemas/refId'
-        amount:
-          $ref: '#/components/schemas/Amount'
-        originalPaymentId:
-          $ref: '#/components/schemas/originalPaymentId'
-        registrationId:
+          description: A textual error code categorising the error.
+          example: InternalServerError
+        message:
           type: string
-          description: The registraion id.
-          example: regId
-        localInstrument:
-          type: string
-          description: The bank's payment service to be used for making a payment.
-          example: SEPA_INSTANT
-          enum:
-          - SEPA
-          - SEPA_INSTANT
-          - FASTER_PAYMENTS
-        debtor:
-          $ref: '#/components/schemas/RefundDebtorInformation'
-        creditor:
-          $ref: '#/components/schemas/CreditorInformation'
-      description: The Initiation payload for the refund.
-    originalPaymentId:
-      type: string
-      description: The original payment id from Token.io payments/transfers. This is required to initiate a refund. Token.io will check the original payment for the refund validation.
-      example: t:sdsds:sdsd
+          description: A description of the error that occurred and a possible way to fix it.
+          example: '`RefId` should not be longer than 35 symbols.'
+      description: Error object providing details about the error.
+      allOf:
+      - $ref: '#/components/schemas/Error'
     SepaInstantAccount:
       title: SepaInstantAccount
       required:
@@ -1374,76 +1303,74 @@ components:
           description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
           example: BOFIIE2D
       description: SEPA Instant account details where the iban is required and the bic is optional.
-    PLIbanAccount:
-      title: PLIbanAccount
-      required:
-      - iban
+    PagingInfo:
       type: object
       properties:
-        iban:
+        limit:
+          type: integer
+          description: The limit (maximum number of records to return) that was sent in the request. If the actual number of returned records is less then the limit, there are no more records left to fetch. <br/>The maximum allowed limit is 200. If the passed limit is bigger than this, it will be set to 200.
+          format: int32
+        offset:
           type: string
-          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
-          example: GB29NWBK60161331926819
-        bic:
+          description: Offset for the next page.
+          example: LerV6Jmex
+    originalPaymentId:
+      type: string
+      description: The original payment id from Token.io payments/transfers. This is required to initiate a refund. Token.io will check the original payment for the refund validation.
+      example: t:sdsds:sdsd
+    GatewayTimeoutError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: DEADLINE_EXCEEDED
+        paymentId:
           type: string
-          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
-          example: BOFIIE2D
-      description: Polish account details where the iban is required and the bic is optional.
+          description: The deadline expired before the operation could complete.
+          example: Deadline exceeded.
+      description: The deadline expired before the operation could complete.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
     inline_response_401:
       type: object
       properties:
         error:
           $ref: '#/components/schemas/Error'
-    inline_response_501:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/NotImplementedError'
-    ElixirAccountCreditor:
-      title: ElixirAccount
-      oneOf:
-      - $ref: '#/components/schemas/PLAccount'
-      - $ref: '#/components/schemas/PLIbanAccount'
-      description: The Elixir creditor account details.
-    inline_response_403:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/PermissionDeniedError'
-    ServerError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A description of the error.
-          example: This is a description of the error.
-        tokenTraceId:
-          type: string
-          description: The trace identifier for the given call.
-          example: '5678912345'
-      description: 'This could refer to either an error by the payment service provider or the bank. When the bank reports a 5xx error, `"token-external-error": "true"` is set as a header in the HTTP response, indicating that the "internal" error originates from the bank. When one of the payment service providers internal services fails or when the bank reports a 4xx error, this header is not populated. The absence of this response header should be interpreted as `"token-external-error": "false"`.'
+    CreditorInformation:
+      description: The creditor information. The account information (one of) is required.
       allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    FasterPaymentsAccount:
-      title: FasterPaymentsAccount
-      required:
-      - accountNumber
-      - sortCode
-      type: object
-      properties:
-        accountNumber:
-          type: string
-          description: The unique identifier for the bank account in the UK or Ireland.
-          example: '12345678'
-        sortCode:
-          type: string
-          description: The number assigned to a branch of a bank, typically containing six digits and most commonly used in the UK and Ireland.
-          example: '123456'
-      description: A UK or Irish account where the sort code and account number are required.
+      - oneOf:
+        - $ref: '#/components/schemas/SepaAccount'
+        - $ref: '#/components/schemas/SepaInstantAccount'
+        - $ref: '#/components/schemas/FasterPaymentsAccount'
+        - $ref: '#/components/schemas/ElixirAccountCreditor'
+        - $ref: '#/components/schemas/EUDomesticNonEuroAccountCreditor'
+        - $ref: '#/components/schemas/EUDomesticNonEuroInstantAccountCreditor'
+        - $ref: '#/components/schemas/BankGiroAccount'
+        - $ref: '#/components/schemas/PlusGiroAccount'
+        - $ref: '#/components/schemas/VirtualAccountCreditor'
+      - type: object
+      - required:
+        - name
+        properties:
+          name:
+            type: string
+            description: The owner's name for the creditor account. This parameter is not required for settlement accounts.
+            example: Customer Inc.
+          ultimateCreditorName:
+            type: string
+            description: The ultimate creditor's name.
+            example: Customer Inc.
+          address:
+            $ref: '#/components/schemas/Address'
+          bankName:
+            type: string
+            description: The creditor's bank name.
+    refId:
+      type: string
+      description: The TPP-generated reference identifier for the token. This is not to be confused with the `requestId`. The `refId` maps to the `tppRefId` in the bank's `consentRequest`. This is needed to match/verify the originating token request with the bank's consent request. <br/>We recommend that the `refId` should not contain special characters (the allowed characters are the 26-letter Latin alphabet, the numerical digits from 0-9 and the hyphen '-'). This field should not exceed 18 characters in length.
+      example: 9htio4a1sp2akdr1aa
     Refund:
       required:
       - createdDateTime
@@ -1484,46 +1411,8 @@ components:
         initiation:
           $ref: '#/components/schemas/ResolvedRefundInitiation'
       description: The refund object.
-    refId:
-      type: string
-      description: The TPP-generated reference identifier for the token. This is not to be confused with the `requestId`. The `refId` maps to the `tppRefId` in the bank's `consentRequest`. This is needed to match/verify the originating token request with the bank's consent request. <br/>We recommend that the `refId` should not contain special characters (the allowed characters are the 26-letter Latin alphabet, the numerical digits from 0-9 and the hyphen '-'). This field should not exceed 18 characters in length.
-      example: 9htio4a1sp2akdr1aa
-    ClearingNumberAccount:
-      title: ClearingNumberAccount
-      required:
-      - bban
-      type: object
-      properties:
-        bban:
-          type: string
-          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
-          example: NWBK60161331926819
-        clearingNumber:
-          type: string
-          description: The bank clearing number or BC number is a number used for the identification of financial institutions in Switzerland and Liechtenstein. Bank clearing numbers are connected to the Swiss Interbank Clearing and the EuroSIC system.
-          example: 87654321
-      description: Account details where the bban is required and the clearing number is optional.
-    PLAccount:
-      title: PLAccount
-      required:
-      - accountNumber
-      type: object
-      properties:
-        accountNumber:
-          type: string
-          description: The payee's Elixir-registered bank account number.
-          example: FRAX82783423
-        bic:
-          type: string
-          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
-          example: BOFIIE2D
-      description: Polish account details where the account number is required and the bic is optional.
-    memberId:
-      type: string
-      description: The Token.io-assigned member id of the TPP.
-      example: m:123456abcd:abcd
-    SepaAccount:
-      title: SepaAccount
+    PLIbanAccount:
+      title: PLIbanAccount
       required:
       - iban
       type: object
@@ -1532,65 +1421,113 @@ components:
           type: string
           description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
           example: GB29NWBK60161331926819
-        bic:
-          type: string
-          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
-          example: BOFIIE2D
-      description: SEPA account details where the iban is required and the bic is optional.
-    EUDomesticNonEuroInstantAccountCreditor:
-      title: EUDomesticNonEuroInstantAccount
-      oneOf:
-      - $ref: '#/components/schemas/EUIbanAccount'
-      - $ref: '#/components/schemas/BbanAccount'
-      - $ref: '#/components/schemas/ClearingNumberAccount'
-      - $ref: '#/components/schemas/SENoBankIdCreditorAccount'
-      description: The instant payment system within a European country using that country's non-Euro domestic currency. An IBAN account will require an `iban` and an optional `bic`, a BBAN account will require a `bban` and an optional `bic`, a Clearing Number account will require a `bban` and a `clearingNumber`. A SENoBankId account, where the currency is SEK or NOK, will require an `iban` and `bban` with an optional `bic` and/or `clearingNumber`. This option is only available for an HP flow that doesn't have a preselected `bankId`.
-    SENoBankIdCreditorAccount:
-      title: SENoBankIdCreditorAccount
-      required:
-      - iban
-      - bban
-      type: object
-      properties:
-        iban:
-          type: string
-          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
-          example: GB29NWBK60161331926819
-        bban:
-          type: string
-          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
-          example: NWBK60161331926819
         bic:
           type: string
           description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
           example: BOFIIE2D
-        clearingNumber:
-          type: string
-          description: The bank clearing number or BC number is a number used for the identification of financial institutions in Switzerland and Liechtenstein. Bank clearing numbers are connected to the Swiss Interbank Clearing and the EuroSIC system.
-          example: 87654321
-      description: Account details where the iban and bban are required and the bic and clearing number are optional. This is ONLY allowed for an HP flow if there is no `bankId` provided in the initiation AND the currency is SEK or NOK.
-    BankGiroAccount:
-      title: BankGiroAccount
-      required:
-      - bankgiroNumber
-      type: object
-      properties:
-        bankgiroNumber:
-          type: string
-          description: The unique identifier for the bank account in Sweden (known in Swedish as Bankgironummer), it consists of 7 or 8 digits.
-          example: '56781234'
-        bic:
-          type: string
-          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
-          example: BOFIIE2D
-      description: Account details where the bankgiroNumber is required and the bic is optional.
-    inline_response_404:
+      description: Polish account details where the iban is required and the bic is optional.
+    inline_response_503:
       required:
       - error
       type: object
       properties:
         error:
-          $ref: '#/components/schemas/PaymentNotFoundError'
+          $ref: '#/components/schemas/ServiceUnavailableError'
+    Address:
+      type: object
+      properties:
+        addressLine:
+          type: array
+          items:
+            type: string
+            example: The Coach House
+        streetName:
+          type: string
+          description: Street number
+          example: 221B
+        buildingNumber:
+          type: string
+          description: Building number
+          example: 2C
+        postCode:
+          type: string
+          description: Post Code
+          example: TR26 1EZ
+        townName:
+          type: string
+          description: Town name
+          example: Saint Ives
+        state:
+          type: string
+          description: State
+          example: Cornwall
+        district:
+          type: string
+          description: The district.
+        country:
+          type: string
+          description: Two-letter country code in upper case (ISO 3166-1 alpha-2).
+          example: GB
+      description: Address
+    PermissionDeniedError:
+      type: object
+      properties:
+        errorCode:
+          example: PermissionDenied
+      description: 'The error returned when the member is not authorized to perform the given operation: PermissionDenied. <br/>This error message will be accompanied by the reason from the bank. Typically this means the access token has expired and the user must re-authenticate with the bank.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    PlusGiroAccount:
+      title: PlusGiroAccount
+      required:
+      - plusgiroNumber
+      type: object
+      properties:
+        plusgiroNumber:
+          type: string
+          description: The unique identifier for the Swedish money transaction system owned by <a href="https://www.nordea.com" target="blank">Nordea</a>.
+          example: '67812345'
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
+          example: BOFIIE2D
+      description: Account details where the plusgiroNumber is required and the bic is optional.
+    ResourceExhaustedError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: RESOURCE_EXHAUSTED
+        paymentId:
+          type: string
+          description: The maximum number of requests has been reached.
+          example: Resource exhausted. Check quota.
+      description: Resource exhausted. Too many requests.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    inline_response_403:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/PermissionDeniedError'
+    Amount:
+      description: The transaction amount and currency.
+      required:
+      - currency
+      - value
+      type: object
+      properties:
+        value:
+          type: string
+          description: The transaction amount with up to four digits after the decimal point.
+          example: '10.23'
+        currency:
+          type: string
+          description: The <a href="https://www.iso.org/iso-4217-currency-codes.html" target="_blank">ISO 4217</a> three letter currency code.
+          example: EUR
     ServiceUnavailableError:
       required:
       - paymentId
@@ -1605,36 +1542,166 @@ components:
       description: Service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
       allOf:
       - $ref: '#/components/schemas/ErrorWithCode'
-    GenerateRefundSigningPayloadResponse:
+    ServerError:
       type: object
       properties:
-        payloadToSign:
+        message:
           type: string
-          description: Base64 of the provider payload the merchant has to sign.
-          example: eyJncm91cEhlYWRlciI6e319
-    BnppRegistrationPayload:
-      title: BnppRegistrationPayload
-      type: object
-      properties:
-        bnpp:
-          $ref: '#/components/schemas/BnppRegistrationPayload_bnpp'
-    ErrorWithCode_2:
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: 'This could refer to either an error by the payment service provider or the bank. When the bank reports a 5xx error, `"token-external-error": "true"` is set as a header in the HTTP response, indicating that the "internal" error originates from the bank. When one of the payment service providers internal services fails or when the bank reports a 4xx error, this header is not populated. The absence of this response header should be interpreted as `"token-external-error": "false"`.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    ElixirAccountCreditor:
+      title: ElixirAccount
+      oneOf:
+      - $ref: '#/components/schemas/PLAccount'
+      - $ref: '#/components/schemas/PLIbanAccount'
+      description: The Elixir creditor account details.
+    RefundDebtorInformation:
+      description: The debtor information. Account information (one of) is required.
+      allOf:
+      - oneOf:
+        - $ref: '#/components/schemas/SepaAccount'
+        - $ref: '#/components/schemas/FasterPaymentsAccount'
+      - type: object
+        properties:
+          name:
+            type: string
+            description: The owner name for the debtor account.
+            example: John Smith
+          ultimateDebtorName:
+            type: string
+            description: The ultimate debtor name.
+            example: John Smith
+          address:
+            $ref: '#/components/schemas/Address'
+    NotImplementedError:
       required:
-      - errorCode
-      - message
+      - paymentId
       type: object
       properties:
         errorCode:
+          example: UNIMPLEMENTED
+        paymentId:
           type: string
-          description: A textual error code categorising the error.
-          example: InternalServerError
-        message:
-          type: string
-          description: A description of the error that occurred and a possible way to fix it.
-          example: RefId should not be longer than 35 symbols.
-      description: Error object providing details about the error.
+          description: The operation was not implemented,supported or enabled by the bank.
+          example: Not implemented.
+      description: The operation was not implemented, supported or enabled by the bank.
       allOf:
-      - $ref: '#/components/schemas/Error_2'
+      - $ref: '#/components/schemas/ErrorWithCode'
+    VirtualAccountCreditor:
+      title: VirtualAccount
+      required:
+      - virtualAccountId
+      type: object
+      properties:
+        virtualAccountId:
+          type: string
+          description: The unique identifier for the settlement account. This field is mandatory for unregulated TPPs.
+          example: pa:4TXFcixy9yKfEmhad45Jp6Lb34d1:2gFUX1NEGTG
+      description: The creditor settlement account details.
+    RefundStatus:
+      type: string
+      description: The Token.io Refund Initiation Status. <br/><br/> <b>INITIATION_PENDING</b> - Token.io has received the refund initiation and the initiation passed Token.io validation. <br/><br/> <b>INITIATION_PROCESSING</b> - the refund is processing on the bank side. Status can be updated to one of INITIATION_COMPLETED, INITIATION_REJECTED or INITIATION_FAILED. If the status is never updated by the bank within certain period of time, the status will stay INITIATION_PROCESSING forever and the corresponding status reason information field will reflect this fact.<br/><br/> <b>INITIATION_COMPLETED</b> - the refund initiation is successful. This does not guarantee the refund is settled.<br/><br/> <b>INITIATION_REJECTED</b> - the refund is rejected by the bank. More details are shared in the corresponding status reason information.  <br/><br/> <b>INITIATION_FAILED</b> - Token.io failed to create the initiation due to failures on the bank side, <i>e.g.</i> the bank is not available at the moment. <br/><br/> <b>INITIATION_NO_FINAL_STATUS_AVAILABLE</b> - The payment status has not been updated for some time and Token.io has stopped polling it. The recommended maximum polling time is 30 days. The status will change to INITIATION_NO_FINAL_STATUS_AVAILABLE after 30 days if the bank does not update the status. This is a final status, but it does not indicate success or failure. Please contact the bank to check the actual status of the payment.
+      example: INITIATION_COMPLETED
+      default: INITIATION_PENDING
+      enum:
+      - INITIATION_PENDING
+      - INITIATION_PROCESSING
+      - INITIATION_COMPLETED
+      - INITIATION_REJECTED
+      - INITIATION_FAILED
+      - INITIATION_NO_FINAL_STATUS_AVAILABLE
+    RefundsResponse_2:
+      type: object
+      properties:
+        refunds:
+          type: array
+          items:
+            $ref: '#/components/schemas/Refund_2'
+        paging:
+          $ref: '#/components/schemas/Paging'
+    ResolvedRefundInitiation_2:
+      required:
+      - amount
+      - creditor
+      - debtor
+      - localInstrument
+      - originalPaymentId
+      - paymentType
+      - refId
+      - registrationId
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description for the refund.
+          example: refund for some reason
+        refId:
+          type: string
+          description: The reference id from the customer.
+          example: myRefId
+        amount:
+          $ref: '#/components/schemas/Amount_2'
+        originalPaymentId:
+          type: string
+          description: The original payment id from Token.io payments/transfers. This is required to initiate a refund. Token.io will check the original payment for the refund validation.
+          example: t:sdsds:sdsd
+        registrationId:
+          type: string
+          description: The registraion id.
+          example: regId
+        localInstrument:
+          type: string
+          description: ASPSP's payment service to be used for making a payment.
+          example: SEPA_INSTANT
+          enum:
+          - SEPA
+          - SEPA_INSTANT
+          - FASTER_PAYMENT
+        debtor:
+          $ref: '#/components/schemas/BnppDebtorInformation'
+        creditor:
+          $ref: '#/components/schemas/CreditorInformation_2'
+      description: The Initiation payload for the refund.
+    Paging:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: The limit (maximum number of records to return) that was sent in the request. If the actual number of returned records is less then the limit, there are no more records left to fetch. <br>The maximum allowed limit is 200. If the passed limit is bigger than this, it will be set to 200.
+          format: int32
+        offset:
+          type: string
+          description: The offset for the next page.
+    Registration:
+      required:
+      - createdDateTime
+      - id
+      - product
+      - registration
+      type: object
+      properties:
+        id:
+          type: string
+          description: registration id is the id user gets from the post registration end point.
+          example: 123e4567-e89b-12d3-a456-426614174000
+        createdDateTime:
+          type: string
+          description: The time when this registraion object was created (in <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a> format).
+          example: '2017-04-05T10:43:07.000+00:00'
+        product:
+          type: string
+          description: REFUND
+          example: REFUND
+      allOf:
+      - oneOf:
+        - $ref: '#/components/schemas/BnppRegistrationPayload'
     UploadKeyAndCertificateResponse:
       type: object
       properties:
@@ -1642,32 +1709,6 @@ components:
           type: string
           description: The unique identifier for the key.
           example: XXXXXXX
-    Amount_2:
-      required:
-      - currency
-      - value
-      type: object
-      properties:
-        value:
-          type: string
-          description: The double amount in a string format.
-          example: '10.23'
-        currency:
-          type: string
-          description: The <a href="https://www.iso.org/iso-4217-currency-codes.html" target="_blank">ISO 4217</a> three letter currency code.
-          example: EUR
-    keys:
-      type: object
-      properties:
-        keys:
-          $ref: '#/components/schemas/keys_keys'
-      description: The private and public keys to be uploaded.
-    keyAndCertificate:
-      type: object
-      properties:
-        keyAndCertificate:
-          $ref: '#/components/schemas/keyAndCertificate_keyAndCertificate'
-      description: The private key and certificate.
     PaymentNotFoundError_2:
       required:
       - paymentId
@@ -1682,24 +1723,72 @@ components:
       description: 'The error object returned when given payment cannot be found: Resource.NotFound.'
       allOf:
       - $ref: '#/components/schemas/ErrorWithCode_2'
-    CreditorInformation_2:
-      description: The creditor information. Account account information (one of) is required.
-      allOf:
-      - oneOf:
-        - $ref: '#/components/schemas/SepaAccount_2'
-        - $ref: '#/components/schemas/FasterPaymentsAccount_2'
-      - type: object
-        properties:
-          name:
-            type: string
-            description: The owner name for the creditor account.
-            example: Customer Inc.
-          ultimateCreditorName:
-            type: string
-            description: The ultimate creditor name.
-            example: Customer Inc.
-          address:
-            $ref: '#/components/schemas/Address_2'
+    keys_keys:
+      type: object
+      properties:
+        privateKey:
+          type: string
+          description: The private key used for the refund.
+          example: xxxxxxxx
+        publicKey:
+          type: string
+          description: The public key used for the refund.
+          example: xxxxx
+    SepaAccount_2:
+      title: SepaAccount
+      required:
+      - bic
+      - iban
+      type: object
+      properties:
+        iban:
+          type: string
+          example: GB82WEST12345698765432
+        bic:
+          type: string
+          description: The bic for debtor bank.
+          example: mybic
+    BnppRegistrationPayload_bnpp:
+      required:
+      - appId
+      - appSecret
+      - debtor
+      type: object
+      properties:
+        appId:
+          type: string
+          description: The app id from BNPP registration.
+          example: myAppId
+        appSecret:
+          type: string
+          description: The app secret from BNPP registration.
+          example: myAppSecret
+        signingKeyId:
+          type: string
+          description: 'The signing key id from BNPP registration. Not required at registration time, but must be set before initiating a merchant-signed refund: it identifies the key used to build the Signature header sent to BNPP.'
+          example: mySigningKeyId
+        tokenSigningKeyId:
+          type: string
+          description: 'An id that was generated by Token.io when the signing key was stored in Token.io system. Only required if this member is not using the merchant-signed refund path: Token.io uses it to self-sign refunds on the member''s behalf via POST /secrets/upload/key-and-certificate.'
+          example: 123e4567-e89b-12d3-a456-426614174000
+        debtor:
+          $ref: '#/components/schemas/BnppDebtorInformation'
+    FasterPaymentsAccount_2:
+      title: FasterPaymentsAcount
+      required:
+      - accountNumber
+      - sortCode
+      type: object
+      properties:
+        accountNumber:
+          type: string
+          example: '12345678'
+        sortCode:
+          type: string
+          example: '123456'
+    EmptyResponse:
+      type: object
+      properties: {}
     Error_2:
       type: object
       properties:
@@ -1712,52 +1801,44 @@ components:
           description: The Token.io trace id.
           example: '5678912345'
       description: The request does not have valid authentication credentials needed to perform the operation.
-    keys_keys:
-      type: object
-      properties:
-        privateKey:
-          type: string
-          description: The private key used for the refund.
-          example: xxxxxxxx
-        publicKey:
-          type: string
-          description: The public key used for the refund.
-          example: xxxxx
-    RefundsResponse_2:
-      type: object
-      properties:
-        refunds:
-          type: array
-          items:
-            $ref: '#/components/schemas/Refund_2'
-        paging:
-          $ref: '#/components/schemas/Paging'
-    NotImplementedError_2:
-      required:
-      - paymentId
+    PemissionDeniedError:
       type: object
       properties:
         errorCode:
-          example: UNIMPLEMENTED
-        paymentId:
-          type: string
-          description: The operation was not implemented/supported/enabled by the bank.
-          example: Not implemented.
-      description: The operation was not implemented/supported/enabled by the bank.
+          example: PermissionDenied
+      description: 'The error returned when the member is not authorised to perform the given operation: PermissionDenied. <br/>This error message will be accompanied by the reason from the bank. Typically this means the access token has expired and the TPP needs the user to re-authenticate with the bank.'
       allOf:
       - $ref: '#/components/schemas/ErrorWithCode_2'
-    RefundStatus:
-      type: string
-      description: The Token.io Refund Initiation Status. <br/><br/> <b>INITIATION_PENDING</b> - Token.io has received the refund initiation and the initiation passed Token.io validation. <br/><br/> <b>INITIATION_PROCESSING</b> - the refund is processing on the bank side. Status can be updated to one of INITIATION_COMPLETED, INITIATION_REJECTED or INITIATION_FAILED. If the status is never updated by the bank within certain period of time, the status will stay INITIATION_PROCESSING forever and the corresponding status reason information field will reflect this fact.<br/><br/> <b>INITIATION_COMPLETED</b> - the refund initiation is successful. This does not guarantee the refund is settled.<br/><br/> <b>INITIATION_REJECTED</b> - the refund is rejected by the bank. More details are shared in the corresponding status reason information.  <br/><br/> <b>INITIATION_FAILED</b> - Token.io failed to create the initiation due to failures on the bank side, <i>e.g.</i> the bank is not available at the moment. <br/><br/> <b>INITIATION_NO_FINAL_STATUS_AVAILABLE</b> - The payment status has not been updated for some time and Token.io has stopped polling it. The recommended maximum polling time is 30 days. The status will change to INITIATION_NO_FINAL_STATUS_AVAILABLE after 30 days if the bank does not update the status. This is a final status, but it does not indicate success or failure. Please contact the bank to check the actual status of the payment.
-      example: INITIATION_COMPLETED
-      default: INITIATION_PENDING
-      enum:
-      - INITIATION_PENDING
-      - INITIATION_PROCESSING
-      - INITIATION_COMPLETED
-      - INITIATION_REJECTED
-      - INITIATION_FAILED
-      - INITIATION_NO_FINAL_STATUS_AVAILABLE
+    BnppDebtorInformation:
+      description: The debtor information. Account information (one of) is required.
+      allOf:
+      - oneOf:
+        - $ref: '#/components/schemas/SepaAccount_2'
+        - $ref: '#/components/schemas/FasterPaymentsAccount_2'
+      - type: object
+        properties:
+          name:
+            type: string
+            description: The owner name for the debtor account.
+            example: John Smith
+          ultimateDebtorName:
+            type: string
+            description: The ultimate debtor name.
+            example: John Smith
+    BnppRegistrationPayload:
+      title: BnppRegistrationPayload
+      type: object
+      properties:
+        bnpp:
+          $ref: '#/components/schemas/BnppRegistrationPayload_bnpp'
+    UploadKeyAndCertificate:
+      type: object
+      properties:
+        upload:
+          oneOf:
+          - $ref: '#/components/schemas/keyAndCertificate'
+          - $ref: '#/components/schemas/keys'
+      description: Upload a key and certificate.
     RefundInitiation_2:
       required:
       - amount
@@ -1804,83 +1885,35 @@ components:
       properties:
         registration:
           $ref: '#/components/schemas/Registration'
-    UploadKeyAndCertificate:
-      type: object
-      properties:
-        upload:
-          oneOf:
-          - $ref: '#/components/schemas/keyAndCertificate'
-          - $ref: '#/components/schemas/keys'
-      description: Upload a key and certificate.
-    Address_2:
-      type: object
-      properties:
-        streetName:
-          type: string
-          description: Street number
-          example: 221B
-        buildingNumber:
-          type: string
-          description: Building number
-          example: 2C
-        postCode:
-          type: string
-          description: Post Code
-          example: E1 6AN
-        townName:
-          type: string
-          description: Town name
-          example: Saint Ives
-        country:
-          type: string
-          description: Country
-          example: United Kingdom
-      description: Address
-    ResolvedRefundInitiation_2:
+    refund_registrations_body:
+      oneOf:
+      - $ref: '#/components/schemas/BnppRegistrationPayload'
+    ErrorWithCode_2:
       required:
-      - amount
-      - creditor
-      - debtor
-      - localInstrument
-      - originalPaymentId
-      - paymentType
-      - refId
-      - registrationId
+      - errorCode
+      - message
       type: object
       properties:
-        description:
+        errorCode:
           type: string
-          description: Description for the refund.
-          example: refund for some reason
-        refId:
+          description: A textual error code categorising the error.
+          example: InternalServerError
+        message:
           type: string
-          description: The reference id from the customer.
-          example: myRefId
-        amount:
-          $ref: '#/components/schemas/Amount_2'
-        originalPaymentId:
+          description: A description of the error that occurred and a possible way to fix it.
+          example: RefId should not be longer than 35 symbols.
+      description: Error object providing details about the error.
+      allOf:
+      - $ref: '#/components/schemas/Error_2'
+    GenerateRefundSigningPayloadResponse:
+      type: object
+      properties:
+        payloadToSign:
           type: string
-          description: The original payment id from Token.io payments/transfers. This is required to initiate a refund. Token.io will check the original payment for the refund validation.
-          example: t:sdsds:sdsd
-        registrationId:
-          type: string
-          description: The registraion id.
-          example: regId
-        localInstrument:
-          type: string
-          description: ASPSP's payment service to be used for making a payment.
-          example: SEPA_INSTANT
-          enum:
-          - SEPA
-          - SEPA_INSTANT
-          - FASTER_PAYMENT
-        debtor:
-          $ref: '#/components/schemas/BnppDebtorInformation'
-        creditor:
-          $ref: '#/components/schemas/CreditorInformation_2'
-      description: The Initiation payload for the refund.
-    BnppDebtorInformation:
-      description: The debtor information. Account information (one of) is required.
+          description: Base64 of the provider payload the merchant has to sign.
+          example: eyJncm91cEhlYWRlciI6e319
+    CreditorInformation_2:
+      description: The creditor information. Account account information (one of) is required.
       allOf:
       - oneOf:
         - $ref: '#/components/schemas/SepaAccount_2'
@@ -1889,99 +1922,14 @@ components:
         properties:
           name:
             type: string
-            description: The owner name for the debtor account.
-            example: John Smith
-          ultimateDebtorName:
+            description: The owner name for the creditor account.
+            example: Customer Inc.
+          ultimateCreditorName:
             type: string
-            description: The ultimate debtor name.
-            example: John Smith
-    keyAndCertificate_keyAndCertificate:
-      type: object
-      properties:
-        privateKey:
-          type: string
-          description: The key used for the refund.
-          example: xxxxxxxx
-        certificate:
-          type: string
-          description: The certificate used for the refund.
-          example: xxxxx
-        certificateName:
-          type: string
-          description: The name of the certificate used for the refund.
-          example: QWAC_PSDGB-FCA-795904
-    Paging:
-      type: object
-      properties:
-        limit:
-          type: integer
-          description: The limit (maximum number of records to return) that was sent in the request. If the actual number of returned records is less then the limit, there are no more records left to fetch. <br>The maximum allowed limit is 200. If the passed limit is bigger than this, it will be set to 200.
-          format: int32
-        offset:
-          type: string
-          description: The offset for the next page.
-    ServiceUnavailableError_2:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: UNAVAILABLE
-        paymentId:
-          type: string
-          description: The service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
-          example: Unavailable.
-      description: Service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode_2'
-    EmptyResponse:
-      type: object
-      properties: {}
-    PemissionDeniedError:
-      type: object
-      properties:
-        errorCode:
-          example: PermissionDenied
-      description: 'The error returned when the member is not authorised to perform the given operation: PermissionDenied. <br/>This error message will be accompanied by the reason from the bank. Typically this means the access token has expired and the TPP needs the user to re-authenticate with the bank.'
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode_2'
-    PayoutRegisterResponse:
-      type: object
-      properties:
-        registration:
-          $ref: '#/components/schemas/Registration'
-    FasterPaymentsAccount_2:
-      title: FasterPaymentsAcount
-      required:
-      - accountNumber
-      - sortCode
-      type: object
-      properties:
-        accountNumber:
-          type: string
-          example: '12345678'
-        sortCode:
-          type: string
-          example: '123456'
-    inline_response_403_2:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/PemissionDeniedError'
-    ServerError_2:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A description of the error.
-          example: This is a description of the error.
-        tokenTraceId:
-          type: string
-          description: The Token.io trace id.
-          example: '5678912345'
-      description: This could refer to either an error on Token.io’s end or an error on the bank side. When the bank reports a 5xx error, Token sets `token-external-error` = true as a header in the HTTP response, indicating that the "internal" error originates from the bank. When one of Token.io's internal services fails or when the bank reports a 4xx error, this header is not populated. The absence of this response header should be interpreted as `token-external-error` = false.
+            description: The ultimate creditor name.
+            example: Customer Inc.
+          address:
+            $ref: '#/components/schemas/Address_2'
     Refund_2:
       required:
       - createdDateTime
@@ -2024,100 +1972,186 @@ components:
         initiation:
           $ref: '#/components/schemas/ResolvedRefundInitiation_2'
       description: The refund object.
-    SepaAccount_2:
-      title: SepaAccount
-      required:
-      - bic
-      - iban
+    Address_2:
       type: object
       properties:
-        iban:
+        streetName:
           type: string
-          example: GB82WEST12345698765432
-        bic:
+          description: Street number
+          example: 221B
+        buildingNumber:
           type: string
-          description: The bic for debtor bank.
-          example: mybic
-    Registration:
-      required:
-      - createdDateTime
-      - id
-      - product
-      - registration
+          description: Building number
+          example: 2C
+        postCode:
+          type: string
+          description: Post Code
+          example: E1 6AN
+        townName:
+          type: string
+          description: Town name
+          example: Saint Ives
+        country:
+          type: string
+          description: Country
+          example: United Kingdom
+      description: Address
+    PayoutRegisterResponse:
       type: object
       properties:
-        id:
+        registration:
+          $ref: '#/components/schemas/Registration'
+    keys:
+      type: object
+      properties:
+        keys:
+          $ref: '#/components/schemas/keys_keys'
+      description: The private and public keys to be uploaded.
+    keyAndCertificate_keyAndCertificate:
+      type: object
+      properties:
+        privateKey:
           type: string
-          description: registration id is the id user gets from the post registration end point.
-          example: 123e4567-e89b-12d3-a456-426614174000
-        createdDateTime:
+          description: The key used for the refund.
+          example: xxxxxxxx
+        certificate:
           type: string
-          description: The time when this registraion object was created (in <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a> format).
-          example: '2017-04-05T10:43:07.000+00:00'
-        product:
+          description: The certificate used for the refund.
+          example: xxxxx
+        certificateName:
           type: string
-          description: REFUND
-          example: REFUND
+          description: The name of the certificate used for the refund.
+          example: QWAC_PSDGB-FCA-795904
+    Amount_2:
+      required:
+      - currency
+      - value
+      type: object
+      properties:
+        value:
+          type: string
+          description: The double amount in a string format.
+          example: '10.23'
+        currency:
+          type: string
+          description: The <a href="https://www.iso.org/iso-4217-currency-codes.html" target="_blank">ISO 4217</a> three letter currency code.
+          example: EUR
+    inline_response_403_2:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/PemissionDeniedError'
+    ServiceUnavailableError_2:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: UNAVAILABLE
+        paymentId:
+          type: string
+          description: The service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+          example: Unavailable.
+      description: Service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
       allOf:
-      - oneOf:
-        - $ref: '#/components/schemas/BnppRegistrationPayload'
-    BnppRegistrationPayload_bnpp:
+      - $ref: '#/components/schemas/ErrorWithCode_2'
+    ServerError_2:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The Token.io trace id.
+          example: '5678912345'
+      description: This could refer to either an error on Token.io’s end or an error on the bank side. When the bank reports a 5xx error, Token sets `token-external-error` = true as a header in the HTTP response, indicating that the "internal" error originates from the bank. When one of Token.io's internal services fails or when the bank reports a 4xx error, this header is not populated. The absence of this response header should be interpreted as `token-external-error` = false.
+    keyAndCertificate:
+      type: object
+      properties:
+        keyAndCertificate:
+          $ref: '#/components/schemas/keyAndCertificate_keyAndCertificate'
+      description: The private key and certificate.
+    NotImplementedError_2:
       required:
-      - appId
-      - appSecret
-      - debtor
+      - paymentId
       type: object
       properties:
-        appId:
+        errorCode:
+          example: UNIMPLEMENTED
+        paymentId:
           type: string
-          description: The app id from BNPP registration.
-          example: myAppId
-        appSecret:
-          type: string
-          description: The app secret from BNPP registration.
-          example: myAppSecret
-        signingKeyId:
-          type: string
-          description: 'The signing key id from BNPP registration. Not required at registration time, but must be set before initiating a merchant-signed refund: it identifies the key used to build the Signature header sent to BNPP.'
-          example: mySigningKeyId
-        tokenSigningKeyId:
-          type: string
-          description: 'An id that was generated by Token.io when the signing key was stored in Token.io system. Only required if this member is not using the merchant-signed refund path: Token.io uses it to self-sign refunds on the member''s behalf via POST /secrets/upload/key-and-certificate.'
-          example: 123e4567-e89b-12d3-a456-426614174000
-        debtor:
-          $ref: '#/components/schemas/BnppDebtorInformation'
-    refund_registrations_body:
-      oneOf:
-      - $ref: '#/components/schemas/BnppRegistrationPayload'
-    io.token.proto.gateway.InitiateRefundResponse:
+          description: The operation was not implemented/supported/enabled by the bank.
+          example: Not implemented.
+      description: The operation was not implemented/supported/enabled by the bank.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode_2'
+    io.token.proto.common.v2.paging.Page:
       type: object
       properties:
-        refund:
-          $ref: '#/components/schemas/io.token.proto.common.v2.payout.Refund'
+        limit:
+          format: int32
+          type: integer
+        offset:
+          type: string
+    io.token.proto.gateway.InitiateRefundRequest:
+      type: object
+      properties:
+        initiation:
+          $ref: '#/components/schemas/io.token.proto.common.v2.payout.RefundInitiation'
     io.token.proto.gateway.GenerateRefundSigningPayloadResponse:
       type: object
       properties:
         payloadToSign:
           type: string
-    io.token.proto.common.v2.common.LocalInstrument:
+    io.token.proto.common.v2.payout.Status:
       enum:
-      - INVALID_LOCAL_INSTRUMENT
-      - SEPA
-      - SEPA_INSTANT
-      - SWIFT
-      - FASTER_PAYMENTS
-      - CHAPS
-      - ELIXIR
-      - EXPRESS_ELIXIR
-      - BLUE_CASH
-      - SORBNET
-      - BANKGIRO
-      - PLUSGIRO
-      - EU_DOMESTIC_NON_EURO
-      - EU_DOMESTIC_NON_EURO_INSTANT
-      - AUTO_SELECT
-      default: INVALID_LOCAL_INSTRUMENT
+      - INVALID_STATUS
+      - INITIATION_PENDING
+      - INITIATION_PROCESSING
+      - INITIATION_COMPLETED
+      - INITIATION_REJECTED
+      - INITIATION_FAILED
+      - INITIATION_NO_FINAL_STATUS_AVAILABLE
+      default: INVALID_STATUS
       type: string
+    io.token.proto.common.money.Money:
+      type: object
+      properties:
+        currency:
+          type: string
+        value:
+          type: string
+    io.token.proto.common.v2.common.DebtorInformation:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        address:
+          $ref: '#/components/schemas/io.token.proto.common.v2.common.Address'
+        bankgiroNumber:
+          type: string
+        bban:
+          type: string
+        bic:
+          type: string
+        clearingNumber:
+          type: string
+        iban:
+          type: string
+        name:
+          type: string
+        plusgiroNumber:
+          type: string
+        sortCode:
+          type: string
+        tokenizedAccountId:
+          type: string
+        ultimateDebtorName:
+          type: string
     io.token.proto.common.v2.common.CreditorInformation:
       type: object
       properties:
@@ -2151,61 +2185,35 @@ components:
           type: string
         virtualAccountId:
           type: string
-    io.token.proto.gateway.InitiateRefundRequest:
+    io.token.proto.gateway.InitiateRefundResponse:
       type: object
       properties:
-        initiation:
-          $ref: '#/components/schemas/io.token.proto.common.v2.payout.RefundInitiation'
-    io.token.proto.common.v2.payout.CorporateApiDebtorInformation:
+        refund:
+          $ref: '#/components/schemas/io.token.proto.common.v2.payout.Refund'
+    io.token.proto.gateway.GetRefundResponse:
       type: object
       properties:
-        accountId:
-          type: string
-    io.token.proto.common.v2.payout.Status:
+        refund:
+          $ref: '#/components/schemas/io.token.proto.common.v2.payout.Refund'
+    io.token.proto.common.v2.common.LocalInstrument:
       enum:
-      - INVALID_STATUS
-      - INITIATION_PENDING
-      - INITIATION_PROCESSING
-      - INITIATION_COMPLETED
-      - INITIATION_REJECTED
-      - INITIATION_FAILED
-      - INITIATION_NO_FINAL_STATUS_AVAILABLE
-      default: INVALID_STATUS
+      - INVALID_LOCAL_INSTRUMENT
+      - SEPA
+      - SEPA_INSTANT
+      - SWIFT
+      - FASTER_PAYMENTS
+      - CHAPS
+      - ELIXIR
+      - EXPRESS_ELIXIR
+      - BLUE_CASH
+      - SORBNET
+      - BANKGIRO
+      - PLUSGIRO
+      - EU_DOMESTIC_NON_EURO
+      - EU_DOMESTIC_NON_EURO_INSTANT
+      - AUTO_SELECT
+      default: INVALID_LOCAL_INSTRUMENT
       type: string
-    io.token.proto.common.v2.common.DebtorInformation:
-      type: object
-      properties:
-        accountNumber:
-          type: string
-        address:
-          $ref: '#/components/schemas/io.token.proto.common.v2.common.Address'
-        bankgiroNumber:
-          type: string
-        bban:
-          type: string
-        bic:
-          type: string
-        clearingNumber:
-          type: string
-        iban:
-          type: string
-        name:
-          type: string
-        plusgiroNumber:
-          type: string
-        sortCode:
-          type: string
-        tokenizedAccountId:
-          type: string
-        ultimateDebtorName:
-          type: string
-    io.token.proto.common.money.Money:
-      type: object
-      properties:
-        currency:
-          type: string
-        value:
-          type: string
     io.token.proto.common.v2.common.Address:
       type: object
       properties:
@@ -2230,24 +2238,6 @@ components:
         streetName:
           type: string
         townName:
-          type: string
-    io.token.proto.gateway.GetRefundResponse:
-      type: object
-      properties:
-        refund:
-          $ref: '#/components/schemas/io.token.proto.common.v2.payout.Refund'
-    io.token.proto.gateway.GenerateRefundSigningPayloadRequest:
-      type: object
-      properties:
-        initiation:
-          $ref: '#/components/schemas/io.token.proto.common.v2.payout.RefundInitiation'
-    io.token.proto.common.v2.paging.Page:
-      type: object
-      properties:
-        limit:
-          format: int32
-          type: integer
-        offset:
           type: string
     io.token.proto.common.v2.payout.Refund:
       type: object
@@ -2299,6 +2289,11 @@ components:
           type: string
         signature:
           type: string
+    io.token.proto.common.v2.payout.CorporateApiDebtorInformation:
+      type: object
+      properties:
+        accountId:
+          type: string
     io.token.proto.gateway.GetRefundsResponse:
       type: object
       properties:
@@ -2308,6 +2303,11 @@ components:
           items:
             $ref: '#/components/schemas/io.token.proto.common.v2.payout.Refund'
           type: array
+    io.token.proto.gateway.GenerateRefundSigningPayloadRequest:
+      type: object
+      properties:
+        initiation:
+          $ref: '#/components/schemas/io.token.proto.common.v2.payout.RefundInitiation'
   securitySchemes:
     Bearer:
       type: http

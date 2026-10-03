@@ -97,39 +97,23 @@ paths:
       - BasicAuth: []
 components:
   schemas:
-    AccountVerificationRequest:
+    Error:
       type: object
-      required:
-      - account
       properties:
-        account:
-          type: object
-          description: 'Account information for account verification
-
-            '
-          required:
-          - name
-          - currency
-          - iban
-          properties:
-            name:
-              type: string
-              description: Name of account holder
-            currency:
-              type: string
-              description: Specifies the currency of the account being verified, represented in ISO 4217 three-letter format (e.g. EUR). This ensures accurate matching where account validation rules or naming conventions may vary by currency.
-              enum:
-              - EUR
-            iban:
-              type: string
-              description: The International Bank Account Number (IBAN) which identifies a bank account across borders
-        virtualAccountId:
+        message:
           type: string
-          description: 'The Token settlement account from which the subsequent payout or refund will be executed.
-
-            > **Conditional** - If this verification check is independent of a Token provided settlement account, this should **NOT** be provided.
-
-            '
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: The request does not have valid authentication credentials needed to perform the operation.
+    inline_response_400:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
     AccountVerificationResponse:
       type: object
       required:
@@ -174,23 +158,39 @@ components:
                 name:
                   type: string
                   description: The name matched to the account provided
-    Error:
+    AccountVerificationRequest:
       type: object
+      required:
+      - account
       properties:
-        message:
+        account:
+          type: object
+          description: 'Account information for account verification
+
+            '
+          required:
+          - name
+          - currency
+          - iban
+          properties:
+            name:
+              type: string
+              description: Name of account holder
+            currency:
+              type: string
+              description: Specifies the currency of the account being verified, represented in ISO 4217 three-letter format (e.g. EUR). This ensures accurate matching where account validation rules or naming conventions may vary by currency.
+              enum:
+              - EUR
+            iban:
+              type: string
+              description: The International Bank Account Number (IBAN) which identifies a bank account across borders
+        virtualAccountId:
           type: string
-          description: A description of the error.
-          example: This is a description of the error.
-        tokenTraceId:
-          type: string
-          description: The trace identifier for the given call.
-          example: '5678912345'
-      description: The request does not have valid authentication credentials needed to perform the operation.
-    inline_response_400:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
+          description: 'The Token settlement account from which the subsequent payout or refund will be executed.
+
+            > **Conditional** - If this verification check is independent of a Token provided settlement account, this should **NOT** be provided.
+
+            '
   securitySchemes:
     Bearer:
       type: http

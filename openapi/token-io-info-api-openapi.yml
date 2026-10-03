@@ -627,42 +627,52 @@ paths:
         required: true
 components:
   schemas:
-    io.token.proto.common.bank.MandatoryFields.Transfer:
+    io.token.proto.common.bank.ProductType:
+      enum:
+      - INVALID
+      - AIS
+      - SIP
+      default: INVALID
+      type: string
+    io.token.proto.common.bank.MandatoryFields.Fields.Stet:
+      type: object
+      properties:
+        creditorAgent:
+          format: boolean
+          type: boolean
+    io.token.proto.gateway.GetBanksCountriesResponse:
+      type: object
+      properties:
+        countries:
+          items:
+            type: string
+          type: array
+    io.token.proto.common.bank.BankInfo:
+      type: object
+      properties:
+        aliasTypes:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.alias.Alias.Type'
+          type: array
+        bankLinkingUri:
+          type: string
+        customAliasLabel:
+          type: string
+        linkingUri:
+          type: string
+        realm:
+          items:
+            type: string
+          type: array
+        redirectUriRegex:
+          type: string
+    io.token.proto.common.bank.MandatoryFields.StandingOrder:
       type: object
       properties:
         domestic:
           $ref: '#/components/schemas/io.token.proto.common.bank.MandatoryFields.Fields'
         international:
           $ref: '#/components/schemas/io.token.proto.common.bank.MandatoryFields.Fields'
-    io.token.proto.common.providerspecific.ScaStatus:
-      enum:
-      - INVALID
-      - AUTHENTICATED
-      - AUTHENTICATION_FAILED
-      - DECLINED_BY_PSU
-      default: INVALID
-      type: string
-    io.token.proto.common.bank.MandatoryFields.Fields.PolishApi:
-      type: object
-      properties:
-        deliveryMode:
-          format: boolean
-          type: boolean
-    io.token.proto.gateway.CredentialFields:
-      type: object
-      properties:
-        fields:
-          items:
-            $ref: '#/components/schemas/io.token.proto.common.providerspecific.CredentialField'
-          type: array
-    io.token.proto.common.bank.MaintenanceWindow.Type:
-      enum:
-      - INVALID
-      - NO_DOWNTIME_EXPECTED
-      - DOWNTIME_EXPECTED
-      - OUTAGE
-      default: INVALID
-      type: string
     io.token.proto.common.bank.Bank:
       type: object
       properties:
@@ -816,26 +826,6 @@ components:
         transactionHistoryLimit:
           format: int32
           type: integer
-    io.token.proto.common.bank.ProductType:
-      enum:
-      - INVALID
-      - AIS
-      - SIP
-      default: INVALID
-      type: string
-    io.token.proto.common.alias.Alias.Type:
-      enum:
-      - INVALID
-      - UNKNOWN
-      - EMAIL
-      - PHONE
-      - DOMAIN
-      - USERNAME
-      - BANK
-      - CUSTOM
-      - EIDAS
-      default: INVALID
-      type: string
     io.token.proto.common.bank.AuthMetadataField:
       type: object
       properties:
@@ -843,17 +833,120 @@ components:
           type: string
         name:
           type: string
-    io.token.proto.common.bank.ScaMethod:
+    io.token.proto.common.providerspecific.ScaStatus:
       enum:
-      - INVALID_SCA_METHOD
-      - REDIRECT
-      - DECOUPLED
-      - CONFIRMATION_PAGE
-      - MULTI_REDIRECT
-      - EMBEDDED_SINGLE_STEP
-      - EMBEDDED_MULTI_STEP
-      default: INVALID_SCA_METHOD
+      - INVALID
+      - AUTHENTICATED
+      - AUTHENTICATION_FAILED
+      - DECLINED_BY_PSU
+      default: INVALID
       type: string
+    io.token.proto.common.bank.MandatoryFields.Access:
+      type: object
+      properties:
+        fields:
+          items:
+            type: string
+          type: array
+    io.token.proto.gateway.GetBanksResponse:
+      type: object
+      properties:
+        banks:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.bank.Bank'
+          type: array
+        paging:
+          $ref: '#/components/schemas/io.token.proto.common.bank.Paging'
+    io.token.proto.gateway.GetBankInfoResponse:
+      type: object
+      properties:
+        info:
+          $ref: '#/components/schemas/io.token.proto.common.bank.BankInfo'
+    io.token.proto.gateway.InitiateBankAuthorizationRequest:
+      type: object
+      properties:
+        consentAccepted:
+          format: boolean
+          type: boolean
+        credentials:
+          $ref: '#/components/schemas/io.token.proto.gateway.InitiateBankAuthorizationRequest.CredentialsEntry'
+        useCredentialFlow:
+          format: boolean
+          type: boolean
+        useWebappCredentialsFlow:
+          format: boolean
+          type: boolean
+    io.token.proto.gateway.CredentialFields:
+      type: object
+      properties:
+        fields:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.providerspecific.CredentialField'
+          type: array
+    io.token.proto.gateway.GetBankAuthUrlResponse:
+      type: object
+      properties:
+        url:
+          type: string
+    io.token.proto.common.bank.MaintenanceWindow.Type:
+      enum:
+      - INVALID
+      - NO_DOWNTIME_EXPECTED
+      - DOWNTIME_EXPECTED
+      - OUTAGE
+      default: INVALID
+      type: string
+    io.token.proto.gateway.GetBankAuthUrlRequest:
+      type: object
+      properties:
+        consentAccepted:
+          format: boolean
+          type: boolean
+    io.token.proto.common.bank.MandatoryFields.Fields:
+      type: object
+      properties:
+        beneficiaryAddress:
+          format: boolean
+          type: boolean
+        beneficiaryName:
+          format: boolean
+          type: boolean
+        debtorAccount:
+          format: boolean
+          type: boolean
+        debtorName:
+          format: boolean
+          type: boolean
+        fields:
+          items:
+            type: string
+          type: array
+        polishApi:
+          $ref: '#/components/schemas/io.token.proto.common.bank.MandatoryFields.Fields.PolishApi'
+        polishapiFields:
+          items:
+            type: string
+          type: array
+        stet:
+          $ref: '#/components/schemas/io.token.proto.common.bank.MandatoryFields.Fields.Stet'
+        stetFields:
+          items:
+            type: string
+          type: array
+    io.token.proto.common.bank.MandatoryFields:
+      type: object
+      properties:
+        access:
+          $ref: '#/components/schemas/io.token.proto.common.bank.MandatoryFields.Access'
+        standingOrder:
+          $ref: '#/components/schemas/io.token.proto.common.bank.MandatoryFields.StandingOrder'
+        transfer:
+          $ref: '#/components/schemas/io.token.proto.common.bank.MandatoryFields.Transfer'
+    io.token.proto.gateway.InitiateBankAuthorizationRequest.CredentialsEntry:
+      type: object
+      properties: {}
+      additionalProperties:
+        type: string
     io.token.proto.common.providerspecific.CredentialField:
       type: object
       properties:
@@ -889,62 +982,6 @@ components:
           type: string
         v2Path:
           type: string
-    io.token.proto.gateway.GetBankInfoResponse:
-      type: object
-      properties:
-        info:
-          $ref: '#/components/schemas/io.token.proto.common.bank.BankInfo'
-    io.token.proto.gateway.GetBankAuthUrlResponse:
-      type: object
-      properties:
-        url:
-          type: string
-    io.token.proto.gateway.InitiateBankAuthorizationRequest:
-      type: object
-      properties:
-        consentAccepted:
-          format: boolean
-          type: boolean
-        credentials:
-          $ref: '#/components/schemas/io.token.proto.gateway.InitiateBankAuthorizationRequest.CredentialsEntry'
-        useCredentialFlow:
-          format: boolean
-          type: boolean
-        useWebappCredentialsFlow:
-          format: boolean
-          type: boolean
-    io.token.proto.gateway.InitiateBankAuthorizationResponse:
-      type: object
-      properties:
-        fields:
-          $ref: '#/components/schemas/io.token.proto.gateway.CredentialFields'
-        oauthState:
-          type: string
-        redirectUrl:
-          type: string
-        status:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.ScaStatus'
-    io.token.proto.common.bank.MandatoryFields:
-      type: object
-      properties:
-        access:
-          $ref: '#/components/schemas/io.token.proto.common.bank.MandatoryFields.Access'
-        standingOrder:
-          $ref: '#/components/schemas/io.token.proto.common.bank.MandatoryFields.StandingOrder'
-        transfer:
-          $ref: '#/components/schemas/io.token.proto.common.bank.MandatoryFields.Transfer'
-    io.token.proto.common.providerspecific.CredentialField.Type:
-      enum:
-      - INVALID
-      - FIELD
-      - PASSWORD
-      - PSU_MESSAGE
-      - IMAGE
-      - FLICKER
-      - DECOUPLED
-      - CONFIRMATION
-      default: INVALID
-      type: string
     io.token.proto.common.bank.MaintenanceWindow:
       type: object
       properties:
@@ -956,87 +993,17 @@ components:
           type: string
         type:
           $ref: '#/components/schemas/io.token.proto.common.bank.MaintenanceWindow.Type'
-    io.token.proto.common.bank.MandatoryFields.StandingOrder:
-      type: object
-      properties:
-        domestic:
-          $ref: '#/components/schemas/io.token.proto.common.bank.MandatoryFields.Fields'
-        international:
-          $ref: '#/components/schemas/io.token.proto.common.bank.MandatoryFields.Fields'
-    io.token.proto.common.bank.MandatoryFields.Access:
+    io.token.proto.gateway.InitiateBankAuthorizationResponse:
       type: object
       properties:
         fields:
-          items:
-            type: string
-          type: array
-    io.token.proto.gateway.InitiateBankAuthorizationRequest.CredentialsEntry:
-      type: object
-      properties: {}
-      additionalProperties:
-        type: string
-    io.token.proto.gateway.GetBanksResponse:
-      type: object
-      properties:
-        banks:
-          items:
-            $ref: '#/components/schemas/io.token.proto.common.bank.Bank'
-          type: array
-        paging:
-          $ref: '#/components/schemas/io.token.proto.common.bank.Paging'
-    io.token.proto.common.bank.Paging:
-      type: object
-      properties:
-        page:
-          format: int32
-          type: integer
-        pageCount:
-          format: int32
-          type: integer
-        perPage:
-          format: int32
-          type: integer
-        totalCount:
-          format: int32
-          type: integer
-    io.token.proto.gateway.GetBanksCountriesResponse:
-      type: object
-      properties:
-        countries:
-          items:
-            type: string
-          type: array
-    io.token.proto.common.bank.MandatoryFields.Fields:
-      type: object
-      properties:
-        beneficiaryAddress:
-          format: boolean
-          type: boolean
-        beneficiaryName:
-          format: boolean
-          type: boolean
-        debtorAccount:
-          format: boolean
-          type: boolean
-        debtorName:
-          format: boolean
-          type: boolean
-        fields:
-          items:
-            type: string
-          type: array
-        polishApi:
-          $ref: '#/components/schemas/io.token.proto.common.bank.MandatoryFields.Fields.PolishApi'
-        polishapiFields:
-          items:
-            type: string
-          type: array
-        stet:
-          $ref: '#/components/schemas/io.token.proto.common.bank.MandatoryFields.Fields.Stet'
-        stetFields:
-          items:
-            type: string
-          type: array
+          $ref: '#/components/schemas/io.token.proto.gateway.CredentialFields'
+        oauthState:
+          type: string
+        redirectUrl:
+          type: string
+        status:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.ScaStatus'
     io.token.proto.common.bank.OpenBankingStandard:
       enum:
       - Invalid_Standard
@@ -1052,34 +1019,67 @@ components:
       - Token
       default: Invalid_Standard
       type: string
-    io.token.proto.common.bank.MandatoryFields.Fields.Stet:
+    io.token.proto.common.bank.MandatoryFields.Fields.PolishApi:
       type: object
       properties:
-        creditorAgent:
+        deliveryMode:
           format: boolean
           type: boolean
-    io.token.proto.gateway.GetBankAuthUrlRequest:
+    io.token.proto.common.bank.Paging:
       type: object
       properties:
-        consentAccepted:
-          format: boolean
-          type: boolean
-    io.token.proto.common.bank.BankInfo:
+        page:
+          format: int32
+          type: integer
+        pageCount:
+          format: int32
+          type: integer
+        perPage:
+          format: int32
+          type: integer
+        totalCount:
+          format: int32
+          type: integer
+    io.token.proto.common.providerspecific.CredentialField.Type:
+      enum:
+      - INVALID
+      - FIELD
+      - PASSWORD
+      - PSU_MESSAGE
+      - IMAGE
+      - FLICKER
+      - DECOUPLED
+      - CONFIRMATION
+      default: INVALID
+      type: string
+    io.token.proto.common.bank.ScaMethod:
+      enum:
+      - INVALID_SCA_METHOD
+      - REDIRECT
+      - DECOUPLED
+      - CONFIRMATION_PAGE
+      - MULTI_REDIRECT
+      - EMBEDDED_SINGLE_STEP
+      - EMBEDDED_MULTI_STEP
+      default: INVALID_SCA_METHOD
+      type: string
+    io.token.proto.common.alias.Alias.Type:
+      enum:
+      - INVALID
+      - UNKNOWN
+      - EMAIL
+      - PHONE
+      - DOMAIN
+      - USERNAME
+      - BANK
+      - CUSTOM
+      - EIDAS
+      default: INVALID
+      type: string
+    io.token.proto.common.bank.MandatoryFields.Transfer:
       type: object
       properties:
-        aliasTypes:
-          items:
-            $ref: '#/components/schemas/io.token.proto.common.alias.Alias.Type'
-          type: array
-        bankLinkingUri:
-          type: string
-        customAliasLabel:
-          type: string
-        linkingUri:
-          type: string
-        realm:
-          items:
-            type: string
-          type: array
-        redirectUriRegex:
-          type: string
+        domestic:
+          $ref: '#/components/schemas/io.token.proto.common.bank.MandatoryFields.Fields'
+        international:
+          $ref: '#/components/schemas/io.token.proto.common.bank.MandatoryFields.Fields'

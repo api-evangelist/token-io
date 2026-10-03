@@ -373,51 +373,13 @@ paths:
       x-hideTryItPanel: true
 components:
   schemas:
-    GatewayTimeoutError:
-      required:
-      - paymentId
+    KeyId:
       type: object
       properties:
-        errorCode:
-          example: DEADLINE_EXCEEDED
-        paymentId:
+        keyId:
           type: string
-          description: The deadline expired before the operation could complete.
-          example: Deadline exceeded.
-      description: The deadline expired before the operation could complete.
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    ErrorWithCode:
-      required:
-      - errorCode
-      - message
-      type: object
-      properties:
-        errorCode:
-          type: string
-          description: A textual error code categorising the error.
-          example: InternalServerError
-        message:
-          type: string
-          description: A description of the error that occurred and a possible way to fix it.
-          example: '`RefId` should not be longer than 35 symbols.'
-      description: Error object providing details about the error.
-      allOf:
-      - $ref: '#/components/schemas/Error'
-    inline_response_504:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/GatewayTimeoutError'
-    inline_response_503:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/ServiceUnavailableError'
+          description: The unique identifier for the public key.
+          example: _NouLPTuo7WBLBV6
     GetKeyResponse:
       type: object
       properties:
@@ -426,6 +388,32 @@ components:
           items:
             $ref: '#/components/schemas/GetKey'
       description: The details of the specified public key.
+    GetKeysResponse:
+      type: object
+      properties:
+        key:
+          type: array
+          description: Contains each public key that has been uploaded.
+          items:
+            $ref: '#/components/schemas/GetKey'
+      description: A list of the public keys retrieved.
+    PaymentNotFoundError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: NOT_FOUND
+        paymentId:
+          type: string
+          description: The requested entity, the `paymentID`, was not found.
+          example: pm2:12345abcd:abcde
+      description: 'The error object returned when given payment cannot be found: ResourceNotFound.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    DeleteKeyResponse:
+      type: object
+      description: No data returned in the successful response.
     inline_response_429:
       required:
       - error
@@ -444,102 +432,6 @@ components:
                 description: This is a textual error code categorising the error.
                 example: InternalServerError
           - $ref: '#/components/schemas/ServerError'
-    PaymentNotFoundError:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: NOT_FOUND
-        paymentId:
-          type: string
-          description: The requested entity, the `paymentID`, was not found.
-          example: pm2:12345abcd:abcde
-      description: 'The error object returned when given payment cannot be found: ResourceNotFound.'
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    PermissionDeniedError:
-      type: object
-      properties:
-        errorCode:
-          example: PermissionDenied
-      description: 'The error returned when the member is not authorized to perform the given operation: PermissionDenied. <br/>This error message will be accompanied by the reason from the bank. Typically this means the access token has expired and the user must re-authenticate with the bank.'
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A description of the error.
-          example: This is a description of the error.
-        tokenTraceId:
-          type: string
-          description: The trace identifier for the given call.
-          example: '5678912345'
-      description: The request does not have valid authentication credentials needed to perform the operation.
-    GetKeysResponse:
-      type: object
-      properties:
-        key:
-          type: array
-          description: Contains each public key that has been uploaded.
-          items:
-            $ref: '#/components/schemas/GetKey'
-      description: A list of the public keys retrieved.
-    ResourceExhaustedError:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: RESOURCE_EXHAUSTED
-        paymentId:
-          type: string
-          description: The maximum number of requests has been reached.
-          example: Resource exhausted. Check quota.
-      description: Resource exhausted. Too many requests.
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    inline_response_400:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-    NotImplementedError:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: UNIMPLEMENTED
-        paymentId:
-          type: string
-          description: The operation was not implemented,supported or enabled by the bank.
-          example: Not implemented.
-      description: The operation was not implemented, supported or enabled by the bank.
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    SubmitKey:
-      type: object
-      properties:
-        keyAlgorithm:
-          type: string
-          description: The security algorithm designed to protect the public key, <i>e.g.</i> ED25519, ECDSA_SHA256, RS256.
-          example: ED25519
-        publicKey:
-          type: string
-          description: 'The public key of the key pair to be uploaded. This key verifies that the payload has been signed by the owner of the private key. <br/>For example: <ul><li><b>Base64 URL format</b>: _yDSz-_vUL92ezh5fJVhKpdbvwOKghDXQsaqDwGKi_A</li> <li><b>PEM format</b>: -----BEGIN PUBLIC KEY-----
-
-            MCowBQYDK2VwAyEAGxDta2XXlr6Vxqk4kJq3+bLowoimRo+B52stoO7AWNg=
-
-            -----END PUBLIC KEY-----</li></ul>'
-          example: '-----BEGIN PUBLIC KEY-----
-
-            MCowBQYDK2VwAyEAGxDta2XXlr6Vxqk4kJq3+bLowoimRo+B52stoO7AWNg=
-
-            -----END PUBLIC KEY-----'
-      description: Specifies the details of the public key.
     GetKey:
       type: object
       properties:
@@ -568,11 +460,25 @@ components:
           description: The expiry date for the public key in epoch format (the number of milliseconds that have elapsed since January 1, 1970).
           example: 1731530316000
       description: The details of the public key that has been uploaded.
-    inline_response_401:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: The request does not have valid authentication credentials needed to perform the operation.
+    inline_response_504:
+      required:
+      - error
       type: object
       properties:
         error:
-          $ref: '#/components/schemas/Error'
+          $ref: '#/components/schemas/GatewayTimeoutError'
     inline_response_501:
       required:
       - error
@@ -580,6 +486,124 @@ components:
       properties:
         error:
           $ref: '#/components/schemas/NotImplementedError'
+    inline_response_404:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/PaymentNotFoundError'
+    inline_response_400:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    ErrorWithCode:
+      required:
+      - errorCode
+      - message
+      type: object
+      properties:
+        errorCode:
+          type: string
+          description: A textual error code categorising the error.
+          example: InternalServerError
+        message:
+          type: string
+          description: A description of the error that occurred and a possible way to fix it.
+          example: '`RefId` should not be longer than 35 symbols.'
+      description: Error object providing details about the error.
+      allOf:
+      - $ref: '#/components/schemas/Error'
+    GatewayTimeoutError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: DEADLINE_EXCEEDED
+        paymentId:
+          type: string
+          description: The deadline expired before the operation could complete.
+          example: Deadline exceeded.
+      description: The deadline expired before the operation could complete.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    inline_response_401:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    SubmitKey:
+      type: object
+      properties:
+        keyAlgorithm:
+          type: string
+          description: The security algorithm designed to protect the public key, <i>e.g.</i> ED25519, ECDSA_SHA256, RS256.
+          example: ED25519
+        publicKey:
+          type: string
+          description: 'The public key of the key pair to be uploaded. This key verifies that the payload has been signed by the owner of the private key. <br/>For example: <ul><li><b>Base64 URL format</b>: _yDSz-_vUL92ezh5fJVhKpdbvwOKghDXQsaqDwGKi_A</li> <li><b>PEM format</b>: -----BEGIN PUBLIC KEY-----
+
+            MCowBQYDK2VwAyEAGxDta2XXlr6Vxqk4kJq3+bLowoimRo+B52stoO7AWNg=
+
+            -----END PUBLIC KEY-----</li></ul>'
+          example: '-----BEGIN PUBLIC KEY-----
+
+            MCowBQYDK2VwAyEAGxDta2XXlr6Vxqk4kJq3+bLowoimRo+B52stoO7AWNg=
+
+            -----END PUBLIC KEY-----'
+      description: Specifies the details of the public key.
+    inline_response_503:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ServiceUnavailableError'
+    PermissionDeniedError:
+      type: object
+      properties:
+        errorCode:
+          example: PermissionDenied
+      description: 'The error returned when the member is not authorized to perform the given operation: PermissionDenied. <br/>This error message will be accompanied by the reason from the bank. Typically this means the access token has expired and the user must re-authenticate with the bank.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    ResourceExhaustedError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: RESOURCE_EXHAUSTED
+        paymentId:
+          type: string
+          description: The maximum number of requests has been reached.
+          example: Resource exhausted. Check quota.
+      description: Resource exhausted. Too many requests.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    inline_response_403:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/PermissionDeniedError'
+    ServiceUnavailableError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: UNAVAILABLE
+        paymentId:
+          type: string
+          description: The service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+          example: Unavailable
+      description: Service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
     ServerError:
       type: object
       properties:
@@ -594,42 +618,18 @@ components:
       description: 'This could refer to either an error by the payment service provider or the bank. When the bank reports a 5xx error, `"token-external-error": "true"` is set as a header in the HTTP response, indicating that the "internal" error originates from the bank. When one of the payment service providers internal services fails or when the bank reports a 4xx error, this header is not populated. The absence of this response header should be interpreted as `"token-external-error": "false"`.'
       allOf:
       - $ref: '#/components/schemas/ErrorWithCode'
-    inline_response_403:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/PermissionDeniedError'
-    KeyId:
-      type: object
-      properties:
-        keyId:
-          type: string
-          description: The unique identifier for the public key.
-          example: _NouLPTuo7WBLBV6
-    DeleteKeyResponse:
-      type: object
-      description: No data returned in the successful response.
-    inline_response_404:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/PaymentNotFoundError'
-    ServiceUnavailableError:
+    NotImplementedError:
       required:
       - paymentId
       type: object
       properties:
         errorCode:
-          example: UNAVAILABLE
+          example: UNIMPLEMENTED
         paymentId:
           type: string
-          description: The service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
-          example: Unavailable
-      description: Service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+          description: The operation was not implemented,supported or enabled by the bank.
+          example: Not implemented.
+      description: The operation was not implemented, supported or enabled by the bank.
       allOf:
       - $ref: '#/components/schemas/ErrorWithCode'
   securitySchemes:

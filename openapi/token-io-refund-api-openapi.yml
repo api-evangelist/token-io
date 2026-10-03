@@ -86,25 +86,26 @@ components:
           type: string
         tokenSigningKeyId:
           type: string
+    io.token.proto.common.v2.payout.Registration:
+      type: object
+      properties:
+        bnpp:
+          $ref: '#/components/schemas/io.token.proto.common.v2.payout.BnppRegistrationPayload'
+        corporateApi:
+          $ref: '#/components/schemas/io.token.proto.common.v2.payout.CorporateApiRegistrationPayload'
+        createdDateTime:
+          type: string
+        fank:
+          $ref: '#/components/schemas/io.token.proto.common.v2.payout.FankRegistrationPayload'
+        hsbc:
+          $ref: '#/components/schemas/io.token.proto.common.v2.payout.HsbcRegistrationPayload'
+        id:
+          type: string
+        product:
+          $ref: '#/components/schemas/io.token.proto.common.v2.payout.Product'
     io.token.proto.gateway.EmptyResponse:
       type: object
       properties: {}
-    io.token.proto.common.v2.payout.CorporateApiDebtorInformation:
-      type: object
-      properties:
-        accountId:
-          type: string
-    io.token.proto.common.v2.payout.CorporateApiRegistrationPayload:
-      type: object
-      properties:
-        debtors:
-          items:
-            $ref: '#/components/schemas/io.token.proto.common.v2.payout.CorporateApiDebtorInformation'
-          type: array
-        memberId:
-          type: string
-        onBehalfOfId:
-          type: string
     io.token.proto.common.v2.common.DebtorInformation:
       type: object
       properties:
@@ -132,26 +133,49 @@ components:
           type: string
         ultimateDebtorName:
           type: string
-    io.token.proto.common.v2.payout.Registration:
+    io.token.proto.common.v2.payout.CorporateApiRegistrationPayload:
+      type: object
+      properties:
+        debtors:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.v2.payout.CorporateApiDebtorInformation'
+          type: array
+        memberId:
+          type: string
+        onBehalfOfId:
+          type: string
+    io.token.proto.common.v2.payout.HsbcRegistrationPayload:
+      type: object
+      properties:
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        debtor:
+          $ref: '#/components/schemas/io.token.proto.common.v2.common.DebtorInformation'
+        debtors:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.v2.common.DebtorInformation'
+          type: array
+        pgpPrivateKey:
+          type: string
+        pgpPrivateKeyPassphrase:
+          type: string
+        pgpPublicKey:
+          type: string
+        profileId:
+          type: string
+    io.token.proto.gateway.PayoutRegisterRequest:
       type: object
       properties:
         bnpp:
           $ref: '#/components/schemas/io.token.proto.common.v2.payout.BnppRegistrationPayload'
         corporateApi:
           $ref: '#/components/schemas/io.token.proto.common.v2.payout.CorporateApiRegistrationPayload'
-        createdDateTime:
-          type: string
         fank:
           $ref: '#/components/schemas/io.token.proto.common.v2.payout.FankRegistrationPayload'
         hsbc:
           $ref: '#/components/schemas/io.token.proto.common.v2.payout.HsbcRegistrationPayload'
-        id:
-          type: string
-        product:
-          $ref: '#/components/schemas/io.token.proto.common.v2.payout.Product'
-    io.token.proto.common.v2.payout.FankRegistrationPayload:
-      type: object
-      properties: {}
     io.token.proto.common.v2.payout.Product:
       enum:
       - UNKNOWN
@@ -159,6 +183,11 @@ components:
       - PAYOUT
       default: UNKNOWN
       type: string
+    io.token.proto.gateway.PayoutRegisterResponse:
+      type: object
+      properties:
+        registration:
+          $ref: '#/components/schemas/io.token.proto.common.v2.payout.Registration'
     io.token.proto.common.v2.common.Address:
       type: object
       properties:
@@ -184,45 +213,16 @@ components:
           type: string
         townName:
           type: string
-    io.token.proto.gateway.PayoutRegisterRequest:
-      type: object
-      properties:
-        bnpp:
-          $ref: '#/components/schemas/io.token.proto.common.v2.payout.BnppRegistrationPayload'
-        corporateApi:
-          $ref: '#/components/schemas/io.token.proto.common.v2.payout.CorporateApiRegistrationPayload'
-        fank:
-          $ref: '#/components/schemas/io.token.proto.common.v2.payout.FankRegistrationPayload'
-        hsbc:
-          $ref: '#/components/schemas/io.token.proto.common.v2.payout.HsbcRegistrationPayload'
     io.token.proto.gateway.GetPayoutRegistrationResponse:
       type: object
       properties:
         registration:
           $ref: '#/components/schemas/io.token.proto.common.v2.payout.Registration'
-    io.token.proto.gateway.PayoutRegisterResponse:
+    io.token.proto.common.v2.payout.FankRegistrationPayload:
+      type: object
+      properties: {}
+    io.token.proto.common.v2.payout.CorporateApiDebtorInformation:
       type: object
       properties:
-        registration:
-          $ref: '#/components/schemas/io.token.proto.common.v2.payout.Registration'
-    io.token.proto.common.v2.payout.HsbcRegistrationPayload:
-      type: object
-      properties:
-        clientId:
-          type: string
-        clientSecret:
-          type: string
-        debtor:
-          $ref: '#/components/schemas/io.token.proto.common.v2.common.DebtorInformation'
-        debtors:
-          items:
-            $ref: '#/components/schemas/io.token.proto.common.v2.common.DebtorInformation'
-          type: array
-        pgpPrivateKey:
-          type: string
-        pgpPrivateKeyPassphrase:
-          type: string
-        pgpPublicKey:
-          type: string
-        profileId:
+        accountId:
           type: string

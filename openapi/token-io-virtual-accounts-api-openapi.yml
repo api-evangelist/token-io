@@ -36,6 +36,47 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    io.token.proto.gateway.AccountDetails:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        sortCode:
+          type: string
+    io.token.proto.gateway.CreditVirtualAccountResponse:
+      type: object
+      properties: {}
+    io.token.proto.gateway.Identifier:
+      type: object
+      properties:
+        accountDetails:
+          $ref: '#/components/schemas/io.token.proto.gateway.AccountDetails'
+        iban:
+          $ref: '#/components/schemas/io.token.proto.gateway.Iban'
+        type:
+          type: string
+    io.token.proto.gateway.Payer:
+      type: object
+      properties:
+        identifier:
+          $ref: '#/components/schemas/io.token.proto.gateway.Identifier'
+        name:
+          type: string
+    io.token.proto.gateway.Iban:
+      type: object
+      properties:
+        bic:
+          type: string
+        iban:
+          type: string
+    io.token.proto.gateway.CreditVirtualAccountRequest.Type:
+      enum:
+      - UNKNOWN
+      - FASTER_PAYMENTS
+      - SEPA_CREDIT_TRANSFERS
+      - SEPA_INSTANT_CREDIT_TRANSFERS
+      default: UNKNOWN
+      type: string
     io.token.proto.gateway.CreditVirtualAccountRequest:
       type: object
       properties:
@@ -47,44 +88,3 @@ components:
           $ref: '#/components/schemas/io.token.proto.gateway.Payer'
         type:
           $ref: '#/components/schemas/io.token.proto.gateway.CreditVirtualAccountRequest.Type'
-    io.token.proto.gateway.AccountDetails:
-      type: object
-      properties:
-        accountNumber:
-          type: string
-        sortCode:
-          type: string
-    io.token.proto.gateway.CreditVirtualAccountResponse:
-      type: object
-      properties: {}
-    io.token.proto.gateway.CreditVirtualAccountRequest.Type:
-      enum:
-      - UNKNOWN
-      - FASTER_PAYMENTS
-      - SEPA_CREDIT_TRANSFERS
-      - SEPA_INSTANT_CREDIT_TRANSFERS
-      default: UNKNOWN
-      type: string
-    io.token.proto.gateway.Iban:
-      type: object
-      properties:
-        bic:
-          type: string
-        iban:
-          type: string
-    io.token.proto.gateway.Payer:
-      type: object
-      properties:
-        identifier:
-          $ref: '#/components/schemas/io.token.proto.gateway.Identifier'
-        name:
-          type: string
-    io.token.proto.gateway.Identifier:
-      type: object
-      properties:
-        accountDetails:
-          $ref: '#/components/schemas/io.token.proto.gateway.AccountDetails'
-        iban:
-          $ref: '#/components/schemas/io.token.proto.gateway.Iban'
-        type:
-          type: string

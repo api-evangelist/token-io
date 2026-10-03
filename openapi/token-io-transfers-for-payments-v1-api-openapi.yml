@@ -391,355 +391,21 @@ paths:
       x-hideTryItPanel: true
 components:
   schemas:
-    StetAccountIdentification:
-      type: object
-      properties:
-        currency:
-          type: string
-          description: The <a href="https://www.iso.org/iso-4217-currency-codes.html" target="_blank">ISO 4217</a> three letter currency code.
-          example: EUR
-        other:
-          $ref: '#/components/schemas/StetGenericIdentification'
-      description: Bank-defined account identifiers.
-    TransferDestinationSepa:
-      title: sepa
-      allOf:
-      - description: The Single Euro Payments Area (SEPA), for bank transfers denominated in Euro. This consists of the 27 member states of the European Union, the four member states of the European Free Trade Association (Iceland, Liechtenstein, Norway and Switzerland) and the UK.
-      - $ref: '#/components/schemas/SepaAccount'
-    TransferDestinationBankgiro:
-      title: bankgiro
-      allOf:
-      - description: The identifier for domestic bank accounts in Sweden.
-      - $ref: '#/components/schemas/BankGiroAccount'
-    CreateTransferRequest:
-      type: object
+    ClearingNumberAccount:
+      title: ClearingNumberAccount
       required:
-      - payload
-      properties:
-        payload:
-          $ref: '#/components/schemas/TransferPayloadRequest'
-      title: This field contains the request payload for a new one-time payment based on the response to a `POST /token-requests` call.
-    AccountIdentifierPlusgiro:
+      - bban
       type: object
       properties:
-        plusgiroNumber:
+        bban:
           type: string
-          description: The account number (minimum 2 and maximum 8 digits) for a PlusGiro account. The clearing code is not used.
-          example: '987654'
-      description: The domestic transaction clearing system in Sweden. The credit transfer function, which is part of <a href="https://www.nordea.com" target="blank">Nordea</a>, and used for mediating payments between accounts held by companies and individuals.
-    AccountIdentifierPan:
-      type: object
-      properties:
-        pan:
+          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
+          example: NWBK60161331926819
+        clearingNumber:
           type: string
-          description: The 14, 15, or 16 digit number generated as a unique identifier for a primary account.
-          example: '4658552288550023'
-      description: The Primary Account Number (PAN). The card identifier found on payment cards, such as credit cards and debit cards, as well as stored-value cards, gift cards and other similar card, sometimes referred to as a bank card number.
-    inline_response_400:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-    EUIbanAccount:
-      title: EUIbanAccount
-      required:
-      - iban
-      type: object
-      properties:
-        iban:
-          type: string
-          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
-          example: GB29NWBK60161331926819
-        bic:
-          type: string
-          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
-          example: BOFIIE2D
-      description: Account details where the iban is required and the bic is optional.
-    PolishApiTransferMetadata:
-      type: object
-      properties:
-        deliveryMode:
-          $ref: '#/components/schemas/PolishApiDeliveryMode'
-        hold:
-          type: boolean
-          description: Indicates whether payment should be held until confirmation of delivery.
-          format: boolean
-          example: false
-          default: false
-      description: Transfer metadata required under the <a href="https://polishapi.org/en/dokumentacja-standardu/" target="blank">Polish API standard</a>.
-    inline_response_501:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/NotImplementedError'
-    GetTransfersResponse:
-      type: object
-      properties:
-        offset:
-          type: string
-          description: The offset of the first item returned in the collection.
-          example: LerV6Jmex
-        transfers:
-          type: array
-          items:
-            $ref: '#/components/schemas/Transfer'
-    ServerError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A description of the error.
-          example: This is a description of the error.
-        tokenTraceId:
-          type: string
-          description: The trace identifier for the given call.
-          example: '5678912345'
-      description: 'This could refer to either an error by the payment service provider or the bank. When the bank reports a 5xx error, `"token-external-error": "true"` is set as a header in the HTTP response, indicating that the "internal" error originates from the bank. When one of the payment service providers internal services fails or when the bank reports a 4xx error, this header is not populated. The absence of this response header should be interpreted as `"token-external-error": "false"`.'
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    MoneyRequest:
-      type: object
-      properties:
-        currency:
-          type: string
-          description: The <a href="https://www.iso.org/iso-4217-currency-codes.html" target="_blank">ISO 4217</a> three letter currency code.
-          example: EUR
-        value:
-          type: string
-          description: The transaction amount with up to four digits after the decimal point.
-          example: '10.23'
-      description: The balance currency and value.
-    ProviderTransferMetadata:
-      type: object
-      oneOf:
-      - title: CMA9 API
-        properties:
-          cma9TransferMetadata:
-            $ref: '#/components/schemas/Cma9TransferMetadata'
-      - title: NextGenPSD2
-        properties:
-          nextGenPsd2TransferMetadata:
-            $ref: '#/components/schemas/NextGenPsd2TransferMetadata'
-      - title: Polish API
-        properties:
-          polishApiTransferMetadata:
-            $ref: '#/components/schemas/PolishApiTransferMetadata'
-      - title: French PSD2
-        properties:
-          stetTransferMetadata:
-            $ref: '#/components/schemas/StetTransferMetadata'
-      description: The transfer metadata required under the Open Banking API standard adopted by the bank.
-    Transfer:
-      type: object
-      properties:
-        actingAs:
-          $ref: '#/components/schemas/ActingAs'
-        convertedToFutureDatedPayment:
-          type: boolean
-          description: Indicates whether a transfer is from an auto single immediate payment coinciding with the bank's out-of-operation hours was converted to a future dated payment
-          format: boolean
-          example: false
-          default: false
-        createdAtMs:
-          type: string
-          description: Specifies the time the transfer was created; timestamp (UTC) in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.
-          format: string
-          example: 1729212980771
-        executionDate:
-          type: string
-          description: Specifies the execution date for the transfer (in <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a> format).
-          example: '2023-01-28'
-        id:
-          type: string
-          description: The `transferId` computed as the hash of the transfer payload.
-          example: tt:83KiRJuXmEDV5m2b8ZvLGE91ELf7PPw5BaDab98kMguu:3VMczyq7r7b6HwC
-        payload:
-          $ref: '#/components/schemas/TransferPayload'
-        payloadSignatures:
-          type: array
-          items:
-            $ref: '#/components/schemas/Signature'
-        providerDetails:
-          $ref: '#/components/schemas/ProviderTransferDetails'
-        refund:
-          $ref: '#/components/schemas/RefundInfo'
-        refundDetails:
-          $ref: '#/components/schemas/TransferRefund'
-        source:
-          $ref: '#/components/schemas/TransferDebtorEndpointResponse'
-        status:
-          $ref: '#/components/schemas/TransactionStatus'
-        statusReasonInformation:
-          type: string
-          description: A human-readable description of the reason for the reported status, which may include a message from the bank. This value should not exceed 256 characters in length.
-          example: This transfer is processing.
-        transactionId:
-          type: string
-          description: The unique transaction identifier; the transaction id.
-          example: 2UhwCZ3BMaEcAUK8bZdukor7NL4tH6TBuu6aJMp5KKfX:5zKcENpV
-      description: Information about each respective transfer record requested.
-    ProviderTransferDetails:
-      type: object
-      properties:
-        id:
-          type: string
-          description: A provider-specific reference id generated upon TPP submission.
-          example: uXmEDV5m2b8ZvLGE91ELf7PPw5BaDab98kMguu
-        status:
-          type: string
-          description: The status provided by the bank. This can be the <a href="https://www.iso20022.org/" target="_blank">ISO 20022</a> payment status code. See <a href="https://developer.token.io/token_rest_api_doc/content/e-rest/iso-20022-statuses.htm" target="_blank">ISO 20022 payment status codes</a> for more information.
-          example: AcceptedSettlementCompleted
-      description: Information about the transfer.
-    TransferRefundStatus:
-      type: string
-      description: Indicates the status of the initiated refund payout.
-      example: PARTIAL
-      default: UNSET
-      enum:
-      - UNSET
-      - NONE
-      - PARTIAL
-      - FULL
-    AccountIdentifierMsisdn:
-      type: object
-      properties:
-        msisdn:
-          type: string
-          description: The MSISDN is composed of the country code and the national destination code. Ensure you remove the + sign and any 0 before the mobile number.
-          example: '447949123456'
-      description: The Mobile Station International Subscriber Director Number (MSISDN) is the user's mobile phone number, used as a unique identifier to enable routing of voice and SMS traffic to and from a specific subscription/device on a wireless/mobile network.
-    TransactionStatus:
-      title: TransactionStatus
-      type: string
-      example: PROCESSING
-      description: Filters by transaction status. <ul> <li><b>PROCESSING</b> – This status indicates that the transaction is in process and that the final status has not been received from the bank.</li> <li><b>SUCCESS</b> – This status indicates that successful payment initiation has been received from the bank. Settlement might not be complete.</li> <li><b>INITIATED</b> – This status is set when the previous status has remained as `PROCESSING` for 30 days and cannot be updated. The transaction has been initiated but the result is unknown. This is the final status and will not get updated later because Token.io has stopped polling the bank.<br/> This status is also returned in a two-step payment flow in the event that a user’s request has been authorized at the bank but the payment confirmation has subsequently failed.</li> <li><b>PENDING</b> – This status indicates that the user has successfully completed the authorization process at the bank and the transfer is pending redemption. This status is only relevant for two-step payment flows.</li> <li><b>PENDING_EXTERNAL_AUTHORIZATION</b> – This status indicates that the user has been sent to the bank to complete the authorization process. If not completed within the allowed timeframe (usually around 15 mins, but there are variations between banks) the transaction will expire and transition to `FAILURE_EXPIRED`. This status is only relevant for 1-step payment flows.</li> <li><b>FAILURE_GENERIC</b> – This status usually indicates a technical failure. Possibly, a failure callback was received from the bank, with no transaction status and no further information.</li> <li><b>FAILURE_PERMISSION_DENIED</b> – This status indicates that the user has been denied authorization at the bank This status is only relevant for two-step payment flows.</li> <li><b>FAILURE_CANCELED</b> – This status indicates that the payment initiation has been cancelled before execution.</li> <li><b>FAILURE_EXPIRED</b> – This status indicates that the user did not complete the authorization process within the allowed timeframe (usually around 15 mins, but there are variations between banks) and the payment has expired.</li> <li><b>FAILURE_INSUFFICIENT_FUNDS</b> – This status indicates that the payment initiation request has been rejected due to insufficient funds.</li> <li><b>FAILURE_DECLINED</b> – This status indicates that the payment initiation has been rejected by the bank.</li> <li><b>SETTLEMENT_IN_PROGRESS</b> – This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Token.io is waiting for the payment to reach the payee bank. No action is required; await the next step, <i>e.g.</i>, Token.io sends a webhook with the status update, or a polling call. The status will change to `SETTLEMENT_IN_PROGRESS` soon after Token.io receives the final status from the debtor bank.</li> <li><b>SETTLEMENT_COMPLETED</b> – This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. The payment has reached the payee bank and Token.io has matched the transaction in the TPP’s settlement account to the initiated payment. For instant payments, `SETTLEMENT_COMPLETED` will be achieved within 30-45 minutes from payment initiation, at the latest. For non-instant payments, the time to reach `SETTLEMENT_COMPLETED` will depend on the clearing period for the payment.</li> <li><b>SETTLEMENT_INCOMPLETE</b> – This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Reconciliation has failed. This happens when Token.io doesn't find the corresponding transaction in the TPP’s settlement account automatically.</li></ul><br/>During settlement of a settlement accounts payment, the status update job will run first for up to 30 days. Payment will then enter into a 'final' status, normally `SUCCESS`.<br/>Once the status update job has run, the reconciliation job looks for matching inbound payments.<br/>For SEPA payments:<ul><li>if a matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>For SEPA Instant payments:<ul><li>if a matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>
-      enum:
-      - PROCESSING
-      - SUCCESS
-      - INITIATED
-      - PENDING
-      - PENDING_EXTERNAL_AUTHORIZATION
-      - FAILURE_GENERIC
-      - FAILURE_PERMISSION_DENIED
-      - FAILURE_CANCELED
-      - FAILURE_EXPIRED
-      - FAILURE_INSUFFICIENT_FUNDS
-      - FAILURE_DECLINED
-      - SETTLEMENT_IN_PROGRESS
-      - SETTLEMENT_COMPLETED
-      - SETTLEMENT_INCOMPLETE
-    Money:
-      type: object
-      required:
-      - currency
-      - value
-      properties:
-        currency:
-          type: string
-          description: The <a href="https://www.iso.org/iso-4217-currency-codes.html" target="_blank">ISO 4217</a> three letter currency code.
-          example: EUR
-        value:
-          type: string
-          description: The transaction amount with up to four digits after the decimal point.
-          example: '10.23'
-      description: The balance currency and value.
-    ServiceUnavailableError:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: UNAVAILABLE
-        paymentId:
-          type: string
-          description: The service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
-          example: Unavailable
-      description: Service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    StetPartyIdentification:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name by which the party is known and which is usually used to identify that party.
-          example: John Smith
-        organisationId:
-          $ref: '#/components/schemas/StetGenericIdentification'
-        postalAddress:
-          $ref: '#/components/schemas/StetPostalAddress'
-        privateId:
-          $ref: '#/components/schemas/StetGenericIdentification'
-      description: The <a href="https://www.iso.org/standard/55005.html" target="_blank">ISO 20022</a> information about the party; this can be either a person or an organisation.
-    TransferPayload:
-      type: object
-      required:
-      - tokenId
-      - refId
-      - amount
-      properties:
-        amount:
-          allOf:
-          - description: The transaction currency and value.
-          - $ref: '#/components/schemas/MoneyRequest'
-        confirmFunds:
-          type: boolean
-          description: Requests confirmation that sufficient funds are available.
-          format: boolean
-          example: false
-          default: false
-        description:
-          type: string
-          description: A description of the transfer.
-        metadata:
-          $ref: '#/components/schemas/Metadata'
-        refId:
-          $ref: '#/components/schemas/refId'
-        tokenId:
-          type: string
-          description: Identifies the authorization token for the transfer.
-          example: tt:8zK1dic95omjWb72gvc3z3ELKbTNfnGd89MbDnM73er4:ZhBVAJSH8DeU1
-        transferDestinations:
-          title: transferDestinations
-          type: array
-          description: The beneficiary account specifying the transfer destination; <i>i.e.</i>, TPP/merchant/creditor.
-          items:
-            $ref: '#/components/schemas/TransferDestination'
-      description: Contains the financial details of the transfer.
-    ErrorWithCode:
-      required:
-      - errorCode
-      - message
-      type: object
-      properties:
-        errorCode:
-          type: string
-          description: A textual error code categorising the error.
-          example: InternalServerError
-        message:
-          type: string
-          description: A description of the error that occurred and a possible way to fix it.
-          example: '`RefId` should not be longer than 35 symbols.'
-      description: Error object providing details about the error.
-      allOf:
-      - $ref: '#/components/schemas/Error'
-    PlusGiroAccount:
-      title: PlusGiroAccount
-      required:
-      - plusgiroNumber
-      type: object
-      properties:
-        plusgiroNumber:
-          type: string
-          description: The unique identifier for the Swedish money transaction system owned by <a href="https://www.nordea.com" target="blank">Nordea</a>.
-          example: '67812345'
-        bic:
-          type: string
-          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
-          example: BOFIIE2D
-      description: Account details where the plusgiroNumber is required and the bic is optional.
+          description: The bank clearing number or BC number is a number used for the identification of financial institutions in Switzerland and Liechtenstein. Bank clearing numbers are connected to the Swiss Interbank Clearing and the EuroSIC system.
+          example: 87654321
+      description: Account details where the bban is required and the clearing number is optional.
     PaymentContextCode:
       type: string
       description: This field describes the context of the payment context. This field is an <a href="https://www.openbanking.org.uk" target="_blank">OBIE</a> standard and also maps to <a href="https://bankio.at/openbanking/knowledge-base/NextGenPSD2" target="_blank">NextGenPsd2</a>'s `purposeCode` and `categoryPurposeCode` fields. We recommend that the TPP populates this field.
@@ -753,28 +419,51 @@ components:
       - FACE_TO_FACE_POINT_OF_SALE
       - TRANSFER_TO_SELF
       - TRANSFER_TO_THIRD_PARTY
-    inline_response_503:
+    TransferDestinationElixir:
+      title: elixir
       required:
-      - error
+      - accountNumber
       type: object
       properties:
-        error:
-          $ref: '#/components/schemas/ServiceUnavailableError'
-    BbanAccount:
-      title: BbanAccount
+        accountNumber:
+          type: string
+          description: The payee's Elixir-registered bank account number. You can also enter the iban in this field for iban accounts.
+          example: FRAX82783423
+      description: The interbank payment system in Poland.
+    Cma9BeneficiaryAccountType:
+      type: string
+      description: To be provided if the AccountType is known.
+      example: BUSINESS
+      enum:
+      - PERSONAL
+      - JOINT_PERSONAL
+      - PERSONAL_SAVINGS_ACCOUNT
+      - BUSINESS
+      - BUSINESS_SAVINGS_ACCOUNT
+      - CHARITY
+      - COLLECTION
+      - CORPORATE
+      - GOVERNMENT
+      - EWALLET
+      - INVESTMENT
+      - ISA
+      - PREMIER
+      - WEALTH
+      - PENSION
+    PaymentNotFoundError:
       required:
-      - bban
+      - paymentId
       type: object
       properties:
-        bban:
+        errorCode:
+          example: NOT_FOUND
+        paymentId:
           type: string
-          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
-          example: NWBK60161331926819
-        bic:
-          type: string
-          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
-          example: BOFIIE2D
-      description: Account details where the bban is required and the bic is optional.
+          description: The requested entity, the `paymentID`, was not found.
+          example: pm2:12345abcd:abcde
+      description: 'The error object returned when given payment cannot be found: ResourceNotFound.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
     inline_response_429:
       required:
       - error
@@ -782,22 +471,6 @@ components:
       properties:
         error:
           $ref: '#/components/schemas/ResourceExhaustedError'
-    TransferDestinationSepaInstant:
-      title: sepaInstant
-      allOf:
-      - description: SEPA Instant Credit, the instant payment processing system with funds made available immediately for the recipient.
-      - $ref: '#/components/schemas/SepaInstantAccount'
-    inline_response_500:
-      properties:
-        error:
-          allOf:
-          - type: object
-            properties:
-              errorCode:
-                type: string
-                description: This is a textual error code categorising the error.
-                example: InternalServerError
-          - $ref: '#/components/schemas/ServerError'
     StetFinancialInstitutionIdentification:
       type: object
       properties:
@@ -813,567 +486,6 @@ components:
         postalAddress:
           $ref: '#/components/schemas/StetPostalAddressCreditor'
       description: The unique and unambiguous identification of a financial institution, as assigned under an internationally recognised or proprietary identification scheme.
-    PaymentNotFoundError:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: NOT_FOUND
-        paymentId:
-          type: string
-          description: The requested entity, the `paymentID`, was not found.
-          example: pm2:12345abcd:abcde
-      description: 'The error object returned when given payment cannot be found: ResourceNotFound.'
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A description of the error.
-          example: This is a description of the error.
-        tokenTraceId:
-          type: string
-          description: The trace identifier for the given call.
-          example: '5678912345'
-      description: The request does not have valid authentication credentials needed to perform the operation.
-    AccountIdentifierGbDomestic:
-      type: object
-      properties:
-        accountNumber:
-          type: string
-          description: The unique identifier for the bank account in the UK or Ireland.
-          example: '12345678'
-        sortCode:
-          type: string
-          description: The number assigned to a branch of a bank, typically containing six digits and most commonly used in the UK and Ireland.
-          example: 123456
-      description: A domestic bank account in the UK.
-    AccountIdentifierIban:
-      type: object
-      properties:
-        iban:
-          type: string
-          description: The International Bank Account Number. This consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
-          example: GB29NWBK60161331926819
-      description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders.
-    SENoBankIdAccount:
-      title: SENoBankIdAccount
-      required:
-      - iban
-      - bban
-      type: object
-      properties:
-        iban:
-          type: string
-          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
-          example: GB29NWBK60161331926819
-        bban:
-          type: string
-          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
-          example: NWBK60161331926819
-        bic:
-          type: string
-          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
-          example: BOFIIE2D
-        clearingNumber:
-          type: string
-          description: The bank clearing number or BC number is a number used for the identification of financial institutions in Switzerland and Liechtenstein. Bank clearing numbers are connected to the Swiss Interbank Clearing and the EuroSIC system.
-          example: 87654321
-      description: Account details where the iban and bban are required and the bic and clearing number are optional. This is ONLY allowed for an HP flow if there is no `bankId` provided in the initiation AND the currency is SEK or NOK.
-    ResourceExhaustedError:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: RESOURCE_EXHAUSTED
-        paymentId:
-          type: string
-          description: The maximum number of requests has been reached.
-          example: Resource exhausted. Check quota.
-      description: Resource exhausted. Too many requests.
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    ActingAs:
-      type: object
-      properties:
-        displayName:
-          type: string
-          description: The name of the recipient shown to the user; required when specifying `actingAs`, optional otherwise.
-          example: The Great Baking Co.
-        refId:
-          $ref: '#/components/schemas/refId'
-        secondaryName:
-          type: string
-          description: The domain or email address of the recipient shown to the user along with the `displayName`.
-          example: jane.doe@company.com
-      description: Specifies another party for whom the token was created 'on behalf of'.
-    SepaInstantAccount:
-      title: SepaInstantAccount
-      required:
-      - iban
-      type: object
-      properties:
-        iban:
-          type: string
-          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
-          example: GB29NWBK60161331926819
-        bic:
-          type: string
-          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
-          example: BOFIIE2D
-      description: SEPA Instant account details where the iban is required and the bic is optional.
-    StetPaymentTypeInformation:
-      type: object
-      properties:
-        categoryPurpose:
-          type: string
-          description: Specifies the high level purpose of the instruction based on a set of pre-defined categories; used by the initiating party to provide information concerning the processing of the payment and is likely to trigger special processing by any of the agents involved in the payment chain. <ul><li><b>CASH</b> - CashManagementTransfer</li><li><b>CORT</b> - TradeSettlementPayment</li><li><b>DVPM</b> - DeliveryAgainstPayment</li><li><b>INTC</b> - IntraCompanyPayment</li><li><b>TREA</b> - TreasuryPayment</li><li><b>SUPP</b> - SupplierPayment</li></ul>
-          example: DVPM
-          default: CASH
-          enum:
-          - CASH
-          - CORT
-          - DVPM
-          - INTC
-          - TREA
-          - SUPP
-        instructionPriority:
-          type: string
-          description: Indicates the urgency or order of importance the instructing party would like to apply to processing; can be ignored for SCTInst (SEPA Instant).
-          example: SAMEDAY
-        localInstrument:
-          type: string
-          description: Used to specify a local instrument, local clearing option and/or further qualify the service or service level. For example, INST is used to ask for SEPA instant Payment (SCTInst). For International payments, this field may be valued with one of the <a href="https://www.iso.org/standard/55005.html" target="_blank">ISO 20022</a> external codes to specify which payment instrument should be used by the creditor's bank.
-          example: INST
-        serviceLevel:
-          type: string
-          description: Only SEPA is allowed.
-          example: SEPA
-      description: A set of elements used to further specify the type of transaction.
-    ChargeBearer:
-      type: string
-      description: The bearer of the charge, if any, for international transfers. <ul><li><b>CRED</b> - all charges are borne by the creditor.</li> <li><b>DEBT</b> - all charges are borne by the debtor.</li> <li><b>SHAR</b> - the parties share the charges.</li> <li><b>SLEV</b> - each party bears its own charges, recommended on SEPA payments.</li></ul>
-      example: CRED
-      default: INVALID_CHARGE_BEARER
-      enum:
-      - INVALID_CHARGE_BEARER
-      - CRED
-      - DEBT
-      - SHAR
-      - SLEV
-    PolishApiDeliveryMode:
-      type: string
-      description: The urgency classification for delivery.
-      example: STANDARD_D2
-      default: INVALID_DELIVERY_MODE
-      enum:
-      - INVALID_DELIVERY_MODE
-      - STANDARD_D2
-      - STANDARD_D1
-      - URGENT_D1
-      - EXPRESS_D0
-    AccountIdentifierBban:
-      type: object
-      properties:
-        bban:
-          type: string
-          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
-          example: NWBK60161331926819
-        clearingNumber:
-          type: string
-          description: The bank clearing number or BC number is a number used for the identification of financial institutions in Switzerland and Liechtenstein. Bank clearing numbers are connected to the Swiss Interbank Clearing and the EuroSIC system.
-          example: 87654321
-    inline_response_403:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/PermissionDeniedError'
-    TransferDestination:
-      required:
-      - customerData
-      - sepa
-      - sepaInstant
-      - fasterPayments
-      - plusgiro
-      - bankgiro
-      - elixir
-      - euDomesticNonEuro
-      - euDomesticNonEuroInstant
-      - virtualAccount
-      properties:
-        customerData:
-          $ref: '#/components/schemas/CustomerDataCreditor'
-        type:
-          $ref: '#/components/schemas/TransferDestinationType'
-      oneOf:
-      - title: sepa
-        properties:
-          sepa:
-            $ref: '#/components/schemas/TransferDestinationSepa'
-      - title: sepaInstant
-        properties:
-          sepaInstant:
-            $ref: '#/components/schemas/TransferDestinationSepaInstant'
-      - title: fasterPayments
-        properties:
-          fasterPayments:
-            $ref: '#/components/schemas/TransferDestinationFasterPayments'
-      - title: elixir
-        properties:
-          elixir:
-            $ref: '#/components/schemas/TransferDestinationElixir'
-      - title: euDomesticNonEuro
-        properties:
-          euDomesticNonEuro:
-            $ref: '#/components/schemas/TransferDestinationEuDomesticNonEuro'
-      - title: euDomesticNonEuroInstant
-        properties:
-          euDomesticNonEuroInstant:
-            $ref: '#/components/schemas/TransferDestinationEuDomesticNonEuroInstant'
-      - title: bankgiro
-        properties:
-          bankgiro:
-            $ref: '#/components/schemas/TransferDestinationBankgiro'
-      - title: plusgiro
-        properties:
-          plusgiro:
-            $ref: '#/components/schemas/TransferDestinationPlusgiro'
-      - title: token
-        properties:
-          token:
-            $ref: '#/components/schemas/TransferDestinationToken'
-      - title: virtualAccount
-        properties:
-          virtualAccount:
-            $ref: '#/components/schemas/TransferDestinationVirtualAccount'
-      description: The beneficiary account specifying the transfer destination, <i>i.e.</i> TPP/merchant/creditor bank.
-    TransferDestinationToken:
-      title: token
-      type: object
-      properties:
-        accountId:
-          type: string
-          description: The bank account identifier for a linked account used by Token.io's Bank Integration Account Linking Service.
-        memberId:
-          type: string
-          description: The Token.io-generated member id for the user/account holder.
-          example: m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq
-      description: The primary account number. The cCard identifier found on payment cards, such as credit and debit cards, as well as stored-value cards, gift cards and other similar cards, somtimes referred to as a bank card number.
-    CreateTransferResponse:
-      type: object
-      properties:
-        authorizationDetails:
-          $ref: '#/components/schemas/ExternalAuthorizationDetails'
-        transfer:
-          $ref: '#/components/schemas/Transfer'
-    TransferDestinationEuDomesticNonEuroInstant:
-      title: euDomesticNonEuroInstant
-      oneOf:
-      - $ref: '#/components/schemas/EUIbanAccount'
-      - $ref: '#/components/schemas/BbanAccount'
-      - $ref: '#/components/schemas/ClearingNumberAccount'
-      - $ref: '#/components/schemas/SENoBankIdAccount'
-      description: The instant payment system within a country using that country's non-Euro domestic currency. An IBAN account will require an `iban` and an optional `bic`, a BBAN account will require a `bban` and an optional `bic`, a Clearing Number account will require a `bban` and a `clearingNumber`. A SENoBankId account, where the currency is SEK or NOK, will require an `iban` and `bban` with an optional `bic` and/or `clearingNumber`. This option is only available for an HP flow that doesn't have a preselected `bankId`.
-    AddressInfo:
-      type: object
-      properties:
-        city:
-          type: string
-          description: Name of the city as given in postal addresses of the building/area.
-          example: Berlin
-        conscriptionNumber:
-          type: string
-          description: A special kind of house number. This relates to a settlement instead of a street. Conscription numbers are in use in some parts of Europe, sometimes together with street-related house numbers, which are also called orientation numbers.
-          example: '2831'
-        country:
-          type: string
-          description: Two-letter country code in upper case (ISO 3166-1 alpha-2).
-          example: DE
-        district:
-          type: string
-          description: A defined district within the city or country containing the address.
-          example: Friedrichshain
-        flats:
-          type: string
-          description: House numbers (range or list) of flats behind a door.
-          example: 21A - 21C
-        full:
-          type: string
-          description: This is used for a full-text, often multi-line address if you find the structured address fields unsuitable for denoting the address of this particular location. Typically such strings cannot be parsed by software.
-          example: Fifth house on the left after the village oak, Smalltown, Smallcountry
-        hamlet:
-          type: string
-          description: A small settlement. In different jurisdictions and geographies, a hamlet may be the size of a town, village, or parish, or may be considered to be a smaller settlement or subdivision or satellite entity to a larger settlement.
-          example: Botzowviertel
-        houseName:
-          type: string
-          description: The name of a house. Sometimes used in countries like England instead of (or in addition to) a house number.
-          example: Grossen Blauen Haus
-        houseNumber:
-          type: string
-          description: The house number (may contain letters, dashes, or other characters). This identifies a single building with multiple addresses.
-          example: '123'
-        place:
-          type: string
-          description: The part of an address which refers to the name of some territorial zone (like an island or square) instead of a street. It should not be included together with `street`.
-          example: Arnswalder Platz
-        postCode:
-          type: string
-          description: An identifier consisting of a group of letters and/or numbers that is added to a postal address to assist the sorting of mail.
-          example: '10243'
-        province:
-          type: string
-          description: For Canada, uppercase two-letter postal abbreviations, <i>e.g.</i>, BC, AB, ON, QC.
-          example: BC
-        state:
-          type: string
-          description: For the US, uppercase two-letter postal abbreviations, <i>e.g.</i>, AK, CA, HI, NY, TX, WY.
-          example: CA
-        street:
-          type: string
-          description: the name of the respective street in which the dwelling or business is located or where mail is received.
-          example: Hans-Otto-Strasse
-        subdistrict:
-          type: string
-          description: A smaller, readily identifiable part of a district.
-          example: Friedrichshain Nord
-        suburb:
-          type: string
-          description: Suburbs and localities are the names of geographic subdivisions of urban areas in Australia.
-          example: Altona Meadows Suburb
-      description: The complete postal address of a party.
-    SepaAccount:
-      title: SepaAccount
-      required:
-      - iban
-      type: object
-      properties:
-        iban:
-          type: string
-          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
-          example: GB29NWBK60161331926819
-        bic:
-          type: string
-          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
-          example: BOFIIE2D
-      description: SEPA account details where the iban is required and the bic is optional.
-    BankGiroAccount:
-      title: BankGiroAccount
-      required:
-      - bankgiroNumber
-      type: object
-      properties:
-        bankgiroNumber:
-          type: string
-          description: The unique identifier for the bank account in Sweden (known in Swedish as Bankgironummer), it consists of 7 or 8 digits.
-          example: '56781234'
-        bic:
-          type: string
-          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
-          example: BOFIIE2D
-      description: Account details where the bankgiroNumber is required and the bic is optional.
-    GetTransferResponse:
-      type: object
-      properties:
-        transfer:
-          $ref: '#/components/schemas/Transfer'
-    GatewayTimeoutError:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: DEADLINE_EXCEEDED
-        paymentId:
-          type: string
-          description: The deadline expired before the operation could complete.
-          example: Deadline exceeded.
-      description: The deadline expired before the operation could complete.
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    inline_response_504:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/GatewayTimeoutError'
-    TransferDestinationVirtualAccount:
-      title: virtualAccount
-      type: object
-      required:
-      - id
-      - localInstrument
-      properties:
-        id:
-          type: string
-          description: The unique identifier for the settlement account.
-          example: pa:2tv9sJzeftSWRXSRvPN4SA1sL5e6:2gFUX1NDbiv
-        localInstrument:
-          type: string
-          description: The bank's payment service used to make the payment.
-          example: SEPA
-          enum:
-          - SEPA
-          - SEPA_INSTANT
-          - FASTER_PAYMENTS
-      description: The details of the transfer destination for the settlement account. This destination is mandatory for unregulated TPPs.
-    CustomerDataDebtorResponse:
-      type: object
-      properties:
-        address:
-          $ref: '#/components/schemas/AddressInfo'
-        legalNames:
-          type: array
-          description: Legal owner name for the debtor account.
-          example: Mr John Arthur Smith
-          items:
-            type: string
-      description: Specifies the legal identity information for the payer/customer.
-    RefundInfo:
-      type: object
-      properties:
-        account:
-          $ref: '#/components/schemas/AccountIdentifier'
-        name:
-          type: string
-          description: Name of the account.
-          example: John A Smith
-      description: Contains information about each refund initiation record in the list.
-    PermissionDeniedError:
-      type: object
-      properties:
-        errorCode:
-          example: PermissionDenied
-      description: 'The error returned when the member is not authorized to perform the given operation: PermissionDenied. <br/>This error message will be accompanied by the reason from the bank. Typically this means the access token has expired and the user must re-authenticate with the bank.'
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    bankId:
-      type: string
-      description: The Token.io id of the bank where the consent is created. **This field is required if the customer is not using Token.io's Hosted Pages for bank selection, <i>i.e.</i>, API-only integration when `EMBEDDED_HOSTED_PAGES` is selected in `flowType`, or Hosted Pages embedded (modal) integration.**
-      example: ob-modelo
-    StetClearingSystemMemberIdentification:
-      type: object
-      properties:
-        clearingSystemId:
-          type: string
-          description: The specification of a pre-agreed offering between clearing agents or the channel through which the payment instruction is processed.
-        memberId:
-          type: string
-          description: Identification of a member of a clearing system.
-          example: m:49DtA9CoF9qYzh77FA9nVrCn2jia:5zKtXEAq
-      description: Identifies a member within a clearing system; to be used for certain international credit transfers in order to identify the beneficiary bank.
-    Signature:
-      type: object
-      properties:
-        keyId:
-          type: string
-          description: The id of the public key used to verify the signature. This is only present if a `tokenId` is present. It can be used to validate that the provided `tokenId` corresponds to the token request (this is needed for Hosted Pages flows only).
-          example: CqSTHPvWY_dgVh-f
-        memberId:
-          type: string
-          description: The Token.io member id of the signing member.
-          example: m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq
-        signature:
-          type: string
-          description: The Base64url-encoded ciphertext signature.
-          example: ODRWmM0xMRM7CKmK3bNl4e2Kb2btavTbZssCsrHsu8yopoKxBzouBrD9q5-E63tgdV1DpB7i31vwNDKywA0CAE
-      description: Contains information about the signing party. This is only present if a `tokenId` is present. It can be used to validate that the provided `tokenId` corresponds to the token request (this is needed for the Hosted Pages flows only).
-    CustomerData:
-      type: object
-      properties:
-        address:
-          $ref: '#/components/schemas/AddressInfo'
-        legalNames:
-          type: array
-          description: The legal owner name for the account.
-          example: Mr John Arthur Smith
-          items:
-            type: string
-      description: Specifies the legal identity information for the account. This information is not required for settlement accounts.
-    AccountIdentifierBankgiro:
-      type: object
-      properties:
-        bankgiroNumber:
-          type: string
-          description: The unique identifier for the bank account in Sweden (known in Swedish as Bankgironummer); it consists of 7 or 8 digits; the clearing code is not used.
-          example: '56781234'
-      description: The identifier for domestic bank accounts in Sweden.
-    StetGenericIdentification:
-      type: object
-      properties:
-        identification:
-          type: string
-          description: The alias of the account.
-        issuer:
-          type: string
-          description: The entity that assigned the identification; country code or any organisation name or identifier that can be recognized by both parties.
-        schemeName:
-          type: string
-          description: 'The name of the identification scheme. Possible values for the scheme name, partially based on <a href="https://www.iso.org/standard/55005.html" target="_blank">ISO 20022</a> external code list, are (a) BANK (BankPartyIdentification): Unique and unambiguous assignment made by a specific bank or similar financial institution to identify a relationship as defined between the bank and its client; (b) COID (CountryIdentificationCode) : Country authority given organisation identification; <i>e.g.</i>, corporate registration number; (c) SREN (SIREN): 9-digit code assigned by INSEE, the French National Institute for Statistics and Economic Studies, to identify an organisation in France; (d) SRET (SIRET): 14-digit code assigned by INSEE, the French National Institute for Statistics and Economic Studies, to identify an organisation unit in France; consists of the SIREN number, followed by a five digit classification number, to identify the local geographical unit of that entity; (e) NIDN (NationalIdentityNumber): assigned by an authority to identify the national identity number of a person. Other values are also permitted, for instance: - OAUT (OAUTH2): OAUTH2 access token that is owned by the Payment Initiation Service Provider (PISP) being also an Account Information Service Provider (AISP) and that can be used in order to identify the user - CPAN (CardPan): Card PAN.'
-      description: Bank-defined account information.
-    Cma9Risk:
-      type: object
-      properties:
-        deliveryAddress:
-          $ref: '#/components/schemas/DeliveryAddress'
-        merchantCustomerIdentification:
-          type: string
-          description: The unique customer identifier for the user with the merchant (maximum 70 characters).
-          example: 0000789123
-        paymentContextCode:
-          $ref: '#/components/schemas/PaymentContextCode'
-        paymentPurposeCode:
-          type: string
-          description: The category code conforming to the Recommended UK Purpose Code in the <a href="https://www.iso.org/standard/55005.html" target="_blank">ISO 20022</a> Payment Messaging List, related to the type of services or goods corresponding to the underlying purpose of the payment. <ul><li><b>CASH</b> - CashManagementTransfer</li><li><b>CORT</b> - TradeSettlementPayment</li><li><b>DVPM</b> - DeliveryAgainstPayment</li><li><b>INTC</b> - IntraCompanyPayment</li><li><b>TREA</b> - TreasuryPayment</li><li><b>SUPP</b> - SupplierPayment</li></ul>
-          default: CASH
-          example: DVPM
-          enum:
-          - CASH
-          - CORT
-          - DVPM
-          - INTC
-          - TREA
-          - SUPP
-        beneficiaryAccountType:
-          $ref: '#/components/schemas/Cma9BeneficiaryAccountType'
-        contractPresentIndicator:
-          type: string
-          description: 'This field indicates whether the Payment Service Provider (PSP) has a contract with the payee and has undertaken some form of validation or due diligence on the payee; values: true or false. This field can be pre-populated by Token.io, for PSPs using Token.io''s license.'
-          example: 'true'
-        beneficiaryPrepopulatedIndicator:
-          type: string
-          description: 'This field indicates whether the PSP, rather than the user, has generated the TRI fields and that the user can''t change them during the transaction journey; values: true or false. This field can be pre-populated by the PSP.'
-          example: 'true'
-      description: This object specifies additional details for risk scoring of payments.
-    CustomerDataCreditor:
-      type: object
-      required:
-      - legalNames
-      properties:
-        address:
-          $ref: '#/components/schemas/AddressInfo'
-        legalNames:
-          type: array
-          description: The legal owner name for the creditor account.
-          example: Mr John Arthur Smith
-          items:
-            type: string
-      description: Specifies the legal identity information for the payee. This information is not required for settlement accounts.
-    ExternalAuthorizationDetails:
-      type: object
-      properties:
-        authorizationUrl:
-          type: string
-          description: Content displayed from this URL prompts the user for permission to initiate the standing order.
-          example: https://your-standing-order-credentials.com
-      description: Contains the external authorization details provided by the bank.
     StetRegulatoryReportingCodes:
       type: object
       properties:
@@ -1383,20 +495,17 @@ components:
           items:
             type: string
       description: Contains the list of needed regulatory reporting codes for international payments.
-    TransferRefund:
+    GetTransfersResponse:
       type: object
       properties:
-        remainingRefundAmount:
-          allOf:
-          - description: The currency and value of the original amount minus the total amount refunded (includes items in processing).
-          - $ref: '#/components/schemas/Money'
-        settledRefundAmount:
-          allOf:
-          - description: The currency and value of the amount successfully refunded.
-          - $ref: '#/components/schemas/Money'
-        transferRefundStatus:
-          $ref: '#/components/schemas/TransferRefundStatus'
-      description: Contains details of the refunded amount settled, the transfer balance remaining, and whether initiated.
+        offset:
+          type: string
+          description: The offset of the first item returned in the collection.
+          example: LerV6Jmex
+        transfers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transfer'
     TransferDebtorEndpointResponse:
       type: object
       required:
@@ -1413,67 +522,118 @@ components:
         customerData:
           $ref: '#/components/schemas/CustomerDataDebtorResponse'
       description: Contains information about the payer account.
-    AccountIdentifierToken:
+    AccountIdentifier:
+      type: object
+      required:
+      - bankgiro
+      - bban
+      - gbDomestic
+      - iban
+      - msisdn
+      - pan
+      - plus giro
+      - token
+      oneOf:
+      - title: bankgiro
+        properties:
+          bankgiro:
+            $ref: '#/components/schemas/AccountIdentifierBankgiro'
+      - title: bban
+        properties:
+          bban:
+            $ref: '#/components/schemas/AccountIdentifierBban'
+      - title: gbDomestic
+        properties:
+          gbDomestic:
+            $ref: '#/components/schemas/AccountIdentifierGbDomestic'
+      - title: iban
+        properties:
+          iban:
+            $ref: '#/components/schemas/AccountIdentifierIban'
+      - title: msisdn
+        properties:
+          msisdn:
+            $ref: '#/components/schemas/AccountIdentifierMsisdn'
+      - title: pan
+        properties:
+          pan:
+            $ref: '#/components/schemas/AccountIdentifierPan'
+      - title: plusgiro
+        properties:
+          plusgiro:
+            $ref: '#/components/schemas/AccountIdentifierPlusgiro'
+      - title: token
+        properties:
+          token:
+            $ref: '#/components/schemas/AccountIdentifierToken'
+      description: Account numbers and other strings that identify this as a unique bank account.
+    TransferPayloadRequest:
+      type: object
+      required:
+      - tokenId
+      properties:
+        amount:
+          allOf:
+          - description: The transaction currency and value.
+          - $ref: '#/components/schemas/MoneyRequest'
+        confirmFunds:
+          type: boolean
+          description: Requests confirmation that sufficient funds are available.
+          format: boolean
+          example: false
+          default: false
+        description:
+          type: string
+          description: 'A description of the transfer.<br/>**Warning**: If the description in a subsequent token request for lookups/changes/updates (retrieve, redeem, or cancel) doesn''t match the description in the originating token request, an exception will be thrown.'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+        refId:
+          $ref: '#/components/schemas/refId'
+        tokenId:
+          type: string
+          description: Identifies the authorization token for the transfer.
+          example: tt:8zK1dic95omjWb72gvc3z3ELKbTNfnGd89MbDnM73er4:ZhBVAJSH8DeU1
+        transferDestinations:
+          type: array
+          description: The beneficiary account specifying the transfer destination; <i>i.e.</i>, TPP/merchant/creditor.
+          items:
+            $ref: '#/components/schemas/TransferDestinationRequest'
+      description: Contains the financial details of the transfer.
+    StetClearingSystemMemberIdentification:
       type: object
       properties:
-        accountId:
+        clearingSystemId:
           type: string
-          description: The bank account identifier for a linked account used by Token.io's Bank Integration Account Linking Service.
-          example: a:b6037206ca7311ed:afa1
+          description: The specification of a pre-agreed offering between clearing agents or the channel through which the payment instruction is processed.
         memberId:
           type: string
-          description: The Token.io-generated member id for the user/account holder.
-          example: m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq
-      description: The primary account number; the card identifier found on payment cards, such as credit cards and debit cards, as well as stored-value cards, gift cards and other similar card, sometimes referred to as a bank card number.
-    StetBeneficiary:
+          description: Identification of a member of a clearing system.
+          example: m:49DtA9CoF9qYzh77FA9nVrCn2jia:5zKtXEAq
+      description: Identifies a member within a clearing system; to be used for certain international credit transfers in order to identify the beneficiary bank.
+    ActingAs:
       type: object
       properties:
-        creditor:
-          $ref: '#/components/schemas/StetPartyIdentification'
-        creditorAccount:
-          $ref: '#/components/schemas/StetAccountIdentification'
-        creditorAgent:
-          $ref: '#/components/schemas/StetFinancialInstitutionIdentification'
-        id:
+        displayName:
           type: string
-          description: The unique identification of an account, a person, or an organisation assigned by an issuer.
-      description: The creditor or payee receiving the transfer.
-    TransferDestinationPlusgiro:
-      title: plusgiro
-      allOf:
-      - description: The domestic transaction clearing system in Sweden. The credit transfer function, which is part of <a href="https://www.nordea.com" target="_blank">Nordea</a>, and used for mediating payments between accounts held by companies and individuals.
-      - $ref: '#/components/schemas/PlusGiroAccount'
-    instructionIdentification:
-      type: string
-      description: The TPP-generated, unique transaction id passed to the bank (mandatory) but does not have to go any further in the payment flow. The expectation is that this is unique indefinitely across all time periods by including a date or date time element to the field, or by inserting a unique id.
-    Metadata:
+          description: The name of the recipient shown to the user; required when specifying `actingAs`, optional otherwise.
+          example: The Great Baking Co.
+        refId:
+          $ref: '#/components/schemas/refId'
+        secondaryName:
+          type: string
+          description: The domain or email address of the recipient shown to the user along with the `displayName`.
+          example: jane.doe@company.com
+      description: Specifies another party for whom the token was created 'on behalf of'.
+    RefundInfo:
       type: object
       properties:
-        chargeBearer:
-          $ref: '#/components/schemas/ChargeBearer'
-        providerTransferMetadata:
-          $ref: '#/components/schemas/ProviderTransferMetadata'
-        purposeCode:
+        account:
+          $ref: '#/components/schemas/AccountIdentifier'
+        name:
           type: string
-          description: The <a href="https://www.iso.org/standard/55005.html" target="_blank">ISO 20022</a> external purpose code. Purpose Codes are four letter codes which are carried across the payment chain, providing information to all users in the payments chain to indicate the reason a payment is being made. Purpose Codes are one of the policy areas of Enhanced Data that can deliver the benefits of the ISO 20022 payment messaging standard. <ul><li><b>CASH</b> - CashManagementTransfer</li><li><b>CORT</b> - TradeSettlementPayment</li><li><b>DVPM</b> - DeliveryAgainstPayment</li><li><b>INTC</b> - IntraCompanyPayment</li><li><b>TREA</b> - TreasuryPayment</li><li><b>SUPP</b> - SupplierPayment</li></ul>
-          default: CASH
-          example: DVPM
-          enum:
-          - CASH
-          - CORT
-          - DVPM
-          - INTC
-          - TREA
-          - SUPP
-        ultimateCreditor:
-          type: string
-          description: The ultimate party to which an amount of money is due.
-          example: ACME GmbH
-        ultimateDebtor:
-          type: string
-          description: The ultimate party that owes that owes money to the (ultimate) creditor.
-          example: John Smith
-      description: Information governing or otherwise related to the transfer instructions.
+          description: Name of the account.
+          example: John A Smith
+      description: Contains information about each refund initiation record in the list.
     TransferDestinationRequest:
       required:
       - customerData
@@ -1533,51 +693,45 @@ components:
           virtualAccount:
             $ref: '#/components/schemas/TransferDestinationVirtualAccount'
       description: The beneficiary account specifying the transfer destination, <i>i.e.</i> TPP/merchant/creditor bank.
-    TransferDestinationElixir:
-      title: elixir
+    TransferDestinationFasterPayments:
+      title: fasterPayments
+      allOf:
+      - description: The interbank payment system in the UK, Full Payment Submission (FPS).
+      - $ref: '#/components/schemas/FasterPaymentsAccount'
+    PlusGiroAccount:
+      title: PlusGiroAccount
       required:
-      - accountNumber
+      - plusgiroNumber
       type: object
       properties:
-        accountNumber:
+        plusgiroNumber:
           type: string
-          description: The payee's Elixir-registered bank account number. You can also enter the iban in this field for iban accounts.
-          example: FRAX82783423
-      description: The interbank payment system in Poland.
-    Cma9BeneficiaryAccountType:
-      type: string
-      description: To be provided if the AccountType is known.
-      example: BUSINESS
-      enum:
-      - PERSONAL
-      - JOINT_PERSONAL
-      - PERSONAL_SAVINGS_ACCOUNT
-      - BUSINESS
-      - BUSINESS_SAVINGS_ACCOUNT
-      - CHARITY
-      - COLLECTION
-      - CORPORATE
-      - GOVERNMENT
-      - EWALLET
-      - INVESTMENT
-      - ISA
-      - PREMIER
-      - WEALTH
-      - PENSION
-    StetPostalAddressCreditor:
+          description: The unique identifier for the Swedish money transaction system owned by <a href="https://www.nordea.com" target="blank">Nordea</a>.
+          example: '67812345'
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
+          example: BOFIIE2D
+      description: Account details where the plusgiroNumber is required and the bic is optional.
+    TransferDestinationToken:
+      title: token
       type: object
       properties:
-        addressLine:
-          type: array
-          description: Up to 4 lines that capture the mailing address.
-          items:
-            type: string
-            example: 47 La Grande Rue, Paris
-        country:
+        accountId:
           type: string
-          description: Two-letter country code in upper case (ISO 3166-1 alpha-2).
-          example: FR
-      description: Contains the mailing address of the creditor.
+          description: The bank account identifier for a linked account used by Token.io's Bank Integration Account Linking Service.
+        memberId:
+          type: string
+          description: The Token.io-generated member id for the user/account holder.
+          example: m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq
+      description: The primary account number. The cCard identifier found on payment cards, such as credit and debit cards, as well as stored-value cards, gift cards and other similar cards, somtimes referred to as a bank card number.
+    inline_response_403:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/PermissionDeniedError'
     DeliveryAddress:
       type: object
       properties:
@@ -1653,21 +807,20 @@ components:
       description: The operation was not implemented, supported or enabled by the bank.
       allOf:
       - $ref: '#/components/schemas/ErrorWithCode'
-    TransferDestinationType:
-      title: type
-      type: string
-      description: Specifies the type of transfer destination.
-      example: BUSINESS
-      default: UNKNOWN
-      enum:
-      - UNKNOWN
-      - BUSINESS
-      - PERSONAL
-    inline_response_401:
+    StetPartyIdentification:
       type: object
       properties:
-        error:
-          $ref: '#/components/schemas/Error'
+        name:
+          type: string
+          description: The name by which the party is known and which is usually used to identify that party.
+          example: John Smith
+        organisationId:
+          $ref: '#/components/schemas/StetGenericIdentification'
+        postalAddress:
+          $ref: '#/components/schemas/StetPostalAddress'
+        privateId:
+          $ref: '#/components/schemas/StetGenericIdentification'
+      description: The <a href="https://www.iso.org/standard/55005.html" target="_blank">ISO 20022</a> information about the party; this can be either a person or an organisation.
     Cma9TransferMetadata:
       type: object
       properties:
@@ -1679,14 +832,340 @@ components:
         risk:
           $ref: '#/components/schemas/Cma9Risk'
       description: Transfer metadata required under the <a href=https://openbanking.atlassian.net/wiki/spaces/DZ/pages/937656404/Read+Write+Data+API+Specification+-+v3.1 target="_blank">CMA9 API standard</a>.
-    TransferDestinationEuDomesticNonEuro:
-      title: euDomesticNonEuro
-      oneOf:
-      - $ref: '#/components/schemas/EUIbanAccount'
-      - $ref: '#/components/schemas/BbanAccount'
-      - $ref: '#/components/schemas/ClearingNumberAccount'
-      - $ref: '#/components/schemas/SENoBankIdAccount'
-      description: The payment system within a country using that country's non-Euro domestic currency. An IBAN account will require an `iban` and an optional `bic`, a BBAN account will require a `bban` and an optional `bic`, a Clearing Number account will require a `bban` and a `clearingNumber`. A SENoBankId account, where the currency is SEK or NOK, will require an `iban` and `bban` with an optional `bic` and/or `clearingNumber`. This option is only available for an HP flow that doesn't have a preselected `bankId`.
+    CustomerData:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/AddressInfo'
+        legalNames:
+          type: array
+          description: The legal owner name for the account.
+          example: Mr John Arthur Smith
+          items:
+            type: string
+      description: Specifies the legal identity information for the account. This information is not required for settlement accounts.
+    CreateTransferRequest:
+      type: object
+      required:
+      - payload
+      properties:
+        payload:
+          $ref: '#/components/schemas/TransferPayloadRequest'
+      title: This field contains the request payload for a new one-time payment based on the response to a `POST /token-requests` call.
+    PolishApiDeliveryMode:
+      type: string
+      description: The urgency classification for delivery.
+      example: STANDARD_D2
+      default: INVALID_DELIVERY_MODE
+      enum:
+      - INVALID_DELIVERY_MODE
+      - STANDARD_D2
+      - STANDARD_D1
+      - URGENT_D1
+      - EXPRESS_D0
+    AccountIdentifierIban:
+      type: object
+      properties:
+        iban:
+          type: string
+          description: The International Bank Account Number. This consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+      description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders.
+    StetPostalAddress:
+      type: object
+      properties:
+        addressLine:
+          type: array
+          description: Up to 4 lines that capture the mailing address.
+          items:
+            type: string
+            example: Appartement 3a, 35 Rue de Bologne, Marseilles
+        country:
+          type: string
+          description: Two-letter country code in upper case (ISO 3166-1 alpha-2).
+          example: FR
+      description: Contains the mailing address of the creditor.
+    AccountIdentifierBban:
+      type: object
+      properties:
+        bban:
+          type: string
+          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
+          example: NWBK60161331926819
+        clearingNumber:
+          type: string
+          description: The bank clearing number or BC number is a number used for the identification of financial institutions in Switzerland and Liechtenstein. Bank clearing numbers are connected to the Swiss Interbank Clearing and the EuroSIC system.
+          example: 87654321
+    StetGenericIdentification:
+      type: object
+      properties:
+        identification:
+          type: string
+          description: The alias of the account.
+        issuer:
+          type: string
+          description: The entity that assigned the identification; country code or any organisation name or identifier that can be recognized by both parties.
+        schemeName:
+          type: string
+          description: 'The name of the identification scheme. Possible values for the scheme name, partially based on <a href="https://www.iso.org/standard/55005.html" target="_blank">ISO 20022</a> external code list, are (a) BANK (BankPartyIdentification): Unique and unambiguous assignment made by a specific bank or similar financial institution to identify a relationship as defined between the bank and its client; (b) COID (CountryIdentificationCode) : Country authority given organisation identification; <i>e.g.</i>, corporate registration number; (c) SREN (SIREN): 9-digit code assigned by INSEE, the French National Institute for Statistics and Economic Studies, to identify an organisation in France; (d) SRET (SIRET): 14-digit code assigned by INSEE, the French National Institute for Statistics and Economic Studies, to identify an organisation unit in France; consists of the SIREN number, followed by a five digit classification number, to identify the local geographical unit of that entity; (e) NIDN (NationalIdentityNumber): assigned by an authority to identify the national identity number of a person. Other values are also permitted, for instance: - OAUT (OAUTH2): OAUTH2 access token that is owned by the Payment Initiation Service Provider (PISP) being also an Account Information Service Provider (AISP) and that can be used in order to identify the user - CPAN (CardPan): Card PAN.'
+      description: Bank-defined account information.
+    inline_response_400:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    AccountIdentifierPan:
+      type: object
+      properties:
+        pan:
+          type: string
+          description: The 14, 15, or 16 digit number generated as a unique identifier for a primary account.
+          example: '4658552288550023'
+      description: The Primary Account Number (PAN). The card identifier found on payment cards, such as credit cards and debit cards, as well as stored-value cards, gift cards and other similar card, sometimes referred to as a bank card number.
+    AccountIdentifierGbDomestic:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+          description: The unique identifier for the bank account in the UK or Ireland.
+          example: '12345678'
+        sortCode:
+          type: string
+          description: The number assigned to a branch of a bank, typically containing six digits and most commonly used in the UK and Ireland.
+          example: 123456
+      description: A domestic bank account in the UK.
+    Metadata:
+      type: object
+      properties:
+        chargeBearer:
+          $ref: '#/components/schemas/ChargeBearer'
+        providerTransferMetadata:
+          $ref: '#/components/schemas/ProviderTransferMetadata'
+        purposeCode:
+          type: string
+          description: The <a href="https://www.iso.org/standard/55005.html" target="_blank">ISO 20022</a> external purpose code. Purpose Codes are four letter codes which are carried across the payment chain, providing information to all users in the payments chain to indicate the reason a payment is being made. Purpose Codes are one of the policy areas of Enhanced Data that can deliver the benefits of the ISO 20022 payment messaging standard. <ul><li><b>CASH</b> - CashManagementTransfer</li><li><b>CORT</b> - TradeSettlementPayment</li><li><b>DVPM</b> - DeliveryAgainstPayment</li><li><b>INTC</b> - IntraCompanyPayment</li><li><b>TREA</b> - TreasuryPayment</li><li><b>SUPP</b> - SupplierPayment</li></ul>
+          default: CASH
+          example: DVPM
+          enum:
+          - CASH
+          - CORT
+          - DVPM
+          - INTC
+          - TREA
+          - SUPP
+        ultimateCreditor:
+          type: string
+          description: The ultimate party to which an amount of money is due.
+          example: ACME GmbH
+        ultimateDebtor:
+          type: string
+          description: The ultimate party that owes that owes money to the (ultimate) creditor.
+          example: John Smith
+      description: Information governing or otherwise related to the transfer instructions.
+    StetPaymentTypeInformation:
+      type: object
+      properties:
+        categoryPurpose:
+          type: string
+          description: Specifies the high level purpose of the instruction based on a set of pre-defined categories; used by the initiating party to provide information concerning the processing of the payment and is likely to trigger special processing by any of the agents involved in the payment chain. <ul><li><b>CASH</b> - CashManagementTransfer</li><li><b>CORT</b> - TradeSettlementPayment</li><li><b>DVPM</b> - DeliveryAgainstPayment</li><li><b>INTC</b> - IntraCompanyPayment</li><li><b>TREA</b> - TreasuryPayment</li><li><b>SUPP</b> - SupplierPayment</li></ul>
+          example: DVPM
+          default: CASH
+          enum:
+          - CASH
+          - CORT
+          - DVPM
+          - INTC
+          - TREA
+          - SUPP
+        instructionPriority:
+          type: string
+          description: Indicates the urgency or order of importance the instructing party would like to apply to processing; can be ignored for SCTInst (SEPA Instant).
+          example: SAMEDAY
+        localInstrument:
+          type: string
+          description: Used to specify a local instrument, local clearing option and/or further qualify the service or service level. For example, INST is used to ask for SEPA instant Payment (SCTInst). For International payments, this field may be valued with one of the <a href="https://www.iso.org/standard/55005.html" target="_blank">ISO 20022</a> external codes to specify which payment instrument should be used by the creditor's bank.
+          example: INST
+        serviceLevel:
+          type: string
+          description: Only SEPA is allowed.
+          example: SEPA
+      description: A set of elements used to further specify the type of transaction.
+    GatewayTimeoutError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: DEADLINE_EXCEEDED
+        paymentId:
+          type: string
+          description: The deadline expired before the operation could complete.
+          example: Deadline exceeded.
+      description: The deadline expired before the operation could complete.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    StetBeneficiary:
+      type: object
+      properties:
+        creditor:
+          $ref: '#/components/schemas/StetPartyIdentification'
+        creditorAccount:
+          $ref: '#/components/schemas/StetAccountIdentification'
+        creditorAgent:
+          $ref: '#/components/schemas/StetFinancialInstitutionIdentification'
+        id:
+          type: string
+          description: The unique identification of an account, a person, or an organisation assigned by an issuer.
+      description: The creditor or payee receiving the transfer.
+    Money:
+      type: object
+      required:
+      - currency
+      - value
+      properties:
+        currency:
+          type: string
+          description: The <a href="https://www.iso.org/iso-4217-currency-codes.html" target="_blank">ISO 4217</a> three letter currency code.
+          example: EUR
+        value:
+          type: string
+          description: The transaction amount with up to four digits after the decimal point.
+          example: '10.23'
+      description: The balance currency and value.
+    inline_response_503:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ServiceUnavailableError'
+    ResourceExhaustedError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: RESOURCE_EXHAUSTED
+        paymentId:
+          type: string
+          description: The maximum number of requests has been reached.
+          example: Resource exhausted. Check quota.
+      description: Resource exhausted. Too many requests.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    MoneyRequest:
+      type: object
+      properties:
+        currency:
+          type: string
+          description: The <a href="https://www.iso.org/iso-4217-currency-codes.html" target="_blank">ISO 4217</a> three letter currency code.
+          example: EUR
+        value:
+          type: string
+          description: The transaction amount with up to four digits after the decimal point.
+          example: '10.23'
+      description: The balance currency and value.
+    Transfer:
+      type: object
+      properties:
+        actingAs:
+          $ref: '#/components/schemas/ActingAs'
+        convertedToFutureDatedPayment:
+          type: boolean
+          description: Indicates whether a transfer is from an auto single immediate payment coinciding with the bank's out-of-operation hours was converted to a future dated payment
+          format: boolean
+          example: false
+          default: false
+        createdAtMs:
+          type: string
+          description: Specifies the time the transfer was created; timestamp (UTC) in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.
+          format: string
+          example: 1729212980771
+        executionDate:
+          type: string
+          description: Specifies the execution date for the transfer (in <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="_blank">ISO 8601</a> format).
+          example: '2023-01-28'
+        id:
+          type: string
+          description: The `transferId` computed as the hash of the transfer payload.
+          example: tt:83KiRJuXmEDV5m2b8ZvLGE91ELf7PPw5BaDab98kMguu:3VMczyq7r7b6HwC
+        payload:
+          $ref: '#/components/schemas/TransferPayload'
+        payloadSignatures:
+          type: array
+          items:
+            $ref: '#/components/schemas/Signature'
+        providerDetails:
+          $ref: '#/components/schemas/ProviderTransferDetails'
+        refund:
+          $ref: '#/components/schemas/RefundInfo'
+        refundDetails:
+          $ref: '#/components/schemas/TransferRefund'
+        source:
+          $ref: '#/components/schemas/TransferDebtorEndpointResponse'
+        status:
+          $ref: '#/components/schemas/TransactionStatus'
+        statusReasonInformation:
+          type: string
+          description: A human-readable description of the reason for the reported status, which may include a message from the bank. This value should not exceed 256 characters in length.
+          example: This transfer is processing.
+        transactionId:
+          type: string
+          description: The unique transaction identifier; the transaction id.
+          example: 2UhwCZ3BMaEcAUK8bZdukor7NL4tH6TBuu6aJMp5KKfX:5zKcENpV
+      description: Information about each respective transfer record requested.
+    EUIbanAccount:
+      title: EUIbanAccount
+      required:
+      - iban
+      type: object
+      properties:
+        iban:
+          type: string
+          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
+          example: BOFIIE2D
+      description: Account details where the iban is required and the bic is optional.
+    AccountIdentifierPlusgiro:
+      type: object
+      properties:
+        plusgiroNumber:
+          type: string
+          description: The account number (minimum 2 and maximum 8 digits) for a PlusGiro account. The clearing code is not used.
+          example: '987654'
+      description: The domestic transaction clearing system in Sweden. The credit transfer function, which is part of <a href="https://www.nordea.com" target="blank">Nordea</a>, and used for mediating payments between accounts held by companies and individuals.
+    TransferDestinationBankgiro:
+      title: bankgiro
+      allOf:
+      - description: The identifier for domestic bank accounts in Sweden.
+      - $ref: '#/components/schemas/BankGiroAccount'
+    SENoBankIdAccount:
+      title: SENoBankIdAccount
+      required:
+      - iban
+      - bban
+      type: object
+      properties:
+        iban:
+          type: string
+          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+        bban:
+          type: string
+          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
+          example: NWBK60161331926819
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
+          example: BOFIIE2D
+        clearingNumber:
+          type: string
+          description: The bank clearing number or BC number is a number used for the identification of financial institutions in Switzerland and Liechtenstein. Bank clearing numbers are connected to the Swiss Interbank Clearing and the EuroSIC system.
+          example: 87654321
+      description: Account details where the iban and bban are required and the bic and clearing number are optional. This is ONLY allowed for an HP flow if there is no `bankId` provided in the initiation AND the currency is SEK or NOK.
     NextGenPsd2TransferMetadata:
       type: object
       properties:
@@ -1703,6 +1182,41 @@ components:
           type: string
           description: The information supplied to enable matching of an entry with the items that the transfer is intended to settle, such as commercial invoices in an accounts receivable system.
       description: The transfer metadata required under the <a href="https://www.berlin-group.org/nextgenpsd2-downloads" target="_blank">NextGenPSD2 standard</a>.
+    TransferPayload:
+      type: object
+      required:
+      - tokenId
+      - refId
+      - amount
+      properties:
+        amount:
+          allOf:
+          - description: The transaction currency and value.
+          - $ref: '#/components/schemas/MoneyRequest'
+        confirmFunds:
+          type: boolean
+          description: Requests confirmation that sufficient funds are available.
+          format: boolean
+          example: false
+          default: false
+        description:
+          type: string
+          description: A description of the transfer.
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+        refId:
+          $ref: '#/components/schemas/refId'
+        tokenId:
+          type: string
+          description: Identifies the authorization token for the transfer.
+          example: tt:8zK1dic95omjWb72gvc3z3ELKbTNfnGd89MbDnM73er4:ZhBVAJSH8DeU1
+        transferDestinations:
+          title: transferDestinations
+          type: array
+          description: The beneficiary account specifying the transfer destination; <i>i.e.</i>, TPP/merchant/creditor.
+          items:
+            $ref: '#/components/schemas/TransferDestination'
+      description: Contains the financial details of the transfer.
     FasterPaymentsAccount:
       title: FasterPaymentsAccount
       required:
@@ -1719,57 +1233,370 @@ components:
           description: The number assigned to a branch of a bank, typically containing six digits and most commonly used in the UK and Ireland.
           example: '123456'
       description: A UK or Irish account where the sort code and account number are required.
-    TransferPayloadRequest:
+    TransferDestination:
+      required:
+      - customerData
+      - sepa
+      - sepaInstant
+      - fasterPayments
+      - plusgiro
+      - bankgiro
+      - elixir
+      - euDomesticNonEuro
+      - euDomesticNonEuroInstant
+      - virtualAccount
+      properties:
+        customerData:
+          $ref: '#/components/schemas/CustomerDataCreditor'
+        type:
+          $ref: '#/components/schemas/TransferDestinationType'
+      oneOf:
+      - title: sepa
+        properties:
+          sepa:
+            $ref: '#/components/schemas/TransferDestinationSepa'
+      - title: sepaInstant
+        properties:
+          sepaInstant:
+            $ref: '#/components/schemas/TransferDestinationSepaInstant'
+      - title: fasterPayments
+        properties:
+          fasterPayments:
+            $ref: '#/components/schemas/TransferDestinationFasterPayments'
+      - title: elixir
+        properties:
+          elixir:
+            $ref: '#/components/schemas/TransferDestinationElixir'
+      - title: euDomesticNonEuro
+        properties:
+          euDomesticNonEuro:
+            $ref: '#/components/schemas/TransferDestinationEuDomesticNonEuro'
+      - title: euDomesticNonEuroInstant
+        properties:
+          euDomesticNonEuroInstant:
+            $ref: '#/components/schemas/TransferDestinationEuDomesticNonEuroInstant'
+      - title: bankgiro
+        properties:
+          bankgiro:
+            $ref: '#/components/schemas/TransferDestinationBankgiro'
+      - title: plusgiro
+        properties:
+          plusgiro:
+            $ref: '#/components/schemas/TransferDestinationPlusgiro'
+      - title: token
+        properties:
+          token:
+            $ref: '#/components/schemas/TransferDestinationToken'
+      - title: virtualAccount
+        properties:
+          virtualAccount:
+            $ref: '#/components/schemas/TransferDestinationVirtualAccount'
+      description: The beneficiary account specifying the transfer destination, <i>i.e.</i> TPP/merchant/creditor bank.
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: The request does not have valid authentication credentials needed to perform the operation.
+    CustomerDataCreditor:
       type: object
       required:
-      - tokenId
+      - legalNames
       properties:
-        amount:
-          allOf:
-          - description: The transaction currency and value.
-          - $ref: '#/components/schemas/MoneyRequest'
-        confirmFunds:
-          type: boolean
-          description: Requests confirmation that sufficient funds are available.
-          format: boolean
-          example: false
-          default: false
-        description:
-          type: string
-          description: 'A description of the transfer.<br/>**Warning**: If the description in a subsequent token request for lookups/changes/updates (retrieve, redeem, or cancel) doesn''t match the description in the originating token request, an exception will be thrown.'
-        metadata:
-          $ref: '#/components/schemas/Metadata'
-        refId:
-          $ref: '#/components/schemas/refId'
-        tokenId:
-          type: string
-          description: Identifies the authorization token for the transfer.
-          example: tt:8zK1dic95omjWb72gvc3z3ELKbTNfnGd89MbDnM73er4:ZhBVAJSH8DeU1
-        transferDestinations:
+        address:
+          $ref: '#/components/schemas/AddressInfo'
+        legalNames:
           type: array
-          description: The beneficiary account specifying the transfer destination; <i>i.e.</i>, TPP/merchant/creditor.
+          description: The legal owner name for the creditor account.
+          example: Mr John Arthur Smith
           items:
-            $ref: '#/components/schemas/TransferDestinationRequest'
-      description: Contains the financial details of the transfer.
+            type: string
+      description: Specifies the legal identity information for the payee. This information is not required for settlement accounts.
+    inline_response_501:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/NotImplementedError'
+    AccountIdentifierMsisdn:
+      type: object
+      properties:
+        msisdn:
+          type: string
+          description: The MSISDN is composed of the country code and the national destination code. Ensure you remove the + sign and any 0 before the mobile number.
+          example: '447949123456'
+      description: The Mobile Station International Subscriber Director Number (MSISDN) is the user's mobile phone number, used as a unique identifier to enable routing of voice and SMS traffic to and from a specific subscription/device on a wireless/mobile network.
+    TransferDestinationPlusgiro:
+      title: plusgiro
+      allOf:
+      - description: The domestic transaction clearing system in Sweden. The credit transfer function, which is part of <a href="https://www.nordea.com" target="_blank">Nordea</a>, and used for mediating payments between accounts held by companies and individuals.
+      - $ref: '#/components/schemas/PlusGiroAccount'
+    TransactionStatus:
+      title: TransactionStatus
+      type: string
+      example: PROCESSING
+      description: Filters by transaction status. <ul> <li><b>PROCESSING</b> – This status indicates that the transaction is in process and that the final status has not been received from the bank.</li> <li><b>SUCCESS</b> – This status indicates that successful payment initiation has been received from the bank. Settlement might not be complete.</li> <li><b>INITIATED</b> – This status is set when the previous status has remained as `PROCESSING` for 30 days and cannot be updated. The transaction has been initiated but the result is unknown. This is the final status and will not get updated later because Token.io has stopped polling the bank.<br/> This status is also returned in a two-step payment flow in the event that a user’s request has been authorized at the bank but the payment confirmation has subsequently failed.</li> <li><b>PENDING</b> – This status indicates that the user has successfully completed the authorization process at the bank and the transfer is pending redemption. This status is only relevant for two-step payment flows.</li> <li><b>PENDING_EXTERNAL_AUTHORIZATION</b> – This status indicates that the user has been sent to the bank to complete the authorization process. If not completed within the allowed timeframe (usually around 15 mins, but there are variations between banks) the transaction will expire and transition to `FAILURE_EXPIRED`. This status is only relevant for 1-step payment flows.</li> <li><b>FAILURE_GENERIC</b> – This status usually indicates a technical failure. Possibly, a failure callback was received from the bank, with no transaction status and no further information.</li> <li><b>FAILURE_PERMISSION_DENIED</b> – This status indicates that the user has been denied authorization at the bank This status is only relevant for two-step payment flows.</li> <li><b>FAILURE_CANCELED</b> – This status indicates that the payment initiation has been cancelled before execution.</li> <li><b>FAILURE_EXPIRED</b> – This status indicates that the user did not complete the authorization process within the allowed timeframe (usually around 15 mins, but there are variations between banks) and the payment has expired.</li> <li><b>FAILURE_INSUFFICIENT_FUNDS</b> – This status indicates that the payment initiation request has been rejected due to insufficient funds.</li> <li><b>FAILURE_DECLINED</b> – This status indicates that the payment initiation has been rejected by the bank.</li> <li><b>SETTLEMENT_IN_PROGRESS</b> – This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Token.io is waiting for the payment to reach the payee bank. No action is required; await the next step, <i>e.g.</i>, Token.io sends a webhook with the status update, or a polling call. The status will change to `SETTLEMENT_IN_PROGRESS` soon after Token.io receives the final status from the debtor bank.</li> <li><b>SETTLEMENT_COMPLETED</b> – This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. The payment has reached the payee bank and Token.io has matched the transaction in the TPP’s settlement account to the initiated payment. For instant payments, `SETTLEMENT_COMPLETED` will be achieved within 30-45 minutes from payment initiation, at the latest. For non-instant payments, the time to reach `SETTLEMENT_COMPLETED` will depend on the clearing period for the payment.</li> <li><b>SETTLEMENT_INCOMPLETE</b> – This status is provided when a Token.io settlement account is used as the beneficiary for the payment, and replaces the payment initiation status. Reconciliation has failed. This happens when Token.io doesn't find the corresponding transaction in the TPP’s settlement account automatically.</li></ul><br/>During settlement of a settlement accounts payment, the status update job will run first for up to 30 days. Payment will then enter into a 'final' status, normally `SUCCESS`.<br/>Once the status update job has run, the reconciliation job looks for matching inbound payments.<br/>For SEPA payments:<ul><li>if a matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 15 days of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>For SEPA Instant payments:<ul><li>if a matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_COMPLETED`</li><li>if no matching inbound payment is found within 1 day of the final payment status update -> `SETTLEMENT_INCOMPLETE`</li></ul>
+      enum:
+      - PROCESSING
+      - SUCCESS
+      - INITIATED
+      - PENDING
+      - PENDING_EXTERNAL_AUTHORIZATION
+      - FAILURE_GENERIC
+      - FAILURE_PERMISSION_DENIED
+      - FAILURE_CANCELED
+      - FAILURE_EXPIRED
+      - FAILURE_INSUFFICIENT_FUNDS
+      - FAILURE_DECLINED
+      - SETTLEMENT_IN_PROGRESS
+      - SETTLEMENT_COMPLETED
+      - SETTLEMENT_INCOMPLETE
+    inline_response_401:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
     refId:
       type: string
       description: The TPP-generated reference identifier for the token. This is not to be confused with the `requestId`. The `refId` maps to the `tppRefId` in the bank's `consentRequest`. This is needed to match/verify the originating token request with the bank's consent request. <br/>We recommend that the `refId` should not contain special characters (the allowed characters are the 26-letter Latin alphabet, the numerical digits from 0-9 and the hyphen '-'). This field should not exceed 18 characters in length.
       example: 9htio4a1sp2akdr1aa
-    ClearingNumberAccount:
-      title: ClearingNumberAccount
+    TransferDestinationVirtualAccount:
+      title: virtualAccount
+      type: object
       required:
-      - bban
+      - id
+      - localInstrument
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the settlement account.
+          example: pa:2tv9sJzeftSWRXSRvPN4SA1sL5e6:2gFUX1NDbiv
+        localInstrument:
+          type: string
+          description: The bank's payment service used to make the payment.
+          example: SEPA
+          enum:
+          - SEPA
+          - SEPA_INSTANT
+          - FASTER_PAYMENTS
+      description: The details of the transfer destination for the settlement account. This destination is mandatory for unregulated TPPs.
+    ExternalAuthorizationDetails:
       type: object
       properties:
-        bban:
+        authorizationUrl:
           type: string
-          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
-          example: NWBK60161331926819
-        clearingNumber:
+          description: Content displayed from this URL prompts the user for permission to initiate the standing order.
+          example: https://your-standing-order-credentials.com
+      description: Contains the external authorization details provided by the bank.
+    TransferRefundStatus:
+      type: string
+      description: Indicates the status of the initiated refund payout.
+      example: PARTIAL
+      default: UNSET
+      enum:
+      - UNSET
+      - NONE
+      - PARTIAL
+      - FULL
+    PermissionDeniedError:
+      type: object
+      properties:
+        errorCode:
+          example: PermissionDenied
+      description: 'The error returned when the member is not authorized to perform the given operation: PermissionDenied. <br/>This error message will be accompanied by the reason from the bank. Typically this means the access token has expired and the user must re-authenticate with the bank.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    CustomerDataDebtorResponse:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/AddressInfo'
+        legalNames:
+          type: array
+          description: Legal owner name for the debtor account.
+          example: Mr John Arthur Smith
+          items:
+            type: string
+      description: Specifies the legal identity information for the payer/customer.
+    ServiceUnavailableError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: UNAVAILABLE
+        paymentId:
           type: string
-          description: The bank clearing number or BC number is a number used for the identification of financial institutions in Switzerland and Liechtenstein. Bank clearing numbers are connected to the Swiss Interbank Clearing and the EuroSIC system.
-          example: 87654321
-      description: Account details where the bban is required and the clearing number is optional.
+          description: The service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+          example: Unavailable
+      description: Service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    ServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: 'This could refer to either an error by the payment service provider or the bank. When the bank reports a 5xx error, `"token-external-error": "true"` is set as a header in the HTTP response, indicating that the "internal" error originates from the bank. When one of the payment service providers internal services fails or when the bank reports a 4xx error, this header is not populated. The absence of this response header should be interpreted as `"token-external-error": "false"`.'
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    TransferDestinationEuDomesticNonEuroInstant:
+      title: euDomesticNonEuroInstant
+      oneOf:
+      - $ref: '#/components/schemas/EUIbanAccount'
+      - $ref: '#/components/schemas/BbanAccount'
+      - $ref: '#/components/schemas/ClearingNumberAccount'
+      - $ref: '#/components/schemas/SENoBankIdAccount'
+      description: The instant payment system within a country using that country's non-Euro domestic currency. An IBAN account will require an `iban` and an optional `bic`, a BBAN account will require a `bban` and an optional `bic`, a Clearing Number account will require a `bban` and a `clearingNumber`. A SENoBankId account, where the currency is SEK or NOK, will require an `iban` and `bban` with an optional `bic` and/or `clearingNumber`. This option is only available for an HP flow that doesn't have a preselected `bankId`.
+    TransferRefund:
+      type: object
+      properties:
+        remainingRefundAmount:
+          allOf:
+          - description: The currency and value of the original amount minus the total amount refunded (includes items in processing).
+          - $ref: '#/components/schemas/Money'
+        settledRefundAmount:
+          allOf:
+          - description: The currency and value of the amount successfully refunded.
+          - $ref: '#/components/schemas/Money'
+        transferRefundStatus:
+          $ref: '#/components/schemas/TransferRefundStatus'
+      description: Contains details of the refunded amount settled, the transfer balance remaining, and whether initiated.
+    bankId:
+      type: string
+      description: The Token.io id of the bank where the consent is created. **This field is required if the customer is not using Token.io's Hosted Pages for bank selection, <i>i.e.</i>, API-only integration when `EMBEDDED_HOSTED_PAGES` is selected in `flowType`, or Hosted Pages embedded (modal) integration.**
+      example: ob-modelo
+    AccountIdentifierToken:
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: The bank account identifier for a linked account used by Token.io's Bank Integration Account Linking Service.
+          example: a:b6037206ca7311ed:afa1
+        memberId:
+          type: string
+          description: The Token.io-generated member id for the user/account holder.
+          example: m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq
+      description: The primary account number; the card identifier found on payment cards, such as credit cards and debit cards, as well as stored-value cards, gift cards and other similar card, sometimes referred to as a bank card number.
+    instructionIdentification:
+      type: string
+      description: The TPP-generated, unique transaction id passed to the bank (mandatory) but does not have to go any further in the payment flow. The expectation is that this is unique indefinitely across all time periods by including a date or date time element to the field, or by inserting a unique id.
+    ChargeBearer:
+      type: string
+      description: The bearer of the charge, if any, for international transfers. <ul><li><b>CRED</b> - all charges are borne by the creditor.</li> <li><b>DEBT</b> - all charges are borne by the debtor.</li> <li><b>SHAR</b> - the parties share the charges.</li> <li><b>SLEV</b> - each party bears its own charges, recommended on SEPA payments.</li></ul>
+      example: CRED
+      default: INVALID_CHARGE_BEARER
+      enum:
+      - INVALID_CHARGE_BEARER
+      - CRED
+      - DEBT
+      - SHAR
+      - SLEV
+    StetAccountIdentification:
+      type: object
+      properties:
+        currency:
+          type: string
+          description: The <a href="https://www.iso.org/iso-4217-currency-codes.html" target="_blank">ISO 4217</a> three letter currency code.
+          example: EUR
+        other:
+          $ref: '#/components/schemas/StetGenericIdentification'
+      description: Bank-defined account identifiers.
+    GetTransferResponse:
+      type: object
+      properties:
+        transfer:
+          $ref: '#/components/schemas/Transfer'
+    inline_response_500:
+      properties:
+        error:
+          allOf:
+          - type: object
+            properties:
+              errorCode:
+                type: string
+                description: This is a textual error code categorising the error.
+                example: InternalServerError
+          - $ref: '#/components/schemas/ServerError'
+    SepaAccount:
+      title: SepaAccount
+      required:
+      - iban
+      type: object
+      properties:
+        iban:
+          type: string
+          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
+          example: BOFIIE2D
+      description: SEPA account details where the iban is required and the bic is optional.
+    ProviderTransferMetadata:
+      type: object
+      oneOf:
+      - title: CMA9 API
+        properties:
+          cma9TransferMetadata:
+            $ref: '#/components/schemas/Cma9TransferMetadata'
+      - title: NextGenPSD2
+        properties:
+          nextGenPsd2TransferMetadata:
+            $ref: '#/components/schemas/NextGenPsd2TransferMetadata'
+      - title: Polish API
+        properties:
+          polishApiTransferMetadata:
+            $ref: '#/components/schemas/PolishApiTransferMetadata'
+      - title: French PSD2
+        properties:
+          stetTransferMetadata:
+            $ref: '#/components/schemas/StetTransferMetadata'
+      description: The transfer metadata required under the Open Banking API standard adopted by the bank.
+    BankGiroAccount:
+      title: BankGiroAccount
+      required:
+      - bankgiroNumber
+      type: object
+      properties:
+        bankgiroNumber:
+          type: string
+          description: The unique identifier for the bank account in Sweden (known in Swedish as Bankgironummer), it consists of 7 or 8 digits.
+          example: '56781234'
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
+          example: BOFIIE2D
+      description: Account details where the bankgiroNumber is required and the bic is optional.
+    Signature:
+      type: object
+      properties:
+        keyId:
+          type: string
+          description: The id of the public key used to verify the signature. This is only present if a `tokenId` is present. It can be used to validate that the provided `tokenId` corresponds to the token request (this is needed for Hosted Pages flows only).
+          example: CqSTHPvWY_dgVh-f
+        memberId:
+          type: string
+          description: The Token.io member id of the signing member.
+          example: m:nP4w3u5y8ddrxDJkjimgSX9e4fZ:5zKtXEAq
+        signature:
+          type: string
+          description: The Base64url-encoded ciphertext signature.
+          example: ODRWmM0xMRM7CKmK3bNl4e2Kb2btavTbZssCsrHsu8yopoKxBzouBrD9q5-E63tgdV1DpB7i31vwNDKywA0CAE
+      description: Contains information about the signing party. This is only present if a `tokenId` is present. It can be used to validate that the provided `tokenId` corresponds to the token request (this is needed for the Hosted Pages flows only).
     StetTransferMetadata:
       type: object
       properties:
@@ -1788,65 +1615,77 @@ components:
         regulatoryReportingCodes:
           $ref: '#/components/schemas/StetRegulatoryReportingCodes'
       description: Transfer metadata required under the <a href="https://www.stet.eu/en/psd2/" target="_blank">French PSD2 API standard</a>.
-    StetPostalAddress:
+    inline_response_504:
+      required:
+      - error
       type: object
       properties:
-        addressLine:
-          type: array
-          description: Up to 4 lines that capture the mailing address.
-          items:
-            type: string
-            example: Appartement 3a, 35 Rue de Bologne, Marseilles
-        country:
-          type: string
-          description: Two-letter country code in upper case (ISO 3166-1 alpha-2).
-          example: FR
-      description: Contains the mailing address of the creditor.
-    AccountIdentifier:
-      type: object
+        error:
+          $ref: '#/components/schemas/GatewayTimeoutError'
+    BbanAccount:
+      title: BbanAccount
       required:
-      - bankgiro
       - bban
-      - gbDomestic
-      - iban
-      - msisdn
-      - pan
-      - plus giro
-      - token
-      oneOf:
-      - title: bankgiro
-        properties:
-          bankgiro:
-            $ref: '#/components/schemas/AccountIdentifierBankgiro'
-      - title: bban
-        properties:
-          bban:
-            $ref: '#/components/schemas/AccountIdentifierBban'
-      - title: gbDomestic
-        properties:
-          gbDomestic:
-            $ref: '#/components/schemas/AccountIdentifierGbDomestic'
-      - title: iban
-        properties:
-          iban:
-            $ref: '#/components/schemas/AccountIdentifierIban'
-      - title: msisdn
-        properties:
-          msisdn:
-            $ref: '#/components/schemas/AccountIdentifierMsisdn'
-      - title: pan
-        properties:
-          pan:
-            $ref: '#/components/schemas/AccountIdentifierPan'
-      - title: plusgiro
-        properties:
-          plusgiro:
-            $ref: '#/components/schemas/AccountIdentifierPlusgiro'
-      - title: token
-        properties:
-          token:
-            $ref: '#/components/schemas/AccountIdentifierToken'
-      description: Account numbers and other strings that identify this as a unique bank account.
+      type: object
+      properties:
+        bban:
+          type: string
+          description: Represents a country-specific bank account number. The BBAN is the last part of the IBAN when used for international funds transfers. Every country has its own specific BBAN format and length. At present, there is no common EU or other standard unifying the BBAN. This is why IBAN was introduced to standardise international bank transfers.
+          example: NWBK60161331926819
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the SWIFT Address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs are often called SWIFT Codes and can be either 8 or 11 characters long."
+          example: BOFIIE2D
+      description: Account details where the bban is required and the bic is optional.
+    TransferDestinationType:
+      title: type
+      type: string
+      description: Specifies the type of transfer destination.
+      example: BUSINESS
+      default: UNKNOWN
+      enum:
+      - UNKNOWN
+      - BUSINESS
+      - PERSONAL
+    Cma9Risk:
+      type: object
+      properties:
+        deliveryAddress:
+          $ref: '#/components/schemas/DeliveryAddress'
+        merchantCustomerIdentification:
+          type: string
+          description: The unique customer identifier for the user with the merchant (maximum 70 characters).
+          example: 0000789123
+        paymentContextCode:
+          $ref: '#/components/schemas/PaymentContextCode'
+        paymentPurposeCode:
+          type: string
+          description: The category code conforming to the Recommended UK Purpose Code in the <a href="https://www.iso.org/standard/55005.html" target="_blank">ISO 20022</a> Payment Messaging List, related to the type of services or goods corresponding to the underlying purpose of the payment. <ul><li><b>CASH</b> - CashManagementTransfer</li><li><b>CORT</b> - TradeSettlementPayment</li><li><b>DVPM</b> - DeliveryAgainstPayment</li><li><b>INTC</b> - IntraCompanyPayment</li><li><b>TREA</b> - TreasuryPayment</li><li><b>SUPP</b> - SupplierPayment</li></ul>
+          default: CASH
+          example: DVPM
+          enum:
+          - CASH
+          - CORT
+          - DVPM
+          - INTC
+          - TREA
+          - SUPP
+        beneficiaryAccountType:
+          $ref: '#/components/schemas/Cma9BeneficiaryAccountType'
+        contractPresentIndicator:
+          type: string
+          description: 'This field indicates whether the Payment Service Provider (PSP) has a contract with the payee and has undertaken some form of validation or due diligence on the payee; values: true or false. This field can be pre-populated by Token.io, for PSPs using Token.io''s license.'
+          example: 'true'
+        beneficiaryPrepopulatedIndicator:
+          type: string
+          description: 'This field indicates whether the PSP, rather than the user, has generated the TRI fields and that the user can''t change them during the transaction journey; values: true or false. This field can be pre-populated by the PSP.'
+          example: 'true'
+      description: This object specifies additional details for risk scoring of payments.
+    TransferDestinationSepaInstant:
+      title: sepaInstant
+      allOf:
+      - description: SEPA Instant Credit, the instant payment processing system with funds made available immediately for the recipient.
+      - $ref: '#/components/schemas/SepaInstantAccount'
     inline_response_404:
       required:
       - error
@@ -1854,11 +1693,172 @@ components:
       properties:
         error:
           $ref: '#/components/schemas/PaymentNotFoundError'
-    TransferDestinationFasterPayments:
-      title: fasterPayments
+    CreateTransferResponse:
+      type: object
+      properties:
+        authorizationDetails:
+          $ref: '#/components/schemas/ExternalAuthorizationDetails'
+        transfer:
+          $ref: '#/components/schemas/Transfer'
+    ErrorWithCode:
+      required:
+      - errorCode
+      - message
+      type: object
+      properties:
+        errorCode:
+          type: string
+          description: A textual error code categorising the error.
+          example: InternalServerError
+        message:
+          type: string
+          description: A description of the error that occurred and a possible way to fix it.
+          example: '`RefId` should not be longer than 35 symbols.'
+      description: Error object providing details about the error.
       allOf:
-      - description: The interbank payment system in the UK, Full Payment Submission (FPS).
-      - $ref: '#/components/schemas/FasterPaymentsAccount'
+      - $ref: '#/components/schemas/Error'
+    SepaInstantAccount:
+      title: SepaInstantAccount
+      required:
+      - iban
+      type: object
+      properties:
+        iban:
+          type: string
+          description: The International Bank Account Number, used when sending interbank transfers or wiring money from one bank to another, especially across international borders. It consists of a two-letter country code followed by two check digits and up to thirty-five alphanumeric characters.
+          example: GB29NWBK60161331926819
+        bic:
+          type: string
+          description: The Business Identifier Code (BIC), <a href="https://www.iso.org/standard/84108.html" target="_blank">ISO 9362</a>, is the address assigned to a bank in order to send automated payments quickly and accurately to the banks concerned. It uniquely identifies the name and country, (and sometimes the branch) of the bank involved. BICs can be either 8 or 11 characters long.
+          example: BOFIIE2D
+      description: SEPA Instant account details where the iban is required and the bic is optional.
+    AddressInfo:
+      type: object
+      properties:
+        city:
+          type: string
+          description: Name of the city as given in postal addresses of the building/area.
+          example: Berlin
+        conscriptionNumber:
+          type: string
+          description: A special kind of house number. This relates to a settlement instead of a street. Conscription numbers are in use in some parts of Europe, sometimes together with street-related house numbers, which are also called orientation numbers.
+          example: '2831'
+        country:
+          type: string
+          description: Two-letter country code in upper case (ISO 3166-1 alpha-2).
+          example: DE
+        district:
+          type: string
+          description: A defined district within the city or country containing the address.
+          example: Friedrichshain
+        flats:
+          type: string
+          description: House numbers (range or list) of flats behind a door.
+          example: 21A - 21C
+        full:
+          type: string
+          description: This is used for a full-text, often multi-line address if you find the structured address fields unsuitable for denoting the address of this particular location. Typically such strings cannot be parsed by software.
+          example: Fifth house on the left after the village oak, Smalltown, Smallcountry
+        hamlet:
+          type: string
+          description: A small settlement. In different jurisdictions and geographies, a hamlet may be the size of a town, village, or parish, or may be considered to be a smaller settlement or subdivision or satellite entity to a larger settlement.
+          example: Botzowviertel
+        houseName:
+          type: string
+          description: The name of a house. Sometimes used in countries like England instead of (or in addition to) a house number.
+          example: Grossen Blauen Haus
+        houseNumber:
+          type: string
+          description: The house number (may contain letters, dashes, or other characters). This identifies a single building with multiple addresses.
+          example: '123'
+        place:
+          type: string
+          description: The part of an address which refers to the name of some territorial zone (like an island or square) instead of a street. It should not be included together with `street`.
+          example: Arnswalder Platz
+        postCode:
+          type: string
+          description: An identifier consisting of a group of letters and/or numbers that is added to a postal address to assist the sorting of mail.
+          example: '10243'
+        province:
+          type: string
+          description: For Canada, uppercase two-letter postal abbreviations, <i>e.g.</i>, BC, AB, ON, QC.
+          example: BC
+        state:
+          type: string
+          description: For the US, uppercase two-letter postal abbreviations, <i>e.g.</i>, AK, CA, HI, NY, TX, WY.
+          example: CA
+        street:
+          type: string
+          description: the name of the respective street in which the dwelling or business is located or where mail is received.
+          example: Hans-Otto-Strasse
+        subdistrict:
+          type: string
+          description: A smaller, readily identifiable part of a district.
+          example: Friedrichshain Nord
+        suburb:
+          type: string
+          description: Suburbs and localities are the names of geographic subdivisions of urban areas in Australia.
+          example: Altona Meadows Suburb
+      description: The complete postal address of a party.
+    StetPostalAddressCreditor:
+      type: object
+      properties:
+        addressLine:
+          type: array
+          description: Up to 4 lines that capture the mailing address.
+          items:
+            type: string
+            example: 47 La Grande Rue, Paris
+        country:
+          type: string
+          description: Two-letter country code in upper case (ISO 3166-1 alpha-2).
+          example: FR
+      description: Contains the mailing address of the creditor.
+    TransferDestinationEuDomesticNonEuro:
+      title: euDomesticNonEuro
+      oneOf:
+      - $ref: '#/components/schemas/EUIbanAccount'
+      - $ref: '#/components/schemas/BbanAccount'
+      - $ref: '#/components/schemas/ClearingNumberAccount'
+      - $ref: '#/components/schemas/SENoBankIdAccount'
+      description: The payment system within a country using that country's non-Euro domestic currency. An IBAN account will require an `iban` and an optional `bic`, a BBAN account will require a `bban` and an optional `bic`, a Clearing Number account will require a `bban` and a `clearingNumber`. A SENoBankId account, where the currency is SEK or NOK, will require an `iban` and `bban` with an optional `bic` and/or `clearingNumber`. This option is only available for an HP flow that doesn't have a preselected `bankId`.
+    TransferDestinationSepa:
+      title: sepa
+      allOf:
+      - description: The Single Euro Payments Area (SEPA), for bank transfers denominated in Euro. This consists of the 27 member states of the European Union, the four member states of the European Free Trade Association (Iceland, Liechtenstein, Norway and Switzerland) and the UK.
+      - $ref: '#/components/schemas/SepaAccount'
+    AccountIdentifierBankgiro:
+      type: object
+      properties:
+        bankgiroNumber:
+          type: string
+          description: The unique identifier for the bank account in Sweden (known in Swedish as Bankgironummer); it consists of 7 or 8 digits; the clearing code is not used.
+          example: '56781234'
+      description: The identifier for domestic bank accounts in Sweden.
+    ProviderTransferDetails:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A provider-specific reference id generated upon TPP submission.
+          example: uXmEDV5m2b8ZvLGE91ELf7PPw5BaDab98kMguu
+        status:
+          type: string
+          description: The status provided by the bank. This can be the <a href="https://www.iso20022.org/" target="_blank">ISO 20022</a> payment status code. See <a href="https://developer.token.io/token_rest_api_doc/content/e-rest/iso-20022-statuses.htm" target="_blank">ISO 20022 payment status codes</a> for more information.
+          example: AcceptedSettlementCompleted
+      description: Information about the transfer.
+    PolishApiTransferMetadata:
+      type: object
+      properties:
+        deliveryMode:
+          $ref: '#/components/schemas/PolishApiDeliveryMode'
+        hold:
+          type: boolean
+          description: Indicates whether payment should be held until confirmation of delivery.
+          format: boolean
+          example: false
+          default: false
+      description: Transfer metadata required under the <a href="https://polishapi.org/en/dokumentacja-standardu/" target="blank">Polish API standard</a>.
   securitySchemes:
     Bearer:
       type: http

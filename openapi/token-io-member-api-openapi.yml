@@ -214,41 +214,11 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    io.token.proto.gateway.CreateRestrictionResponse:
+    io.token.proto.gateway.CreateRuleRequest:
       type: object
       properties:
-        restrictionId:
-          type: string
-    io.token.proto.gateway.UpdateRestrictionResponse:
-      type: object
-      properties: {}
-    io.token.proto.gateway.GetCountriesResponse:
-      type: object
-      properties:
-        countries:
-          items:
-            $ref: '#/components/schemas/io.token.proto.common.restriction.Country'
-          type: array
-    io.token.proto.gateway.UpdateRestrictionRequest:
-      type: object
-      properties:
-        updatedRestriction:
-          $ref: '#/components/schemas/io.token.proto.common.restriction.Restriction'
-    io.token.proto.gateway.UpdateRuleResponse:
-      type: object
-      properties: {}
-    io.token.proto.gateway.DeleteRuleResponse:
-      type: object
-      properties:
-        deletedRule:
-          $ref: '#/components/schemas/io.token.proto.common.restriction.Rule'
-    io.token.proto.gateway.GetRegionsResponse:
-      type: object
-      properties:
-        regions:
-          items:
-            $ref: '#/components/schemas/io.token.proto.common.restriction.Region'
-          type: array
+        rule:
+          $ref: '#/components/schemas/io.token.proto.common.restriction.RulePayload'
     io.token.proto.common.restriction.Rule:
       type: object
       properties:
@@ -263,15 +233,47 @@ components:
           type: string
         text:
           type: string
-    io.token.proto.common.restriction.Region:
+    io.token.proto.gateway.UpdateRestrictionRequest:
       type: object
       properties:
-        country:
+        updatedRestriction:
+          $ref: '#/components/schemas/io.token.proto.common.restriction.Restriction'
+    io.token.proto.gateway.CreateRestrictionResponse:
+      type: object
+      properties:
+        restrictionId:
           type: string
-        id:
-          type: string
-        name:
-          type: string
+    io.token.proto.common.restriction.RestrictedProductType:
+      enum:
+      - UNKNOWN_PRODUCT_TYPE
+      - SINGLE_IMMEDIATE_PAYMENT
+      - IP_ADDRESS
+      - GEO_LOCATION
+      - PIS_PAYMENT_NETWORK
+      default: UNKNOWN_PRODUCT_TYPE
+      type: string
+    io.token.proto.gateway.DeleteRuleResponse:
+      type: object
+      properties:
+        deletedRule:
+          $ref: '#/components/schemas/io.token.proto.common.restriction.Rule'
+    io.token.proto.gateway.UpdateRuleResponse:
+      type: object
+      properties: {}
+    io.token.proto.gateway.GetCountriesResponse:
+      type: object
+      properties:
+        countries:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.restriction.Country'
+          type: array
+    io.token.proto.gateway.GetRestrictionsResponse:
+      type: object
+      properties:
+        restrictions:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.restriction.Restriction'
+          type: array
     io.token.proto.common.restriction.Restriction:
       type: object
       properties:
@@ -294,11 +296,28 @@ components:
           type: string
         updatedAt:
           type: string
+    io.token.proto.gateway.DeleteRestrictionResponse:
+      type: object
+      properties:
+        deletedRestriction:
+          $ref: '#/components/schemas/io.token.proto.common.restriction.Restriction'
     io.token.proto.gateway.UpdateRuleRequest:
       type: object
       properties:
         updatedRule:
           $ref: '#/components/schemas/io.token.proto.common.restriction.Rule'
+    io.token.proto.gateway.GetRegionsResponse:
+      type: object
+      properties:
+        regions:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.restriction.Region'
+          type: array
+    io.token.proto.gateway.CreateRuleResponse:
+      type: object
+      properties:
+        ruleId:
+          type: string
     io.token.proto.gateway.CreateRestrictionRequest:
       type: object
       properties:
@@ -306,23 +325,9 @@ components:
           $ref: '#/components/schemas/io.token.proto.common.restriction.RestrictionPayload'
         targetMemberId:
           type: string
-    io.token.proto.common.restriction.Country:
+    io.token.proto.gateway.UpdateRestrictionResponse:
       type: object
-      properties:
-        code:
-          type: string
-        name:
-          type: string
-    io.token.proto.gateway.CreateRuleResponse:
-      type: object
-      properties:
-        ruleId:
-          type: string
-    io.token.proto.gateway.DeleteRestrictionResponse:
-      type: object
-      properties:
-        deletedRestriction:
-          $ref: '#/components/schemas/io.token.proto.common.restriction.Restriction'
+      properties: {}
     io.token.proto.common.restriction.RulePayload:
       type: object
       properties:
@@ -330,13 +335,6 @@ components:
           type: string
         text:
           type: string
-    io.token.proto.gateway.GetRestrictionsResponse:
-      type: object
-      properties:
-        restrictions:
-          items:
-            $ref: '#/components/schemas/io.token.proto.common.restriction.Restriction'
-          type: array
     io.token.proto.common.restriction.RestrictionPayload:
       type: object
       properties:
@@ -346,17 +344,19 @@ components:
           items:
             $ref: '#/components/schemas/io.token.proto.common.restriction.RulePayload'
           type: array
-    io.token.proto.common.restriction.RestrictedProductType:
-      enum:
-      - UNKNOWN_PRODUCT_TYPE
-      - SINGLE_IMMEDIATE_PAYMENT
-      - IP_ADDRESS
-      - GEO_LOCATION
-      - PIS_PAYMENT_NETWORK
-      default: UNKNOWN_PRODUCT_TYPE
-      type: string
-    io.token.proto.gateway.CreateRuleRequest:
+    io.token.proto.common.restriction.Country:
       type: object
       properties:
-        rule:
-          $ref: '#/components/schemas/io.token.proto.common.restriction.RulePayload'
+        code:
+          type: string
+        name:
+          type: string
+    io.token.proto.common.restriction.Region:
+      type: object
+      properties:
+        country:
+          type: string
+        id:
+          type: string
+        name:
+          type: string

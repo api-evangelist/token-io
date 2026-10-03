@@ -199,6 +199,23 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    io.token.proto.gateway.consent.ConsentResponse:
+      type: object
+      properties:
+        consent:
+          $ref: '#/components/schemas/io.token.proto.gateway.consent.Consent'
+    io.token.proto.common.v2.common.FlowType:
+      enum:
+      - UNKNOWN
+      - API
+      - WEB_APP
+      - WEB_APP_CREDENTIAL
+      - API_ONLY
+      - FULL_HOSTED_PAGES
+      - EMBEDDED_HOSTED_PAGES
+      - PAY_BY_LINK_HOSTED_PAGES
+      default: UNKNOWN
+      type: string
     io.token.proto.gateway.consent.GetConsentsResponse:
       type: object
       properties:
@@ -208,49 +225,6 @@ components:
           type: array
         page:
           $ref: '#/components/schemas/io.token.proto.common.v2.paging.PageInfo'
-    io.token.proto.gateway.consent.Permission:
-      enum:
-      - UNKNOWN_PERMISSION
-      - READ_ACCOUNTS
-      - READ_ACCOUNT_BALANCES
-      - READ_ACCOUNT_TRANSACTIONS
-      - READ_ACCOUNT_PARTIES
-      default: UNKNOWN_PERMISSION
-      type: string
-    io.token.proto.gateway.consent.ConsentRequest:
-      type: object
-      properties:
-        bankId:
-          type: string
-        callbackState:
-          type: string
-        callbackUrl:
-          type: string
-        consentTermsAccepted:
-          format: boolean
-          type: boolean
-        expiresAt:
-          type: string
-        externalPsuReference:
-          type: string
-        flowType:
-          $ref: '#/components/schemas/io.token.proto.common.v2.common.FlowType'
-        onBehalfOfId:
-          type: string
-        permissions:
-          items:
-            $ref: '#/components/schemas/io.token.proto.gateway.consent.Permission'
-          type: array
-        transactionHistoryDays:
-          format: int32
-          type: integer
-    io.token.proto.gateway.consent.ConfirmConsentRequest:
-      type: object
-      properties:
-        consentId:
-          type: string
-        psuConfirmedAt:
-          type: string
     io.token.proto.common.v2.paging.PageInfo:
       type: object
       properties:
@@ -264,6 +238,20 @@ components:
           type: string
         offset:
           type: string
+    io.token.proto.gateway.consent.ConsentStatus:
+      enum:
+      - UNKNOWN_CONSENT_STATUS
+      - PENDING
+      - PENDING_REDIRECT_AUTH
+      - FAILURE_REJECTED
+      - AUTHORIZED
+      - EXPIRED
+      - FAILURE_EXPIRED
+      - FAILURE_CANCELLED
+      - REVOKED
+      - PENDING_REDIRECT_HP
+      default: UNKNOWN_CONSENT_STATUS
+      type: string
     io.token.proto.gateway.consent.Consent:
       type: object
       properties:
@@ -304,46 +292,58 @@ components:
           type: integer
         updatedAt:
           type: string
+    io.token.proto.gateway.consent.Authentication:
+      type: object
+      properties:
+        redirectUrl:
+          type: string
+    io.token.proto.gateway.consent.ConsentRequest:
+      type: object
+      properties:
+        bankId:
+          type: string
+        callbackState:
+          type: string
+        callbackUrl:
+          type: string
+        consentTermsAccepted:
+          format: boolean
+          type: boolean
+        expiresAt:
+          type: string
+        externalPsuReference:
+          type: string
+        flowType:
+          $ref: '#/components/schemas/io.token.proto.common.v2.common.FlowType'
+        onBehalfOfId:
+          type: string
+        permissions:
+          items:
+            $ref: '#/components/schemas/io.token.proto.gateway.consent.Permission'
+          type: array
+        transactionHistoryDays:
+          format: int32
+          type: integer
+    io.token.proto.gateway.consent.ConfirmConsentRequest:
+      type: object
+      properties:
+        consentId:
+          type: string
+        psuConfirmedAt:
+          type: string
+    io.token.proto.gateway.consent.Permission:
+      enum:
+      - UNKNOWN_PERMISSION
+      - READ_ACCOUNTS
+      - READ_ACCOUNT_BALANCES
+      - READ_ACCOUNT_TRANSACTIONS
+      - READ_ACCOUNT_PARTIES
+      default: UNKNOWN_PERMISSION
+      type: string
     io.token.proto.gateway.consent.ConfirmConsentAuthenticationRequest:
       type: object
       properties:
         consentId:
           type: string
         query:
-          type: string
-    io.token.proto.gateway.consent.ConsentResponse:
-      type: object
-      properties:
-        consent:
-          $ref: '#/components/schemas/io.token.proto.gateway.consent.Consent'
-    io.token.proto.common.v2.common.FlowType:
-      enum:
-      - UNKNOWN
-      - API
-      - WEB_APP
-      - WEB_APP_CREDENTIAL
-      - API_ONLY
-      - FULL_HOSTED_PAGES
-      - EMBEDDED_HOSTED_PAGES
-      - PAY_BY_LINK_HOSTED_PAGES
-      default: UNKNOWN
-      type: string
-    io.token.proto.gateway.consent.ConsentStatus:
-      enum:
-      - UNKNOWN_CONSENT_STATUS
-      - PENDING
-      - PENDING_REDIRECT_AUTH
-      - FAILURE_REJECTED
-      - AUTHORIZED
-      - EXPIRED
-      - FAILURE_EXPIRED
-      - FAILURE_CANCELLED
-      - REVOKED
-      - PENDING_REDIRECT_HP
-      default: UNKNOWN_CONSENT_STATUS
-      type: string
-    io.token.proto.gateway.consent.Authentication:
-      type: object
-      properties:
-        redirectUrl:
           type: string

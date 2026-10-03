@@ -297,30 +297,6 @@ paths:
         required: true
 components:
   schemas:
-    io.token.proto.common.member.Merchant.PersonDetail:
-      type: object
-      properties:
-        address:
-          type: string
-        dateOfBirth:
-          type: string
-        fullName:
-          type: string
-    io.token.proto.gateway.CreateSubTppResponse:
-      type: object
-      properties:
-        subTppId:
-          type: string
-    io.token.proto.gateway.GetDocumentsResponse:
-      type: object
-      properties:
-        documents:
-          items:
-            $ref: '#/components/schemas/io.token.proto.common.member.Document'
-          type: array
-    io.token.proto.gateway.DeleteSubTppResponse:
-      type: object
-      properties: {}
     io.token.proto.common.member.Merchant.CompetentAuthorities:
       enum:
       - INVALID_AUTHORITY
@@ -328,157 +304,6 @@ components:
       - BAFIN
       default: INVALID_AUTHORITY
       type: string
-    io.token.proto.common.member.Document:
-      type: object
-      properties:
-        createdAtMs:
-          format: string
-          type: string
-        description:
-          type: string
-        documentName:
-          type: string
-        fileId:
-          type: string
-        id:
-          type: string
-        memberId:
-          type: string
-        status:
-          $ref: '#/components/schemas/io.token.proto.common.member.DocumentStatus'
-        subTppId:
-          type: string
-        updatedAtMs:
-          format: string
-          type: string
-        uploadOptional:
-          format: boolean
-          type: boolean
-    io.token.proto.gateway.CreateSubTppRequest:
-      type: object
-      properties:
-        domain:
-          type: string
-        domicileCountry:
-          type: string
-        logo:
-          format: byte
-          type: string
-        mccCode:
-          type: string
-        merchant:
-          $ref: '#/components/schemas/io.token.proto.common.member.Merchant'
-        name:
-          type: string
-        parentSubTppId:
-          type: string
-        useNewFlow:
-          format: boolean
-          type: boolean
-    io.token.proto.common.blob.Blob.Payload:
-      type: object
-      properties:
-        accessMode:
-          $ref: '#/components/schemas/io.token.proto.common.blob.Blob.AccessMode'
-        data:
-          format: byte
-          type: string
-        name:
-          type: string
-        ownerId:
-          type: string
-        type:
-          type: string
-    io.token.proto.gateway.UpdateSubTppResponse:
-      type: object
-      properties: {}
-    io.token.proto.common.member.Merchant.RegulatoryType:
-      enum:
-      - INVALID_TYPE
-      - TYPE_1
-      - TYPE_2
-      default: INVALID_TYPE
-      type: string
-    io.token.proto.common.member.SubTpp.Status:
-      enum:
-      - INVALID_STATUS
-      - ACTIVATED
-      - REJECTED
-      - AWAITING_APPROVAL
-      - DEACTIVATED
-      - AWAITING_DOCUMENTS
-      default: INVALID_STATUS
-      type: string
-    io.token.proto.common.member.Merchant.MerchantType:
-      enum:
-      - INVALID_MERCHANT_TYPE
-      - TOKEN_LICENSED_SOLE_TRADER
-      - TOKEN_LICENSED_NON_SOLE_TRADER_PUBLIC
-      - TOKEN_LICENSED_NON_SOLE_TRADER_PRIVATE
-      - LICENSED_TPP_SOLE_TRADER
-      - LICENSED_TPP_NON_SOLE_TRADER
-      default: INVALID_MERCHANT_TYPE
-      type: string
-    io.token.proto.common.member.SubTpp.CallbackType:
-      enum:
-      - UNSPECIFIED
-      - TOKEN_CALLBACK
-      - TPP_CALLBACK
-      default: UNSPECIFIED
-      type: string
-    io.token.proto.gateway.UploadDocumentResponse:
-      type: object
-      properties: {}
-    io.token.proto.common.blob.Blob.AccessMode:
-      enum:
-      - DEFAULT
-      - PUBLIC
-      default: DEFAULT
-      type: string
-    io.token.proto.common.member.Merchant.RiskAssessmentScore:
-      enum:
-      - INVALID_SCORE
-      - GREEN
-      - AMBER
-      - RED
-      default: INVALID_SCORE
-      type: string
-    io.token.proto.common.member.Merchant.ChargeableStatus:
-      enum:
-      - INVALID_STATUS
-      - CHARGEABLE
-      - PASS_THROUGH
-      - INTERNAL
-      default: INVALID_STATUS
-      type: string
-    io.token.proto.gateway.GetPreSignedUrlResponse:
-      type: object
-      properties:
-        expiresAt:
-          type: string
-        url:
-          type: string
-    io.token.proto.gateway.RetrieveSubTppResponse:
-      type: object
-      properties:
-        subTpp:
-          $ref: '#/components/schemas/io.token.proto.common.member.SubTpp'
-    io.token.proto.gateway.RetrieveSubTppsResponse:
-      type: object
-      properties:
-        offset:
-          type: string
-        subTpps:
-          items:
-            $ref: '#/components/schemas/io.token.proto.common.member.SubTpp'
-          type: array
-    io.token.proto.gateway.UploadDocumentRequest:
-      type: object
-      properties:
-        file:
-          $ref: '#/components/schemas/io.token.proto.common.blob.Blob.Payload'
-        fileType:
-          type: string
     io.token.proto.common.member.Merchant:
       type: object
       properties:
@@ -545,11 +370,56 @@ components:
           type: array
         uid:
           type: string
-    io.token.proto.gateway.UpdateSubTppRequest:
+    io.token.proto.common.member.Merchant.RiskAssessmentScore:
+      enum:
+      - INVALID_SCORE
+      - GREEN
+      - AMBER
+      - RED
+      default: INVALID_SCORE
+      type: string
+    io.token.proto.gateway.UploadDocumentRequest:
       type: object
       properties:
-        subTpp:
-          $ref: '#/components/schemas/io.token.proto.common.member.SubTpp'
+        file:
+          $ref: '#/components/schemas/io.token.proto.common.blob.Blob.Payload'
+        fileType:
+          type: string
+    io.token.proto.gateway.GetDocumentsResponse:
+      type: object
+      properties:
+        documents:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.member.Document'
+          type: array
+    io.token.proto.common.member.Merchant.ChargeableStatus:
+      enum:
+      - INVALID_STATUS
+      - CHARGEABLE
+      - PASS_THROUGH
+      - INTERNAL
+      default: INVALID_STATUS
+      type: string
+    io.token.proto.common.member.SubTpp.Status:
+      enum:
+      - INVALID_STATUS
+      - ACTIVATED
+      - REJECTED
+      - AWAITING_APPROVAL
+      - DEACTIVATED
+      - AWAITING_DOCUMENTS
+      default: INVALID_STATUS
+      type: string
+    io.token.proto.gateway.UpdateSubTppResponse:
+      type: object
+      properties: {}
+    io.token.proto.common.member.SubTpp.CallbackType:
+      enum:
+      - UNSPECIFIED
+      - TOKEN_CALLBACK
+      - TPP_CALLBACK
+      default: UNSPECIFIED
+      type: string
     io.token.proto.gateway.RetrieveSubTppChildrenResponse:
       type: object
       properties:
@@ -557,6 +427,78 @@ components:
           items:
             $ref: '#/components/schemas/io.token.proto.common.member.SubTpp'
           type: array
+    io.token.proto.common.member.Merchant.MerchantType:
+      enum:
+      - INVALID_MERCHANT_TYPE
+      - TOKEN_LICENSED_SOLE_TRADER
+      - TOKEN_LICENSED_NON_SOLE_TRADER_PUBLIC
+      - TOKEN_LICENSED_NON_SOLE_TRADER_PRIVATE
+      - LICENSED_TPP_SOLE_TRADER
+      - LICENSED_TPP_NON_SOLE_TRADER
+      default: INVALID_MERCHANT_TYPE
+      type: string
+    io.token.proto.common.member.Document:
+      type: object
+      properties:
+        createdAtMs:
+          format: string
+          type: string
+        description:
+          type: string
+        documentName:
+          type: string
+        fileId:
+          type: string
+        id:
+          type: string
+        memberId:
+          type: string
+        status:
+          $ref: '#/components/schemas/io.token.proto.common.member.DocumentStatus'
+        subTppId:
+          type: string
+        updatedAtMs:
+          format: string
+          type: string
+        uploadOptional:
+          format: boolean
+          type: boolean
+    io.token.proto.common.member.Merchant.RegulatoryType:
+      enum:
+      - INVALID_TYPE
+      - TYPE_1
+      - TYPE_2
+      default: INVALID_TYPE
+      type: string
+    io.token.proto.gateway.DeleteSubTppResponse:
+      type: object
+      properties: {}
+    io.token.proto.common.blob.Blob.AccessMode:
+      enum:
+      - DEFAULT
+      - PUBLIC
+      default: DEFAULT
+      type: string
+    io.token.proto.gateway.UploadDocumentResponse:
+      type: object
+      properties: {}
+    io.token.proto.gateway.UpdateSubTppRequest:
+      type: object
+      properties:
+        subTpp:
+          $ref: '#/components/schemas/io.token.proto.common.member.SubTpp'
+    io.token.proto.gateway.CreateSubTppResponse:
+      type: object
+      properties:
+        subTppId:
+          type: string
+    io.token.proto.gateway.GetPreSignedUrlResponse:
+      type: object
+      properties:
+        expiresAt:
+          type: string
+        url:
+          type: string
     io.token.proto.common.member.DocumentStatus:
       enum:
       - INVALID_DOCUMENT_STATUS
@@ -565,6 +507,20 @@ components:
       - WITHDRAWN
       default: INVALID_DOCUMENT_STATUS
       type: string
+    io.token.proto.common.member.Merchant.PersonDetail:
+      type: object
+      properties:
+        address:
+          type: string
+        dateOfBirth:
+          type: string
+        fullName:
+          type: string
+    io.token.proto.gateway.RetrieveSubTppResponse:
+      type: object
+      properties:
+        subTpp:
+          $ref: '#/components/schemas/io.token.proto.common.member.SubTpp'
     io.token.proto.common.member.SubTpp:
       type: object
       properties:
@@ -609,3 +565,47 @@ components:
         updatedAt:
           format: string
           type: string
+    io.token.proto.common.blob.Blob.Payload:
+      type: object
+      properties:
+        accessMode:
+          $ref: '#/components/schemas/io.token.proto.common.blob.Blob.AccessMode'
+        data:
+          format: byte
+          type: string
+        name:
+          type: string
+        ownerId:
+          type: string
+        type:
+          type: string
+    io.token.proto.gateway.RetrieveSubTppsResponse:
+      type: object
+      properties:
+        offset:
+          type: string
+        subTpps:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.member.SubTpp'
+          type: array
+    io.token.proto.gateway.CreateSubTppRequest:
+      type: object
+      properties:
+        domain:
+          type: string
+        domicileCountry:
+          type: string
+        logo:
+          format: byte
+          type: string
+        mccCode:
+          type: string
+        merchant:
+          $ref: '#/components/schemas/io.token.proto.common.member.Merchant'
+        name:
+          type: string
+        parentSubTppId:
+          type: string
+        useNewFlow:
+          format: boolean
+          type: boolean

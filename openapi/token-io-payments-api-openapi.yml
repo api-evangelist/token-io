@@ -291,6 +291,139 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    io.token.proto.common.address.Address:
+      type: object
+      properties:
+        city:
+          type: string
+        conscriptionNumber:
+          type: string
+        country:
+          type: string
+        district:
+          type: string
+        flats:
+          type: string
+        full:
+          type: string
+        hamlet:
+          type: string
+        houseName:
+          type: string
+        houseNumber:
+          type: string
+        place:
+          type: string
+        postCode:
+          type: string
+        province:
+          type: string
+        state:
+          type: string
+        street:
+          type: string
+        subdistrict:
+          type: string
+        suburb:
+          type: string
+    io.token.proto.common.transferinstructions.TransferDestination.Type:
+      enum:
+      - UNKNOWN
+      - BUSINESS
+      - PERSONAL
+      default: UNKNOWN
+      type: string
+    io.token.proto.common.v2.openbanking.payment.PaymentLinkStatus:
+      enum:
+      - UNKNOWN
+      - LINK_ACTIVE
+      - LINK_EXPIRED
+      - LINK_REDEEMED
+      - LINK_CANCELED
+      default: UNKNOWN
+      type: string
+    io.token.proto.common.v2.openbanking.common.ChargeBearer:
+      enum:
+      - UNKNOWN_CHARGE_BEARER
+      - CRED
+      - DEBT
+      - SHAR
+      - SLEV
+      default: UNKNOWN_CHARGE_BEARER
+      type: string
+    io.token.proto.common.providerspecific.nextgenpsd2.NextGenPsd2StandingOrderMetadata:
+      type: object
+      properties:
+        creditorAgentName:
+          type: string
+        endToEndIdentification:
+          type: string
+    io.token.proto.common.v2.common.FlowType:
+      enum:
+      - UNKNOWN
+      - API
+      - WEB_APP
+      - WEB_APP_CREDENTIAL
+      - API_ONLY
+      - FULL_HOSTED_PAGES
+      - EMBEDDED_HOSTED_PAGES
+      - PAY_BY_LINK_HOSTED_PAGES
+      default: UNKNOWN
+      type: string
+    io.token.proto.common.providerspecific.stet.PostalAddress:
+      type: object
+      properties:
+        addressLine:
+          items:
+            type: string
+          type: array
+        country:
+          type: string
+    io.token.proto.common.providerspecific.cma9.DeliveryAddress:
+      type: object
+      properties:
+        addressLine:
+          items:
+            type: string
+          type: array
+        addressType:
+          type: string
+        buildingNumber:
+          type: string
+        country:
+          type: string
+        countrySubDivision:
+          items:
+            type: string
+          type: array
+        department:
+          type: string
+        postCode:
+          type: string
+        streetName:
+          type: string
+        subDepartment:
+          type: string
+        townName:
+          type: string
+    io.token.proto.common.v2.paging.PageInfo:
+      type: object
+      properties:
+        haveMore:
+          format: boolean
+          type: boolean
+        limit:
+          format: int32
+          type: integer
+        nextOffset:
+          type: string
+        offset:
+          type: string
+    io.token.proto.gateway.ProvidePaymentEmbeddedAuthV2Request:
+      type: object
+      properties:
+        embeddedAuth:
+          $ref: '#/components/schemas/io.token.proto.gateway.ProvidePaymentEmbeddedAuthV2Request.EmbeddedAuthEntry'
     io.token.proto.common.v2.common.LocalInstrument:
       enum:
       - INVALID_LOCAL_INSTRUMENT
@@ -310,16 +443,37 @@ components:
       - AUTO_SELECT
       default: INVALID_LOCAL_INSTRUMENT
       type: string
-    io.token.proto.common.providerspecific.nextgenpsd2.NextGenPsd2TransferMetadata:
+    io.token.proto.common.providerspecific.polishapi.PolishApiTransferMetadata:
       type: object
       properties:
-        creditorAgent:
+        deliveryMode:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.polishapi.DeliveryMode'
+        hold:
+          format: boolean
+          type: boolean
+    io.token.proto.common.v2.common.Risk:
+      type: object
+      properties:
+        beneficiaryAccountType:
+          $ref: '#/components/schemas/io.token.proto.common.v2.common.BeneficiaryAccountType'
+        beneficiaryPrepopulatedIndicator:
+          format: boolean
+          type: boolean
+        contractPresentIndicator:
+          format: boolean
+          type: boolean
+        contractPresentInidicator:
+          format: boolean
+          type: boolean
+        deliveryAddress:
+          $ref: '#/components/schemas/io.token.proto.common.v2.common.Address'
+        merchantCategoryCode:
           type: string
-        creditorAgentName:
+        paymentContextCode:
+          $ref: '#/components/schemas/io.token.proto.common.v2.common.PaymentContextCode'
+        paymentPurposeCode:
           type: string
-        endToEndIdentification:
-          type: string
-        remittanceInformationStructured:
+        psuId:
           type: string
     io.token.proto.gateway.CreatePaymentV2Request:
       type: object
@@ -331,218 +485,50 @@ components:
         pispConsentAccepted:
           format: boolean
           type: boolean
-    io.token.proto.common.transferinstructions.PaymentContext:
-      enum:
-      - INVALID_CONTEXT
-      - OTHER_CONTEXT
-      - BILL_PAYMENT
-      - ECOMMERCE_GOODS
-      - ECOMMERCE_SERVICES
-      - PERSON_TO_PERSON
-      default: INVALID_CONTEXT
-      type: string
-    io.token.proto.common.v2.common.DebtorInformation:
+    io.token.proto.common.v2.openbanking.payment.Payment:
       type: object
       properties:
-        accountNumber:
+        authentication:
+          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.common.Authentication'
+        bankPaymentId:
           type: string
-        address:
-          $ref: '#/components/schemas/io.token.proto.common.v2.common.Address'
-        bankgiroNumber:
+        bankPaymentStatus:
           type: string
-        bban:
+        bankTransactionId:
           type: string
-        bic:
+        bankVrpId:
           type: string
-        clearingNumber:
+        bankVrpStatus:
           type: string
-        iban:
-          type: string
-        name:
-          type: string
-        plusgiroNumber:
-          type: string
-        sortCode:
-          type: string
-        tokenizedAccountId:
-          type: string
-        ultimateDebtorName:
-          type: string
-    io.token.proto.common.transferinstructions.ChargeBearer:
-      enum:
-      - INVALID_CHARGE_BEARER
-      - CRED
-      - DEBT
-      - SHAR
-      - SLEV
-      default: INVALID_CHARGE_BEARER
-      type: string
-    io.token.proto.gateway.GetPaymentsV2Response:
-      type: object
-      properties:
-        pageInfo:
-          $ref: '#/components/schemas/io.token.proto.common.v2.paging.PageInfo'
-        payments:
-          items:
-            $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.payment.Payment'
-          type: array
-    io.token.proto.common.providerspecific.cma9.BeneficiaryAccountType:
-      enum:
-      - INVALID_BENEFICIARY_ACCOUNT_TYPE
-      - PERSONAL
-      - JOINT_PERSONAL
-      - PERSONAL_SAVINGS_ACCOUNT
-      - BUSINESS
-      - BUSINESS_SAVINGS_ACCOUNT
-      - CHARITY
-      - COLLECTION
-      - CORPORATE
-      - GOVERNMENT
-      - EWALLET
-      - INVESTMENT
-      - ISA
-      - PREMIER
-      - WEALTH
-      - PENSION
-      default: INVALID_BENEFICIARY_ACCOUNT_TYPE
-      type: string
-    io.token.proto.common.v2.openbanking.payment.V1Fields.InternalTokenRequestResultStatus:
-      enum:
-      - UNKNOWN
-      - PENDING
-      - PROCESSED
-      - REJECTED
-      - PENDING_TOKEN_REQUEST_CREATED
-      - PENDING_WEB_APP_INVOKED
-      - PENDING_WEB_APP_BANK_SELECTED
-      - PENDING_WEB_APP_CONSENT_ACCEPTED
-      - PENDING_WEB_APP_CONSENT_DECLINED
-      - PENDING_CREDENTIALS_REQUIRED
-      - PENDING_REDIRECT_URL_SENT_TO_TPP
-      - PENDING_CONSENT_SENT_TO_BANK
-      - PROCESSING_CONSENT_ACCEPTED_BY_BANK
-      - PROCESSING_CALLBACK_INITIATED_BY_TPP
-      - PROCESSED_COMPLETED_PAYMENT_CONFIRMATION_PAGE_DISPLAYED
-      - PROCESSED_FAILED_PAYMENT_ERROR_PAGE_DISPLAYED
-      - PENDING_REDIRECT_URL_SENT
-      - PENDING_WEB_APP_SENT_USER_TO_BANK
-      - PENDING_FURTHER_CREDENTIALS_REQUIRED_1
-      - PENDING_FURTHER_CREDENTIALS_REQUIRED_2
-      - PENDING_TOKEN_CREATED_NOT_AUTHORIZED
-      - PROCESSED_NO_CALLBACK
-      - PENDING_DECOUPLED_AUTHENTICATION
-      default: UNKNOWN
-      type: string
-    io.token.proto.common.v2.openbanking.common.EmbeddedAuthField.Type:
-      enum:
-      - INVALID_TYPE
-      - FIELD
-      - PASSWORD
-      - CHOICE_FIELD
-      - CONFIRMATION
-      default: INVALID_TYPE
-      type: string
-    io.token.proto.gateway.PaymentV2Response:
-      type: object
-      properties:
-        payment:
-          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.payment.Payment'
-    io.token.proto.common.providerspecific.stet.ClearingSystemMemberIdentification:
-      type: object
-      properties:
-        clearingSystemId:
-          type: string
-        memberId:
-          type: string
-    io.token.proto.common.providerspecific.stet.PartyIdentification:
-      type: object
-      properties:
-        name:
-          type: string
-        organisationId:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.GenericIdentification'
-        postalAddress:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.PostalAddress'
-        privateId:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.GenericIdentification'
-    io.token.proto.common.providerspecific.cma9.Cma9TransferMetadata:
-      type: object
-      properties:
-        endToEndIdentification:
-          type: string
-        instructionIdentification:
-          type: string
-        remittanceInformation:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.RemittanceInformation'
-        risk:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.Risk'
-    io.token.proto.common.v2.common.RefundAccount:
-      type: object
-      properties:
-        accountNumber:
-          type: string
-        bankgiroNumber:
-          type: string
-        bban:
-          type: string
-        bic:
-          type: string
-        clearingNumber:
-          type: string
-        iban:
-          type: string
-        name:
-          type: string
-        plusgiroNumber:
-          type: string
-        sortCode:
-          type: string
-    io.token.proto.common.v2.openbanking.common.Authentication:
-      type: object
-      properties:
-        description:
-          type: string
-        fields:
-          items:
-            $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.common.EmbeddedAuthField'
-          type: array
-        flickerCode:
-          type: string
-        image:
-          type: string
-        isRetry:
+        convertedToFutureDatedPayment:
           format: boolean
           type: boolean
-        redirectUrl:
+        createdDateTime:
           type: string
-        requiredCredentials:
-          items:
-            $ref: '#/components/schemas/io.token.proto.common.providerspecific.CredentialField'
-          type: array
-    io.token.proto.common.alias.Alias.Type:
-      enum:
-      - INVALID
-      - UNKNOWN
-      - EMAIL
-      - PHONE
-      - DOMAIN
-      - USERNAME
-      - BANK
-      - CUSTOM
-      - EIDAS
-      default: INVALID
-      type: string
-    io.token.proto.common.providerspecific.ProviderTransferMetadata:
-      type: object
-      properties:
-        cma9TransferMetadata:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.Cma9TransferMetadata'
-        nextGenPsd2TransferMetadata:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.nextgenpsd2.NextGenPsd2TransferMetadata'
-        polishApiTransferMetadata:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.polishapi.PolishApiTransferMetadata'
-        stetTransferMetadata:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.StetTransferMetadata'
+        errorInfo:
+          $ref: '#/components/schemas/io.token.proto.common.v2.common.ErrorInfo'
+        expiresDateTime:
+          type: string
+        id:
+          type: string
+        initiation:
+          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.payment.Initiation'
+        memberId:
+          type: string
+        paymentLinkStatus:
+          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.payment.PaymentLinkStatus'
+        paymentType:
+          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.common.PaymentType'
+        refundDetails:
+          $ref: '#/components/schemas/io.token.proto.common.v2.common.Refund'
+        status:
+          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.payment.Status'
+        statusReasonInformation:
+          type: string
+        updatedDateTime:
+          type: string
+        v1Fields:
+          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.payment.V1Fields'
     io.token.proto.common.v2.openbanking.payment.Initiation:
       type: object
       properties:
@@ -601,36 +587,98 @@ components:
           $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.payment.V1InitiationFields'
         vrpConsentId:
           type: string
-    io.token.proto.common.providerspecific.CredentialField:
+    io.token.proto.gateway.PaymentV2Response:
       type: object
       properties:
-        description:
+        payment:
+          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.payment.Payment'
+    io.token.proto.common.v2.openbanking.common.EmbeddedAuthField.Type:
+      enum:
+      - INVALID_TYPE
+      - FIELD
+      - PASSWORD
+      - CHOICE_FIELD
+      - CONFIRMATION
+      default: INVALID_TYPE
+      type: string
+    io.token.proto.common.v2.common.PayByLinkOptions:
+      type: object
+      properties:
+        expiresDateTime:
+          type: string
+    io.token.proto.common.v2.openbanking.common.EmbeddedAuthField:
+      type: object
+      properties:
+        additionalInformation:
           type: string
         displayName:
           type: string
-        flickerCode:
-          type: string
         id:
-          type: string
-        image:
           type: string
         options:
           items:
             type: string
           type: array
-        password:
+        type:
+          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.common.EmbeddedAuthField.Type'
+    io.token.proto.common.v2.openbanking.common.Authentication:
+      type: object
+      properties:
+        description:
+          type: string
+        fields:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.common.EmbeddedAuthField'
+          type: array
+        flickerCode:
+          type: string
+        image:
+          type: string
+        isRetry:
           format: boolean
           type: boolean
-        type:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.CredentialField.Type'
-    io.token.proto.common.v2.openbanking.common.ChargeBearer:
+        redirectUrl:
+          type: string
+        requiredCredentials:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.providerspecific.CredentialField'
+          type: array
+    io.token.proto.common.v2.common.RefundAccount:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        bankgiroNumber:
+          type: string
+        bban:
+          type: string
+        bic:
+          type: string
+        clearingNumber:
+          type: string
+        iban:
+          type: string
+        name:
+          type: string
+        plusgiroNumber:
+          type: string
+        sortCode:
+          type: string
+    io.token.proto.common.v2.openbanking.payment.V1InitiationFields.PostponeInitiation:
       enum:
-      - UNKNOWN_CHARGE_BEARER
+      - INVALID
+      - POSTPONE
+      - DO_NOT_POSTPONE
+      default: INVALID
+      type: string
+    io.token.proto.common.transferinstructions.ChargeBearer:
+      enum:
+      - INVALID_CHARGE_BEARER
       - CRED
       - DEBT
       - SHAR
       - SLEV
-      default: UNKNOWN_CHARGE_BEARER
+      default: INVALID_CHARGE_BEARER
       type: string
     io.token.proto.common.providerspecific.stet.PaymentTypeInformation:
       type: object
@@ -643,43 +691,281 @@ components:
           type: string
         serviceLevel:
           type: string
-    io.token.proto.common.providerspecific.cma9.Risk:
+    io.token.proto.common.providerspecific.CredentialField.Type:
+      enum:
+      - INVALID
+      - FIELD
+      - PASSWORD
+      - PSU_MESSAGE
+      - IMAGE
+      - FLICKER
+      - DECOUPLED
+      - CONFIRMATION
+      default: INVALID
+      type: string
+    io.token.proto.common.money.Money:
       type: object
       properties:
-        beneficiaryAccountType:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.BeneficiaryAccountType'
-        beneficiaryPrepopulatedIndicator:
+        currency:
           type: string
-        contractPresentIndicator:
+        value:
           type: string
-        deliveryAddress:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.DeliveryAddress'
-        merchantCategoryCode:
-          type: string
-        merchantCustomerIdentification:
-          type: string
-        paymentContextCode:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.PaymentContextCode'
-        paymentPurposeCode:
-          type: string
-    io.token.proto.common.providerspecific.stet.PostalAddress:
+    io.token.proto.common.v2.common.DebtorInformation:
       type: object
       properties:
-        addressLine:
+        accountNumber:
+          type: string
+        address:
+          $ref: '#/components/schemas/io.token.proto.common.v2.common.Address'
+        bankgiroNumber:
+          type: string
+        bban:
+          type: string
+        bic:
+          type: string
+        clearingNumber:
+          type: string
+        iban:
+          type: string
+        name:
+          type: string
+        plusgiroNumber:
+          type: string
+        sortCode:
+          type: string
+        tokenizedAccountId:
+          type: string
+        ultimateDebtorName:
+          type: string
+    io.token.proto.common.v2.common.CreditorInformation:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        accountVerificationId:
+          type: string
+        address:
+          $ref: '#/components/schemas/io.token.proto.common.v2.common.Address'
+        bankName:
+          type: string
+        bankgiroNumber:
+          type: string
+        bban:
+          type: string
+        beneficiaryId:
+          type: string
+        bic:
+          type: string
+        clearingNumber:
+          type: string
+        iban:
+          type: string
+        name:
+          type: string
+        plusgiroNumber:
+          type: string
+        sortCode:
+          type: string
+        ultimateCreditorName:
+          type: string
+        virtualAccountId:
+          type: string
+    io.token.proto.common.providerspecific.ProviderStandingOrderMetadata:
+      type: object
+      properties:
+        cma9StandingOrderMetadata:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.Cma9StandingOrderMetadata'
+        nextGenPsd2StandingOrderMetadata:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.nextgenpsd2.NextGenPsd2StandingOrderMetadata'
+        polishapiStandingOrderMetadata:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.polishapi.PolishApiStandingOrderMetadata'
+        stetStandingOrderMetadata:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.StetStandingOrderMetadata'
+    io.token.proto.common.providerspecific.stet.RegulatoryReportingCodes:
+      type: object
+      properties:
+        regulatoryReportingCode:
           items:
             type: string
           type: array
-        country:
-          type: string
-    io.token.proto.common.providerspecific.stet.GenericIdentification:
+    io.token.proto.common.v2.common.PaymentContextCode:
+      enum:
+      - INVALID_PAYMENT_CONTEXT_CODE
+      - BILL_PAYMENT
+      - ECOMMERCE_GOODS
+      - ECOMMERCE_SERVICES
+      - OTHER
+      - PARTY_TO_PARTY
+      - BILLING_GOODS_AND_SERVICES_IN_ADVANCE
+      - BILLING_GOODS_AND_SERVICES_IN_ARREARS
+      - PISP_PAYEE
+      - ECOMMERCE_MERCHANT_INITIATED_PAYMENT
+      - FACE_TO_FACE_POINT_OF_SALE
+      - TRANSFER_TO_SELF
+      - TRANSFER_TO_THIRD_PARTY
+      default: INVALID_PAYMENT_CONTEXT_CODE
+      type: string
+    io.token.proto.common.token.ActingAs:
       type: object
       properties:
-        identification:
+        displayName:
           type: string
-        issuer:
+        logoUrl:
           type: string
-        schemeName:
+        refId:
           type: string
+        secondaryName:
+          type: string
+    io.token.proto.gateway.ProvidePaymentEmbeddedAuthV2Request.EmbeddedAuthEntry:
+      type: object
+      properties: {}
+      additionalProperties:
+        type: string
+    io.token.proto.common.v2.common.Refund:
+      type: object
+      properties:
+        paymentRefundStatus:
+          $ref: '#/components/schemas/io.token.proto.common.v2.common.PaymentRefundStatus'
+        refundAccount:
+          $ref: '#/components/schemas/io.token.proto.common.v2.common.RefundAccount'
+        refundStateUpdatedAt:
+          type: string
+        remainingRefundAmount:
+          $ref: '#/components/schemas/io.token.proto.common.money.Money'
+        settledRefundAmount:
+          $ref: '#/components/schemas/io.token.proto.common.money.Money'
+    io.token.proto.common.providerspecific.ProviderTransferMetadata:
+      type: object
+      properties:
+        cma9TransferMetadata:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.Cma9TransferMetadata'
+        nextGenPsd2TransferMetadata:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.nextgenpsd2.NextGenPsd2TransferMetadata'
+        polishApiTransferMetadata:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.polishapi.PolishApiTransferMetadata'
+        stetTransferMetadata:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.StetTransferMetadata'
+    io.token.proto.common.providerspecific.cma9.PaymentContextCode:
+      enum:
+      - INVALID_PAYMENT_CONTEXT_CODE
+      - BILL_PAYMENT
+      - ECOMMERCE_GOODS
+      - ECOMMERCE_SERVICES
+      - OTHER
+      - PARTY_TO_PARTY
+      - BILLING_GOODS_AND_SERVICES_IN_ADVANCE
+      - BILLING_GOODS_AND_SERVICES_IN_ARREARS
+      - PISP_PAYEE
+      - ECOMMERCE_MERCHANT_INITIATED_PAYMENT
+      - FACE_TO_FACE_POINT_OF_SALE
+      - TRANSFER_TO_SELF
+      - TRANSFER_TO_THIRD_PARTY
+      default: INVALID_PAYMENT_CONTEXT_CODE
+      type: string
+    io.token.proto.common.providerspecific.polishapi.PolishApiStandingOrderMetadata:
+      type: object
+      properties:
+        deliveryMode:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.polishapi.DeliveryMode'
+        hold:
+          format: boolean
+          type: boolean
+    io.token.proto.gateway.CreatePaymentV2Request.InitialEmbeddedAuthEntry:
+      type: object
+      properties: {}
+      additionalProperties:
+        type: string
+    io.token.proto.common.v2.openbanking.common.PaymentType:
+      enum:
+      - UNKNOWN_PAYMENT_TYPE
+      - SINGLE_IMMEDIATE_PAYMENT
+      - VARIABLE_RECURRING_PAYMENT
+      default: UNKNOWN_PAYMENT_TYPE
+      type: string
+    io.token.proto.common.providerspecific.cma9.RemittanceInformation:
+      type: object
+      properties:
+        reference:
+          type: string
+        referenceHash:
+          type: string
+    io.token.proto.gateway.GetPaymentsV2Response:
+      type: object
+      properties:
+        pageInfo:
+          $ref: '#/components/schemas/io.token.proto.common.v2.paging.PageInfo'
+        payments:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.payment.Payment'
+          type: array
+    io.token.proto.common.providerspecific.nextgenpsd2.NextGenPsd2TransferMetadata:
+      type: object
+      properties:
+        creditorAgent:
+          type: string
+        creditorAgentName:
+          type: string
+        endToEndIdentification:
+          type: string
+        remittanceInformationStructured:
+          type: string
+    io.token.proto.gateway.CancelPaymentResponse:
+      type: object
+      properties:
+        payment:
+          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.payment.Payment'
+    io.token.proto.common.v2.openbanking.payment.V1Fields.InternalTokenRequestResultStatus:
+      enum:
+      - UNKNOWN
+      - PENDING
+      - PROCESSED
+      - REJECTED
+      - PENDING_TOKEN_REQUEST_CREATED
+      - PENDING_WEB_APP_INVOKED
+      - PENDING_WEB_APP_BANK_SELECTED
+      - PENDING_WEB_APP_CONSENT_ACCEPTED
+      - PENDING_WEB_APP_CONSENT_DECLINED
+      - PENDING_CREDENTIALS_REQUIRED
+      - PENDING_REDIRECT_URL_SENT_TO_TPP
+      - PENDING_CONSENT_SENT_TO_BANK
+      - PROCESSING_CONSENT_ACCEPTED_BY_BANK
+      - PROCESSING_CALLBACK_INITIATED_BY_TPP
+      - PROCESSED_COMPLETED_PAYMENT_CONFIRMATION_PAGE_DISPLAYED
+      - PROCESSED_FAILED_PAYMENT_ERROR_PAGE_DISPLAYED
+      - PENDING_REDIRECT_URL_SENT
+      - PENDING_WEB_APP_SENT_USER_TO_BANK
+      - PENDING_FURTHER_CREDENTIALS_REQUIRED_1
+      - PENDING_FURTHER_CREDENTIALS_REQUIRED_2
+      - PENDING_TOKEN_CREATED_NOT_AUTHORIZED
+      - PROCESSED_NO_CALLBACK
+      - PENDING_DECOUPLED_AUTHENTICATION
+      default: UNKNOWN
+      type: string
+    io.token.proto.common.providerspecific.stet.AccountIdentification:
+      type: object
+      properties:
+        currency:
+          type: string
+        iban:
+          type: string
+        other:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.GenericIdentification'
+    io.token.proto.common.providerspecific.stet.StetStandingOrderMetadata:
+      type: object
+      properties:
+        beneficiary:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.Beneficiary'
+        endToEndId:
+          type: string
+    io.token.proto.common.providerspecific.polishapi.DeliveryMode:
+      enum:
+      - INVALID_DELIVERY_MODE
+      - STANDARD_D2
+      - STANDARD_D1
+      - URGENT_D1
+      - EXPRESS_D0
+      default: INVALID_DELIVERY_MODE
+      type: string
     io.token.proto.common.providerspecific.stet.StetTransferMetadata:
       type: object
       properties:
@@ -715,18 +1001,50 @@ components:
       - PENSION
       default: INVALID_BENEFICIARY_ACCOUNT_TYPE
       type: string
-    io.token.proto.common.providerspecific.cma9.RemittanceInformation:
+    io.token.proto.common.transferinstructions.TransferInstructions.Metadata:
       type: object
       properties:
-        reference:
+        chargeBearer:
+          $ref: '#/components/schemas/io.token.proto.common.transferinstructions.ChargeBearer'
+        deliveryAddress:
+          $ref: '#/components/schemas/io.token.proto.common.address.Address'
+        merchantCategoryCode:
           type: string
-        referenceHash:
+        merchantCustomerId:
           type: string
-    io.token.proto.common.v2.common.PayByLinkOptions:
+        paymentContext:
+          $ref: '#/components/schemas/io.token.proto.common.transferinstructions.PaymentContext'
+        providerStandingOrderMetadata:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.ProviderStandingOrderMetadata'
+        providerTransferMetadata:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.ProviderTransferMetadata'
+        purposeCode:
+          type: string
+        ultimateCreditor:
+          type: string
+        ultimateDebtor:
+          type: string
+    io.token.proto.common.transferinstructions.PaymentContext:
+      enum:
+      - INVALID_CONTEXT
+      - OTHER_CONTEXT
+      - BILL_PAYMENT
+      - ECOMMERCE_GOODS
+      - ECOMMERCE_SERVICES
+      - PERSON_TO_PERSON
+      default: INVALID_CONTEXT
+      type: string
+    io.token.proto.common.providerspecific.cma9.Cma9TransferMetadata:
       type: object
       properties:
-        expiresDateTime:
+        endToEndIdentification:
           type: string
+        instructionIdentification:
+          type: string
+        remittanceInformation:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.RemittanceInformation'
+        risk:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.Risk'
     io.token.proto.common.v2.common.PaymentRefundStatus:
       enum:
       - INVALID
@@ -735,29 +1053,128 @@ components:
       - FULL
       default: INVALID
       type: string
-    io.token.proto.common.providerspecific.ProviderStandingOrderMetadata:
+    io.token.proto.common.providerspecific.CredentialField:
       type: object
       properties:
-        cma9StandingOrderMetadata:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.Cma9StandingOrderMetadata'
-        nextGenPsd2StandingOrderMetadata:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.nextgenpsd2.NextGenPsd2StandingOrderMetadata'
-        polishapiStandingOrderMetadata:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.polishapi.PolishApiStandingOrderMetadata'
-        stetStandingOrderMetadata:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.StetStandingOrderMetadata'
-    io.token.proto.gateway.CreatePaymentV2Request.InitialEmbeddedAuthEntry:
-      type: object
-      properties: {}
-      additionalProperties:
-        type: string
-    io.token.proto.common.providerspecific.stet.RegulatoryReportingCodes:
-      type: object
-      properties:
-        regulatoryReportingCode:
+        description:
+          type: string
+        displayName:
+          type: string
+        flickerCode:
+          type: string
+        id:
+          type: string
+        image:
+          type: string
+        options:
           items:
             type: string
           type: array
+        password:
+          format: boolean
+          type: boolean
+        type:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.CredentialField.Type'
+    io.token.proto.common.providerspecific.cma9.BeneficiaryAccountType:
+      enum:
+      - INVALID_BENEFICIARY_ACCOUNT_TYPE
+      - PERSONAL
+      - JOINT_PERSONAL
+      - PERSONAL_SAVINGS_ACCOUNT
+      - BUSINESS
+      - BUSINESS_SAVINGS_ACCOUNT
+      - CHARITY
+      - COLLECTION
+      - CORPORATE
+      - GOVERNMENT
+      - EWALLET
+      - INVESTMENT
+      - ISA
+      - PREMIER
+      - WEALTH
+      - PENSION
+      default: INVALID_BENEFICIARY_ACCOUNT_TYPE
+      type: string
+    io.token.proto.common.providerspecific.cma9.Risk:
+      type: object
+      properties:
+        beneficiaryAccountType:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.BeneficiaryAccountType'
+        beneficiaryPrepopulatedIndicator:
+          type: string
+        contractPresentIndicator:
+          type: string
+        deliveryAddress:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.DeliveryAddress'
+        merchantCategoryCode:
+          type: string
+        merchantCustomerIdentification:
+          type: string
+        paymentContextCode:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.PaymentContextCode'
+        paymentPurposeCode:
+          type: string
+    io.token.proto.common.providerspecific.stet.GenericIdentification:
+      type: object
+      properties:
+        identification:
+          type: string
+        issuer:
+          type: string
+        schemeName:
+          type: string
+    io.token.proto.common.v2.openbanking.payment.Status:
+      enum:
+      - INVALID_STATUS
+      - INITIATION_PENDING
+      - INITIATION_PENDING_MORE_INFO
+      - INITIATION_PENDING_REDIRECT_AUTH
+      - INITIATION_PENDING_REDIRECT_AUTH_VERIFICATION
+      - INITIATION_PENDING_EMBEDDED_AUTH
+      - INITIATION_PENDING_EMBEDDED_AUTH_VERIFICATION
+      - INITIATION_PENDING_REDEMPTION
+      - INITIATION_PENDING_REDEMPTION_VERIFICATION
+      - INITIATION_PROCESSING
+      - INITIATION_COMPLETED
+      - INITIATION_REJECTED
+      - INITIATION_FAILED
+      - CANCELED
+      - INITIATION_NO_FINAL_STATUS_AVAILABLE
+      - INITIATION_PENDING_DECOUPLED_AUTH
+      - INITIATION_REJECTED_INSUFFICIENT_FUNDS
+      - INITIATION_DECLINED
+      - SETTLEMENT_IN_PROGRESS
+      - SETTLEMENT_COMPLETED
+      - SETTLEMENT_INCOMPLETE
+      - INITIATION_EXPIRED
+      - INITIATION_PENDING_REDIRECT_HP
+      - INITIATION_PENDING_REDIRECT_PBL
+      default: INVALID_STATUS
+      type: string
+    io.token.proto.common.providerspecific.stet.FinancialInstitutionIdentification:
+      type: object
+      properties:
+        bicFi:
+          type: string
+        clearingSystemMemberId:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.ClearingSystemMemberIdentification'
+        name:
+          type: string
+        postalAddress:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.PostalAddress'
+    io.token.proto.common.v2.common.ErrorInfo:
+      type: object
+      properties:
+        httpErrorCode:
+          format: int32
+          type: integer
+        message:
+          type: string
+        tokenExternalError:
+          format: boolean
+          type: boolean
+        tokenTraceId:
+          type: string
     io.token.proto.common.transaction.TransactionStatus:
       enum:
       - INVALID_STATUS
@@ -782,91 +1199,6 @@ components:
       - SETTLEMENT_INCOMPLETE
       - SETTLEMENT_COMPLETED
       default: INVALID_STATUS
-      type: string
-    io.token.proto.common.v2.common.ErrorInfo:
-      type: object
-      properties:
-        httpErrorCode:
-          format: int32
-          type: integer
-        message:
-          type: string
-        tokenExternalError:
-          format: boolean
-          type: boolean
-        tokenTraceId:
-          type: string
-    io.token.proto.gateway.CancelPaymentResponse:
-      type: object
-      properties:
-        payment:
-          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.payment.Payment'
-    io.token.proto.common.providerspecific.stet.FinancialInstitutionIdentification:
-      type: object
-      properties:
-        bicFi:
-          type: string
-        clearingSystemMemberId:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.ClearingSystemMemberIdentification'
-        name:
-          type: string
-        postalAddress:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.PostalAddress'
-    io.token.proto.common.providerspecific.cma9.PaymentContextCode:
-      enum:
-      - INVALID_PAYMENT_CONTEXT_CODE
-      - BILL_PAYMENT
-      - ECOMMERCE_GOODS
-      - ECOMMERCE_SERVICES
-      - OTHER
-      - PARTY_TO_PARTY
-      - BILLING_GOODS_AND_SERVICES_IN_ADVANCE
-      - BILLING_GOODS_AND_SERVICES_IN_ARREARS
-      - PISP_PAYEE
-      - ECOMMERCE_MERCHANT_INITIATED_PAYMENT
-      - FACE_TO_FACE_POINT_OF_SALE
-      - TRANSFER_TO_SELF
-      - TRANSFER_TO_THIRD_PARTY
-      default: INVALID_PAYMENT_CONTEXT_CODE
-      type: string
-    io.token.proto.common.v2.common.Risk:
-      type: object
-      properties:
-        beneficiaryAccountType:
-          $ref: '#/components/schemas/io.token.proto.common.v2.common.BeneficiaryAccountType'
-        beneficiaryPrepopulatedIndicator:
-          format: boolean
-          type: boolean
-        contractPresentIndicator:
-          format: boolean
-          type: boolean
-        contractPresentInidicator:
-          format: boolean
-          type: boolean
-        deliveryAddress:
-          $ref: '#/components/schemas/io.token.proto.common.v2.common.Address'
-        merchantCategoryCode:
-          type: string
-        paymentContextCode:
-          $ref: '#/components/schemas/io.token.proto.common.v2.common.PaymentContextCode'
-        paymentPurposeCode:
-          type: string
-        psuId:
-          type: string
-    io.token.proto.common.providerspecific.polishapi.PolishApiTransferMetadata:
-      type: object
-      properties:
-        deliveryMode:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.polishapi.DeliveryMode'
-        hold:
-          format: boolean
-          type: boolean
-    io.token.proto.common.v2.openbanking.common.PaymentType:
-      enum:
-      - UNKNOWN_PAYMENT_TYPE
-      - SINGLE_IMMEDIATE_PAYMENT
-      - VARIABLE_RECURRING_PAYMENT
-      default: UNKNOWN_PAYMENT_TYPE
       type: string
     io.token.proto.common.v2.openbanking.payment.V1InitiationFields:
       type: object
@@ -903,275 +1235,13 @@ components:
         v1Api:
           format: boolean
           type: boolean
-    io.token.proto.common.providerspecific.stet.Beneficiary:
+    io.token.proto.common.providerspecific.stet.ClearingSystemMemberIdentification:
       type: object
       properties:
-        creditor:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.PartyIdentification'
-        creditorAccount:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.AccountIdentification'
-        creditorAgent:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.FinancialInstitutionIdentification'
-        id:
+        clearingSystemId:
           type: string
-    io.token.proto.common.money.Money:
-      type: object
-      properties:
-        currency:
+        memberId:
           type: string
-        value:
-          type: string
-    io.token.proto.common.providerspecific.stet.AccountIdentification:
-      type: object
-      properties:
-        currency:
-          type: string
-        iban:
-          type: string
-        other:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.GenericIdentification'
-    io.token.proto.common.providerspecific.CredentialField.Type:
-      enum:
-      - INVALID
-      - FIELD
-      - PASSWORD
-      - PSU_MESSAGE
-      - IMAGE
-      - FLICKER
-      - DECOUPLED
-      - CONFIRMATION
-      default: INVALID
-      type: string
-    io.token.proto.common.v2.openbanking.payment.Status:
-      enum:
-      - INVALID_STATUS
-      - INITIATION_PENDING
-      - INITIATION_PENDING_MORE_INFO
-      - INITIATION_PENDING_REDIRECT_AUTH
-      - INITIATION_PENDING_REDIRECT_AUTH_VERIFICATION
-      - INITIATION_PENDING_EMBEDDED_AUTH
-      - INITIATION_PENDING_EMBEDDED_AUTH_VERIFICATION
-      - INITIATION_PENDING_REDEMPTION
-      - INITIATION_PENDING_REDEMPTION_VERIFICATION
-      - INITIATION_PROCESSING
-      - INITIATION_COMPLETED
-      - INITIATION_REJECTED
-      - INITIATION_FAILED
-      - CANCELED
-      - INITIATION_NO_FINAL_STATUS_AVAILABLE
-      - INITIATION_PENDING_DECOUPLED_AUTH
-      - INITIATION_REJECTED_INSUFFICIENT_FUNDS
-      - INITIATION_DECLINED
-      - SETTLEMENT_IN_PROGRESS
-      - SETTLEMENT_COMPLETED
-      - SETTLEMENT_INCOMPLETE
-      - INITIATION_EXPIRED
-      - INITIATION_PENDING_REDIRECT_HP
-      - INITIATION_PENDING_REDIRECT_PBL
-      default: INVALID_STATUS
-      type: string
-    io.token.proto.common.address.Address:
-      type: object
-      properties:
-        city:
-          type: string
-        conscriptionNumber:
-          type: string
-        country:
-          type: string
-        district:
-          type: string
-        flats:
-          type: string
-        full:
-          type: string
-        hamlet:
-          type: string
-        houseName:
-          type: string
-        houseNumber:
-          type: string
-        place:
-          type: string
-        postCode:
-          type: string
-        province:
-          type: string
-        state:
-          type: string
-        street:
-          type: string
-        subdistrict:
-          type: string
-        suburb:
-          type: string
-    io.token.proto.common.v2.common.PaymentContextCode:
-      enum:
-      - INVALID_PAYMENT_CONTEXT_CODE
-      - BILL_PAYMENT
-      - ECOMMERCE_GOODS
-      - ECOMMERCE_SERVICES
-      - OTHER
-      - PARTY_TO_PARTY
-      - BILLING_GOODS_AND_SERVICES_IN_ADVANCE
-      - BILLING_GOODS_AND_SERVICES_IN_ARREARS
-      - PISP_PAYEE
-      - ECOMMERCE_MERCHANT_INITIATED_PAYMENT
-      - FACE_TO_FACE_POINT_OF_SALE
-      - TRANSFER_TO_SELF
-      - TRANSFER_TO_THIRD_PARTY
-      default: INVALID_PAYMENT_CONTEXT_CODE
-      type: string
-    io.token.proto.common.v2.common.FlowType:
-      enum:
-      - UNKNOWN
-      - API
-      - WEB_APP
-      - WEB_APP_CREDENTIAL
-      - API_ONLY
-      - FULL_HOSTED_PAGES
-      - EMBEDDED_HOSTED_PAGES
-      - PAY_BY_LINK_HOSTED_PAGES
-      default: UNKNOWN
-      type: string
-    io.token.proto.common.v2.openbanking.payment.V1Fields:
-      type: object
-      properties:
-        destinationAccountId:
-          type: string
-        fromMemberId:
-          type: string
-        sourceAccountId:
-          type: string
-        tokenRequestResultStatus:
-          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.payment.V1Fields.InternalTokenRequestResultStatus'
-        transferStatus:
-          $ref: '#/components/schemas/io.token.proto.common.transaction.TransactionStatus'
-        webAppRedirectUrl:
-          type: string
-    io.token.proto.common.v2.openbanking.common.EmbeddedAuthField:
-      type: object
-      properties:
-        additionalInformation:
-          type: string
-        displayName:
-          type: string
-        id:
-          type: string
-        options:
-          items:
-            type: string
-          type: array
-        type:
-          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.common.EmbeddedAuthField.Type'
-    io.token.proto.common.transferinstructions.TransferDestination.Type:
-      enum:
-      - UNKNOWN
-      - BUSINESS
-      - PERSONAL
-      default: UNKNOWN
-      type: string
-    io.token.proto.common.providerspecific.polishapi.DeliveryMode:
-      enum:
-      - INVALID_DELIVERY_MODE
-      - STANDARD_D2
-      - STANDARD_D1
-      - URGENT_D1
-      - EXPRESS_D0
-      default: INVALID_DELIVERY_MODE
-      type: string
-    io.token.proto.common.providerspecific.stet.StetStandingOrderMetadata:
-      type: object
-      properties:
-        beneficiary:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.Beneficiary'
-        endToEndId:
-          type: string
-    io.token.proto.common.providerspecific.polishapi.PolishApiStandingOrderMetadata:
-      type: object
-      properties:
-        deliveryMode:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.polishapi.DeliveryMode'
-        hold:
-          format: boolean
-          type: boolean
-    io.token.proto.common.v2.common.CreditorInformation:
-      type: object
-      properties:
-        accountNumber:
-          type: string
-        accountVerificationId:
-          type: string
-        address:
-          $ref: '#/components/schemas/io.token.proto.common.v2.common.Address'
-        bankName:
-          type: string
-        bankgiroNumber:
-          type: string
-        bban:
-          type: string
-        beneficiaryId:
-          type: string
-        bic:
-          type: string
-        clearingNumber:
-          type: string
-        iban:
-          type: string
-        name:
-          type: string
-        plusgiroNumber:
-          type: string
-        sortCode:
-          type: string
-        ultimateCreditorName:
-          type: string
-        virtualAccountId:
-          type: string
-    io.token.proto.gateway.ProvidePaymentEmbeddedAuthV2Request:
-      type: object
-      properties:
-        embeddedAuth:
-          $ref: '#/components/schemas/io.token.proto.gateway.ProvidePaymentEmbeddedAuthV2Request.EmbeddedAuthEntry'
-    io.token.proto.common.transferinstructions.TransferInstructions.Metadata:
-      type: object
-      properties:
-        chargeBearer:
-          $ref: '#/components/schemas/io.token.proto.common.transferinstructions.ChargeBearer'
-        deliveryAddress:
-          $ref: '#/components/schemas/io.token.proto.common.address.Address'
-        merchantCategoryCode:
-          type: string
-        merchantCustomerId:
-          type: string
-        paymentContext:
-          $ref: '#/components/schemas/io.token.proto.common.transferinstructions.PaymentContext'
-        providerStandingOrderMetadata:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.ProviderStandingOrderMetadata'
-        providerTransferMetadata:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.ProviderTransferMetadata'
-        purposeCode:
-          type: string
-        ultimateCreditor:
-          type: string
-        ultimateDebtor:
-          type: string
-    io.token.proto.common.token.ActingAs:
-      type: object
-      properties:
-        displayName:
-          type: string
-        logoUrl:
-          type: string
-        refId:
-          type: string
-        secondaryName:
-          type: string
-    io.token.proto.gateway.ProvidePaymentEmbeddedAuthV2Request.EmbeddedAuthEntry:
-      type: object
-      properties: {}
-      additionalProperties:
-        type: string
     io.token.proto.common.providerspecific.cma9.Cma9StandingOrderMetadata:
       type: object
       properties:
@@ -1196,15 +1266,17 @@ components:
           $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.RemittanceInformation'
         risk:
           $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.Risk'
-    io.token.proto.common.v2.openbanking.payment.PaymentLinkStatus:
-      enum:
-      - UNKNOWN
-      - LINK_ACTIVE
-      - LINK_EXPIRED
-      - LINK_REDEEMED
-      - LINK_CANCELED
-      default: UNKNOWN
-      type: string
+    io.token.proto.common.alias.Alias:
+      type: object
+      properties:
+        realm:
+          type: string
+        realmId:
+          type: string
+        type:
+          $ref: '#/components/schemas/io.token.proto.common.alias.Alias.Type'
+        value:
+          type: string
     io.token.proto.common.v2.common.Address:
       type: object
       properties:
@@ -1230,125 +1302,53 @@ components:
           type: string
         townName:
           type: string
-    io.token.proto.common.v2.openbanking.payment.Payment:
+    io.token.proto.common.providerspecific.stet.PartyIdentification:
       type: object
       properties:
-        authentication:
-          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.common.Authentication'
-        bankPaymentId:
+        name:
           type: string
-        bankPaymentStatus:
-          type: string
-        bankTransactionId:
-          type: string
-        bankVrpId:
-          type: string
-        bankVrpStatus:
-          type: string
-        convertedToFutureDatedPayment:
-          format: boolean
-          type: boolean
-        createdDateTime:
-          type: string
-        errorInfo:
-          $ref: '#/components/schemas/io.token.proto.common.v2.common.ErrorInfo'
-        expiresDateTime:
-          type: string
+        organisationId:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.GenericIdentification'
+        postalAddress:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.PostalAddress'
+        privateId:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.GenericIdentification'
+    io.token.proto.common.providerspecific.stet.Beneficiary:
+      type: object
+      properties:
+        creditor:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.PartyIdentification'
+        creditorAccount:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.AccountIdentification'
+        creditorAgent:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.FinancialInstitutionIdentification'
         id:
           type: string
-        initiation:
-          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.payment.Initiation'
-        memberId:
-          type: string
-        paymentLinkStatus:
-          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.payment.PaymentLinkStatus'
-        paymentType:
-          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.common.PaymentType'
-        refundDetails:
-          $ref: '#/components/schemas/io.token.proto.common.v2.common.Refund'
-        status:
-          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.payment.Status'
-        statusReasonInformation:
-          type: string
-        updatedDateTime:
-          type: string
-        v1Fields:
-          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.payment.V1Fields'
-    io.token.proto.common.v2.common.Refund:
-      type: object
-      properties:
-        paymentRefundStatus:
-          $ref: '#/components/schemas/io.token.proto.common.v2.common.PaymentRefundStatus'
-        refundAccount:
-          $ref: '#/components/schemas/io.token.proto.common.v2.common.RefundAccount'
-        refundStateUpdatedAt:
-          type: string
-        remainingRefundAmount:
-          $ref: '#/components/schemas/io.token.proto.common.money.Money'
-        settledRefundAmount:
-          $ref: '#/components/schemas/io.token.proto.common.money.Money'
-    io.token.proto.common.v2.openbanking.payment.V1InitiationFields.PostponeInitiation:
+    io.token.proto.common.alias.Alias.Type:
       enum:
       - INVALID
-      - POSTPONE
-      - DO_NOT_POSTPONE
+      - UNKNOWN
+      - EMAIL
+      - PHONE
+      - DOMAIN
+      - USERNAME
+      - BANK
+      - CUSTOM
+      - EIDAS
       default: INVALID
       type: string
-    io.token.proto.common.providerspecific.cma9.DeliveryAddress:
+    io.token.proto.common.v2.openbanking.payment.V1Fields:
       type: object
       properties:
-        addressLine:
-          items:
-            type: string
-          type: array
-        addressType:
+        destinationAccountId:
           type: string
-        buildingNumber:
+        fromMemberId:
           type: string
-        country:
+        sourceAccountId:
           type: string
-        countrySubDivision:
-          items:
-            type: string
-          type: array
-        department:
-          type: string
-        postCode:
-          type: string
-        streetName:
-          type: string
-        subDepartment:
-          type: string
-        townName:
-          type: string
-    io.token.proto.common.providerspecific.nextgenpsd2.NextGenPsd2StandingOrderMetadata:
-      type: object
-      properties:
-        creditorAgentName:
-          type: string
-        endToEndIdentification:
-          type: string
-    io.token.proto.common.v2.paging.PageInfo:
-      type: object
-      properties:
-        haveMore:
-          format: boolean
-          type: boolean
-        limit:
-          format: int32
-          type: integer
-        nextOffset:
-          type: string
-        offset:
-          type: string
-    io.token.proto.common.alias.Alias:
-      type: object
-      properties:
-        realm:
-          type: string
-        realmId:
-          type: string
-        type:
-          $ref: '#/components/schemas/io.token.proto.common.alias.Alias.Type'
-        value:
+        tokenRequestResultStatus:
+          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.payment.V1Fields.InternalTokenRequestResultStatus'
+        transferStatus:
+          $ref: '#/components/schemas/io.token.proto.common.transaction.TransactionStatus'
+        webAppRedirectUrl:
           type: string

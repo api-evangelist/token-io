@@ -429,23 +429,20 @@ paths:
     - url: https://api.token.io/v1
 components:
   schemas:
-    BankAccount:
+    TransferDestinations:
       required:
-      - account
+      - customerData
+      - destinations
       type: object
       properties:
-        account:
-          description: The bank account identifier.
-          oneOf:
-          - $ref: '#/components/schemas/Custom'
-          - $ref: '#/components/schemas/Iban'
-          - $ref: '#/components/schemas/Domestic'
-      description: Represents Token account identifier.
-      example:
-        account:
-          custom:
-            bankId: test
-            payload: 0123456789
+        destinations:
+          type: array
+          description: A list of transfer destinations.
+          items:
+            $ref: '#/components/schemas/TransferDestination'
+        customerData:
+          $ref: '#/components/schemas/Customer'
+      description: A list of possible transfer destinations for a given customer.
     Money:
       required:
       - currency
@@ -461,224 +458,6 @@ components:
           type: string
           description: Double amount in the string format.
       description: Represents a monetary value.
-    TransferResponse:
-      required:
-      - status
-      - statusDescription
-      - transactionId
-      type: object
-      properties:
-        transactionId:
-          type: string
-          description: The transaction id as recorded by the bank.
-        status:
-          $ref: '#/components/schemas/TransactionStatus'
-        statusDescription:
-          type: string
-          description: Human-readable status description.
-        source:
-          $ref: '#/components/schemas/TransferEndpoint'
-      description: Transfer operation response.
-    ACH:
-      required:
-      - accountNumber
-      - routingNumber
-      type: object
-      properties:
-        accountNumber:
-          type: integer
-          description: The account number.
-        routingNumber:
-          type: integer
-          description: The routing number.
-      description: The Automated Clearing House Network.
-    Custom:
-      required:
-      - bankId
-      - payload
-      type: object
-      properties:
-        bankId:
-          type: string
-          description: the Token bank identifier.
-        payload:
-          type: string
-          description: the bank-custom account identifier.
-      description: Represents an account identifier in bank-custom format.
-    Domestic:
-      required:
-      - accountNumber
-      - bankCode
-      - country
-      type: object
-      properties:
-        bankCode:
-          type: string
-          description: The bank identifier.
-        accountNumber:
-          type: string
-          description: The account identifier.
-        country:
-          maxLength: 2
-          minLength: 2
-          type: string
-          description: 2-letter ISO 3166-1 alpha-2 country code
-      description: Represents an account in the regional format.
-    TransferDestinations:
-      required:
-      - customerData
-      - destinations
-      type: object
-      properties:
-        destinations:
-          type: array
-          description: A list of transfer destinations.
-          items:
-            $ref: '#/components/schemas/TransferDestination'
-        customerData:
-          $ref: '#/components/schemas/Customer'
-      description: A list of possible transfer destinations for a given customer.
-    SWIFT:
-      required:
-      - accountNumber
-      - bic
-      type: object
-      properties:
-        accountNumber:
-          type: string
-          description: The account number.
-        bic:
-          type: string
-          description: Bank Identifier Code.
-      description: Society for Worldwide Interbank Financial Telecommunication.
-    FPS:
-      required:
-      - accountNumber
-      - sortCode
-      type: object
-      properties:
-        sortCode:
-          type: string
-          description: The sort code associated wth the account.
-        accountNumber:
-          type: string
-          description: The account number.
-      description: Faster Payments Service.
-    SEPA:
-      required:
-      - iban
-      type: object
-      properties:
-        iban:
-          type: string
-          description: International Bank Account Number.
-        bic:
-          type: string
-          description: Bank Identifier Code.
-      description: Single Euro Payments Area.
-    TransferEndpoint:
-      required:
-      - account
-      - customerData
-      type: object
-      properties:
-        account:
-          $ref: '#/components/schemas/BankAccount'
-        customerData:
-          $ref: '#/components/schemas/Customer'
-      description: Money transfer source or destination account
-    TransactionStatus:
-      type: string
-      description: The transaction status.
-      enum:
-      - PROCESSING
-      - SUCCESS
-      - FAILURE_INSUFFICIENT_FUNDS
-      - FAILURE_INVALID_CURRENCY
-      - FAILURE_PERMISSION_DENIED
-      - FAILURE_INVALID_AMOUNT
-      - FAILURE_EXPIRED
-      - FAILURE_UNSUPPORTED_DESTINATION
-      - FAILURE_GENERIC
-      - INITIATED
-    TransferDestination:
-      required:
-      - destination
-      type: object
-      properties:
-        scheme:
-          description: The transfer destination details.
-          oneOf:
-          - $ref: '#/components/schemas/SEPA'
-          - $ref: '#/components/schemas/FPS'
-          - $ref: '#/components/schemas/SWIFT'
-          - $ref: '#/components/schemas/ACH'
-      description: Represents payment scheme details for a given account.
-    TransferRequest:
-      required:
-      - destinatons
-      - source
-      - transactionAmount
-      - transferId
-      type: object
-      properties:
-        transferId:
-          type: string
-          description: The Token transfer identifier.
-        transactionAmount:
-          $ref: '#/components/schemas/Money'
-        source:
-          $ref: '#/components/schemas/BankAccount'
-        destinations:
-          type: array
-          items:
-            $ref: '#/components/schemas/TransferDestinations'
-        description:
-          type: string
-          description: Optional transfer description.
-        tokenRefId:
-          type: string
-          description: Reference id of the token, set by the initiator.
-        tokenInitiatorId:
-          type: string
-          description: Id of the member requesting token creation.
-        transferRefId:
-          type: string
-          description: Transfer reference id.
-        metadata:
-          $ref: '#/components/schemas/TransferMetadata'
-      description: Transfer operation request.
-    TransferMetadata:
-      type: object
-      properties:
-        purposeOfPayment:
-          type: string
-          description: Purpose of Payment for this transfer.
-          enum:
-          - OTHER
-          - PERSONAL_EXPENSES
-          - PURCHASE_OF_SHARES
-          - TRANSFER_TO_YOUR_OWN_ACCOUNT
-          - PURCHASE_OF_PROPERTY
-          - FAMILY_MAINTENANCE
-          - SAVINGS
-        paymentContext:
-          type: string
-          description: Optional payment context of this transfer.
-          enum:
-          - OTHER_CONTEXT
-          - BILL_PAYMENT
-          - ECOMMERCE_GOODS
-          - ECOMMERCE_SERVICES
-          - PERSON_TO_PERSON
-        merchantCategoryCode:
-          type: string
-          description: Optional ISO 18245 Merchant Category Code (MCC).
-        merchantCustomerId:
-          description: Optional unique merchant customer identifier.
-        deliveryAddress:
-          $ref: '#/components/schemas/Address'
-      description: Represents additional metadata related to a transfer.
     Address:
       type: object
       properties:
@@ -735,18 +514,152 @@ components:
           type: string
           description: The state. For the US, uppercase two-letter postal abbreviations (AK, CA, HI, NY, TX, WY, etc.) are used.
       description: Represents a postal address.
-    Iban:
+    TransferRequest:
+      required:
+      - destinatons
+      - source
+      - transactionAmount
+      - transferId
+      type: object
+      properties:
+        transferId:
+          type: string
+          description: The Token transfer identifier.
+        transactionAmount:
+          $ref: '#/components/schemas/Money'
+        source:
+          $ref: '#/components/schemas/BankAccount'
+        destinations:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransferDestinations'
+        description:
+          type: string
+          description: Optional transfer description.
+        tokenRefId:
+          type: string
+          description: Reference id of the token, set by the initiator.
+        tokenInitiatorId:
+          type: string
+          description: Id of the member requesting token creation.
+        transferRefId:
+          type: string
+          description: Transfer reference id.
+        metadata:
+          $ref: '#/components/schemas/TransferMetadata'
+      description: Transfer operation request.
+    TransferDestination:
+      required:
+      - destination
+      type: object
+      properties:
+        scheme:
+          description: The transfer destination details.
+          oneOf:
+          - $ref: '#/components/schemas/SEPA'
+          - $ref: '#/components/schemas/FPS'
+          - $ref: '#/components/schemas/SWIFT'
+          - $ref: '#/components/schemas/ACH'
+      description: Represents payment scheme details for a given account.
+    ACH:
+      required:
+      - accountNumber
+      - routingNumber
+      type: object
+      properties:
+        accountNumber:
+          type: integer
+          description: The account number.
+        routingNumber:
+          type: integer
+          description: The routing number.
+      description: The Automated Clearing House Network.
+    TransferMetadata:
+      type: object
+      properties:
+        purposeOfPayment:
+          type: string
+          description: Purpose of Payment for this transfer.
+          enum:
+          - OTHER
+          - PERSONAL_EXPENSES
+          - PURCHASE_OF_SHARES
+          - TRANSFER_TO_YOUR_OWN_ACCOUNT
+          - PURCHASE_OF_PROPERTY
+          - FAMILY_MAINTENANCE
+          - SAVINGS
+        paymentContext:
+          type: string
+          description: Optional payment context of this transfer.
+          enum:
+          - OTHER_CONTEXT
+          - BILL_PAYMENT
+          - ECOMMERCE_GOODS
+          - ECOMMERCE_SERVICES
+          - PERSON_TO_PERSON
+        merchantCategoryCode:
+          type: string
+          description: Optional ISO 18245 Merchant Category Code (MCC).
+        merchantCustomerId:
+          description: Optional unique merchant customer identifier.
+        deliveryAddress:
+          $ref: '#/components/schemas/Address'
+      description: Represents additional metadata related to a transfer.
+    FPS:
+      required:
+      - accountNumber
+      - sortCode
+      type: object
+      properties:
+        sortCode:
+          type: string
+          description: The sort code associated wth the account.
+        accountNumber:
+          type: string
+          description: The account number.
+      description: Faster Payments Service.
+    SEPA:
       required:
       - iban
       type: object
       properties:
         iban:
           type: string
-          description: The IBAN account number.
+          description: International Bank Account Number.
         bic:
           type: string
-          description: optional BIC number for this account.
-      description: Represents an account using IBAN format.
+          description: Bank Identifier Code.
+      description: Single Euro Payments Area.
+    BankAccount:
+      required:
+      - account
+      type: object
+      properties:
+        account:
+          description: The bank account identifier.
+          oneOf:
+          - $ref: '#/components/schemas/Custom'
+          - $ref: '#/components/schemas/Iban'
+          - $ref: '#/components/schemas/Domestic'
+      description: Represents Token account identifier.
+      example:
+        account:
+          custom:
+            bankId: test
+            payload: 0123456789
+    SWIFT:
+      required:
+      - accountNumber
+      - bic
+      type: object
+      properties:
+        accountNumber:
+          type: string
+          description: The account number.
+        bic:
+          type: string
+          description: Bank Identifier Code.
+      description: Society for Worldwide Interbank Financial Telecommunication.
     Customer:
       required:
       - legalNames
@@ -760,25 +673,101 @@ components:
         address:
           $ref: '#/components/schemas/Address'
       description: Represents account holder information.
-    io.token.proto.common.v2.common.LocalInstrument:
-      enum:
-      - INVALID_LOCAL_INSTRUMENT
-      - SEPA
-      - SEPA_INSTANT
-      - SWIFT
-      - FASTER_PAYMENTS
-      - CHAPS
-      - ELIXIR
-      - EXPRESS_ELIXIR
-      - BLUE_CASH
-      - SORBNET
-      - BANKGIRO
-      - PLUSGIRO
-      - EU_DOMESTIC_NON_EURO
-      - EU_DOMESTIC_NON_EURO_INSTANT
-      - AUTO_SELECT
-      default: INVALID_LOCAL_INSTRUMENT
+    TransferEndpoint:
+      required:
+      - account
+      - customerData
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/BankAccount'
+        customerData:
+          $ref: '#/components/schemas/Customer'
+      description: Money transfer source or destination account
+    Domestic:
+      required:
+      - accountNumber
+      - bankCode
+      - country
+      type: object
+      properties:
+        bankCode:
+          type: string
+          description: The bank identifier.
+        accountNumber:
+          type: string
+          description: The account identifier.
+        country:
+          maxLength: 2
+          minLength: 2
+          type: string
+          description: 2-letter ISO 3166-1 alpha-2 country code
+      description: Represents an account in the regional format.
+    TransactionStatus:
       type: string
+      description: The transaction status.
+      enum:
+      - PROCESSING
+      - SUCCESS
+      - FAILURE_INSUFFICIENT_FUNDS
+      - FAILURE_INVALID_CURRENCY
+      - FAILURE_PERMISSION_DENIED
+      - FAILURE_INVALID_AMOUNT
+      - FAILURE_EXPIRED
+      - FAILURE_UNSUPPORTED_DESTINATION
+      - FAILURE_GENERIC
+      - INITIATED
+    Custom:
+      required:
+      - bankId
+      - payload
+      type: object
+      properties:
+        bankId:
+          type: string
+          description: the Token bank identifier.
+        payload:
+          type: string
+          description: the bank-custom account identifier.
+      description: Represents an account identifier in bank-custom format.
+    TransferResponse:
+      required:
+      - status
+      - statusDescription
+      - transactionId
+      type: object
+      properties:
+        transactionId:
+          type: string
+          description: The transaction id as recorded by the bank.
+        status:
+          $ref: '#/components/schemas/TransactionStatus'
+        statusDescription:
+          type: string
+          description: Human-readable status description.
+        source:
+          $ref: '#/components/schemas/TransferEndpoint'
+      description: Transfer operation response.
+    Iban:
+      required:
+      - iban
+      type: object
+      properties:
+        iban:
+          type: string
+          description: The IBAN account number.
+        bic:
+          type: string
+          description: optional BIC number for this account.
+      description: Represents an account using IBAN format.
+    io.token.proto.common.v2.paging.Page:
+      type: object
+      properties:
+        limit:
+          format: int32
+          type: integer
+        offset:
+          type: string
     io.token.proto.gateway.GetRefundsByPaymentIdResponse:
       type: object
       properties:
@@ -788,6 +777,51 @@ components:
           items:
             $ref: '#/components/schemas/io.token.proto.common.v2.payout.Refund'
           type: array
+    io.token.proto.common.v2.payout.Status:
+      enum:
+      - INVALID_STATUS
+      - INITIATION_PENDING
+      - INITIATION_PROCESSING
+      - INITIATION_COMPLETED
+      - INITIATION_REJECTED
+      - INITIATION_FAILED
+      - INITIATION_NO_FINAL_STATUS_AVAILABLE
+      default: INVALID_STATUS
+      type: string
+    io.token.proto.common.money.Money:
+      type: object
+      properties:
+        currency:
+          type: string
+        value:
+          type: string
+    io.token.proto.common.v2.common.DebtorInformation:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        address:
+          $ref: '#/components/schemas/io.token.proto.common.v2.common.Address'
+        bankgiroNumber:
+          type: string
+        bban:
+          type: string
+        bic:
+          type: string
+        clearingNumber:
+          type: string
+        iban:
+          type: string
+        name:
+          type: string
+        plusgiroNumber:
+          type: string
+        sortCode:
+          type: string
+        tokenizedAccountId:
+          type: string
+        ultimateDebtorName:
+          type: string
     io.token.proto.common.v2.common.CreditorInformation:
       type: object
       properties:
@@ -821,56 +855,48 @@ components:
           type: string
         virtualAccountId:
           type: string
-    io.token.proto.common.v2.payout.CorporateApiDebtorInformation:
+    io.token.proto.common.v2.payout.Refund:
       type: object
       properties:
-        accountId:
+        bankPaymentStatus:
           type: string
-    io.token.proto.common.v2.payout.Status:
+        bankTransactionId:
+          type: string
+        createdDateTime:
+          type: string
+        id:
+          type: string
+        initiation:
+          $ref: '#/components/schemas/io.token.proto.common.v2.payout.RefundInitiation'
+        memberId:
+          type: string
+        providerAccountVerificationId:
+          type: string
+        status:
+          $ref: '#/components/schemas/io.token.proto.common.v2.payout.Status'
+        statusReasonInformation:
+          type: string
+        updatedDateTime:
+          type: string
+    io.token.proto.common.v2.common.LocalInstrument:
       enum:
-      - INVALID_STATUS
-      - INITIATION_PENDING
-      - INITIATION_PROCESSING
-      - INITIATION_COMPLETED
-      - INITIATION_REJECTED
-      - INITIATION_FAILED
-      - INITIATION_NO_FINAL_STATUS_AVAILABLE
-      default: INVALID_STATUS
+      - INVALID_LOCAL_INSTRUMENT
+      - SEPA
+      - SEPA_INSTANT
+      - SWIFT
+      - FASTER_PAYMENTS
+      - CHAPS
+      - ELIXIR
+      - EXPRESS_ELIXIR
+      - BLUE_CASH
+      - SORBNET
+      - BANKGIRO
+      - PLUSGIRO
+      - EU_DOMESTIC_NON_EURO
+      - EU_DOMESTIC_NON_EURO_INSTANT
+      - AUTO_SELECT
+      default: INVALID_LOCAL_INSTRUMENT
       type: string
-    io.token.proto.common.v2.common.DebtorInformation:
-      type: object
-      properties:
-        accountNumber:
-          type: string
-        address:
-          $ref: '#/components/schemas/io.token.proto.common.v2.common.Address'
-        bankgiroNumber:
-          type: string
-        bban:
-          type: string
-        bic:
-          type: string
-        clearingNumber:
-          type: string
-        iban:
-          type: string
-        name:
-          type: string
-        plusgiroNumber:
-          type: string
-        sortCode:
-          type: string
-        tokenizedAccountId:
-          type: string
-        ultimateDebtorName:
-          type: string
-    io.token.proto.common.money.Money:
-      type: object
-      properties:
-        currency:
-          type: string
-        value:
-          type: string
     io.token.proto.common.v2.common.Address:
       type: object
       properties:
@@ -895,37 +921,6 @@ components:
         streetName:
           type: string
         townName:
-          type: string
-    io.token.proto.common.v2.paging.Page:
-      type: object
-      properties:
-        limit:
-          format: int32
-          type: integer
-        offset:
-          type: string
-    io.token.proto.common.v2.payout.Refund:
-      type: object
-      properties:
-        bankPaymentStatus:
-          type: string
-        bankTransactionId:
-          type: string
-        createdDateTime:
-          type: string
-        id:
-          type: string
-        initiation:
-          $ref: '#/components/schemas/io.token.proto.common.v2.payout.RefundInitiation'
-        memberId:
-          type: string
-        providerAccountVerificationId:
-          type: string
-        status:
-          $ref: '#/components/schemas/io.token.proto.common.v2.payout.Status'
-        statusReasonInformation:
-          type: string
-        updatedDateTime:
           type: string
     io.token.proto.common.v2.payout.RefundInitiation:
       type: object
@@ -954,6 +949,32 @@ components:
           type: string
         signature:
           type: string
+    io.token.proto.common.v2.payout.CorporateApiDebtorInformation:
+      type: object
+      properties:
+        accountId:
+          type: string
+    io.token.proto.common.providerspecific.nextgenpsd2.NextGenPsd2StandingOrderMetadata:
+      type: object
+      properties:
+        creditorAgentName:
+          type: string
+        endToEndIdentification:
+          type: string
+    io.token.proto.gateway.GetTransferResponse:
+      type: object
+      properties:
+        transfer:
+          $ref: '#/components/schemas/io.token.proto.common.transfer.Transfer'
+    io.token.proto.common.security.Signature:
+      type: object
+      properties:
+        keyId:
+          type: string
+        memberId:
+          type: string
+        signature:
+          type: string
     io.token.proto.common.account.AccountIdentifier:
       type: object
       properties:
@@ -973,65 +994,12 @@ components:
           $ref: '#/components/schemas/io.token.proto.common.account.AccountIdentifier.Plusgiro'
         token:
           $ref: '#/components/schemas/io.token.proto.common.account.AccountIdentifier.Token'
-    io.token.proto.common.transferinstructions.TransferDestination.Elixir:
+    io.token.proto.common.transferinstructions.TransferDestination.Ach:
       type: object
       properties:
-        accountNumber:
+        account:
           type: string
-    io.token.proto.common.providerspecific.nextgenpsd2.NextGenPsd2TransferMetadata:
-      type: object
-      properties:
-        creditorAgent:
-          type: string
-        creditorAgentName:
-          type: string
-        endToEndIdentification:
-          type: string
-        remittanceInformationStructured:
-          type: string
-    io.token.proto.common.transferinstructions.TransferDestination.Plusgiro:
-      type: object
-      properties:
-        plusgiroNumber:
-          type: string
-    io.token.proto.common.transferinstructions.TransferDestination.ExpressElixir:
-      type: object
-      properties:
-        accountNumber:
-          type: string
-    io.token.proto.common.account.AccountIdentifier.Bban:
-      type: object
-      properties:
-        bban:
-          type: string
-        clearingNumber:
-          type: string
-    io.token.proto.common.account.AccountIdentifier.Token:
-      type: object
-      properties:
-        accountId:
-          type: string
-        memberId:
-          type: string
-    io.token.proto.common.security.Signature:
-      type: object
-      properties:
-        keyId:
-          type: string
-        memberId:
-          type: string
-        signature:
-          type: string
-    io.token.proto.common.providerspecific.stet.PaymentTypeInformation:
-      type: object
-      properties:
-        categoryPurpose:
-          type: string
-        instructionPriority:
-          type: string
-        localInstrument:
-          type: string
-        serviceLevel:
+        routing:
           type: string
     io.token.proto.common.transferinstructions.TransferEndpoint:
       type: object
@@ -1046,32 +1014,135 @@ components:
           type: string
         customerData:
           $ref: '#/components/schemas/io.token.proto.common.transferinstructions.CustomerData'
-    io.token.proto.common.security.SealedMessage.RsaAesMethod:
+    io.token.proto.common.account.Refund:
       type: object
       properties:
-        aesAlgorithm:
+        account:
+          $ref: '#/components/schemas/io.token.proto.common.account.AccountIdentifier'
+        name:
           type: string
-        encryptedAesKey:
-          type: string
-        rsaAlgorithm:
-          type: string
-        rsaKeyId:
-          type: string
-        signature:
-          type: string
-        signatureKeyId:
-          type: string
-    io.token.proto.common.security.SealedMessage:
+    io.token.proto.gateway.GetStandingOrderSubmissionResponse:
       type: object
       properties:
-        ciphertext:
+        submission:
+          $ref: '#/components/schemas/io.token.proto.common.submission.StandingOrderSubmission'
+    io.token.proto.common.account.AccountIdentifier.Bankgiro:
+      type: object
+      properties:
+        bankgiroNumber:
           type: string
-        noop:
-          $ref: '#/components/schemas/io.token.proto.common.security.SealedMessage.NoopMethod'
-        rsa:
-          $ref: '#/components/schemas/io.token.proto.common.security.SealedMessage.RsaMethod'
-        rsaAes:
-          $ref: '#/components/schemas/io.token.proto.common.security.SealedMessage.RsaAesMethod'
+    io.token.proto.common.providerspecific.ProviderStandingOrderMetadata:
+      type: object
+      properties:
+        cma9StandingOrderMetadata:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.Cma9StandingOrderMetadata'
+        nextGenPsd2StandingOrderMetadata:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.nextgenpsd2.NextGenPsd2StandingOrderMetadata'
+        polishapiStandingOrderMetadata:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.polishapi.PolishApiStandingOrderMetadata'
+        stetStandingOrderMetadata:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.StetStandingOrderMetadata'
+    io.token.proto.common.providerspecific.stet.RegulatoryReportingCodes:
+      type: object
+      properties:
+        regulatoryReportingCode:
+          items:
+            type: string
+          type: array
+    io.token.proto.common.transfer.TransferPayload:
+      type: object
+      properties:
+        amount:
+          $ref: '#/components/schemas/io.token.proto.common.money.Money'
+        confirmFunds:
+          format: boolean
+          type: boolean
+        description:
+          type: string
+        destinations:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.transferinstructions.TransferEndpoint'
+          type: array
+        metadata:
+          $ref: '#/components/schemas/io.token.proto.common.transferinstructions.TransferInstructions.Metadata'
+        refId:
+          type: string
+        tokenId:
+          type: string
+        transferDestinations:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.transferinstructions.TransferDestination'
+          type: array
+    io.token.proto.common.token.StandingOrderBody:
+      type: object
+      properties:
+        amount:
+          type: string
+        currency:
+          type: string
+        endDate:
+          type: string
+        frequency:
+          type: string
+        instructions:
+          $ref: '#/components/schemas/io.token.proto.common.transferinstructions.TransferInstructions'
+        remittanceReference:
+          type: string
+        returnRefundAccount:
+          format: boolean
+          type: boolean
+        startDate:
+          type: string
+    io.token.proto.common.account.AccountIdentifier.Bban:
+      type: object
+      properties:
+        bban:
+          type: string
+        clearingNumber:
+          type: string
+    io.token.proto.common.account.BankAccount.Custom:
+      type: object
+      properties:
+        bankId:
+          type: string
+        payload:
+          type: string
+    io.token.proto.common.providerspecific.nextgenpsd2.NextGenPsd2TransferMetadata:
+      type: object
+      properties:
+        creditorAgent:
+          type: string
+        creditorAgentName:
+          type: string
+        endToEndIdentification:
+          type: string
+        remittanceInformationStructured:
+          type: string
+    io.token.proto.common.transferinstructions.TransferDestination.EuDomesticNonEuroInstant:
+      type: object
+      properties:
+        bban:
+          type: string
+        bic:
+          type: string
+        clearingNumber:
+          type: string
+        iban:
+          type: string
+    io.token.proto.gateway.CreateTransferRequest:
+      type: object
+      properties:
+        payload:
+          $ref: '#/components/schemas/io.token.proto.common.transfer.TransferPayload'
+        payloadSignature:
+          $ref: '#/components/schemas/io.token.proto.common.security.Signature'
+    io.token.proto.common.transferinstructions.TransferDestination.SepaInstant:
+      type: object
+      properties:
+        bic:
+          type: string
+        iban:
+          type: string
     io.token.proto.common.transfer.Transfer:
       type: object
       properties:
@@ -1115,172 +1186,42 @@ components:
           type: string
         transferRefundStatus:
           $ref: '#/components/schemas/io.token.proto.common.v2.payout.TransferRefundStatus'
-    io.token.proto.common.account.BankAccount.FasterPayments:
+    io.token.proto.common.providerspecific.stet.GenericIdentification:
+      type: object
+      properties:
+        identification:
+          type: string
+        issuer:
+          type: string
+        schemeName:
+          type: string
+    io.token.proto.common.providerspecific.stet.FinancialInstitutionIdentification:
+      type: object
+      properties:
+        bicFi:
+          type: string
+        clearingSystemMemberId:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.ClearingSystemMemberIdentification'
+        name:
+          type: string
+        postalAddress:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.PostalAddress'
+    io.token.proto.common.security.SealedMessage.NoopMethod:
+      type: object
+      properties: {}
+    io.token.proto.common.transferinstructions.TransferDestination.Chaps:
       type: object
       properties:
         accountNumber:
           type: string
         sortCode:
           type: string
-    io.token.proto.common.transferinstructions.TransferDestination.VirtualAccount:
+    io.token.proto.common.account.BankAccount.Guest:
       type: object
       properties:
-        localInstrument:
-          $ref: '#/components/schemas/io.token.proto.common.transferinstructions.TransferDestination.VirtualAccount.LocalInstrument'
-        virtualAccountId:
+        bankId:
           type: string
-    io.token.proto.common.transaction.TransactionStatus:
-      enum:
-      - INVALID_STATUS
-      - PENDING
-      - PROCESSING
-      - SUCCESS
-      - PENDING_EXTERNAL_AUTHORIZATION
-      - FAILURE_CANCELED
-      - FAILURE_INSUFFICIENT_FUNDS
-      - FAILURE_INVALID_CURRENCY
-      - FAILURE_PERMISSION_DENIED
-      - FAILURE_QUOTE_EXPIRED
-      - FAILURE_INVALID_AMOUNT
-      - FAILURE_INVALID_QUOTE
-      - FAILURE_EXPIRED
-      - FAILURE_DECLINED
-      - FAILURE_GENERIC
-      - SENT
-      - INITIATED
-      - STATUS_NOT_AVAILABLE
-      - SETTLEMENT_IN_PROGRESS
-      - SETTLEMENT_INCOMPLETE
-      - SETTLEMENT_COMPLETED
-      default: INVALID_STATUS
-      type: string
-    io.token.proto.common.transferinstructions.CustomerData:
-      type: object
-      properties:
-        address:
-          $ref: '#/components/schemas/io.token.proto.common.address.Address'
-        legalNames:
-          items:
-            type: string
-          type: array
-    io.token.proto.common.v2.payout.TransferRefundStatus:
-      enum:
-      - NONE
-      - PARTIAL
-      - FULL
-      default: NONE
-      type: string
-    io.token.proto.common.security.SealedMessage.RsaMethod:
-      type: object
-      properties:
-        algorithm:
-          type: string
-        keyId:
-          type: string
-        signature:
-          type: string
-        signatureKeyId:
-          type: string
-    io.token.proto.common.providerspecific.polishapi.PolishApiTransferMetadata:
-      type: object
-      properties:
-        deliveryMode:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.polishapi.DeliveryMode'
-        hold:
-          format: boolean
-          type: boolean
-    io.token.proto.common.account.BankAccount.SecretAccount:
-      type: object
-      properties:
-        secretId:
-          type: string
-    io.token.proto.common.transfer.TransferPayload:
-      type: object
-      properties:
-        amount:
-          $ref: '#/components/schemas/io.token.proto.common.money.Money'
-        confirmFunds:
-          format: boolean
-          type: boolean
-        description:
-          type: string
-        destinations:
-          items:
-            $ref: '#/components/schemas/io.token.proto.common.transferinstructions.TransferEndpoint'
-          type: array
-        metadata:
-          $ref: '#/components/schemas/io.token.proto.common.transferinstructions.TransferInstructions.Metadata'
-        refId:
-          type: string
-        tokenId:
-          type: string
-        transferDestinations:
-          items:
-            $ref: '#/components/schemas/io.token.proto.common.transferinstructions.TransferDestination'
-          type: array
-    io.token.proto.common.account.AccountIdentifier.Msisdn:
-      type: object
-      properties:
-        msisdn:
-          type: string
-    io.token.proto.common.account.BankAccount.Ach:
-      type: object
-      properties:
-        account:
-          type: string
-        routing:
-          type: string
-    io.token.proto.common.providerspecific.stet.StetStandingOrderMetadata:
-      type: object
-      properties:
-        beneficiary:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.Beneficiary'
-        endToEndId:
-          type: string
-    io.token.proto.common.token.ExternalAuthorizationDetails:
-      type: object
-      properties:
-        authorizationUrl:
-          type: string
-        completionPattern:
-          type: string
-        url:
-          type: string
-    io.token.proto.common.account.BankAccount.EuDomesticNonEuro:
-      type: object
-      properties:
-        bban:
-          type: string
-        bic:
-          type: string
-        clearingNumber:
-          type: string
-        iban:
-          type: string
-    io.token.proto.common.token.ActingAs:
-      type: object
-      properties:
-        displayName:
-          type: string
-        logoUrl:
-          type: string
-        refId:
-          type: string
-        secondaryName:
-          type: string
-    io.token.proto.common.providerspecific.ProviderStandingOrderSubmissionDetails:
-      type: object
-      properties:
-        id:
-          type: string
-        status:
-          type: string
-    io.token.proto.common.account.AccountIdentifier.GbDomestic:
-      type: object
-      properties:
-        accountNumber:
-          type: string
-        sortCode:
+        nonce:
           type: string
     io.token.proto.common.transferinstructions.TransferDestination.EuDomesticNonEuro:
       type: object
@@ -1293,66 +1234,6 @@ components:
           type: string
         iban:
           type: string
-    io.token.proto.common.providerspecific.nextgenpsd2.NextGenPsd2StandingOrderMetadata:
-      type: object
-      properties:
-        creditorAgentName:
-          type: string
-        endToEndIdentification:
-          type: string
-    io.token.proto.common.transferinstructions.TransferDestination.Ach:
-      type: object
-      properties:
-        account:
-          type: string
-        routing:
-          type: string
-    io.token.proto.common.transferinstructions.TransferDestination.FasterPayments:
-      type: object
-      properties:
-        accountNumber:
-          type: string
-        sortCode:
-          type: string
-    io.token.proto.common.submission.StandingOrderSubmission:
-      type: object
-      properties:
-        actingAs:
-          $ref: '#/components/schemas/io.token.proto.common.token.ActingAs'
-        createdAtMs:
-          format: string
-          type: string
-        id:
-          type: string
-        payload:
-          $ref: '#/components/schemas/io.token.proto.common.token.StandingOrderBody'
-        providerDetails:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.ProviderStandingOrderSubmissionDetails'
-        refund:
-          $ref: '#/components/schemas/io.token.proto.common.account.Refund'
-        standingOrderId:
-          type: string
-        status:
-          $ref: '#/components/schemas/io.token.proto.common.submission.SubmissionStatus'
-        statusReasonInformation:
-          type: string
-        tokenId:
-          type: string
-    io.token.proto.common.account.BankAccount.TokenAuthorization:
-      type: object
-      properties:
-        authorization:
-          $ref: '#/components/schemas/io.token.proto.banklink.BankAuthorization'
-    io.token.proto.common.transferinstructions.PaymentContext:
-      enum:
-      - INVALID_CONTEXT
-      - OTHER_CONTEXT
-      - BILL_PAYMENT
-      - ECOMMERCE_GOODS
-      - ECOMMERCE_SERVICES
-      - PERSON_TO_PERSON
-      default: INVALID_CONTEXT
-      type: string
     io.token.proto.common.providerspecific.stet.ClearingSystemMemberIdentification:
       type: object
       properties:
@@ -1360,20 +1241,102 @@ components:
           type: string
         memberId:
           type: string
-    io.token.proto.common.transferinstructions.TransferDestination.UsStructured:
+    io.token.proto.common.security.SealedMessage.RsaAesMethod:
       type: object
       properties:
-        abaRoutingNumber:
+        aesAlgorithm:
           type: string
-        beneficiaryAccountNumber:
+        encryptedAesKey:
           type: string
-        beneficiaryName:
+        rsaAlgorithm:
           type: string
-        receivingBankAddress:
+        rsaKeyId:
           type: string
-        receivingBankName:
+        signature:
           type: string
-        swiftBic:
+        signatureKeyId:
+          type: string
+    io.token.proto.gateway.CreateTransferResponse:
+      type: object
+      properties:
+        authorizationDetails:
+          $ref: '#/components/schemas/io.token.proto.common.token.ExternalAuthorizationDetails'
+        transfer:
+          $ref: '#/components/schemas/io.token.proto.common.transfer.Transfer'
+    io.token.proto.common.providerspecific.cma9.Cma9StandingOrderMetadata:
+      type: object
+      properties:
+        finalPaymentAmount:
+          $ref: '#/components/schemas/io.token.proto.common.money.Money'
+        finalPaymentDateTime:
+          type: string
+        firstPaymentAmount:
+          $ref: '#/components/schemas/io.token.proto.common.money.Money'
+        firstPaymentDateTime:
+          type: string
+        frequency:
+          type: string
+        numberOfPayments:
+          format: int32
+          type: integer
+        recurringPaymentAmount:
+          $ref: '#/components/schemas/io.token.proto.common.money.Money'
+        recurringPaymentDateTime:
+          type: string
+        remittanceInformation:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.RemittanceInformation'
+        risk:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.Risk'
+    io.token.proto.common.security.SealedMessage.RsaMethod:
+      type: object
+      properties:
+        algorithm:
+          type: string
+        keyId:
+          type: string
+        signature:
+          type: string
+        signatureKeyId:
+          type: string
+    io.token.proto.common.transferinstructions.TransferDestination.Plusgiro:
+      type: object
+      properties:
+        plusgiroNumber:
+          type: string
+    io.token.proto.common.address.Address:
+      type: object
+      properties:
+        city:
+          type: string
+        conscriptionNumber:
+          type: string
+        country:
+          type: string
+        district:
+          type: string
+        flats:
+          type: string
+        full:
+          type: string
+        hamlet:
+          type: string
+        houseName:
+          type: string
+        houseNumber:
+          type: string
+        place:
+          type: string
+        postCode:
+          type: string
+        province:
+          type: string
+        state:
+          type: string
+        street:
+          type: string
+        subdistrict:
+          type: string
+        suburb:
           type: string
     io.token.proto.common.account.BankAccount.Swift:
       type: object
@@ -1382,170 +1345,36 @@ components:
           type: string
         bic:
           type: string
-    io.token.proto.common.transferinstructions.TransferDestination.Beneficiary:
+    io.token.proto.common.transferinstructions.TransferDestination.Bankgiro:
       type: object
       properties:
-        beneficiaryId:
+        bankgiroNumber:
           type: string
-        localInstrument:
-          $ref: '#/components/schemas/io.token.proto.common.transferinstructions.TransferDestination.Beneficiary.LocalInstrument'
-    io.token.proto.common.providerspecific.cma9.Risk:
+    io.token.proto.common.transfer.Refund:
       type: object
       properties:
-        beneficiaryAccountType:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.BeneficiaryAccountType'
-        beneficiaryPrepopulatedIndicator:
-          type: string
-        contractPresentIndicator:
-          type: string
-        deliveryAddress:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.DeliveryAddress'
-        merchantCategoryCode:
-          type: string
-        merchantCustomerIdentification:
-          type: string
-        paymentContextCode:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.PaymentContextCode'
-        paymentPurposeCode:
-          type: string
-    io.token.proto.common.providerspecific.stet.PostalAddress:
+        remainingRefundAmount:
+          $ref: '#/components/schemas/io.token.proto.common.money.Money'
+        settledRefundAmount:
+          $ref: '#/components/schemas/io.token.proto.common.money.Money'
+        transferRefundStatus:
+          $ref: '#/components/schemas/io.token.proto.common.v2.payout.TransferRefundStatus'
+    io.token.proto.common.transferinstructions.CustomerData:
       type: object
       properties:
-        addressLine:
+        address:
+          $ref: '#/components/schemas/io.token.proto.common.address.Address'
+        legalNames:
           items:
             type: string
           type: array
-        country:
-          type: string
-    io.token.proto.common.providerspecific.stet.GenericIdentification:
+    io.token.proto.common.providerspecific.ProviderTransferDetails:
       type: object
       properties:
-        identification:
+        id:
           type: string
-        issuer:
+        status:
           type: string
-        schemeName:
-          type: string
-    io.token.proto.common.providerspecific.stet.StetTransferMetadata:
-      type: object
-      properties:
-        beneficiary:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.Beneficiary'
-        debtorAgent:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.FinancialInstitutionIdentification'
-        endToEndId:
-          type: string
-        executionRule:
-          type: string
-        paymentTypeInformation:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.PaymentTypeInformation'
-        regulatoryReportingCodes:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.RegulatoryReportingCodes'
-    io.token.proto.common.account.BankAccount.Guest:
-      type: object
-      properties:
-        bankId:
-          type: string
-        nonce:
-          type: string
-    io.token.proto.common.providerspecific.stet.RegulatoryReportingCodes:
-      type: object
-      properties:
-        regulatoryReportingCode:
-          items:
-            type: string
-          type: array
-    io.token.proto.gateway.GetStandingOrderSubmissionsResponse:
-      type: object
-      properties:
-        offset:
-          type: string
-        submissions:
-          items:
-            $ref: '#/components/schemas/io.token.proto.common.submission.StandingOrderSubmission'
-          type: array
-    io.token.proto.common.account.BankAccount:
-      type: object
-      properties:
-        accountFeatures:
-          $ref: '#/components/schemas/io.token.proto.common.account.AccountFeatures'
-        ach:
-          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.Ach'
-        bank:
-          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.Bank'
-        custom:
-          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.Custom'
-        domestic:
-          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.Domestic'
-        euDomesticNonEuro:
-          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.EuDomesticNonEuro'
-        fasterPayments:
-          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.FasterPayments'
-        guest:
-          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.Guest'
-        iban:
-          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.Iban'
-        metadata:
-          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.MetadataEntry'
-        secret:
-          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.SecretAccount'
-        sepa:
-          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.Sepa'
-        swift:
-          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.Swift'
-        token:
-          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.Token'
-        tokenAuthorization:
-          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.TokenAuthorization'
-    io.token.proto.common.transferinstructions.TransferDestination.VirtualAccount.LocalInstrument:
-      enum:
-      - INVALID_LOCAL_INSTRUMENT
-      - SEPA
-      - SEPA_INSTANT
-      - FASTER_PAYMENTS
-      default: INVALID_LOCAL_INSTRUMENT
-      type: string
-    io.token.proto.common.security.SealedMessage.NoopMethod:
-      type: object
-      properties: {}
-    io.token.proto.common.providerspecific.stet.AccountIdentification:
-      type: object
-      properties:
-        currency:
-          type: string
-        iban:
-          type: string
-        other:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.GenericIdentification'
-    io.token.proto.common.transfer.Transfer.ScaStatus:
-      enum:
-      - UNKNOWN
-      - APPLIED
-      - EXEMPTED
-      default: UNKNOWN
-      type: string
-    io.token.proto.gateway.CreateStandingOrderResponse:
-      type: object
-      properties:
-        authorizationDetails:
-          $ref: '#/components/schemas/io.token.proto.common.token.ExternalAuthorizationDetails'
-        submission:
-          $ref: '#/components/schemas/io.token.proto.common.submission.StandingOrderSubmission'
-    io.token.proto.common.providerspecific.polishapi.PolishApiStandingOrderMetadata:
-      type: object
-      properties:
-        deliveryMode:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.polishapi.DeliveryMode'
-        hold:
-          format: boolean
-          type: boolean
-    io.token.proto.gateway.CreateTransferResponse:
-      type: object
-      properties:
-        authorizationDetails:
-          $ref: '#/components/schemas/io.token.proto.common.token.ExternalAuthorizationDetails'
-        transfer:
-          $ref: '#/components/schemas/io.token.proto.common.transfer.Transfer'
     io.token.proto.common.transferinstructions.TransferDestination:
       type: object
       properties:
@@ -1597,48 +1426,201 @@ components:
           $ref: '#/components/schemas/io.token.proto.common.transferinstructions.TransferDestination.UsStructured'
         virtualAccount:
           $ref: '#/components/schemas/io.token.proto.common.transferinstructions.TransferDestination.VirtualAccount'
-    io.token.proto.common.transferinstructions.TransferInstructions.Metadata:
+    io.token.proto.common.providerspecific.stet.PaymentTypeInformation:
       type: object
       properties:
-        chargeBearer:
-          $ref: '#/components/schemas/io.token.proto.common.transferinstructions.ChargeBearer'
-        deliveryAddress:
-          $ref: '#/components/schemas/io.token.proto.common.address.Address'
-        merchantCategoryCode:
+        categoryPurpose:
           type: string
-        merchantCustomerId:
+        instructionPriority:
           type: string
-        paymentContext:
-          $ref: '#/components/schemas/io.token.proto.common.transferinstructions.PaymentContext'
-        providerStandingOrderMetadata:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.ProviderStandingOrderMetadata'
-        providerTransferMetadata:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.ProviderTransferMetadata'
-        purposeCode:
+        localInstrument:
           type: string
-        ultimateCreditor:
+        serviceLevel:
           type: string
-        ultimateDebtor:
-          type: string
-    io.token.proto.common.token.StandingOrderBody:
+    io.token.proto.gateway.GetTransfersResponse:
       type: object
       properties:
-        amount:
+        offset:
           type: string
+        transfers:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.transfer.Transfer'
+          type: array
+    io.token.proto.banklink.BankAuthorization:
+      type: object
+      properties:
+        accounts:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.security.SealedMessage'
+          type: array
+        bankId:
+          type: string
+    io.token.proto.common.account.BankAccount.Ach:
+      type: object
+      properties:
+        account:
+          type: string
+        routing:
+          type: string
+    io.token.proto.common.token.ExternalAuthorizationDetails:
+      type: object
+      properties:
+        authorizationUrl:
+          type: string
+        completionPattern:
+          type: string
+        url:
+          type: string
+    io.token.proto.common.account.AccountIdentifier.Pan:
+      type: object
+      properties:
+        pan:
+          type: string
+    io.token.proto.common.transferinstructions.TransferDestination.Beneficiary.LocalInstrument:
+      enum:
+      - INVALID_LOCAL_INSTRUMENT
+      - SEPA
+      - SEPA_INSTANT
+      - FASTER_PAYMENTS
+      default: INVALID_LOCAL_INSTRUMENT
+      type: string
+    io.token.proto.common.transferinstructions.TransferDestination.Custom:
+      type: object
+      properties:
+        bankId:
+          type: string
+        payload:
+          type: string
+    io.token.proto.common.account.BankAccount.Bank:
+      type: object
+      properties:
+        bankId:
+          type: string
+    io.token.proto.common.account.BankAccount.Sepa:
+      type: object
+      properties:
+        bic:
+          type: string
+        iban:
+          type: string
+    io.token.proto.common.transferinstructions.TransferDestination.Sorbnet:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+    io.token.proto.common.account.BankAccount.FasterPayments:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        sortCode:
+          type: string
+    io.token.proto.common.providerspecific.stet.AccountIdentification:
+      type: object
+      properties:
         currency:
           type: string
-        endDate:
+        iban:
           type: string
-        frequency:
+        other:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.GenericIdentification'
+    io.token.proto.common.account.BankAccount.Domestic:
+      type: object
+      properties:
+        accountNumber:
           type: string
-        instructions:
-          $ref: '#/components/schemas/io.token.proto.common.transferinstructions.TransferInstructions'
-        remittanceReference:
+        bankCode:
           type: string
-        returnRefundAccount:
-          format: boolean
-          type: boolean
-        startDate:
+        country:
+          type: string
+    io.token.proto.common.providerspecific.stet.StetStandingOrderMetadata:
+      type: object
+      properties:
+        beneficiary:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.Beneficiary'
+        endToEndId:
+          type: string
+    io.token.proto.common.transferinstructions.TransferDestination.Hsvp:
+      type: object
+      properties:
+        iban:
+          type: string
+    io.token.proto.common.transferinstructions.TransferDestination.Target2:
+      type: object
+      properties:
+        iban:
+          type: string
+    io.token.proto.common.transferinstructions.TransferDestination.Bacs:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        sortCode:
+          type: string
+    io.token.proto.common.account.BankAccount:
+      type: object
+      properties:
+        accountFeatures:
+          $ref: '#/components/schemas/io.token.proto.common.account.AccountFeatures'
+        ach:
+          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.Ach'
+        bank:
+          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.Bank'
+        custom:
+          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.Custom'
+        domestic:
+          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.Domestic'
+        euDomesticNonEuro:
+          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.EuDomesticNonEuro'
+        fasterPayments:
+          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.FasterPayments'
+        guest:
+          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.Guest'
+        iban:
+          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.Iban'
+        metadata:
+          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.MetadataEntry'
+        secret:
+          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.SecretAccount'
+        sepa:
+          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.Sepa'
+        swift:
+          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.Swift'
+        token:
+          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.Token'
+        tokenAuthorization:
+          $ref: '#/components/schemas/io.token.proto.common.account.BankAccount.TokenAuthorization'
+    io.token.proto.common.transferinstructions.TransferDestination.Beneficiary:
+      type: object
+      properties:
+        beneficiaryId:
+          type: string
+        localInstrument:
+          $ref: '#/components/schemas/io.token.proto.common.transferinstructions.TransferDestination.Beneficiary.LocalInstrument'
+    io.token.proto.common.account.AccountIdentifier.Plusgiro:
+      type: object
+      properties:
+        plusgiroNumber:
+          type: string
+    io.token.proto.common.transferinstructions.TransferDestination.Elixir:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+    io.token.proto.common.transferinstructions.TransferDestination.UsStructured:
+      type: object
+      properties:
+        abaRoutingNumber:
+          type: string
+        beneficiaryAccountNumber:
+          type: string
+        beneficiaryName:
+          type: string
+        receivingBankAddress:
+          type: string
+        receivingBankName:
+          type: string
+        swiftBic:
           type: string
     io.token.proto.common.providerspecific.cma9.DeliveryAddress:
       type: object
@@ -1667,51 +1649,59 @@ components:
           type: string
         townName:
           type: string
-    io.token.proto.common.account.BankAccount.Token:
+    io.token.proto.common.submission.StandingOrderSubmission:
       type: object
       properties:
-        accountId:
+        actingAs:
+          $ref: '#/components/schemas/io.token.proto.common.token.ActingAs'
+        createdAtMs:
+          format: string
           type: string
-        memberId:
-          type: string
-    io.token.proto.common.account.AccountIdentifier.Pan:
-      type: object
-      properties:
-        pan:
-          type: string
-    io.token.proto.common.account.BankAccount.Custom:
-      type: object
-      properties:
-        bankId:
+        id:
           type: string
         payload:
+          $ref: '#/components/schemas/io.token.proto.common.token.StandingOrderBody'
+        providerDetails:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.ProviderStandingOrderSubmissionDetails'
+        refund:
+          $ref: '#/components/schemas/io.token.proto.common.account.Refund'
+        standingOrderId:
           type: string
-    io.token.proto.common.account.AccountIdentifier.Bankgiro:
+        status:
+          $ref: '#/components/schemas/io.token.proto.common.submission.SubmissionStatus'
+        statusReasonInformation:
+          type: string
+        tokenId:
+          type: string
+    io.token.proto.common.transferinstructions.TransferDestination.Sepa:
       type: object
       properties:
-        bankgiroNumber:
+        bic:
           type: string
-    io.token.proto.common.transferinstructions.TransferInstructions:
+        iban:
+          type: string
+    io.token.proto.common.account.AccountFeatures:
       type: object
       properties:
-        destinations:
-          items:
-            $ref: '#/components/schemas/io.token.proto.common.transferinstructions.TransferEndpoint'
-          type: array
-        metadata:
-          $ref: '#/components/schemas/io.token.proto.common.transferinstructions.TransferInstructions.Metadata'
-        source:
-          $ref: '#/components/schemas/io.token.proto.common.transferinstructions.TransferEndpoint'
-        transferDestinations:
-          items:
-            $ref: '#/components/schemas/io.token.proto.common.transferinstructions.TransferDestination'
-          type: array
-    io.token.proto.common.transferinstructions.TransferDestination.Token:
+        requiresExternalAuth:
+          format: boolean
+          type: boolean
+        supportsInformation:
+          format: boolean
+          type: boolean
+        supportsPayment:
+          format: boolean
+          type: boolean
+        supportsReceivePayment:
+          format: boolean
+          type: boolean
+        supportsSendPayment:
+          format: boolean
+          type: boolean
+    io.token.proto.common.transferinstructions.TransferDestination.BlueCash:
       type: object
       properties:
-        accountId:
-          type: string
-        memberId:
+        accountNumber:
           type: string
     io.token.proto.common.transferinstructions.ChargeBearer:
       enum:
@@ -1722,6 +1712,312 @@ components:
       - SLEV
       default: INVALID_CHARGE_BEARER
       type: string
+    io.token.proto.common.account.BankAccount.Iban:
+      type: object
+      properties:
+        bic:
+          type: string
+        iban:
+          type: string
+    io.token.proto.common.account.AccountIdentifier.Iban:
+      type: object
+      properties:
+        iban:
+          type: string
+    io.token.proto.common.transfer.Transfer.Method:
+      enum:
+      - DEFAULT
+      - INSTANT
+      default: DEFAULT
+      type: string
+    io.token.proto.common.token.ActingAs:
+      type: object
+      properties:
+        displayName:
+          type: string
+        logoUrl:
+          type: string
+        refId:
+          type: string
+        secondaryName:
+          type: string
+    io.token.proto.common.account.BankAccount.Token:
+      type: object
+      properties:
+        accountId:
+          type: string
+        memberId:
+          type: string
+    io.token.proto.common.providerspecific.ProviderStandingOrderSubmissionDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+    io.token.proto.common.transferinstructions.TransferDestination.Swift:
+      type: object
+      properties:
+        account:
+          type: string
+        bic:
+          type: string
+    io.token.proto.common.providerspecific.polishapi.PolishApiStandingOrderMetadata:
+      type: object
+      properties:
+        deliveryMode:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.polishapi.DeliveryMode'
+        hold:
+          format: boolean
+          type: boolean
+    io.token.proto.common.transferinstructions.TransferDestination.FasterPayments:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        sortCode:
+          type: string
+    io.token.proto.common.providerspecific.stet.Beneficiary:
+      type: object
+      properties:
+        creditor:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.PartyIdentification'
+        creditorAccount:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.AccountIdentification'
+        creditorAgent:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.FinancialInstitutionIdentification'
+        id:
+          type: string
+    io.token.proto.common.transferinstructions.PaymentContext:
+      enum:
+      - INVALID_CONTEXT
+      - OTHER_CONTEXT
+      - BILL_PAYMENT
+      - ECOMMERCE_GOODS
+      - ECOMMERCE_SERVICES
+      - PERSON_TO_PERSON
+      default: INVALID_CONTEXT
+      type: string
+    io.token.proto.common.providerspecific.cma9.Cma9TransferMetadata:
+      type: object
+      properties:
+        endToEndIdentification:
+          type: string
+        instructionIdentification:
+          type: string
+        remittanceInformation:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.RemittanceInformation'
+        risk:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.Risk'
+    io.token.proto.common.transfer.Transfer.ScaStatus:
+      enum:
+      - UNKNOWN
+      - APPLIED
+      - EXEMPTED
+      default: UNKNOWN
+      type: string
+    io.token.proto.common.transferinstructions.TransferDestination.ExpressElixir:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+    io.token.proto.common.account.AccountIdentifier.GbDomestic:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        sortCode:
+          type: string
+    io.token.proto.common.providerspecific.stet.PartyIdentification:
+      type: object
+      properties:
+        name:
+          type: string
+        organisationId:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.GenericIdentification'
+        postalAddress:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.PostalAddress'
+        privateId:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.GenericIdentification'
+    io.token.proto.common.transferinstructions.TransferDestination.Type:
+      enum:
+      - UNKNOWN
+      - BUSINESS
+      - PERSONAL
+      default: UNKNOWN
+      type: string
+    io.token.proto.common.account.BankAccount.TokenAuthorization:
+      type: object
+      properties:
+        authorization:
+          $ref: '#/components/schemas/io.token.proto.banklink.BankAuthorization'
+    io.token.proto.common.providerspecific.stet.PostalAddress:
+      type: object
+      properties:
+        addressLine:
+          items:
+            type: string
+          type: array
+        country:
+          type: string
+    io.token.proto.common.submission.SubmissionStatus:
+      enum:
+      - INVALID
+      - PENDING
+      - PROCESSING
+      - SUCCESS
+      - FAILED
+      - INITIATED
+      - CANCELED
+      - SENT
+      - PENDING_EXTERNAL_AUTHORIZATION
+      default: INVALID
+      type: string
+    io.token.proto.common.providerspecific.polishapi.PolishApiTransferMetadata:
+      type: object
+      properties:
+        deliveryMode:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.polishapi.DeliveryMode'
+        hold:
+          format: boolean
+          type: boolean
+    io.token.proto.common.v2.payout.TransferRefundStatus:
+      enum:
+      - NONE
+      - PARTIAL
+      - FULL
+      default: NONE
+      type: string
+    io.token.proto.common.security.SealedMessage:
+      type: object
+      properties:
+        ciphertext:
+          type: string
+        noop:
+          $ref: '#/components/schemas/io.token.proto.common.security.SealedMessage.NoopMethod'
+        rsa:
+          $ref: '#/components/schemas/io.token.proto.common.security.SealedMessage.RsaMethod'
+        rsaAes:
+          $ref: '#/components/schemas/io.token.proto.common.security.SealedMessage.RsaAesMethod'
+    io.token.proto.common.account.BankAccount.EuDomesticNonEuro:
+      type: object
+      properties:
+        bban:
+          type: string
+        bic:
+          type: string
+        clearingNumber:
+          type: string
+        iban:
+          type: string
+    io.token.proto.common.transferinstructions.TransferDestination.Token:
+      type: object
+      properties:
+        accountId:
+          type: string
+        memberId:
+          type: string
+    io.token.proto.common.transferinstructions.TransferDestination.VirtualAccount:
+      type: object
+      properties:
+        localInstrument:
+          $ref: '#/components/schemas/io.token.proto.common.transferinstructions.TransferDestination.VirtualAccount.LocalInstrument'
+        virtualAccountId:
+          type: string
+    io.token.proto.common.providerspecific.ProviderTransferMetadata:
+      type: object
+      properties:
+        cma9TransferMetadata:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.Cma9TransferMetadata'
+        nextGenPsd2TransferMetadata:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.nextgenpsd2.NextGenPsd2TransferMetadata'
+        polishApiTransferMetadata:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.polishapi.PolishApiTransferMetadata'
+        stetTransferMetadata:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.StetTransferMetadata'
+    io.token.proto.common.providerspecific.cma9.PaymentContextCode:
+      enum:
+      - INVALID_PAYMENT_CONTEXT_CODE
+      - BILL_PAYMENT
+      - ECOMMERCE_GOODS
+      - ECOMMERCE_SERVICES
+      - OTHER
+      - PARTY_TO_PARTY
+      - BILLING_GOODS_AND_SERVICES_IN_ADVANCE
+      - BILLING_GOODS_AND_SERVICES_IN_ARREARS
+      - PISP_PAYEE
+      - ECOMMERCE_MERCHANT_INITIATED_PAYMENT
+      - FACE_TO_FACE_POINT_OF_SALE
+      - TRANSFER_TO_SELF
+      - TRANSFER_TO_THIRD_PARTY
+      default: INVALID_PAYMENT_CONTEXT_CODE
+      type: string
+    io.token.proto.common.providerspecific.cma9.RemittanceInformation:
+      type: object
+      properties:
+        reference:
+          type: string
+        referenceHash:
+          type: string
+    io.token.proto.common.account.AccountIdentifier.Msisdn:
+      type: object
+      properties:
+        msisdn:
+          type: string
+    io.token.proto.common.providerspecific.stet.StetTransferMetadata:
+      type: object
+      properties:
+        beneficiary:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.Beneficiary'
+        debtorAgent:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.FinancialInstitutionIdentification'
+        endToEndId:
+          type: string
+        executionRule:
+          type: string
+        paymentTypeInformation:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.PaymentTypeInformation'
+        regulatoryReportingCodes:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.RegulatoryReportingCodes'
+    io.token.proto.common.account.AccountIdentifier.Token:
+      type: object
+      properties:
+        accountId:
+          type: string
+        memberId:
+          type: string
+    io.token.proto.common.providerspecific.polishapi.DeliveryMode:
+      enum:
+      - INVALID_DELIVERY_MODE
+      - STANDARD_D2
+      - STANDARD_D1
+      - URGENT_D1
+      - EXPRESS_D0
+      default: INVALID_DELIVERY_MODE
+      type: string
+    io.token.proto.common.transferinstructions.TransferInstructions.Metadata:
+      type: object
+      properties:
+        chargeBearer:
+          $ref: '#/components/schemas/io.token.proto.common.transferinstructions.ChargeBearer'
+        deliveryAddress:
+          $ref: '#/components/schemas/io.token.proto.common.address.Address'
+        merchantCategoryCode:
+          type: string
+        merchantCustomerId:
+          type: string
+        paymentContext:
+          $ref: '#/components/schemas/io.token.proto.common.transferinstructions.PaymentContext'
+        providerStandingOrderMetadata:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.ProviderStandingOrderMetadata'
+        providerTransferMetadata:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.ProviderTransferMetadata'
+        purposeCode:
+          type: string
+        ultimateCreditor:
+          type: string
+        ultimateDebtor:
+          type: string
     io.token.proto.common.providerspecific.cma9.BeneficiaryAccountType:
       enum:
       - INVALID_BENEFICIARY_ACCOUNT_TYPE
@@ -1742,366 +2038,26 @@ components:
       - PENSION
       default: INVALID_BENEFICIARY_ACCOUNT_TYPE
       type: string
-    io.token.proto.common.transferinstructions.TransferDestination.SepaInstant:
+    io.token.proto.common.providerspecific.cma9.Risk:
       type: object
       properties:
-        bic:
+        beneficiaryAccountType:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.BeneficiaryAccountType'
+        beneficiaryPrepopulatedIndicator:
           type: string
-        iban:
+        contractPresentIndicator:
           type: string
-    io.token.proto.common.account.BankAccount.Bank:
-      type: object
-      properties:
-        bankId:
+        deliveryAddress:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.DeliveryAddress'
+        merchantCategoryCode:
           type: string
-    io.token.proto.common.providerspecific.cma9.Cma9TransferMetadata:
-      type: object
-      properties:
-        endToEndIdentification:
+        merchantCustomerIdentification:
           type: string
-        instructionIdentification:
+        paymentContextCode:
+          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.PaymentContextCode'
+        paymentPurposeCode:
           type: string
-        remittanceInformation:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.RemittanceInformation'
-        risk:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.Risk'
-    io.token.proto.common.account.BankAccount.Sepa:
-      type: object
-      properties:
-        bic:
-          type: string
-        iban:
-          type: string
-    io.token.proto.common.transferinstructions.TransferDestination.Hsvp:
-      type: object
-      properties:
-        iban:
-          type: string
-    io.token.proto.gateway.GetTransfersResponse:
-      type: object
-      properties:
-        offset:
-          type: string
-        transfers:
-          items:
-            $ref: '#/components/schemas/io.token.proto.common.transfer.Transfer'
-          type: array
-    io.token.proto.common.transferinstructions.TransferDestination.Sepa:
-      type: object
-      properties:
-        bic:
-          type: string
-        iban:
-          type: string
-    io.token.proto.common.providerspecific.cma9.RemittanceInformation:
-      type: object
-      properties:
-        reference:
-          type: string
-        referenceHash:
-          type: string
-    io.token.proto.common.transferinstructions.TransferDestination.EuDomesticNonEuroInstant:
-      type: object
-      properties:
-        bban:
-          type: string
-        bic:
-          type: string
-        clearingNumber:
-          type: string
-        iban:
-          type: string
-    io.token.proto.common.providerspecific.cma9.PaymentContextCode:
-      enum:
-      - INVALID_PAYMENT_CONTEXT_CODE
-      - BILL_PAYMENT
-      - ECOMMERCE_GOODS
-      - ECOMMERCE_SERVICES
-      - OTHER
-      - PARTY_TO_PARTY
-      - BILLING_GOODS_AND_SERVICES_IN_ADVANCE
-      - BILLING_GOODS_AND_SERVICES_IN_ARREARS
-      - PISP_PAYEE
-      - ECOMMERCE_MERCHANT_INITIATED_PAYMENT
-      - FACE_TO_FACE_POINT_OF_SALE
-      - TRANSFER_TO_SELF
-      - TRANSFER_TO_THIRD_PARTY
-      default: INVALID_PAYMENT_CONTEXT_CODE
-      type: string
-    io.token.proto.common.address.Address:
-      type: object
-      properties:
-        city:
-          type: string
-        conscriptionNumber:
-          type: string
-        country:
-          type: string
-        district:
-          type: string
-        flats:
-          type: string
-        full:
-          type: string
-        hamlet:
-          type: string
-        houseName:
-          type: string
-        houseNumber:
-          type: string
-        place:
-          type: string
-        postCode:
-          type: string
-        province:
-          type: string
-        state:
-          type: string
-        street:
-          type: string
-        subdistrict:
-          type: string
-        suburb:
-          type: string
-    io.token.proto.gateway.CreateStandingOrderRequest:
-      type: object
-      properties:
-        tokenId:
-          type: string
-    io.token.proto.gateway.GetStandingOrderSubmissionResponse:
-      type: object
-      properties:
-        submission:
-          $ref: '#/components/schemas/io.token.proto.common.submission.StandingOrderSubmission'
-    io.token.proto.common.providerspecific.polishapi.DeliveryMode:
-      enum:
-      - INVALID_DELIVERY_MODE
-      - STANDARD_D2
-      - STANDARD_D1
-      - URGENT_D1
-      - EXPRESS_D0
-      default: INVALID_DELIVERY_MODE
-      type: string
-    io.token.proto.common.account.AccountFeatures:
-      type: object
-      properties:
-        requiresExternalAuth:
-          format: boolean
-          type: boolean
-        supportsInformation:
-          format: boolean
-          type: boolean
-        supportsPayment:
-          format: boolean
-          type: boolean
-        supportsReceivePayment:
-          format: boolean
-          type: boolean
-        supportsSendPayment:
-          format: boolean
-          type: boolean
-    io.token.proto.common.transferinstructions.TransferDestination.Chaps:
-      type: object
-      properties:
-        accountNumber:
-          type: string
-        sortCode:
-          type: string
-    io.token.proto.common.providerspecific.cma9.Cma9StandingOrderMetadata:
-      type: object
-      properties:
-        finalPaymentAmount:
-          $ref: '#/components/schemas/io.token.proto.common.money.Money'
-        finalPaymentDateTime:
-          type: string
-        firstPaymentAmount:
-          $ref: '#/components/schemas/io.token.proto.common.money.Money'
-        firstPaymentDateTime:
-          type: string
-        frequency:
-          type: string
-        numberOfPayments:
-          format: int32
-          type: integer
-        recurringPaymentAmount:
-          $ref: '#/components/schemas/io.token.proto.common.money.Money'
-        recurringPaymentDateTime:
-          type: string
-        remittanceInformation:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.RemittanceInformation'
-        risk:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.Risk'
-    io.token.proto.common.account.BankAccount.MetadataEntry:
-      type: object
-      properties: {}
-      additionalProperties:
-        type: string
-    io.token.proto.gateway.GetTransferResponse:
-      type: object
-      properties:
-        transfer:
-          $ref: '#/components/schemas/io.token.proto.common.transfer.Transfer'
-    io.token.proto.common.account.BankAccount.Iban:
-      type: object
-      properties:
-        bic:
-          type: string
-        iban:
-          type: string
-    io.token.proto.common.account.BankAccount.Domestic:
-      type: object
-      properties:
-        accountNumber:
-          type: string
-        bankCode:
-          type: string
-        country:
-          type: string
-    io.token.proto.common.transferinstructions.TransferDestination.BlueCash:
-      type: object
-      properties:
-        accountNumber:
-          type: string
-    io.token.proto.common.account.Refund:
-      type: object
-      properties:
-        account:
-          $ref: '#/components/schemas/io.token.proto.common.account.AccountIdentifier'
-        name:
-          type: string
-    io.token.proto.common.account.AccountIdentifier.Iban:
-      type: object
-      properties:
-        iban:
-          type: string
-    io.token.proto.common.transfer.Transfer.Method:
-      enum:
-      - DEFAULT
-      - INSTANT
-      default: DEFAULT
-      type: string
-    io.token.proto.common.providerspecific.stet.PartyIdentification:
-      type: object
-      properties:
-        name:
-          type: string
-        organisationId:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.GenericIdentification'
-        postalAddress:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.PostalAddress'
-        privateId:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.GenericIdentification'
-    io.token.proto.gateway.CreateTransferRequest:
-      type: object
-      properties:
-        payload:
-          $ref: '#/components/schemas/io.token.proto.common.transfer.TransferPayload'
-        payloadSignature:
-          $ref: '#/components/schemas/io.token.proto.common.security.Signature'
-    io.token.proto.common.providerspecific.ProviderTransferMetadata:
-      type: object
-      properties:
-        cma9TransferMetadata:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.Cma9TransferMetadata'
-        nextGenPsd2TransferMetadata:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.nextgenpsd2.NextGenPsd2TransferMetadata'
-        polishApiTransferMetadata:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.polishapi.PolishApiTransferMetadata'
-        stetTransferMetadata:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.StetTransferMetadata'
-    io.token.proto.common.transferinstructions.TransferDestination.Target2:
-      type: object
-      properties:
-        iban:
-          type: string
-    io.token.proto.common.transferinstructions.TransferDestination.Sorbnet:
-      type: object
-      properties:
-        accountNumber:
-          type: string
-    io.token.proto.common.transfer.Refund:
-      type: object
-      properties:
-        remainingRefundAmount:
-          $ref: '#/components/schemas/io.token.proto.common.money.Money'
-        settledRefundAmount:
-          $ref: '#/components/schemas/io.token.proto.common.money.Money'
-        transferRefundStatus:
-          $ref: '#/components/schemas/io.token.proto.common.v2.payout.TransferRefundStatus'
-    io.token.proto.common.transferinstructions.TransferDestination.Swift:
-      type: object
-      properties:
-        account:
-          type: string
-        bic:
-          type: string
-    io.token.proto.common.providerspecific.ProviderTransferDetails:
-      type: object
-      properties:
-        id:
-          type: string
-        status:
-          type: string
-    io.token.proto.common.providerspecific.ProviderStandingOrderMetadata:
-      type: object
-      properties:
-        cma9StandingOrderMetadata:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.cma9.Cma9StandingOrderMetadata'
-        nextGenPsd2StandingOrderMetadata:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.nextgenpsd2.NextGenPsd2StandingOrderMetadata'
-        polishapiStandingOrderMetadata:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.polishapi.PolishApiStandingOrderMetadata'
-        stetStandingOrderMetadata:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.StetStandingOrderMetadata'
-    io.token.proto.common.transferinstructions.TransferDestination.Bankgiro:
-      type: object
-      properties:
-        bankgiroNumber:
-          type: string
-    io.token.proto.common.providerspecific.stet.FinancialInstitutionIdentification:
-      type: object
-      properties:
-        bicFi:
-          type: string
-        clearingSystemMemberId:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.ClearingSystemMemberIdentification'
-        name:
-          type: string
-        postalAddress:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.PostalAddress'
-    io.token.proto.common.account.AccountIdentifier.Plusgiro:
-      type: object
-      properties:
-        plusgiroNumber:
-          type: string
-    io.token.proto.common.providerspecific.stet.Beneficiary:
-      type: object
-      properties:
-        creditor:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.PartyIdentification'
-        creditorAccount:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.AccountIdentification'
-        creditorAgent:
-          $ref: '#/components/schemas/io.token.proto.common.providerspecific.stet.FinancialInstitutionIdentification'
-        id:
-          type: string
-    io.token.proto.banklink.BankAuthorization:
-      type: object
-      properties:
-        accounts:
-          items:
-            $ref: '#/components/schemas/io.token.proto.common.security.SealedMessage'
-          type: array
-        bankId:
-          type: string
-    io.token.proto.common.transferinstructions.TransferDestination.Type:
-      enum:
-      - UNKNOWN
-      - BUSINESS
-      - PERSONAL
-      default: UNKNOWN
-      type: string
-    io.token.proto.common.transferinstructions.TransferDestination.Beneficiary.LocalInstrument:
+    io.token.proto.common.transferinstructions.TransferDestination.VirtualAccount.LocalInstrument:
       enum:
       - INVALID_LOCAL_INSTRUMENT
       - SEPA
@@ -2109,32 +2065,76 @@ components:
       - FASTER_PAYMENTS
       default: INVALID_LOCAL_INSTRUMENT
       type: string
-    io.token.proto.common.transferinstructions.TransferDestination.Bacs:
+    io.token.proto.gateway.CreateStandingOrderRequest:
       type: object
       properties:
-        accountNumber:
+        tokenId:
           type: string
-        sortCode:
-          type: string
-    io.token.proto.common.submission.SubmissionStatus:
+    io.token.proto.common.transaction.TransactionStatus:
       enum:
-      - INVALID
+      - INVALID_STATUS
       - PENDING
       - PROCESSING
       - SUCCESS
-      - FAILED
-      - INITIATED
-      - CANCELED
-      - SENT
       - PENDING_EXTERNAL_AUTHORIZATION
-      default: INVALID
+      - FAILURE_CANCELED
+      - FAILURE_INSUFFICIENT_FUNDS
+      - FAILURE_INVALID_CURRENCY
+      - FAILURE_PERMISSION_DENIED
+      - FAILURE_QUOTE_EXPIRED
+      - FAILURE_INVALID_AMOUNT
+      - FAILURE_INVALID_QUOTE
+      - FAILURE_EXPIRED
+      - FAILURE_DECLINED
+      - FAILURE_GENERIC
+      - SENT
+      - INITIATED
+      - STATUS_NOT_AVAILABLE
+      - SETTLEMENT_IN_PROGRESS
+      - SETTLEMENT_INCOMPLETE
+      - SETTLEMENT_COMPLETED
+      default: INVALID_STATUS
       type: string
-    io.token.proto.common.transferinstructions.TransferDestination.Custom:
+    io.token.proto.gateway.GetStandingOrderSubmissionsResponse:
       type: object
       properties:
-        bankId:
+        offset:
           type: string
-        payload:
+        submissions:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.submission.StandingOrderSubmission'
+          type: array
+    io.token.proto.gateway.CreateStandingOrderResponse:
+      type: object
+      properties:
+        authorizationDetails:
+          $ref: '#/components/schemas/io.token.proto.common.token.ExternalAuthorizationDetails'
+        submission:
+          $ref: '#/components/schemas/io.token.proto.common.submission.StandingOrderSubmission'
+    io.token.proto.common.transferinstructions.TransferInstructions:
+      type: object
+      properties:
+        destinations:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.transferinstructions.TransferEndpoint'
+          type: array
+        metadata:
+          $ref: '#/components/schemas/io.token.proto.common.transferinstructions.TransferInstructions.Metadata'
+        source:
+          $ref: '#/components/schemas/io.token.proto.common.transferinstructions.TransferEndpoint'
+        transferDestinations:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.transferinstructions.TransferDestination'
+          type: array
+    io.token.proto.common.account.BankAccount.MetadataEntry:
+      type: object
+      properties: {}
+      additionalProperties:
+        type: string
+    io.token.proto.common.account.BankAccount.SecretAccount:
+      type: object
+      properties:
+        secretId:
           type: string
   securitySchemes:
     BasicAuth:

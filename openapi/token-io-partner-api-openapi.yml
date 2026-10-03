@@ -79,9 +79,15 @@ paths:
       deprecated: false
 components:
   schemas:
-    io.token.proto.gateway.DisableMemberResponse:
+    io.token.proto.gateway.GetMembersUnderPartnerResponse:
       type: object
-      properties: {}
+      properties:
+        members:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.member.MemberInfo'
+          type: array
+        offset:
+          type: string
     io.token.proto.gateway.EnableMemberResponse:
       type: object
       properties: {}
@@ -99,15 +105,6 @@ components:
           type: string
         profileName:
           type: string
-    io.token.proto.gateway.GetMembersUnderPartnerResponse:
-      type: object
-      properties:
-        members:
-          items:
-            $ref: '#/components/schemas/io.token.proto.common.member.MemberInfo'
-          type: array
-        offset:
-          type: string
     io.token.proto.common.alias.Alias:
       type: object
       properties:
@@ -119,6 +116,9 @@ components:
           $ref: '#/components/schemas/io.token.proto.common.alias.Alias.Type'
         value:
           type: string
+    io.token.proto.gateway.DisableMemberResponse:
+      type: object
+      properties: {}
     io.token.proto.common.alias.Alias.Type:
       enum:
       - INVALID

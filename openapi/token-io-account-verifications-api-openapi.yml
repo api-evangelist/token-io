@@ -30,22 +30,23 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    io.token.proto.gateway.accountverification.AccountVerificationResultStatus:
+    io.token.proto.gateway.accountverification.AccountVerificationResultReason:
       enum:
-      - INVALID_STATUS
-      - MATCH
-      - NO_MATCH
-      - CLOSE_MATCH
-      - VERIFICATION_NOT_POSSIBLE
-      default: INVALID_STATUS
+      - INVALID_REASON
+      - UNKNOWN
+      - EXACT_MATCH
+      - NAME_MISMATCH
+      - ACCOUNT_MISMATCH
+      - ACCOUNT_TYPE_MISMATCH
+      default: INVALID_REASON
       type: string
-    io.token.proto.gateway.accountverification.MatchDetails:
+    io.token.proto.gateway.accountverification.AccountVerificationResponse:
       type: object
       properties:
-        accountType:
-          $ref: '#/components/schemas/io.token.proto.gateway.accountverification.AccountType'
-        name:
+        id:
           type: string
+        result:
+          $ref: '#/components/schemas/io.token.proto.gateway.accountverification.AccountVerificationResult'
     io.token.proto.gateway.accountverification.Currency:
       enum:
       - INVALID_CURRENCY
@@ -68,37 +69,6 @@ components:
           type: string
         sortCode:
           type: string
-    io.token.proto.gateway.accountverification.AccountVerificationResultReason:
-      enum:
-      - INVALID_REASON
-      - UNKNOWN
-      - EXACT_MATCH
-      - NAME_MISMATCH
-      - ACCOUNT_MISMATCH
-      - ACCOUNT_TYPE_MISMATCH
-      default: INVALID_REASON
-      type: string
-    io.token.proto.gateway.accountverification.AccountVerificationResponse:
-      type: object
-      properties:
-        id:
-          type: string
-        result:
-          $ref: '#/components/schemas/io.token.proto.gateway.accountverification.AccountVerificationResult'
-    io.token.proto.gateway.accountverification.PerformAccountVerificationRequest:
-      type: object
-      properties:
-        account:
-          $ref: '#/components/schemas/io.token.proto.gateway.accountverification.AccountDetails'
-        virtualAccountId:
-          type: string
-    io.token.proto.gateway.accountverification.AccountType:
-      enum:
-      - NOT_APPLICABLE_ACCOUNT_TYPE
-      - PERSONAL
-      - BUSINESS
-      default: NOT_APPLICABLE_ACCOUNT_TYPE
-      type: string
     io.token.proto.gateway.accountverification.AccountVerificationResult:
       type: object
       properties:
@@ -112,3 +82,33 @@ components:
           type: array
         status:
           $ref: '#/components/schemas/io.token.proto.gateway.accountverification.AccountVerificationResultStatus'
+    io.token.proto.gateway.accountverification.MatchDetails:
+      type: object
+      properties:
+        accountType:
+          $ref: '#/components/schemas/io.token.proto.gateway.accountverification.AccountType'
+        name:
+          type: string
+    io.token.proto.gateway.accountverification.AccountType:
+      enum:
+      - NOT_APPLICABLE_ACCOUNT_TYPE
+      - PERSONAL
+      - BUSINESS
+      default: NOT_APPLICABLE_ACCOUNT_TYPE
+      type: string
+    io.token.proto.gateway.accountverification.PerformAccountVerificationRequest:
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/io.token.proto.gateway.accountverification.AccountDetails'
+        virtualAccountId:
+          type: string
+    io.token.proto.gateway.accountverification.AccountVerificationResultStatus:
+      enum:
+      - INVALID_STATUS
+      - MATCH
+      - NO_MATCH
+      - CLOSE_MATCH
+      - VERIFICATION_NOT_POSSIBLE
+      default: INVALID_STATUS
+      type: string
