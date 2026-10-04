@@ -104,6 +104,18 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    io.token.proto.gateway.GetMemberKeyResponse:
+      type: object
+      properties:
+        key:
+          $ref: '#/components/schemas/io.token.proto.gateway.MemberKey'
+    io.token.proto.gateway.GetMemberKeysResponse:
+      type: object
+      properties:
+        key:
+          items:
+            $ref: '#/components/schemas/io.token.proto.gateway.MemberKey'
+          type: array
     io.token.proto.gateway.MemberKey:
       type: object
       properties:
@@ -116,25 +128,11 @@ components:
           type: string
         publicKey:
           type: string
-    io.token.proto.gateway.AddMemberKeyRequest:
+    io.token.proto.gateway.AddMemberKeyResponse:
       type: object
       properties:
-        keyAlgorithm:
-          $ref: '#/components/schemas/io.token.proto.common.security.Key.Algorithm'
-        publicKey:
+        keyId:
           type: string
-    io.token.proto.gateway.GetMemberKeysResponse:
-      type: object
-      properties:
-        key:
-          items:
-            $ref: '#/components/schemas/io.token.proto.gateway.MemberKey'
-          type: array
-    io.token.proto.gateway.GetMemberKeyResponse:
-      type: object
-      properties:
-        key:
-          $ref: '#/components/schemas/io.token.proto.gateway.MemberKey'
     io.token.proto.gateway.DeleteMemberKeyResponse:
       type: object
       properties: {}
@@ -147,8 +145,10 @@ components:
       - RS512
       default: INVALID_ALGORITHM
       type: string
-    io.token.proto.gateway.AddMemberKeyResponse:
+    io.token.proto.gateway.AddMemberKeyRequest:
       type: object
       properties:
-        keyId:
+        keyAlgorithm:
+          $ref: '#/components/schemas/io.token.proto.common.security.Key.Algorithm'
+        publicKey:
           type: string

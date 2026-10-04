@@ -474,19 +474,6 @@ paths:
       deprecated: false
 components:
   schemas:
-    io.token.proto.common.tsp.bankconfig.BankConfig.SlovakPsd2Standard:
-      type: object
-      properties:
-        clientId:
-          type: string
-        clientSecret:
-          type: string
-        signingKeyId:
-          type: string
-        tppClientId:
-          type: string
-        transportKeyId:
-          type: string
     io.token.proto.common.tsp.bankconfig.BankConfig.NextGenPsd2Standard:
       type: object
       properties:
@@ -525,11 +512,35 @@ components:
           type: string
         transportKeyId:
           type: string
-    io.token.proto.gateway.GetBankConfigsResponse.BankConfigsEntry:
+    io.token.proto.common.tsp.bankconfig.BankConfig:
       type: object
-      properties: {}
-      additionalProperties:
-        $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig'
+      properties:
+        budapestPsd2Standard:
+          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig.BudapestPsd2Standard'
+        czechPsd2Standard:
+          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig.CzechPsd2Standard'
+        nextGenPsd2Standard:
+          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig.NextGenPsd2Standard'
+        noLicenceRequired:
+          format: boolean
+          type: boolean
+        polishApiStandard:
+          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig.PolishApiStandard'
+        providerSampleStandard:
+          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig.ProviderSampleStandard'
+        slovakPsd2Standard:
+          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig.SlovakPsd2Standard'
+        starlingApiStandard:
+          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig.StarlingApiStandard'
+        stetPsd2Standard:
+          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig.StetPsd2Standard'
+        ukOpenBankingStandard:
+          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig.UKOpenBankingStandard'
+    io.token.proto.gateway.GetBankConfigsResponse:
+      type: object
+      properties:
+        bankConfigs:
+          $ref: '#/components/schemas/io.token.proto.gateway.GetBankConfigsResponse.BankConfigsEntry'
     io.token.proto.common.tsp.bankconfig.BankConfig.UKOpenBankingStandard:
       type: object
       properties:
@@ -556,84 +567,6 @@ components:
           type: string
         transportKeyId:
           type: string
-    io.token.proto.common.tsp.bankconfig.BankConfig.PolishApiStandard:
-      type: object
-      properties:
-        clientId:
-          type: string
-        clientSecret:
-          type: string
-        jwtSigningKeyId:
-          type: string
-        kid:
-          type: string
-        signingKeyId:
-          type: string
-        tppId:
-          type: string
-        transportKeyId:
-          type: string
-        x5c:
-          type: string
-        x5t:
-          type: string
-        x5u:
-          type: string
-    io.token.proto.common.tsp.bankconfig.BankConfig.ProviderSampleStandard:
-      type: object
-      properties:
-        clientId:
-          type: string
-        clientSecret:
-          type: string
-        jwtSigningAlgorithm:
-          type: string
-        jwtSigningKeyId:
-          type: string
-        signingKeyId:
-          type: string
-        transportKeyId:
-          type: string
-    io.token.proto.gateway.GetBankConfigResponse:
-      type: object
-      properties:
-        bankConfig:
-          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig'
-    io.token.proto.gateway.DeleteBankConfigResponse:
-      type: object
-      properties: {}
-    io.token.proto.gateway.StoreBankConfigResponse:
-      type: object
-      properties: {}
-    io.token.proto.gateway.GetBankConfigsResponse:
-      type: object
-      properties:
-        bankConfigs:
-          $ref: '#/components/schemas/io.token.proto.gateway.GetBankConfigsResponse.BankConfigsEntry'
-    io.token.proto.common.tsp.bankconfig.BankConfig:
-      type: object
-      properties:
-        budapestPsd2Standard:
-          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig.BudapestPsd2Standard'
-        czechPsd2Standard:
-          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig.CzechPsd2Standard'
-        nextGenPsd2Standard:
-          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig.NextGenPsd2Standard'
-        noLicenceRequired:
-          format: boolean
-          type: boolean
-        polishApiStandard:
-          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig.PolishApiStandard'
-        providerSampleStandard:
-          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig.ProviderSampleStandard'
-        slovakPsd2Standard:
-          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig.SlovakPsd2Standard'
-        starlingApiStandard:
-          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig.StarlingApiStandard'
-        stetPsd2Standard:
-          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig.StetPsd2Standard'
-        ukOpenBankingStandard:
-          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig.UKOpenBankingStandard'
     io.token.proto.common.tsp.bankconfig.BankConfig.StarlingApiStandard:
       type: object
       properties:
@@ -670,6 +603,22 @@ components:
           type: string
         xApiKey:
           type: string
+    io.token.proto.common.tsp.bankconfig.BankConfig.SlovakPsd2Standard:
+      type: object
+      properties:
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        signingKeyId:
+          type: string
+        tppClientId:
+          type: string
+        transportKeyId:
+          type: string
+    io.token.proto.gateway.StoreBankConfigResponse:
+      type: object
+      properties: {}
     io.token.proto.common.tsp.bankconfig.BankConfig.StetPsd2Standard:
       type: object
       properties:
@@ -691,3 +640,54 @@ components:
           type: string
         xApiKeyPis:
           type: string
+    io.token.proto.common.tsp.bankconfig.BankConfig.ProviderSampleStandard:
+      type: object
+      properties:
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        jwtSigningAlgorithm:
+          type: string
+        jwtSigningKeyId:
+          type: string
+        signingKeyId:
+          type: string
+        transportKeyId:
+          type: string
+    io.token.proto.gateway.DeleteBankConfigResponse:
+      type: object
+      properties: {}
+    io.token.proto.common.tsp.bankconfig.BankConfig.PolishApiStandard:
+      type: object
+      properties:
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        jwtSigningKeyId:
+          type: string
+        kid:
+          type: string
+        signingKeyId:
+          type: string
+        tppId:
+          type: string
+        transportKeyId:
+          type: string
+        x5c:
+          type: string
+        x5t:
+          type: string
+        x5u:
+          type: string
+    io.token.proto.gateway.GetBankConfigsResponse.BankConfigsEntry:
+      type: object
+      properties: {}
+      additionalProperties:
+        $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig'
+    io.token.proto.gateway.GetBankConfigResponse:
+      type: object
+      properties:
+        bankConfig:
+          $ref: '#/components/schemas/io.token.proto.common.tsp.bankconfig.BankConfig'

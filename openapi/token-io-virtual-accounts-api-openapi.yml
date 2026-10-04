@@ -36,16 +36,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    io.token.proto.gateway.AccountDetails:
-      type: object
-      properties:
-        accountNumber:
-          type: string
-        sortCode:
-          type: string
-    io.token.proto.gateway.CreditVirtualAccountResponse:
-      type: object
-      properties: {}
     io.token.proto.gateway.Identifier:
       type: object
       properties:
@@ -55,6 +45,20 @@ components:
           $ref: '#/components/schemas/io.token.proto.gateway.Iban'
         type:
           type: string
+    io.token.proto.gateway.CreditVirtualAccountRequest:
+      type: object
+      properties:
+        amount:
+          type: string
+        description:
+          type: string
+        payer:
+          $ref: '#/components/schemas/io.token.proto.gateway.Payer'
+        type:
+          $ref: '#/components/schemas/io.token.proto.gateway.CreditVirtualAccountRequest.Type'
+    io.token.proto.gateway.CreditVirtualAccountResponse:
+      type: object
+      properties: {}
     io.token.proto.gateway.Payer:
       type: object
       properties:
@@ -77,14 +81,10 @@ components:
       - SEPA_INSTANT_CREDIT_TRANSFERS
       default: UNKNOWN
       type: string
-    io.token.proto.gateway.CreditVirtualAccountRequest:
+    io.token.proto.gateway.AccountDetails:
       type: object
       properties:
-        amount:
+        accountNumber:
           type: string
-        description:
+        sortCode:
           type: string
-        payer:
-          $ref: '#/components/schemas/io.token.proto.gateway.Payer'
-        type:
-          $ref: '#/components/schemas/io.token.proto.gateway.CreditVirtualAccountRequest.Type'

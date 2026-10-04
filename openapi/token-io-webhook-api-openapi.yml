@@ -56,6 +56,11 @@ paths:
       deprecated: false
 components:
   schemas:
+    io.token.proto.gateway.GetWebhookConfigResponse:
+      type: object
+      properties:
+        config:
+          $ref: '#/components/schemas/io.token.proto.common.webhook.Webhook.Config'
     io.token.proto.common.webhook.EventType:
       enum:
       - INVALID
@@ -74,22 +79,9 @@ components:
       - SUB_TPP_STATUS_UPDATE
       default: INVALID
       type: string
-    io.token.proto.gateway.SetWebhookConfigRequest:
-      type: object
-      properties:
-        config:
-          $ref: '#/components/schemas/io.token.proto.common.webhook.Webhook.Config'
     io.token.proto.gateway.SetWebhookConfigResponse:
       type: object
       properties: {}
-    io.token.proto.gateway.DeleteWebhookConfigResponse:
-      type: object
-      properties: {}
-    io.token.proto.gateway.GetWebhookConfigResponse:
-      type: object
-      properties:
-        config:
-          $ref: '#/components/schemas/io.token.proto.common.webhook.Webhook.Config'
     io.token.proto.common.webhook.Webhook.Config:
       type: object
       properties:
@@ -99,3 +91,11 @@ components:
           type: array
         url:
           type: string
+    io.token.proto.gateway.DeleteWebhookConfigResponse:
+      type: object
+      properties: {}
+    io.token.proto.gateway.SetWebhookConfigRequest:
+      type: object
+      properties:
+        config:
+          $ref: '#/components/schemas/io.token.proto.common.webhook.Webhook.Config'
