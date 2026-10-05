@@ -1,0 +1,36 @@
+slug: token-io
+provider: Token.io
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Webhook
+  spec_file: token-io-webhook-api-openapi.yml
+  capability_id: BC-4270.80
+  capability_id_l1: BC-4270
+  capability_name: Webhook & Event Subscription Management
+  confidence: 0.72
+  evidence: GET/PUT/DELETE /webhook/config — 'Sets the webhook config', schema io.token.proto.common.webhook.EventType
+  reason: The operations manage the platform's outbound webhook configuration and subscribed event types,
+    which is exactly the surface described by Webhook & Event Subscription Management within the developer/API
+    ecosystem capability. Confidence held below 0.8 because webhook config is thin, largely plumbing evidence.
+- tag: Webhooks
+  spec_file: token-io-webhooks-api-openapi.yml
+  capability_id: BC-4270.80
+  capability_id_l1: BC-4270
+  capability_name: Webhook & Event Subscription Management
+  confidence: 0.72
+  evidence: '''Set webhook config'' / ''Get webhook config'' / ''Delete webhook config'' with SetWebhookConfigRequest,
+    GetWebhookConfigResponse'
+  reason: Same outbound event-notification configuration surface exposed to API consumers of this platform,
+    matching Webhook & Event Subscription Management. Kept at moderate confidence as the tag is narrow
+    configuration plumbing rather than a rich business surface.
