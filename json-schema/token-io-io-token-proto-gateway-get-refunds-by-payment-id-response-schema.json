@@ -1,0 +1,293 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/token-io/main/json-schema/token-io-io-token-proto-gateway-get-refunds-by-payment-id-response-schema.json",
+  "title": "io.token.proto.gateway.GetRefundsByPaymentIdResponse",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/token-io-transfers-api-openapi.yml#/components/schemas/io.token.proto.gateway.GetRefundsByPaymentIdResponse",
+  "type": "object",
+  "properties": {
+    "paging": {
+      "$ref": "#/$defs/io.token.proto.common.v2.paging.Page"
+    },
+    "refunds": {
+      "items": {
+        "$ref": "#/$defs/io.token.proto.common.v2.payout.Refund"
+      },
+      "type": "array"
+    }
+  },
+  "$defs": {
+    "io.token.proto.common.money.Money": {
+      "type": "object",
+      "properties": {
+        "currency": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "io.token.proto.common.v2.common.Address": {
+      "type": "object",
+      "properties": {
+        "addressLine": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "buildingNumber": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "countrySubDivision": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "district": {
+          "type": "string"
+        },
+        "postCode": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "streetName": {
+          "type": "string"
+        },
+        "townName": {
+          "type": "string"
+        }
+      }
+    },
+    "io.token.proto.common.v2.common.CreditorInformation": {
+      "type": "object",
+      "properties": {
+        "accountNumber": {
+          "type": "string"
+        },
+        "accountVerificationId": {
+          "type": "string"
+        },
+        "address": {
+          "$ref": "#/$defs/io.token.proto.common.v2.common.Address"
+        },
+        "bankName": {
+          "type": "string"
+        },
+        "bankgiroNumber": {
+          "type": "string"
+        },
+        "bban": {
+          "type": "string"
+        },
+        "beneficiaryId": {
+          "type": "string"
+        },
+        "bic": {
+          "type": "string"
+        },
+        "clearingNumber": {
+          "type": "string"
+        },
+        "iban": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "plusgiroNumber": {
+          "type": "string"
+        },
+        "sortCode": {
+          "type": "string"
+        },
+        "ultimateCreditorName": {
+          "type": "string"
+        },
+        "virtualAccountId": {
+          "type": "string"
+        }
+      }
+    },
+    "io.token.proto.common.v2.common.DebtorInformation": {
+      "type": "object",
+      "properties": {
+        "accountNumber": {
+          "type": "string"
+        },
+        "address": {
+          "$ref": "#/$defs/io.token.proto.common.v2.common.Address"
+        },
+        "bankgiroNumber": {
+          "type": "string"
+        },
+        "bban": {
+          "type": "string"
+        },
+        "bic": {
+          "type": "string"
+        },
+        "clearingNumber": {
+          "type": "string"
+        },
+        "iban": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "plusgiroNumber": {
+          "type": "string"
+        },
+        "sortCode": {
+          "type": "string"
+        },
+        "tokenizedAccountId": {
+          "type": "string"
+        },
+        "ultimateDebtorName": {
+          "type": "string"
+        }
+      }
+    },
+    "io.token.proto.common.v2.common.LocalInstrument": {
+      "enum": [
+        "INVALID_LOCAL_INSTRUMENT",
+        "SEPA",
+        "SEPA_INSTANT",
+        "SWIFT",
+        "FASTER_PAYMENTS",
+        "CHAPS",
+        "ELIXIR",
+        "EXPRESS_ELIXIR",
+        "BLUE_CASH",
+        "SORBNET",
+        "BANKGIRO",
+        "PLUSGIRO",
+        "EU_DOMESTIC_NON_EURO",
+        "EU_DOMESTIC_NON_EURO_INSTANT",
+        "AUTO_SELECT"
+      ],
+      "default": "INVALID_LOCAL_INSTRUMENT",
+      "type": "string"
+    },
+    "io.token.proto.common.v2.paging.Page": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "offset": {
+          "type": "string"
+        }
+      }
+    },
+    "io.token.proto.common.v2.payout.CorporateApiDebtorInformation": {
+      "type": "object",
+      "properties": {
+        "accountId": {
+          "type": "string"
+        }
+      }
+    },
+    "io.token.proto.common.v2.payout.Refund": {
+      "type": "object",
+      "properties": {
+        "bankPaymentStatus": {
+          "type": "string"
+        },
+        "bankTransactionId": {
+          "type": "string"
+        },
+        "createdDateTime": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "initiation": {
+          "$ref": "#/$defs/io.token.proto.common.v2.payout.RefundInitiation"
+        },
+        "memberId": {
+          "type": "string"
+        },
+        "providerAccountVerificationId": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/io.token.proto.common.v2.payout.Status"
+        },
+        "statusReasonInformation": {
+          "type": "string"
+        },
+        "updatedDateTime": {
+          "type": "string"
+        }
+      }
+    },
+    "io.token.proto.common.v2.payout.RefundInitiation": {
+      "type": "object",
+      "properties": {
+        "accountVerificationId": {
+          "type": "string"
+        },
+        "amount": {
+          "$ref": "#/$defs/io.token.proto.common.money.Money"
+        },
+        "corporateApiDebtor": {
+          "$ref": "#/$defs/io.token.proto.common.v2.payout.CorporateApiDebtorInformation"
+        },
+        "creditor": {
+          "$ref": "#/$defs/io.token.proto.common.v2.common.CreditorInformation"
+        },
+        "debtor": {
+          "$ref": "#/$defs/io.token.proto.common.v2.common.DebtorInformation"
+        },
+        "description": {
+          "type": "string"
+        },
+        "localInstrument": {
+          "$ref": "#/$defs/io.token.proto.common.v2.common.LocalInstrument"
+        },
+        "onBehalfOfId": {
+          "type": "string"
+        },
+        "originalPaymentId": {
+          "type": "string"
+        },
+        "refId": {
+          "type": "string"
+        },
+        "registrationId": {
+          "type": "string"
+        },
+        "signature": {
+          "type": "string"
+        }
+      }
+    },
+    "io.token.proto.common.v2.payout.Status": {
+      "enum": [
+        "INVALID_STATUS",
+        "INITIATION_PENDING",
+        "INITIATION_PROCESSING",
+        "INITIATION_COMPLETED",
+        "INITIATION_REJECTED",
+        "INITIATION_FAILED",
+        "INITIATION_NO_FINAL_STATUS_AVAILABLE"
+      ],
+      "default": "INVALID_STATUS",
+      "type": "string"
+    }
+  }
+}

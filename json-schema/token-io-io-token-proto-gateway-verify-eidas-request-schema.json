@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/token-io/main/json-schema/token-io-io-token-proto-gateway-verify-eidas-request-schema.json",
+  "title": "io.token.proto.gateway.VerifyEidasRequest",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/token-io-eidas-api-openapi.yml#/components/schemas/io.token.proto.gateway.VerifyEidasRequest",
+  "type": "object",
+  "properties": {
+    "payload": {
+      "$ref": "#/$defs/io.token.proto.common.eidas.VerifyEidasPayload"
+    },
+    "signature": {
+      "type": "string"
+    }
+  },
+  "$defs": {
+    "io.token.proto.common.alias.Alias": {
+      "type": "object",
+      "properties": {
+        "realm": {
+          "type": "string"
+        },
+        "realmId": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/$defs/io.token.proto.common.alias.Alias.Type"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "io.token.proto.common.alias.Alias.Type": {
+      "enum": [
+        "INVALID",
+        "UNKNOWN",
+        "EMAIL",
+        "PHONE",
+        "DOMAIN",
+        "USERNAME",
+        "BANK",
+        "CUSTOM",
+        "EIDAS"
+      ],
+      "default": "INVALID",
+      "type": "string"
+    },
+    "io.token.proto.common.eidas.VerifyEidasPayload": {
+      "type": "object",
+      "properties": {
+        "algorithm": {
+          "$ref": "#/$defs/io.token.proto.common.security.Key.Algorithm"
+        },
+        "alias": {
+          "$ref": "#/$defs/io.token.proto.common.alias.Alias"
+        },
+        "certificate": {
+          "type": "string"
+        },
+        "memberId": {
+          "type": "string"
+        }
+      }
+    },
+    "io.token.proto.common.security.Key.Algorithm": {
+      "enum": [
+        "INVALID_ALGORITHM",
+        "ED25519",
+        "ECDSA_SHA256",
+        "RS256",
+        "RS512"
+      ],
+      "default": "INVALID_ALGORITHM",
+      "type": "string"
+    }
+  }
+}

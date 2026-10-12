@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/token-io/main/json-schema/token-io-io-token-proto-gateway-create-restriction-request-schema.json",
+  "title": "io.token.proto.gateway.CreateRestrictionRequest",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/token-io-member-api-openapi.yml#/components/schemas/io.token.proto.gateway.CreateRestrictionRequest",
+  "type": "object",
+  "properties": {
+    "restrictionPayload": {
+      "$ref": "#/$defs/io.token.proto.common.restriction.RestrictionPayload"
+    },
+    "targetMemberId": {
+      "type": "string"
+    }
+  },
+  "$defs": {
+    "io.token.proto.common.restriction.RestrictedProductType": {
+      "enum": [
+        "UNKNOWN_PRODUCT_TYPE",
+        "SINGLE_IMMEDIATE_PAYMENT",
+        "IP_ADDRESS",
+        "GEO_LOCATION",
+        "PIS_PAYMENT_NETWORK"
+      ],
+      "default": "UNKNOWN_PRODUCT_TYPE",
+      "type": "string"
+    },
+    "io.token.proto.common.restriction.RestrictionPayload": {
+      "type": "object",
+      "properties": {
+        "productType": {
+          "$ref": "#/$defs/io.token.proto.common.restriction.RestrictedProductType"
+        },
+        "rulePayloads": {
+          "items": {
+            "$ref": "#/$defs/io.token.proto.common.restriction.RulePayload"
+          },
+          "type": "array"
+        }
+      }
+    },
+    "io.token.proto.common.restriction.RulePayload": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/token-io/main/json-schema/token-io-io-token-proto-gateway-consent-consent-request-schema.json",
+  "title": "io.token.proto.gateway.consent.ConsentRequest",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/token-io-consents-api-openapi.yml#/components/schemas/io.token.proto.gateway.consent.ConsentRequest",
+  "type": "object",
+  "properties": {
+    "bankId": {
+      "type": "string"
+    },
+    "callbackState": {
+      "type": "string"
+    },
+    "callbackUrl": {
+      "type": "string"
+    },
+    "consentTermsAccepted": {
+      "format": "boolean",
+      "type": "boolean"
+    },
+    "expiresAt": {
+      "type": "string"
+    },
+    "externalPsuReference": {
+      "type": "string"
+    },
+    "flowType": {
+      "$ref": "#/$defs/io.token.proto.common.v2.common.FlowType"
+    },
+    "onBehalfOfId": {
+      "type": "string"
+    },
+    "permissions": {
+      "items": {
+        "$ref": "#/$defs/io.token.proto.gateway.consent.Permission"
+      },
+      "type": "array"
+    },
+    "transactionHistoryDays": {
+      "format": "int32",
+      "type": "integer"
+    }
+  },
+  "$defs": {
+    "io.token.proto.common.v2.common.FlowType": {
+      "enum": [
+        "UNKNOWN",
+        "API",
+        "WEB_APP",
+        "WEB_APP_CREDENTIAL",
+        "API_ONLY",
+        "FULL_HOSTED_PAGES",
+        "EMBEDDED_HOSTED_PAGES",
+        "PAY_BY_LINK_HOSTED_PAGES"
+      ],
+      "default": "UNKNOWN",
+      "type": "string"
+    },
+    "io.token.proto.gateway.consent.Permission": {
+      "enum": [
+        "UNKNOWN_PERMISSION",
+        "READ_ACCOUNTS",
+        "READ_ACCOUNT_BALANCES",
+        "READ_ACCOUNT_TRANSACTIONS",
+        "READ_ACCOUNT_PARTIES"
+      ],
+      "default": "UNKNOWN_PERMISSION",
+      "type": "string"
+    }
+  }
+}

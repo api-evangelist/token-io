@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/token-io/main/json-schema/token-io-io-token-proto-gateway-get-member-key-response-schema.json",
+  "title": "io.token.proto.gateway.GetMemberKeyResponse",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/token-io-members-api-openapi.yml#/components/schemas/io.token.proto.gateway.GetMemberKeyResponse",
+  "type": "object",
+  "properties": {
+    "key": {
+      "$ref": "#/$defs/io.token.proto.gateway.MemberKey"
+    }
+  },
+  "$defs": {
+    "io.token.proto.common.security.Key.Algorithm": {
+      "enum": [
+        "INVALID_ALGORITHM",
+        "ED25519",
+        "ECDSA_SHA256",
+        "RS256",
+        "RS512"
+      ],
+      "default": "INVALID_ALGORITHM",
+      "type": "string"
+    },
+    "io.token.proto.gateway.MemberKey": {
+      "type": "object",
+      "properties": {
+        "algorithm": {
+          "$ref": "#/$defs/io.token.proto.common.security.Key.Algorithm"
+        },
+        "expiresAtMs": {
+          "format": "string",
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "publicKey": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,242 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/token-io/main/json-schema/token-io-transfer-response-schema.json",
+  "title": "TransferResponse",
+  "description": "Transfer operation response.",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/token-io-transfers-api-openapi.yml#/components/schemas/TransferResponse",
+  "required": [
+    "status",
+    "statusDescription",
+    "transactionId"
+  ],
+  "type": "object",
+  "properties": {
+    "transactionId": {
+      "type": "string",
+      "description": "The transaction id as recorded by the bank."
+    },
+    "status": {
+      "$ref": "#/$defs/TransactionStatus"
+    },
+    "statusDescription": {
+      "type": "string",
+      "description": "Human-readable status description."
+    },
+    "source": {
+      "$ref": "#/$defs/TransferEndpoint"
+    }
+  },
+  "$defs": {
+    "Address": {
+      "type": "object",
+      "properties": {
+        "houseNumber": {
+          "type": "string",
+          "description": "The house number (may contain letters, dashes or other characters). Addresses describe ways to tag a single building with multiple addresses."
+        },
+        "houseName": {
+          "type": "string",
+          "description": "The name of a house. This is sometimes used in some countries like England instead of (or in addition to) a house number."
+        },
+        "flats": {
+          "type": "string",
+          "description": "The house numbers (range or list) of flats behind a door."
+        },
+        "conscriptionNumber": {
+          "type": "string",
+          "description": "This special kind of house number relates to a settlement instead of a street. Conscription numbers were introduced in the Austrio-Hungarian Empire and are still in use in some parts of Europe, sometimes together with street-related house numbers which are also called orientation numbers."
+        },
+        "street": {
+          "type": "string",
+          "description": "The name of the respective street."
+        },
+        "place": {
+          "type": "string",
+          "description": "This is part of an address which refers to the name of some territorial zone (usually like island or square) instead of a street. Should not be used together with street."
+        },
+        "postCode": {
+          "type": "string",
+          "description": "The postal code of the building/area."
+        },
+        "city": {
+          "type": "string",
+          "description": "The name of the city as given in postal addresses of the building/area."
+        },
+        "country": {
+          "maxLength": 2,
+          "minLength": 2,
+          "type": "string",
+          "description": "The ISO 3166-1 alpha-2 two letter country code in upper case."
+        },
+        "full": {
+          "type": "string",
+          "description": "Use this for a full-text, often multi-line address if you find the structured address fields unsuitable for denoting the address of this particular location. Examples: 'Fifth house on the left after the village oak, Smalltown, Smallcountry' or '1200 West Sunset Boulevard Suite 110A'. Beware that these strings can hardly be parsed by software."
+        },
+        "hamlet": {
+          "type": "string",
+          "description": "The hamlet."
+        },
+        "suburb": {
+          "type": "string",
+          "description": "If an address exists several times in a city. You have to add the name of the settlement. See Australian definition of suburb."
+        },
+        "subdistrict": {
+          "type": "string",
+          "description": "The subdistrict."
+        },
+        "district": {
+          "type": "string",
+          "description": "The district."
+        },
+        "province": {
+          "type": "string",
+          "description": "The province. For Canada, uppercase two-letter postal abbreviations  (BC, AB, ON, QC, etc.) are used. In Russia a synonym region is widely used."
+        },
+        "state": {
+          "maxLength": 2,
+          "minLength": 2,
+          "type": "string",
+          "description": "The state. For the US, uppercase two-letter postal abbreviations (AK, CA, HI, NY, TX, WY, etc.) are used."
+        }
+      },
+      "description": "Represents a postal address."
+    },
+    "BankAccount": {
+      "required": [
+        "account"
+      ],
+      "type": "object",
+      "properties": {
+        "account": {
+          "description": "The bank account identifier.",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/Custom"
+            },
+            {
+              "$ref": "#/$defs/Iban"
+            },
+            {
+              "$ref": "#/$defs/Domestic"
+            }
+          ]
+        }
+      },
+      "description": "Represents Token account identifier."
+    },
+    "Custom": {
+      "required": [
+        "bankId",
+        "payload"
+      ],
+      "type": "object",
+      "properties": {
+        "bankId": {
+          "type": "string",
+          "description": "the Token bank identifier."
+        },
+        "payload": {
+          "type": "string",
+          "description": "the bank-custom account identifier."
+        }
+      },
+      "description": "Represents an account identifier in bank-custom format."
+    },
+    "Customer": {
+      "required": [
+        "legalNames"
+      ],
+      "type": "object",
+      "properties": {
+        "legalNames": {
+          "type": "array",
+          "description": "A list of names of primary account holders.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "address": {
+          "$ref": "#/$defs/Address"
+        }
+      },
+      "description": "Represents account holder information."
+    },
+    "Domestic": {
+      "required": [
+        "accountNumber",
+        "bankCode",
+        "country"
+      ],
+      "type": "object",
+      "properties": {
+        "bankCode": {
+          "type": "string",
+          "description": "The bank identifier."
+        },
+        "accountNumber": {
+          "type": "string",
+          "description": "The account identifier."
+        },
+        "country": {
+          "maxLength": 2,
+          "minLength": 2,
+          "type": "string",
+          "description": "2-letter ISO 3166-1 alpha-2 country code"
+        }
+      },
+      "description": "Represents an account in the regional format."
+    },
+    "Iban": {
+      "required": [
+        "iban"
+      ],
+      "type": "object",
+      "properties": {
+        "iban": {
+          "type": "string",
+          "description": "The IBAN account number."
+        },
+        "bic": {
+          "type": "string",
+          "description": "optional BIC number for this account."
+        }
+      },
+      "description": "Represents an account using IBAN format."
+    },
+    "TransactionStatus": {
+      "type": "string",
+      "description": "The transaction status.",
+      "enum": [
+        "PROCESSING",
+        "SUCCESS",
+        "FAILURE_INSUFFICIENT_FUNDS",
+        "FAILURE_INVALID_CURRENCY",
+        "FAILURE_PERMISSION_DENIED",
+        "FAILURE_INVALID_AMOUNT",
+        "FAILURE_EXPIRED",
+        "FAILURE_UNSUPPORTED_DESTINATION",
+        "FAILURE_GENERIC",
+        "INITIATED"
+      ]
+    },
+    "TransferEndpoint": {
+      "required": [
+        "account",
+        "customerData"
+      ],
+      "type": "object",
+      "properties": {
+        "account": {
+          "$ref": "#/$defs/BankAccount"
+        },
+        "customerData": {
+          "$ref": "#/$defs/Customer"
+        }
+      },
+      "description": "Money transfer source or destination account"
+    }
+  }
+}

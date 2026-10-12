@@ -1,3 +1,4 @@
+name: Token.io API Rate Limits
 specification: API Commons Rate Limits
 specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
@@ -8,31 +9,19 @@ modified: '2026-05-25'
 reconciled: false
 generated: '2026-09-17'
 method: searched
-source: >-
-  https://docs.token.io/products/tpp/integration-considerations/api-basics (429 / RESOURCE_EXHAUSTED,
-  the customer-initiated and token-customer-ip-address headers),
-  https://support.token.io/hc/en-us/articles/22853099035673-Should-we-add-rate-limiting-to-our-Open-Banking-API,
-  and the UK Open Banking Standard defaults the connected banks enforce
+source: https://docs.token.io/products/tpp/integration-considerations/api-basics (429 / RESOURCE_EXHAUSTED, the customer-initiated and token-customer-ip-address headers), https://support.token.io/hc/en-us/articles/22853099035673-Should-we-add-rate-limiting-to-our-Open-Banking-API, and the UK Open Banking Standard defaults the connected banks enforce
 limit_count: 3
 headers_published: false
-headers_note: >-
-  Re-checked 2026-09-17: Token.io publishes NO RateLimit-* or X-RateLimit-* response headers and no
-  numeric limit of its own. Exhaustion surfaces as HTTP 429 / gRPC RESOURCE_EXHAUSTED (8) with no
-  quota metadata, so a client cannot see how close it is to a cap until it hits one. The binding
-  constraint is bank-side and per-consent.
+headers_note: 'Re-checked 2026-09-17: Token.io publishes NO RateLimit-* or X-RateLimit-* response headers and no numeric limit of its own. Exhaustion surfaces as HTTP 429 / gRPC RESOURCE_EXHAUSTED (8) with no quota metadata, so a client cannot see how close it is to a cap until it hits one. The binding constraint is bank-side and per-consent.'
 tags:
-  - Open Banking
-  - Rate Limiting
-  - PSD2
-description: 'Rate limit posture for the Token.io Open Banking API. Token.io itself does not publish a single
-  global RPS / RPM number for the TPP API; effective limits are governed by (a) PSD2 / Open Banking Standard
-  defaults applied per-consent at each connected bank, and (b) any TPP-level limits Token.io applies to its own
-  API surface. Token.io recommends rate limiting on a per-consent basis to prevent overuse of bank-side AIS
-  endpoints. Consult contract terms for production tenant-level limits.'
+- Open Banking
+- Rate Limiting
+- PSD2
+description: Rate limit posture for the Token.io Open Banking API. Token.io itself does not publish a single global RPS / RPM number for the TPP API; effective limits are governed by (a) PSD2 / Open Banking Standard defaults applied per-consent at each connected bank, and (b) any TPP-level limits Token.io applies to its own API surface. Token.io recommends rate limiting on a per-consent basis to prevent overuse of bank-side AIS endpoints. Consult contract terms for production tenant-level limits.
 sources:
-  - https://support.token.io/hc/en-us/articles/22853099035673-Should-we-add-rate-limiting-to-our-Open-Banking-API
-  - https://docs.token.io/products/tpp/integration-considerations/api-basics
-  - https://standards.openbanking.org.uk
+- https://support.token.io/hc/en-us/articles/22853099035673-Should-we-add-rate-limiting-to-our-Open-Banking-API
+- https://docs.token.io/products/tpp/integration-considerations/api-basics
+- https://standards.openbanking.org.uk
 headers:
   retryAfter: retry-after
 responseCodes:
@@ -40,23 +29,22 @@ responseCodes:
   quotaExceeded: 429
 algorithm: per-consent
 limits:
-  - scope: per-AIS-consent (Open Banking UK default)
-    tier: Default
-    rule: 4 requests per minute when accessed without PSU present, unlimited PSU-present
-    notes: 'UK Open Banking Standard default for AIS endpoints — accounts, balance, transactions, standing
-      orders. Bank-enforced upstream of Token.io.'
-  - scope: per-TPP global
-    tier: Production
-    rule: contract-defined
-    notes: Token.io applies tenant-level throttling per commercial agreement. Exact RPS / RPM negotiated with
-      sales.
-  - scope: per-bank
-    tier: All
-    rule: bank-defined
-    notes: Each upstream bank enforces its own PSD2 / Open Banking rate limits. Token.io surfaces 429s and bank
-      status via the Reports API at /reports/banks/status.
+- scope: per-AIS-consent (Open Banking UK default)
+  tier: Default
+  rule: 4 requests per minute when accessed without PSU present, unlimited PSU-present
+  notes: UK Open Banking Standard default for AIS endpoints — accounts, balance, transactions, standing orders. Bank-enforced upstream of Token.io.
+  name: Default per-AIS-consent (Open Banking UK default)
+- scope: per-TPP global
+  tier: Production
+  rule: contract-defined
+  notes: Token.io applies tenant-level throttling per commercial agreement. Exact RPS / RPM negotiated with sales.
+  name: Production per-TPP global
+- scope: per-bank
+  tier: All
+  rule: bank-defined
+  notes: Each upstream bank enforces its own PSD2 / Open Banking rate limits. Token.io surfaces 429s and bank status via the Reports API at /reports/banks/status.
+  name: All per-bank
 recommendations:
-  - Apply per-consent rate limiting on AIS workflows to stay within bank-side caps.
-  - Use the Webhooks API to receive event-driven updates rather than polling.
-  - Use the Reports API (/reports/banks/status and /reports/banks/{bankId}/status) to monitor degraded bank
-    connectivity before retrying.
+- Apply per-consent rate limiting on AIS workflows to stay within bank-side caps.
+- Use the Webhooks API to receive event-driven updates rather than polling.
+- Use the Reports API (/reports/banks/status and /reports/banks/{bankId}/status) to monitor degraded bank connectivity before retrying.

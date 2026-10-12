@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/token-io/main/json-schema/token-io-io-token-proto-gateway-accountverification-account-verification-response-schema.json",
+  "title": "io.token.proto.gateway.accountverification.AccountVerificationResponse",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/token-io-account-verifications-api-openapi.yml#/components/schemas/io.token.proto.gateway.accountverification.AccountVerificationResponse",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "result": {
+      "$ref": "#/$defs/io.token.proto.gateway.accountverification.AccountVerificationResult"
+    }
+  },
+  "$defs": {
+    "io.token.proto.gateway.accountverification.AccountType": {
+      "enum": [
+        "NOT_APPLICABLE_ACCOUNT_TYPE",
+        "PERSONAL",
+        "BUSINESS"
+      ],
+      "default": "NOT_APPLICABLE_ACCOUNT_TYPE",
+      "type": "string"
+    },
+    "io.token.proto.gateway.accountverification.AccountVerificationResult": {
+      "type": "object",
+      "properties": {
+        "details": {
+          "type": "string"
+        },
+        "matched": {
+          "$ref": "#/$defs/io.token.proto.gateway.accountverification.MatchDetails"
+        },
+        "reasons": {
+          "items": {
+            "$ref": "#/$defs/io.token.proto.gateway.accountverification.AccountVerificationResultReason"
+          },
+          "type": "array"
+        },
+        "status": {
+          "$ref": "#/$defs/io.token.proto.gateway.accountverification.AccountVerificationResultStatus"
+        }
+      }
+    },
+    "io.token.proto.gateway.accountverification.AccountVerificationResultReason": {
+      "enum": [
+        "INVALID_REASON",
+        "UNKNOWN",
+        "EXACT_MATCH",
+        "NAME_MISMATCH",
+        "ACCOUNT_MISMATCH",
+        "ACCOUNT_TYPE_MISMATCH"
+      ],
+      "default": "INVALID_REASON",
+      "type": "string"
+    },
+    "io.token.proto.gateway.accountverification.AccountVerificationResultStatus": {
+      "enum": [
+        "INVALID_STATUS",
+        "MATCH",
+        "NO_MATCH",
+        "CLOSE_MATCH",
+        "VERIFICATION_NOT_POSSIBLE"
+      ],
+      "default": "INVALID_STATUS",
+      "type": "string"
+    },
+    "io.token.proto.gateway.accountverification.MatchDetails": {
+      "type": "object",
+      "properties": {
+        "accountType": {
+          "$ref": "#/$defs/io.token.proto.gateway.accountverification.AccountType"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/token-io/main/json-schema/token-io-io-token-proto-gateway-consent-get-consents-response-schema.json",
+  "title": "io.token.proto.gateway.consent.GetConsentsResponse",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/token-io-consents-api-openapi.yml#/components/schemas/io.token.proto.gateway.consent.GetConsentsResponse",
+  "type": "object",
+  "properties": {
+    "consents": {
+      "items": {
+        "$ref": "#/$defs/io.token.proto.gateway.consent.Consent"
+      },
+      "type": "array"
+    },
+    "page": {
+      "$ref": "#/$defs/io.token.proto.common.v2.paging.PageInfo"
+    }
+  },
+  "$defs": {
+    "io.token.proto.common.v2.common.FlowType": {
+      "enum": [
+        "UNKNOWN",
+        "API",
+        "WEB_APP",
+        "WEB_APP_CREDENTIAL",
+        "API_ONLY",
+        "FULL_HOSTED_PAGES",
+        "EMBEDDED_HOSTED_PAGES",
+        "PAY_BY_LINK_HOSTED_PAGES"
+      ],
+      "default": "UNKNOWN",
+      "type": "string"
+    },
+    "io.token.proto.common.v2.paging.PageInfo": {
+      "type": "object",
+      "properties": {
+        "haveMore": {
+          "format": "boolean",
+          "type": "boolean"
+        },
+        "limit": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "nextOffset": {
+          "type": "string"
+        },
+        "offset": {
+          "type": "string"
+        }
+      }
+    },
+    "io.token.proto.gateway.consent.Authentication": {
+      "type": "object",
+      "properties": {
+        "redirectUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "io.token.proto.gateway.consent.Consent": {
+      "type": "object",
+      "properties": {
+        "authentication": {
+          "$ref": "#/$defs/io.token.proto.gateway.consent.Authentication"
+        },
+        "bankId": {
+          "type": "string"
+        },
+        "callbackState": {
+          "type": "string"
+        },
+        "callbackUrl": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "expiresAt": {
+          "type": "string"
+        },
+        "externalPsuReference": {
+          "type": "string"
+        },
+        "flowType": {
+          "$ref": "#/$defs/io.token.proto.common.v2.common.FlowType"
+        },
+        "id": {
+          "type": "string"
+        },
+        "memberId": {
+          "type": "string"
+        },
+        "onBehalfOfId": {
+          "type": "string"
+        },
+        "permissions": {
+          "items": {
+            "$ref": "#/$defs/io.token.proto.gateway.consent.Permission"
+          },
+          "type": "array"
+        },
+        "reconfirmBy": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/io.token.proto.gateway.consent.ConsentStatus"
+        },
+        "statusReason": {
+          "type": "string"
+        },
+        "transactionHistoryDays": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      }
+    },
+    "io.token.proto.gateway.consent.ConsentStatus": {
+      "enum": [
+        "UNKNOWN_CONSENT_STATUS",
+        "PENDING",
+        "PENDING_REDIRECT_AUTH",
+        "FAILURE_REJECTED",
+        "AUTHORIZED",
+        "EXPIRED",
+        "FAILURE_EXPIRED",
+        "FAILURE_CANCELLED",
+        "REVOKED",
+        "PENDING_REDIRECT_HP"
+      ],
+      "default": "UNKNOWN_CONSENT_STATUS",
+      "type": "string"
+    },
+    "io.token.proto.gateway.consent.Permission": {
+      "enum": [
+        "UNKNOWN_PERMISSION",
+        "READ_ACCOUNTS",
+        "READ_ACCOUNT_BALANCES",
+        "READ_ACCOUNT_TRANSACTIONS",
+        "READ_ACCOUNT_PARTIES"
+      ],
+      "default": "UNKNOWN_PERMISSION",
+      "type": "string"
+    }
+  }
+}

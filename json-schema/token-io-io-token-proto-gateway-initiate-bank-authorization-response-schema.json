@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/token-io/main/json-schema/token-io-io-token-proto-gateway-initiate-bank-authorization-response-schema.json",
+  "title": "io.token.proto.gateway.InitiateBankAuthorizationResponse",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/token-io-info-api-openapi.yml#/components/schemas/io.token.proto.gateway.InitiateBankAuthorizationResponse",
+  "type": "object",
+  "properties": {
+    "fields": {
+      "$ref": "#/$defs/io.token.proto.gateway.CredentialFields"
+    },
+    "oauthState": {
+      "type": "string"
+    },
+    "redirectUrl": {
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/io.token.proto.common.providerspecific.ScaStatus"
+    }
+  },
+  "$defs": {
+    "io.token.proto.common.providerspecific.CredentialField": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "flickerCode": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "options": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "password": {
+          "format": "boolean",
+          "type": "boolean"
+        },
+        "type": {
+          "$ref": "#/$defs/io.token.proto.common.providerspecific.CredentialField.Type"
+        }
+      }
+    },
+    "io.token.proto.common.providerspecific.CredentialField.Type": {
+      "enum": [
+        "INVALID",
+        "FIELD",
+        "PASSWORD",
+        "PSU_MESSAGE",
+        "IMAGE",
+        "FLICKER",
+        "DECOUPLED",
+        "CONFIRMATION"
+      ],
+      "default": "INVALID",
+      "type": "string"
+    },
+    "io.token.proto.common.providerspecific.ScaStatus": {
+      "enum": [
+        "INVALID",
+        "AUTHENTICATED",
+        "AUTHENTICATION_FAILED",
+        "DECLINED_BY_PSU"
+      ],
+      "default": "INVALID",
+      "type": "string"
+    },
+    "io.token.proto.gateway.CredentialFields": {
+      "type": "object",
+      "properties": {
+        "fields": {
+          "items": {
+            "$ref": "#/$defs/io.token.proto.common.providerspecific.CredentialField"
+          },
+          "type": "array"
+        }
+      }
+    }
+  }
+}
