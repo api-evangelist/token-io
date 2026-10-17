@@ -131,22 +131,22 @@ paths:
       deprecated: false
 components:
   schemas:
-    io.token.proto.common.member.MemberRecoveryOperation.Authorization:
+    io.token.proto.common.eidas.RegisterWithEidasPayload:
       type: object
       properties:
-        memberId:
+        bankId:
           type: string
-        memberKey:
-          $ref: '#/components/schemas/io.token.proto.common.security.Key'
-        prevHash:
-          type: string
-    io.token.proto.gateway.GetEidasCertificateStatusResponse:
-      type: object
-      properties:
         certificate:
           type: string
-        status:
-          $ref: '#/components/schemas/io.token.proto.common.eidas.EidasCertificateStatus'
+    io.token.proto.gateway.RegisterWithEidasResponse:
+      type: object
+      properties:
+        keyId:
+          type: string
+        memberId:
+          type: string
+        verificationId:
+          type: string
     io.token.proto.common.eidas.EidasCertificateStatus:
       enum:
       - INVALID_CERTIFICATE_STATUS
@@ -155,17 +155,6 @@ components:
       - CERTIFICATE_NOT_FOUND
       default: INVALID_CERTIFICATE_STATUS
       type: string
-    io.token.proto.common.eidas.EidasRecoveryPayload:
-      type: object
-      properties:
-        algorithm:
-          $ref: '#/components/schemas/io.token.proto.common.security.Key.Algorithm'
-        certificate:
-          type: string
-        key:
-          $ref: '#/components/schemas/io.token.proto.common.security.Key'
-        memberId:
-          type: string
     io.token.proto.gateway.GetEidasVerificationStatusResponse:
       type: object
       properties:
@@ -177,14 +166,36 @@ components:
           $ref: '#/components/schemas/io.token.proto.common.eidas.EidasVerificationStatus'
         statusDetails:
           type: string
-    io.token.proto.common.security.Key.Level:
-      enum:
-      - INVALID_LEVEL
-      - PRIVILEGED
-      - STANDARD
-      - LOW
-      default: INVALID_LEVEL
-      type: string
+    io.token.proto.gateway.GetEidasCertificateStatusResponse:
+      type: object
+      properties:
+        certificate:
+          type: string
+        status:
+          $ref: '#/components/schemas/io.token.proto.common.eidas.EidasCertificateStatus'
+    io.token.proto.common.security.Key:
+      type: object
+      properties:
+        algorithm:
+          $ref: '#/components/schemas/io.token.proto.common.security.Key.Algorithm'
+        expiresAtMs:
+          format: string
+          type: string
+        id:
+          type: string
+        level:
+          $ref: '#/components/schemas/io.token.proto.common.security.Key.Level'
+        publicKey:
+          type: string
+    io.token.proto.gateway.VerifyEidasResponse:
+      type: object
+      properties:
+        eidasStatus:
+          $ref: '#/components/schemas/io.token.proto.common.eidas.EidasVerificationStatus'
+        statusDetails:
+          type: string
+        verificationId:
+          type: string
     io.token.proto.common.eidas.VerifyEidasPayload:
       type: object
       properties:
@@ -196,18 +207,13 @@ components:
           type: string
         memberId:
           type: string
-    io.token.proto.gateway.RecoverEidasRequest:
+    io.token.proto.gateway.RegisterWithEidasRequest:
       type: object
       properties:
         payload:
-          $ref: '#/components/schemas/io.token.proto.common.eidas.EidasRecoveryPayload'
+          $ref: '#/components/schemas/io.token.proto.common.eidas.RegisterWithEidasPayload'
         signature:
           type: string
-    io.token.proto.gateway.RecoverEidasResponse:
-      type: object
-      properties:
-        recoveryEntry:
-          $ref: '#/components/schemas/io.token.proto.common.member.MemberRecoveryOperation'
     io.token.proto.common.alias.Alias:
       type: object
       properties:
@@ -219,11 +225,13 @@ components:
           $ref: '#/components/schemas/io.token.proto.common.alias.Alias.Type'
         value:
           type: string
-    io.token.proto.gateway.VerifyEidasRequest:
+    io.token.proto.common.security.Signature:
       type: object
       properties:
-        payload:
-          $ref: '#/components/schemas/io.token.proto.common.eidas.VerifyEidasPayload'
+        keyId:
+          type: string
+        memberId:
+          type: string
         signature:
           type: string
     io.token.proto.common.alias.Alias.Type:
@@ -239,69 +247,19 @@ components:
       - EIDAS
       default: INVALID
       type: string
-    io.token.proto.common.security.Signature:
+    io.token.proto.gateway.RecoverEidasResponse:
       type: object
       properties:
-        keyId:
-          type: string
+        recoveryEntry:
+          $ref: '#/components/schemas/io.token.proto.common.member.MemberRecoveryOperation'
+    io.token.proto.common.member.MemberRecoveryOperation.Authorization:
+      type: object
+      properties:
         memberId:
           type: string
-        signature:
-          type: string
-    io.token.proto.common.security.Key.Algorithm:
-      enum:
-      - INVALID_ALGORITHM
-      - ED25519
-      - ECDSA_SHA256
-      - RS256
-      - RS512
-      default: INVALID_ALGORITHM
-      type: string
-    io.token.proto.gateway.RegisterWithEidasResponse:
-      type: object
-      properties:
-        keyId:
-          type: string
-        memberId:
-          type: string
-        verificationId:
-          type: string
-    io.token.proto.common.eidas.RegisterWithEidasPayload:
-      type: object
-      properties:
-        bankId:
-          type: string
-        certificate:
-          type: string
-    io.token.proto.gateway.VerifyEidasResponse:
-      type: object
-      properties:
-        eidasStatus:
-          $ref: '#/components/schemas/io.token.proto.common.eidas.EidasVerificationStatus'
-        statusDetails:
-          type: string
-        verificationId:
-          type: string
-    io.token.proto.gateway.RegisterWithEidasRequest:
-      type: object
-      properties:
-        payload:
-          $ref: '#/components/schemas/io.token.proto.common.eidas.RegisterWithEidasPayload'
-        signature:
-          type: string
-    io.token.proto.common.security.Key:
-      type: object
-      properties:
-        algorithm:
-          $ref: '#/components/schemas/io.token.proto.common.security.Key.Algorithm'
-        expiresAtMs:
-          format: string
-          type: string
-        id:
-          type: string
-        level:
-          $ref: '#/components/schemas/io.token.proto.common.security.Key.Level'
-        publicKey:
+        memberKey:
+          $ref: '#/components/schemas/io.token.proto.common.security.Key'
+        prevHash:
           type: string
     io.token.proto.common.eidas.EidasVerificationStatus:
       enum:
@@ -311,6 +269,48 @@ components:
       - EIDAS_STATUS_ERROR
       - EIDAS_STATUS_PENDING
       default: INVALID_EIDAS_STATUS
+      type: string
+    io.token.proto.common.security.Key.Level:
+      enum:
+      - INVALID_LEVEL
+      - PRIVILEGED
+      - STANDARD
+      - LOW
+      default: INVALID_LEVEL
+      type: string
+    io.token.proto.gateway.RecoverEidasRequest:
+      type: object
+      properties:
+        payload:
+          $ref: '#/components/schemas/io.token.proto.common.eidas.EidasRecoveryPayload'
+        signature:
+          type: string
+    io.token.proto.gateway.VerifyEidasRequest:
+      type: object
+      properties:
+        payload:
+          $ref: '#/components/schemas/io.token.proto.common.eidas.VerifyEidasPayload'
+        signature:
+          type: string
+    io.token.proto.common.eidas.EidasRecoveryPayload:
+      type: object
+      properties:
+        algorithm:
+          $ref: '#/components/schemas/io.token.proto.common.security.Key.Algorithm'
+        certificate:
+          type: string
+        key:
+          $ref: '#/components/schemas/io.token.proto.common.security.Key'
+        memberId:
+          type: string
+    io.token.proto.common.security.Key.Algorithm:
+      enum:
+      - INVALID_ALGORITHM
+      - ED25519
+      - ECDSA_SHA256
+      - RS256
+      - RS512
+      default: INVALID_ALGORITHM
       type: string
     io.token.proto.common.member.MemberRecoveryOperation:
       type: object

@@ -109,6 +109,30 @@ components:
       properties:
         key:
           $ref: '#/components/schemas/io.token.proto.gateway.MemberKey'
+    io.token.proto.common.security.Key.Algorithm:
+      enum:
+      - INVALID_ALGORITHM
+      - ED25519
+      - ECDSA_SHA256
+      - RS256
+      - RS512
+      default: INVALID_ALGORITHM
+      type: string
+    io.token.proto.gateway.AddMemberKeyRequest:
+      type: object
+      properties:
+        keyAlgorithm:
+          $ref: '#/components/schemas/io.token.proto.common.security.Key.Algorithm'
+        publicKey:
+          type: string
+    io.token.proto.gateway.DeleteMemberKeyResponse:
+      type: object
+      properties: {}
+    io.token.proto.gateway.AddMemberKeyResponse:
+      type: object
+      properties:
+        keyId:
+          type: string
     io.token.proto.gateway.GetMemberKeysResponse:
       type: object
       properties:
@@ -126,29 +150,5 @@ components:
           type: string
         id:
           type: string
-        publicKey:
-          type: string
-    io.token.proto.gateway.AddMemberKeyResponse:
-      type: object
-      properties:
-        keyId:
-          type: string
-    io.token.proto.gateway.DeleteMemberKeyResponse:
-      type: object
-      properties: {}
-    io.token.proto.common.security.Key.Algorithm:
-      enum:
-      - INVALID_ALGORITHM
-      - ED25519
-      - ECDSA_SHA256
-      - RS256
-      - RS512
-      default: INVALID_ALGORITHM
-      type: string
-    io.token.proto.gateway.AddMemberKeyRequest:
-      type: object
-      properties:
-        keyAlgorithm:
-          $ref: '#/components/schemas/io.token.proto.common.security.Key.Algorithm'
         publicKey:
           type: string

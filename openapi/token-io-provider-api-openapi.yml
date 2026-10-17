@@ -113,6 +113,30 @@ components:
       - RECONCILIATION
       default: UNKNOWN
       type: string
+    io.token.proto.common.v2.paging.PageInfo:
+      type: object
+      properties:
+        haveMore:
+          format: boolean
+          type: boolean
+        limit:
+          format: int32
+          type: integer
+        nextOffset:
+          type: string
+        offset:
+          type: string
+    io.token.proto.common.virtualaccount.CorporateApiRegistrationPayload:
+      type: object
+      properties:
+        debtors:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.v2.payout.CorporateApiDebtorInformation'
+          type: array
+        memberId:
+          type: string
+        onBehalfOfId:
+          type: string
     io.token.proto.common.v2.common.Address:
       type: object
       properties:
@@ -138,43 +162,6 @@ components:
           type: string
         townName:
           type: string
-    io.token.proto.common.virtualaccount.CorporateApiRegistrationPayload:
-      type: object
-      properties:
-        debtors:
-          items:
-            $ref: '#/components/schemas/io.token.proto.common.v2.payout.CorporateApiDebtorInformation'
-          type: array
-        memberId:
-          type: string
-        onBehalfOfId:
-          type: string
-    io.token.proto.gateway.GetProviderRegistrationsResponse:
-      type: object
-      properties:
-        pageInfo:
-          $ref: '#/components/schemas/io.token.proto.common.v2.paging.PageInfo'
-        registrations:
-          items:
-            $ref: '#/components/schemas/io.token.proto.common.virtualaccount.Registration'
-          type: array
-    io.token.proto.common.virtualaccount.BnppRegistrationPayload:
-      type: object
-      properties:
-        appId:
-          type: string
-        appSecret:
-          type: string
-        debtor:
-          $ref: '#/components/schemas/io.token.proto.common.v2.common.DebtorInformation'
-        debtors:
-          items:
-            $ref: '#/components/schemas/io.token.proto.common.v2.common.DebtorInformation'
-          type: array
-        signingKeyId:
-          type: string
-        tokenSigningKeyId:
-          type: string
     io.token.proto.common.virtualaccount.HsbcRegistrationPayload:
       type: object
       properties:
@@ -196,18 +183,16 @@ components:
           type: string
         profileId:
           type: string
-    io.token.proto.gateway.EmptyResponse:
+    io.token.proto.common.v2.payout.CorporateApiDebtorInformation:
       type: object
-      properties: {}
-    io.token.proto.common.virtualaccount.Provider:
-      enum:
-      - UNKNOWN_PROVIDER
-      - BNPP
-      - HSBC
-      - FANK
-      - CORPORATE_API
-      default: UNKNOWN_PROVIDER
-      type: string
+      properties:
+        accountId:
+          type: string
+    io.token.proto.gateway.ProviderRegistrationResponse:
+      type: object
+      properties:
+        registration:
+          $ref: '#/components/schemas/io.token.proto.common.virtualaccount.Registration'
     io.token.proto.common.virtualaccount.Registration:
       type: object
       properties:
@@ -227,6 +212,60 @@ components:
           $ref: '#/components/schemas/io.token.proto.common.virtualaccount.Product'
         provider:
           $ref: '#/components/schemas/io.token.proto.common.virtualaccount.Provider'
+    io.token.proto.gateway.RegisterProviderRequest:
+      type: object
+      properties:
+        bnpp:
+          $ref: '#/components/schemas/io.token.proto.common.virtualaccount.BnppRegistrationPayload'
+        corporateApi:
+          $ref: '#/components/schemas/io.token.proto.common.virtualaccount.CorporateApiRegistrationPayload'
+        fank:
+          $ref: '#/components/schemas/io.token.proto.common.virtualaccount.FankRegistrationPayload'
+        hsbc:
+          $ref: '#/components/schemas/io.token.proto.common.virtualaccount.HsbcRegistrationPayload'
+        product:
+          $ref: '#/components/schemas/io.token.proto.common.virtualaccount.Product'
+    io.token.proto.common.virtualaccount.FankRegistrationPayload:
+      type: object
+      properties: {}
+    io.token.proto.common.virtualaccount.Provider:
+      enum:
+      - UNKNOWN_PROVIDER
+      - BNPP
+      - HSBC
+      - FANK
+      - CORPORATE_API
+      default: UNKNOWN_PROVIDER
+      type: string
+    io.token.proto.gateway.GetProviderRegistrationsResponse:
+      type: object
+      properties:
+        pageInfo:
+          $ref: '#/components/schemas/io.token.proto.common.v2.paging.PageInfo'
+        registrations:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.virtualaccount.Registration'
+          type: array
+    io.token.proto.gateway.EmptyResponse:
+      type: object
+      properties: {}
+    io.token.proto.common.virtualaccount.BnppRegistrationPayload:
+      type: object
+      properties:
+        appId:
+          type: string
+        appSecret:
+          type: string
+        debtor:
+          $ref: '#/components/schemas/io.token.proto.common.v2.common.DebtorInformation'
+        debtors:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.v2.common.DebtorInformation'
+          type: array
+        signingKeyId:
+          type: string
+        tokenSigningKeyId:
+          type: string
     io.token.proto.common.v2.common.DebtorInformation:
       type: object
       properties:
@@ -254,42 +293,3 @@ components:
           type: string
         ultimateDebtorName:
           type: string
-    io.token.proto.common.v2.payout.CorporateApiDebtorInformation:
-      type: object
-      properties:
-        accountId:
-          type: string
-    io.token.proto.gateway.RegisterProviderRequest:
-      type: object
-      properties:
-        bnpp:
-          $ref: '#/components/schemas/io.token.proto.common.virtualaccount.BnppRegistrationPayload'
-        corporateApi:
-          $ref: '#/components/schemas/io.token.proto.common.virtualaccount.CorporateApiRegistrationPayload'
-        fank:
-          $ref: '#/components/schemas/io.token.proto.common.virtualaccount.FankRegistrationPayload'
-        hsbc:
-          $ref: '#/components/schemas/io.token.proto.common.virtualaccount.HsbcRegistrationPayload'
-        product:
-          $ref: '#/components/schemas/io.token.proto.common.virtualaccount.Product'
-    io.token.proto.common.virtualaccount.FankRegistrationPayload:
-      type: object
-      properties: {}
-    io.token.proto.common.v2.paging.PageInfo:
-      type: object
-      properties:
-        haveMore:
-          format: boolean
-          type: boolean
-        limit:
-          format: int32
-          type: integer
-        nextOffset:
-          type: string
-        offset:
-          type: string
-    io.token.proto.gateway.ProviderRegistrationResponse:
-      type: object
-      properties:
-        registration:
-          $ref: '#/components/schemas/io.token.proto.common.virtualaccount.Registration'

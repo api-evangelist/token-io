@@ -150,6 +150,82 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    io.token.proto.common.v2.paging.PageInfo:
+      type: object
+      properties:
+        haveMore:
+          format: boolean
+          type: boolean
+        limit:
+          format: int32
+          type: integer
+        nextOffset:
+          type: string
+        offset:
+          type: string
+    io.token.proto.common.v2.openbanking.paymentlink.PaymentLinkStatus:
+      enum:
+      - UNKNOWN
+      - LINK_ACTIVE
+      - LINK_EXPIRED
+      - LINK_CANCELED
+      - USAGE_LIMIT_REACHED
+      - AMOUNT_LIMIT_REACHED
+      default: UNKNOWN
+      type: string
+    io.token.proto.gateway.paymentlinks.PaymentLinksResponse:
+      type: object
+      properties:
+        pageInfo:
+          $ref: '#/components/schemas/io.token.proto.common.v2.paging.PageInfo'
+        paymentLinks:
+          items:
+            $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.paymentlink.PaymentLink'
+          type: array
+    io.token.proto.common.v2.common.Address:
+      type: object
+      properties:
+        addressLine:
+          items:
+            type: string
+          type: array
+        buildingNumber:
+          type: string
+        country:
+          type: string
+        countrySubDivision:
+          items:
+            type: string
+          type: array
+        district:
+          type: string
+        postCode:
+          type: string
+        state:
+          type: string
+        streetName:
+          type: string
+        townName:
+          type: string
+    io.token.proto.common.v2.common.LocalInstrument:
+      enum:
+      - INVALID_LOCAL_INSTRUMENT
+      - SEPA
+      - SEPA_INSTANT
+      - SWIFT
+      - FASTER_PAYMENTS
+      - CHAPS
+      - ELIXIR
+      - EXPRESS_ELIXIR
+      - BLUE_CASH
+      - SORBNET
+      - BANKGIRO
+      - PLUSGIRO
+      - EU_DOMESTIC_NON_EURO
+      - EU_DOMESTIC_NON_EURO_INSTANT
+      - AUTO_SELECT
+      default: INVALID_LOCAL_INSTRUMENT
+      type: string
     io.token.proto.common.money.Money:
       type: object
       properties:
@@ -190,43 +266,41 @@ components:
           type: string
         virtualAccountId:
           type: string
-    io.token.proto.common.v2.common.Address:
+    io.token.proto.common.v2.common.Risk:
       type: object
       properties:
-        addressLine:
-          items:
-            type: string
-          type: array
-        buildingNumber:
-          type: string
-        country:
-          type: string
-        countrySubDivision:
-          items:
-            type: string
-          type: array
-        district:
-          type: string
-        postCode:
-          type: string
-        state:
-          type: string
-        streetName:
-          type: string
-        townName:
-          type: string
-    io.token.proto.common.v2.paging.PageInfo:
-      type: object
-      properties:
-        haveMore:
+        beneficiaryAccountType:
+          $ref: '#/components/schemas/io.token.proto.common.v2.common.BeneficiaryAccountType'
+        beneficiaryPrepopulatedIndicator:
           format: boolean
           type: boolean
-        limit:
+        contractPresentIndicator:
+          format: boolean
+          type: boolean
+        contractPresentInidicator:
+          format: boolean
+          type: boolean
+        deliveryAddress:
+          $ref: '#/components/schemas/io.token.proto.common.v2.common.Address'
+        merchantCategoryCode:
+          type: string
+        paymentContextCode:
+          $ref: '#/components/schemas/io.token.proto.common.v2.common.PaymentContextCode'
+        paymentPurposeCode:
+          type: string
+        psuId:
+          type: string
+    io.token.proto.common.v2.openbanking.paymentlink.LinkConfig:
+      type: object
+      properties:
+        expiresAt:
+          type: string
+        maxUsageCount:
           format: int32
           type: integer
-        nextOffset:
+        perPaymentAmountLimit:
           type: string
-        offset:
+        totalAmountLimit:
           type: string
     io.token.proto.common.v2.openbanking.paymentlink.PaymentTemplate:
       type: object
@@ -261,25 +335,14 @@ components:
           type: boolean
         risk:
           $ref: '#/components/schemas/io.token.proto.common.v2.common.Risk'
-    io.token.proto.common.v2.common.LocalInstrument:
-      enum:
-      - INVALID_LOCAL_INSTRUMENT
-      - SEPA
-      - SEPA_INSTANT
-      - SWIFT
-      - FASTER_PAYMENTS
-      - CHAPS
-      - ELIXIR
-      - EXPRESS_ELIXIR
-      - BLUE_CASH
-      - SORBNET
-      - BANKGIRO
-      - PLUSGIRO
-      - EU_DOMESTIC_NON_EURO
-      - EU_DOMESTIC_NON_EURO_INSTANT
-      - AUTO_SELECT
-      default: INVALID_LOCAL_INSTRUMENT
-      type: string
+    io.token.proto.common.v2.openbanking.paymentlink.CurrentUsage:
+      type: object
+      properties:
+        remainingAmount:
+          type: string
+        remainingCount:
+          format: int32
+          type: integer
     io.token.proto.gateway.paymentlinks.CreatePaymentLinkRequest:
       type: object
       properties:
@@ -287,27 +350,6 @@ components:
           $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.paymentlink.LinkConfig'
         paymentTemplate:
           $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.paymentlink.PaymentTemplate'
-    io.token.proto.common.v2.openbanking.paymentlink.LinkConfig:
-      type: object
-      properties:
-        expiresAt:
-          type: string
-        maxUsageCount:
-          format: int32
-          type: integer
-        perPaymentAmountLimit:
-          type: string
-        totalAmountLimit:
-          type: string
-    io.token.proto.gateway.paymentlinks.PaymentLinksResponse:
-      type: object
-      properties:
-        pageInfo:
-          $ref: '#/components/schemas/io.token.proto.common.v2.paging.PageInfo'
-        paymentLinks:
-          items:
-            $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.paymentlink.PaymentLink'
-          type: array
     io.token.proto.common.v2.common.PaymentContextCode:
       enum:
       - INVALID_PAYMENT_CONTEXT_CODE
@@ -325,29 +367,29 @@ components:
       - TRANSFER_TO_THIRD_PARTY
       default: INVALID_PAYMENT_CONTEXT_CODE
       type: string
-    io.token.proto.common.v2.common.Risk:
+    io.token.proto.gateway.paymentlinks.PaymentLinkResponse:
       type: object
       properties:
-        beneficiaryAccountType:
-          $ref: '#/components/schemas/io.token.proto.common.v2.common.BeneficiaryAccountType'
-        beneficiaryPrepopulatedIndicator:
-          format: boolean
-          type: boolean
-        contractPresentIndicator:
-          format: boolean
-          type: boolean
-        contractPresentInidicator:
-          format: boolean
-          type: boolean
-        deliveryAddress:
-          $ref: '#/components/schemas/io.token.proto.common.v2.common.Address'
-        merchantCategoryCode:
+        paymentLink:
+          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.paymentlink.PaymentLink'
+    io.token.proto.common.v2.openbanking.paymentlink.PaymentLink:
+      type: object
+      properties:
+        createdAt:
           type: string
-        paymentContextCode:
-          $ref: '#/components/schemas/io.token.proto.common.v2.common.PaymentContextCode'
-        paymentPurposeCode:
+        currentUsage:
+          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.paymentlink.CurrentUsage'
+        id:
           type: string
-        psuId:
+        linkConfig:
+          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.paymentlink.LinkConfig'
+        memberId:
+          type: string
+        paymentTemplate:
+          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.paymentlink.PaymentTemplate'
+        status:
+          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.paymentlink.PaymentLinkStatus'
+        url:
           type: string
     io.token.proto.common.v2.openbanking.common.ChargeBearer:
       enum:
@@ -358,29 +400,6 @@ components:
       - SLEV
       default: UNKNOWN_CHARGE_BEARER
       type: string
-    io.token.proto.common.v2.openbanking.paymentlink.PaymentLinkStatus:
-      enum:
-      - UNKNOWN
-      - LINK_ACTIVE
-      - LINK_EXPIRED
-      - LINK_CANCELED
-      - USAGE_LIMIT_REACHED
-      - AMOUNT_LIMIT_REACHED
-      default: UNKNOWN
-      type: string
-    io.token.proto.common.v2.openbanking.paymentlink.CurrentUsage:
-      type: object
-      properties:
-        remainingAmount:
-          type: string
-        remainingCount:
-          format: int32
-          type: integer
-    io.token.proto.gateway.paymentlinks.PaymentLinkResponse:
-      type: object
-      properties:
-        paymentLink:
-          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.paymentlink.PaymentLink'
     io.token.proto.common.v2.common.BeneficiaryAccountType:
       enum:
       - INVALID_BENEFICIARY_ACCOUNT_TYPE
@@ -401,22 +420,3 @@ components:
       - PENSION
       default: INVALID_BENEFICIARY_ACCOUNT_TYPE
       type: string
-    io.token.proto.common.v2.openbanking.paymentlink.PaymentLink:
-      type: object
-      properties:
-        createdAt:
-          type: string
-        currentUsage:
-          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.paymentlink.CurrentUsage'
-        id:
-          type: string
-        linkConfig:
-          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.paymentlink.LinkConfig'
-        memberId:
-          type: string
-        paymentTemplate:
-          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.paymentlink.PaymentTemplate'
-        status:
-          $ref: '#/components/schemas/io.token.proto.common.v2.openbanking.paymentlink.PaymentLinkStatus'
-        url:
-          type: string

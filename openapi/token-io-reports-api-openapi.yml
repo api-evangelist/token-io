@@ -173,6 +173,99 @@ paths:
     - url: https://api.token.io
 components:
   schemas:
+    ServiceUnavailableError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: UNAVAILABLE
+        paymentId:
+          type: string
+          description: The service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+          example: Unavailable
+      description: Service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    bankId:
+      type: string
+      description: The Token.io id of the bank where the consent is created. **This field is required if the customer is not using Token.io's Hosted Pages for bank selection, <i>i.e.</i>, API-only integration when `EMBEDDED_HOSTED_PAGES` is selected in `flowType`, or Hosted Pages embedded (modal) integration.**
+      example: ob-modelo
+    inline_response_401:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    inline_response_504:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/GatewayTimeoutError'
+    inline_response_400:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    inline_response_403:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/PermissionDeniedError'
+    inline_response_500:
+      properties:
+        error:
+          allOf:
+          - type: object
+            properties:
+              errorCode:
+                type: string
+                description: This is a textual error code categorising the error.
+                example: InternalServerError
+          - $ref: '#/components/schemas/ServerError'
+    GetBankStatusResponse:
+      type: object
+      properties:
+        bankStatus:
+          $ref: '#/components/schemas/bankStatus'
+    inline_response_404:
+      required:
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/PaymentNotFoundError'
+    GatewayTimeoutError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: DEADLINE_EXCEEDED
+        paymentId:
+          type: string
+          description: The deadline expired before the operation could complete.
+          example: Deadline exceeded.
+      description: The deadline expired before the operation could complete.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
+    ResourceExhaustedError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: RESOURCE_EXHAUSTED
+        paymentId:
+          type: string
+          description: The maximum number of requests has been reached.
+          example: Resource exhausted. Check quota.
+      description: Resource exhausted. Too many requests.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
     bankStatus:
       type: object
       properties:
@@ -191,39 +284,36 @@ components:
           type: string
           description: The current state of this bank's PIS support:<ul><li><b>LIVE</b> – accepting calls</li><li><b>DOWN</b> – connection interrupted, not accepting calls</li></ul>
       description: Contains information on the current status of the connected bank.
-    inline_response_504:
-      required:
-      - error
+    banksStatus:
       type: object
       properties:
-        error:
-          $ref: '#/components/schemas/GatewayTimeoutError'
-    inline_response_401:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-    ServiceUnavailableError:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: UNAVAILABLE
-        paymentId:
+        aisStatus:
           type: string
-          description: The service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
-          example: Unavailable
-      description: Service is unavailable, likely due to a transient condition; this is usually corrected with a retry.
+          description: The current state of this bank's AIS support:<ul><li><b>LIVE</b> – accepting calls</li><li><b>DOWN</b> – connection interrupted, not accepting calls</li></ul>
+        bankId:
+          $ref: '#/components/schemas/bankId'
+        lastUpdatedAt:
+          type: string
+          description: The time since the latest status reported, in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.
+          example: '27811843'
+        pisStatus:
+          type: string
+          description: The current state of this bank's PIS support:<ul><li><b>LIVE</b> – accepting calls</li><li><b>DOWN</b> – connection interrupted, not accepting calls</li></ul>
+      description: Contains information on the current status of connected banks.
+    ServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: 'This could refer to either an error by the payment service provider or the bank. When the bank reports a 5xx error, `"token-external-error": "true"` is set as a header in the HTTP response, indicating that the "internal" error originates from the bank. When one of the payment service providers internal services fails or when the bank reports a 4xx error, this header is not populated. The absence of this response header should be interpreted as `"token-external-error": "false"`.'
       allOf:
       - $ref: '#/components/schemas/ErrorWithCode'
-    inline_response_503:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/ServiceUnavailableError'
     inline_response_429:
       required:
       - error
@@ -231,13 +321,33 @@ components:
       properties:
         error:
           $ref: '#/components/schemas/ResourceExhaustedError'
-    inline_response_403:
+    inline_response_501:
       required:
       - error
       type: object
       properties:
         error:
-          $ref: '#/components/schemas/PermissionDeniedError'
+          $ref: '#/components/schemas/NotImplementedError'
+    GetBanksStatusResponse:
+      type: object
+      properties:
+        banksStatus:
+          type: array
+          items:
+            $ref: '#/components/schemas/banksStatus'
+          description: Contains information on the current status of connected banks.
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the error.
+          example: This is a description of the error.
+        tokenTraceId:
+          type: string
+          description: The trace identifier for the given call.
+          example: '5678912345'
+      description: The request does not have valid authentication credentials needed to perform the operation.
     ErrorWithCode:
       required:
       - errorCode
@@ -255,14 +365,27 @@ components:
       description: Error object providing details about the error.
       allOf:
       - $ref: '#/components/schemas/Error'
-    GetBanksStatusResponse:
+    inline_response_503:
+      required:
+      - error
       type: object
       properties:
-        banksStatus:
-          type: array
-          items:
-            $ref: '#/components/schemas/banksStatus'
-          description: Contains information on the current status of connected banks.
+        error:
+          $ref: '#/components/schemas/ServiceUnavailableError'
+    NotImplementedError:
+      required:
+      - paymentId
+      type: object
+      properties:
+        errorCode:
+          example: UNIMPLEMENTED
+        paymentId:
+          type: string
+          description: The operation was not implemented,supported or enabled by the bank.
+          example: Not implemented.
+      description: The operation was not implemented, supported or enabled by the bank.
+      allOf:
+      - $ref: '#/components/schemas/ErrorWithCode'
     PermissionDeniedError:
       type: object
       properties:
@@ -285,129 +408,11 @@ components:
       description: 'The error object returned when given payment cannot be found: ResourceNotFound.'
       allOf:
       - $ref: '#/components/schemas/ErrorWithCode'
-    GetBankStatusResponse:
+    io.token.proto.gateway.GetBankStatusResponse:
       type: object
       properties:
         bankStatus:
-          $ref: '#/components/schemas/bankStatus'
-    GatewayTimeoutError:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: DEADLINE_EXCEEDED
-        paymentId:
-          type: string
-          description: The deadline expired before the operation could complete.
-          example: Deadline exceeded.
-      description: The deadline expired before the operation could complete.
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    NotImplementedError:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: UNIMPLEMENTED
-        paymentId:
-          type: string
-          description: The operation was not implemented,supported or enabled by the bank.
-          example: Not implemented.
-      description: The operation was not implemented, supported or enabled by the bank.
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    ServerError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A description of the error.
-          example: This is a description of the error.
-        tokenTraceId:
-          type: string
-          description: The trace identifier for the given call.
-          example: '5678912345'
-      description: 'This could refer to either an error by the payment service provider or the bank. When the bank reports a 5xx error, `"token-external-error": "true"` is set as a header in the HTTP response, indicating that the "internal" error originates from the bank. When one of the payment service providers internal services fails or when the bank reports a 4xx error, this header is not populated. The absence of this response header should be interpreted as `"token-external-error": "false"`.'
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    inline_response_500:
-      properties:
-        error:
-          allOf:
-          - type: object
-            properties:
-              errorCode:
-                type: string
-                description: This is a textual error code categorising the error.
-                example: InternalServerError
-          - $ref: '#/components/schemas/ServerError'
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A description of the error.
-          example: This is a description of the error.
-        tokenTraceId:
-          type: string
-          description: The trace identifier for the given call.
-          example: '5678912345'
-      description: The request does not have valid authentication credentials needed to perform the operation.
-    ResourceExhaustedError:
-      required:
-      - paymentId
-      type: object
-      properties:
-        errorCode:
-          example: RESOURCE_EXHAUSTED
-        paymentId:
-          type: string
-          description: The maximum number of requests has been reached.
-          example: Resource exhausted. Check quota.
-      description: Resource exhausted. Too many requests.
-      allOf:
-      - $ref: '#/components/schemas/ErrorWithCode'
-    inline_response_400:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-    bankId:
-      type: string
-      description: The Token.io id of the bank where the consent is created. **This field is required if the customer is not using Token.io's Hosted Pages for bank selection, <i>i.e.</i>, API-only integration when `EMBEDDED_HOSTED_PAGES` is selected in `flowType`, or Hosted Pages embedded (modal) integration.**
-      example: ob-modelo
-    inline_response_404:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/PaymentNotFoundError'
-    banksStatus:
-      type: object
-      properties:
-        aisStatus:
-          type: string
-          description: The current state of this bank's AIS support:<ul><li><b>LIVE</b> – accepting calls</li><li><b>DOWN</b> – connection interrupted, not accepting calls</li></ul>
-        bankId:
-          $ref: '#/components/schemas/bankId'
-        lastUpdatedAt:
-          type: string
-          description: The time since the latest status reported, in milliseconds, 1 day (24 hours) = 8640000000, 1 hour = 36000000, and 1 minute = 60000.
-          example: '27811843'
-        pisStatus:
-          type: string
-          description: The current state of this bank's PIS support:<ul><li><b>LIVE</b> – accepting calls</li><li><b>DOWN</b> – connection interrupted, not accepting calls</li></ul>
-      description: Contains information on the current status of connected banks.
-    inline_response_501:
-      required:
-      - error
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/NotImplementedError'
+          $ref: '#/components/schemas/io.token.proto.gateway.GetBankStatusResponse.BankStatus'
     io.token.proto.gateway.GetBanksStatusResponse:
       type: object
       properties:
@@ -441,11 +446,6 @@ components:
           type: string
         serverStatus:
           type: string
-    io.token.proto.gateway.GetBankStatusResponse:
-      type: object
-      properties:
-        bankStatus:
-          $ref: '#/components/schemas/io.token.proto.gateway.GetBankStatusResponse.BankStatus'
   securitySchemes:
     Bearer:
       type: http

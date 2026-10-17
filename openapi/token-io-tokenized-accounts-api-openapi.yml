@@ -69,6 +69,18 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    io.token.proto.gateway.tokenizedaccount.GetTokenizedAccountResponse:
+      type: object
+      properties:
+        accountDetails:
+          $ref: '#/components/schemas/io.token.proto.gateway.tokenizedaccount.AccountDetails'
+        bankId:
+          type: string
+    io.token.proto.gateway.tokenizedaccount.CreateTokenizedAccountResponse:
+      type: object
+      properties:
+        tokenizedAccountId:
+          type: string
     io.token.proto.common.v2.common.Address:
       type: object
       properties:
@@ -94,10 +106,15 @@ components:
           type: string
         townName:
           type: string
-    io.token.proto.gateway.tokenizedaccount.CreateTokenizedAccountResponse:
+    google.protobuf.Empty:
+      type: object
+      properties: {}
+    io.token.proto.gateway.tokenizedaccount.CreateTokenizedAccountRequest:
       type: object
       properties:
-        tokenizedAccountId:
+        accountDetails:
+          $ref: '#/components/schemas/io.token.proto.gateway.tokenizedaccount.AccountDetails'
+        bankId:
           type: string
     io.token.proto.gateway.tokenizedaccount.AccountDetails:
       type: object
@@ -123,21 +140,4 @@ components:
         sortCode:
           type: string
         ultimateName:
-          type: string
-    io.token.proto.gateway.tokenizedaccount.GetTokenizedAccountResponse:
-      type: object
-      properties:
-        accountDetails:
-          $ref: '#/components/schemas/io.token.proto.gateway.tokenizedaccount.AccountDetails'
-        bankId:
-          type: string
-    google.protobuf.Empty:
-      type: object
-      properties: {}
-    io.token.proto.gateway.tokenizedaccount.CreateTokenizedAccountRequest:
-      type: object
-      properties:
-        accountDetails:
-          $ref: '#/components/schemas/io.token.proto.gateway.tokenizedaccount.AccountDetails'
-        bankId:
           type: string
